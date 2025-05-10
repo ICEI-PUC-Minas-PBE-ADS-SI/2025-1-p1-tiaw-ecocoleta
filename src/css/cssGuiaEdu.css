@@ -1,0 +1,452 @@
+/* Base Styles */
+:root {
+    --primary-color: #0D9F6F;
+    --primary-dark: #0A7F59;
+    --secondary-color: #F5F9F8;
+    --text-color: #333;
+    --light-gray: #F8F9FA;
+    --gray: #6C757D;
+    --blue: #3B82F6;
+    --orange: #F59E0B;
+    --purple: #8B5CF6;
+    --white: #FFFFFF;
+    --shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    --border-radius: 8px;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    color: var(--text-color);
+    line-height: 1.6;
+    background-color: var(--secondary-color);
+}
+
+.container {
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+h1, h2, h3, h4 {
+    margin-bottom: 15px;
+    font-weight: 600;
+}
+
+h1 {
+    font-size: 2.5rem;
+    line-height: 1.2;
+}
+
+h2 {
+    font-size: 2rem;
+    text-align: center;
+    margin-bottom: 40px;
+}
+
+p {
+    margin-bottom: 15px;
+}
+
+a {
+    text-decoration: none;
+    color: var(--primary-color);
+}
+
+ul {
+    list-style: none;
+}
+
+img {
+    max-width: 100%;
+    height: auto;
+}
+
+section {
+    padding: 80px 0;
+}
+
+/* Buttons */
+.btn-primary {
+    background-color: var(--primary-color);
+    color: var(--white);
+    border: none;
+    padding: 10px 20px;
+    border-radius: var(--border-radius);
+    cursor: pointer;
+    font-weight: 600;
+    transition: background-color 0.3s;
+}
+
+.btn-primary:hover {
+    background-color: var(--primary-dark);
+}
+
+/* Hero Section */
+.hero {
+    background-color: var(--secondary-color);
+    padding: 80px 0;
+}
+
+.hero .container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.hero-content {
+    flex: 1;
+    padding-right: 40px;
+}
+
+.hero-image {
+    flex: 1;
+    text-align: center;
+}
+
+.hero-image img {
+    max-width: 100%;
+    height: auto;
+}
+
+/* Recycling Cycle Section */
+.recycling-cycle {
+    background-color: var(--white);
+}
+
+.cycle-steps {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 30px;
+}
+
+.cycle-step {
+    text-align: center;
+    padding: 20px;
+    border-radius: var(--border-radius);
+    background-color: var(--light-gray);
+    transition: transform 0.3s;
+}
+
+.cycle-step:hover {
+    transform: translateY(-5px);
+}
+
+.icon-container {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 20px;
+    color: var(--white);
+    font-size: 1.8rem;
+}
+
+.green {
+    background-color: var(--primary-color);
+}
+
+.blue {
+    background-color: var(--blue);
+}
+
+.orange {
+    background-color: var(--orange);
+}
+
+.purple {
+    background-color: var(--purple);
+}
+
+/* Materials Library Section */
+.materials-library {
+    background-color: var(--secondary-color);
+}
+
+.search-container {
+    display: flex;
+    max-width: 600px;
+    margin: 0 auto 40px;
+}
+
+.search-container input {
+    flex: 1;
+    padding: 12px 15px;
+    border: 1px solid #ddd;
+    border-radius: var(--border-radius) 0 0 var(--border-radius);
+    font-size: 1rem;
+}
+
+.search-btn {
+    background-color: var(--primary-color);
+    color: var(--white);
+    border: none;
+    padding: 0 20px;
+    border-radius: 0 var(--border-radius) var(--border-radius) 0;
+    cursor: pointer;
+}
+
+.materials-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 30px;
+}
+
+.material-card {
+    background-color: var(--white);
+    padding: 30px;
+    border-radius: var(--border-radius);
+    box-shadow: var(--shadow);
+    transition: transform 0.3s;
+}
+
+.material-card:hover {
+    transform: translateY(-5px);
+}
+
+.material-icon {
+    font-size: 2rem;
+    color: var(--primary-color);
+    margin-bottom: 15px;
+}
+
+.learn-more {
+    display: inline-block;
+    margin-top: 10px;
+    font-weight: 500;
+}
+
+.learn-more i {
+    margin-left: 5px;
+    transition: transform 0.3s;
+}
+
+.learn-more:hover i {
+    transform: translateX(5px);
+}
+
+/* Knowledge Test Section */
+.knowledge-test {
+    background-color: var(--white);
+}
+
+.quiz-container {
+    max-width: 800px;
+    margin: 0 auto;
+    background-color: var(--light-gray);
+    padding: 40px;
+    border-radius: var(--border-radius);
+}
+
+.progress-container {
+    margin-bottom: 30px;
+}
+
+.progress-text {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 10px;
+}
+
+.progress-bar {
+    height: 10px;
+    background-color: #e9ecef;
+    border-radius: 5px;
+    overflow: hidden;
+}
+
+.progress {
+    height: 100%;
+    background-color: var(--primary-color);
+    border-radius: 5px;
+}
+
+.question {
+    font-size: 1.2rem;
+    font-weight: 500;
+    margin-bottom: 20px;
+}
+
+.options {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.option {
+    display: flex;
+    align-items: center;
+    padding: 15px;
+    background-color: var(--white);
+    border-radius: var(--border-radius);
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.option:hover {
+    background-color: #e9ecef;
+}
+
+.option input {
+    margin-right: 15px;
+}
+
+/* Quiz buttons */
+.btn-confirm, .btn-next, .btn-restart {
+    background-color: var(--primary-color);
+    color: var(--white);
+    border: none;
+    padding: 12px 24px;
+    border-radius: var(--border-radius);
+    cursor: pointer;
+    font-weight: 600;
+    transition: background-color 0.3s;
+    margin-top: 20px;
+    align-self: center;
+    display: block;
+    width: fit-content;
+}
+
+.btn-confirm:hover, .btn-next:hover, .btn-restart:hover {
+    background-color: var(--primary-dark);
+}
+
+.explanation {
+    background-color: var(--white);
+    padding: 20px;
+    border-radius: var(--border-radius);
+    margin-top: 20px;
+}
+
+.explanation h3 {
+    margin-bottom: 15px;
+}
+
+.explanation p {
+    margin-bottom: 20px;
+}
+
+/* Download Materials Section */
+.download-materials {
+    background-color: var(--secondary-color);
+}
+
+.downloads-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 30px;
+}
+
+.download-card {
+    background-color: var(--white);
+    padding: 20px;
+    border-radius: var(--border-radius);
+    box-shadow: var(--shadow);
+    display: flex;
+    align-items: center;
+}
+
+.download-icon {
+    font-size: 2rem;
+    color: var(--primary-color);
+    margin-right: 15px;
+}
+
+.download-info {
+    flex: 1;
+}
+
+.download-info h3 {
+    margin-bottom: 5px;
+}
+
+.file-size {
+    font-size: 0.9rem;
+    color: var(--gray);
+}
+
+.download-btn {
+    background-color: var(--primary-color);
+    color: var(--white);
+    border: none;
+    padding: 8px 15px;
+    border-radius: var(--border-radius);
+    cursor: pointer;
+    font-size: 0.9rem;
+    white-space: nowrap;
+}
+
+.download-btn:hover {
+    background-color: var(--primary-dark);
+}
+
+
+
+/* Responsive Styles */
+@media (max-width: 992px) {
+    .cycle-steps {
+        grid-template-columns: repeat(2, 1fr);
+    }
+    
+    .materials-grid,
+    .downloads-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+}
+
+@media (max-width: 768px) {
+    h1 {
+        font-size: 2rem;
+    }
+    
+    h2 {
+        font-size: 1.8rem;
+    }
+    
+    .hero .container {
+        flex-direction: column;
+    }
+    
+    .hero-content {
+        padding-right: 0;
+        margin-bottom: 40px;
+        text-align: center;
+    }
+    
+    nav {
+        display: none;
+    }
+    
+    .menu-toggle {
+        display: block;
+    }
+    
+    .materials-grid,
+    .downloads-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    
+    .download-card {
+        flex-direction: column;
+        text-align: center;
+    }
+    
+    .download-icon {
+        margin-right: 0;
+        margin-bottom: 15px;
+    }
+    
+    .download-info {
+        margin-bottom: 15px;
+    }
+}

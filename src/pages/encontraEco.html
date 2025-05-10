@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+  /</head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" type="image/png" href="img/logo.svg">
+    <title>Encontrar Ecoponto</title>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+    <link rel="stylesheet" href="../css/navFooter.css">
+    <link rel="stylesheet" href="../css/encontrareco.css" />
+    <!-- Importação da fonte Poppins do Google Fonts -->
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    
+      <div class="group-1">
+        <main class="main">
+          <!-- Seção de Busca -->
+          <section class="section">
+            <div class="card-busca">
+              <div class="area-input">
+                <div class="input-busca">
+                  <i class="icon-lupa"></i>
+                  <input type="text" placeholder="Buscar endereço..." />
+                </div>
+                <button class="button-buscar">Buscar</button>
+              </div>
+
+              <div class="area-filtros">
+                <!-- Os filtros fixos foram removidos. Os filtros dinâmicos e o dropdown serão renderizados via JS. -->
+              </div>
+            </div>
+          </section>
+
+          <!-- Seção do Mapa -->
+          <section class="map-section">
+            <div id="map"></div>
+            <div class="info-panel">
+              <h2>Selecione um ponto no mapa</h2>
+              <div class="info-content">
+                <p>
+                  Clique em um ponto de coleta no mapa para ver mais
+                  informações.
+                </p>
+              </div>
+            </div>
+          </section>
+        </main>
+      </div>
+    </div>
+   
+
+    <!-- Scripts -->
+    <script src="../js/navFooter.js"></script>
+    <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+    <script src="../js/script.js"></script>
+      </body>
+</html>
