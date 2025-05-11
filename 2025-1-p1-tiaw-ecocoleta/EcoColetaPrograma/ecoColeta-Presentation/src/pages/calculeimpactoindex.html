@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Calcule Seu Impacto</title>
+  <link rel="stylesheet" href="../css/calculeimpactocss.css">
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+</head>
+<body class="ecoimpact-body">
+  <div class="ecoimpact-container">
+    <h1>Calcule Seu Impacto</h1>
+    <div class="ecoimpact-form-box">
+      <div class="ecoimpact-form-row">
+        <div class="ecoimpact-form-group">
+          <label class="ecoimpacto-label" for="material">Tipo de Material</label>
+          <select id="material">
+            <option value="papel">Papel</option>
+            <option value="plastico">Plástico</option>
+            <option value="vidro">Vidro</option>
+            <option value="metal">Metal</option>
+          </select>
+        </div>
+        <div class="ecoimpact-form-group">
+          <label for="quantidade">Quantidade (kg)</label>
+          <input type="number" id="quantidade" min="0" value="0">
+        </div>
+      </div>
+      <button id="calcular">Calcular Impacto</button>
+      <div class="ecoimpact-result-box" id="result">
+        <div class="ecoimpact-result-item">
+          <span class="material-icons">park</span>
+          <div class="ecoimpact-result-value" id="arvores">0</div>
+          <div class="ecoimpact-result-label">Árvores Salvas</div>
+        </div>
+        <div class="ecoimpact-result-item">
+          <span class="material-icons">water_drop</span>
+          <div class="ecoimpact-result-value" id="agua">0L</div>
+          <div class="ecoimpact-result-label">Água Economizada</div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <script src="../js/calculeimpactoscript.js"></script>
+</body>
+</html>

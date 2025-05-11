@@ -1,0 +1,126 @@
+.ecoimpact-body {
+    background: #eafff3;
+    font-family: 'Montserrat', Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+  }
+  
+  .ecoimpact-container {
+    max-width: 500px;
+    margin: 60px auto;
+    background: none;
+    text-align: center;
+  }
+  
+  h1 {
+    font-size: 2.3rem;
+    font-weight: bold;
+    color: #222;
+    margin-bottom: 30px;
+  }
+  
+  .ecoimpact-form-box {
+    background: #fff;
+    border-radius: 16px;
+    padding: 32px 24px 24px 24px;
+    box-shadow: 0 2px 16px rgba(0,0,0,0.04);
+  }
+  
+  .ecoimpact-form-row {
+    display: flex;
+    gap: 16px;
+    justify-content: center;
+    margin-bottom: 18px;
+  }
+  
+  .ecoimpact-form-group {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    min-width: 120px;
+  }
+  
+  .ecoimpact-label {
+    font-size: 1rem;
+    color: #555;
+    margin-bottom: 6px;
+    text-align: left;
+  }
+  
+  select, input[type="number"] {
+    padding: 8px 10px;
+    border: 1px solid #d0e6db;
+    border-radius: 6px;
+    font-size: 1rem;
+    outline: none;
+    background: #f7fdfb;
+  }
+  
+  #calcular {
+    width: 100%;
+    background: #16a36a;
+    color: #fff;
+    font-size: 1.1rem;
+    font-weight: 500;
+    border: none;
+    border-radius: 8px;
+    padding: 12px 0;
+    margin-top: 10px;
+    cursor: pointer;
+    transition: background 0.2s;
+  }
+  
+  button:hover {
+    background: #128a59;
+  }
+  
+  .ecoimpact-result-box {
+    display: flex;
+    justify-content: space-around;
+    background: #eafff3;
+    border-radius: 12px;
+    margin-top: 28px;
+    padding: 24px 0;
+  }
+  
+  .ecoimpact-result-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-width: 120px;
+  }
+  
+  .material-icons {
+    font-size: 2.2rem;
+    color: #16a36a;
+    margin-bottom: 4px;
+  }
+  
+  .ecoimpact-result-value{
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: #222;
+  }
+  
+  .ecoimpact-result-value {
+    font-size: 1rem;
+    color: #555;
+    margin-top: 2px;
+  }
+
+  @media (min-width: 768px) {
+    main {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+  
+  @media (min-width: 1024px) {
+    main {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  
+    nav {
+      justify-content: flex-start;
+    }
+  }
+  
