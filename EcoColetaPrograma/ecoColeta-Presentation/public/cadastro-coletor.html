@@ -1,72 +1,310 @@
 <!DOCTYPE html>
-<html lang="pt-br">
+<html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cadastro de Coletor</title>
-    <link rel="stylesheet" href="../src/css/cadastro-coletor.css">
+    <title>EcoColeta - Cadastro de Coletores</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/lucide/0.263.1/lucide.min.css" rel="stylesheet">
 </head>
 <body>
-    <div class="auth-container">
-        <form id="cadastroColetorForm" class="form-container">
-            <h1>Cadastro de Coletor</h1>
-            <label for="nome">Nome:</label>
-            <input type="text" id="nome" name="nome" required>
+    <div class="container">
+        <!-- Success Page (hidden by default) -->
+        <div id="success-page" class="success-page hidden">
+            <div class="success-card">
+                <div class="success-icon">
+                    <i data-lucide="check-circle"></i>
+                </div>
+                <h2>Cadastro realizado!</h2>
+                <p>Obrigado por se juntar ao EcoColeta. Em breve entraremos em contato.</p>
+                <button id="new-registration" class="btn btn-primary">Novo cadastro</button>
+            </div>
+        </div>
 
-            <label for="email">E-mail:</label>
-            <input type="email" id="email" name="email" required>
+        <!-- Main Form -->
+        <div id="main-form" class="main-content">
+            <!-- Header -->
+            <header class="header">
+                <div class="logo">
+                    <div class="logo-icon">
+                        <i data-lucide="leaf"></i>
+                    </div>
+                    <h1>EcoColeta</h1>
+                </div>
+                <h2>Cadastro de Coletor</h2>
+                <p>Preencha seus dados para se tornar um coletor e contribuir para um futuro mais sustentável.</p>
+            </header>
 
-            <label for="telefone">Telefone:</label>
-            <input type="text" id="telefone" name="telefone" required>
+            <!-- Form Card -->
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-title">
+                        <i data-lucide="users"></i>
+                        <span>Informações do Coletor</span>
+                    </div>
+                    <p class="card-description">Complete todos os campos obrigatórios para finalizar seu cadastro</p>
+                </div>
 
-            <label for="cep">CEP:</label>
-            <input type="text" id="cep" name="cep" required>
+                <div class="card-content">
+                    <form id="collector-form">
+                        <!-- Dados Pessoais -->
+                        <section class="form-section">
+                            <div class="section-header">
+                                <i data-lucide="user"></i>
+                                <span>Dados Pessoais</span>
+                            </div>
+                            <div class="form-grid">
+                                <div class="form-group">
+                                    <label for="nomeCompleto">Nome completo *</label>
+                                    <input type="text" id="nomeCompleto" name="nomeCompleto" placeholder="Seu nome completo" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="cpf">CPF *</label>
+                                    <input type="text" id="cpf" name="cpf" placeholder="000.000.000-00" maxlength="14" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="dataNascimento">Data de nascimento *</label>
+                                    <input type="date" id="dataNascimento" name="dataNascimento" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="genero">Gênero</label>
+                                    <select id="genero" name="genero">
+                                        <option value="">Selecione</option>
+                                        <option value="masculino">Masculino</option>
+                                        <option value="feminino">Feminino</option>
+                                        <option value="nao-binario">Não binário</option>
+                                        <option value="nao-informar">Prefiro não informar</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </section>
 
-            <label for="endereco">Endereço:</label>
-            <input type="text" id="endereco" name="endereco" required>
+                        <div class="separator"></div>
 
-            <label for="cidade">Cidade:</label>
-            <input type="text" id="cidade" name="cidade" required>
+                        <!-- Contato -->
+                        <section class="form-section">
+                            <div class="section-header">
+                                <i data-lucide="phone"></i>
+                                <span>Contato</span>
+                            </div>
+                            <div class="form-grid">
+                                <div class="form-group">
+                                    <label for="telefone">Telefone *</label>
+                                    <input type="text" id="telefone" name="telefone" placeholder="(00) 00000-0000" maxlength="15" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="email">E-mail *</label>
+                                    <input type="email" id="email" name="email" placeholder="seu@email.com" required>
+                                </div>
+                            </div>
+                        </section>
 
-            <label for="estado">Estado:</label>
-            <input type="text" id="estado" name="estado" required>
+                        <div class="separator"></div>
 
-            <label for="razaoSocial">Razão Social:</label>
-            <input type="text" id="razaoSocial" name="razaoSocial" required>
+                        <!-- Endereço -->
+                        <section class="form-section">
+                            <div class="section-header">
+                                <i data-lucide="map-pin"></i>
+                                <span>Endereço</span>
+                            </div>
+                            <div class="address-grid">
+                                <div class="form-group">
+                                    <label for="cep">CEP *</label>
+                                    <input type="text" id="cep" name="cep" placeholder="00000-000" maxlength="9" required>
+                                </div>
+                                <div class="form-group address-full">
+                                    <label for="endereco">Endereço *</label>
+                                    <input type="text" id="endereco" name="endereco" placeholder="Rua, avenida..." required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="numero">Número *</label>
+                                    <input type="text" id="numero" name="numero" placeholder="123" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="complemento">Complemento</label>
+                                    <input type="text" id="complemento" name="complemento" placeholder="Apto, casa...">
+                                </div>
+                                <div class="form-group">
+                                    <label for="bairro">Bairro *</label>
+                                    <input type="text" id="bairro" name="bairro" placeholder="Bairro" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="cidade">Cidade *</label>
+                                    <input type="text" id="cidade" name="cidade" placeholder="Cidade" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="estado">Estado *</label>
+                                    <select id="estado" name="estado" required>
+                                        <option value="">UF</option>
+                                        <option value="AC">AC</option>
+                                        <option value="AL">AL</option>
+                                        <option value="AP">AP</option>
+                                        <option value="AM">AM</option>
+                                        <option value="BA">BA</option>
+                                        <option value="CE">CE</option>
+                                        <option value="DF">DF</option>
+                                        <option value="ES">ES</option>
+                                        <option value="GO">GO</option>
+                                        <option value="MA">MA</option>
+                                        <option value="MT">MT</option>
+                                        <option value="MS">MS</option>
+                                        <option value="MG">MG</option>
+                                        <option value="PA">PA</option>
+                                        <option value="PB">PB</option>
+                                        <option value="PR">PR</option>
+                                        <option value="PE">PE</option>
+                                        <option value="PI">PI</option>
+                                        <option value="RJ">RJ</option>
+                                        <option value="RN">RN</option>
+                                        <option value="RS">RS</option>
+                                        <option value="RO">RO</option>
+                                        <option value="RR">RR</option>
+                                        <option value="SC">SC</option>
+                                        <option value="SP">SP</option>
+                                        <option value="SE">SE</option>
+                                        <option value="TO">TO</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </section>
 
-            <label for="cnpj">CNPJ:</label>
-            <input type="text" id="cnpj" name="cnpj" required>
+                        <div class="separator"></div>
 
-            <label for="areaAtuacao">Área de Atuação:</label>
-            <input type="text" id="areaAtuacao" name="areaAtuacao" required>
+                        <!-- Coleta -->
+                        <section class="form-section">
+                            <div class="section-header">
+                                <i data-lucide="recycle"></i>
+                                <span>Informações de Coleta</span>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label>Materiais de interesse *</label>
+                                <div class="materials-grid">
+                                    <div class="material-item">
+                                        <input type="checkbox" id="plastico" name="materiaisInteresse" value="Plástico">
+                                        <label for="plastico">
+                                            <i data-lucide="package"></i>
+                                            <span>Plástico</span>
+                                        </label>
+                                    </div>
+                                    <div class="material-item">
+                                        <input type="checkbox" id="papel" name="materiaisInteresse" value="Papel">
+                                        <label for="papel">
+                                            <i data-lucide="file-text"></i>
+                                            <span>Papel</span>
+                                        </label>
+                                    </div>
+                                    <div class="material-item">
+                                        <input type="checkbox" id="vidro" name="materiaisInteresse" value="Vidro">
+                                        <label for="vidro">
+                                            <i data-lucide="bottle"></i>
+                                            <span>Vidro</span>
+                                        </label>
+                                    </div>
+                                    <div class="material-item">
+                                        <input type="checkbox" id="metal" name="materiaisInteresse" value="Metal">
+                                        <label for="metal">
+                                            <i data-lucide="zap"></i>
+                                            <span>Metal</span>
+                                        </label>
+                                    </div>
+                                    <div class="material-item">
+                                        <input type="checkbox" id="organico" name="materiaisInteresse" value="Orgânico">
+                                        <label for="organico">
+                                            <i data-lucide="sprout"></i>
+                                            <span>Orgânico</span>
+                                        </label>
+                                    </div>
+                                    <div class="material-item">
+                                        <input type="checkbox" id="eletronicos" name="materiaisInteresse" value="Eletrônicos">
+                                        <label for="eletronicos">
+                                            <i data-lucide="cpu"></i>
+                                            <span>Eletrônicos</span>
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
 
-            <label for="materiaisColeta">Materiais Coletados:</label>
-            <div>
-                <input type="checkbox" id="papel" name="materiaisColeta" value="papel">
-                <label for="papel">Papel</label>
+                            <div class="form-grid">
+                                <div class="form-group">
+                                    <label for="disponibilidade">Disponibilidade *</label>
+                                    <select id="disponibilidade" name="disponibilidade" required>
+                                        <option value="">Selecione</option>
+                                        <option value="diurno">Diurno</option>
+                                        <option value="noturno">Noturno</option>
+                                        <option value="fins-semana">Finais de semana</option>
+                                        <option value="flexivel">Flexível</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label for="possuiVeiculo">Possui veículo? *</label>
+                                    <select id="possuiVeiculo" name="possuiVeiculo" required>
+                                        <option value="">Selecione</option>
+                                        <option value="sim">Sim</option>
+                                        <option value="nao">Não</option>
+                                    </select>
+                                </div>
+                            </div>
 
-                <input type="checkbox" id="plastico" name="materiaisColeta" value="plastico">
-                <label for="plastico">Plástico</label>
+                            <div class="form-group" id="tipoVeiculoGroup" style="display: none;">
+                                <label for="tipoVeiculo">Tipo de veículo</label>
+                                <select id="tipoVeiculo" name="tipoVeiculo">
+                                    <option value="">Selecione</option>
+                                    <option value="carro">Carro</option>
+                                    <option value="moto">Moto</option>
+                                    <option value="bicicleta">Bicicleta</option>
+                                    <option value="caminhao">Caminhão</option>
+                                    <option value="outro">Outro</option>
+                                </select>
+                            </div>
 
-                <input type="checkbox" id="vidro" name="materiaisColeta" value="vidro">
-                <label for="vidro">Vidro</label>
+                            <div class="form-group">
+                                <label for="areaAtuacao">Área de atuação preferencial</label>
+                                <textarea id="areaAtuacao" name="areaAtuacao" rows="3" placeholder="Descreva os bairros ou regiões onde gostaria de atuar..."></textarea>
+                            </div>
+                        </section>
 
-                <input type="checkbox" id="metal" name="materiaisColeta" value="metal">
-                <label for="metal">Metal</label>
+                        <div class="separator"></div>
 
-                <input type="checkbox" id="eletronicos" name="materiaisColeta" value="eletronicos">
-                <label for="eletronicos">Eletrônicos</label>
+                        <!-- Termos -->
+                        <section class="form-section">
+                            <div class="section-header">
+                                <i data-lucide="shield"></i>
+                                <span>Termos e Condições</span>
+                            </div>
+                            <div class="terms-box">
+                                <div class="checkbox-group">
+                                    <input type="checkbox" id="aceitaTermos" name="aceitaTermos" required>
+                                    <label for="aceitaTermos">
+                                        Li e concordo com os <a href="#" class="link">Termos de Uso e Política de Privacidade</a> do EcoColeta. *
+                                    </label>
+                                </div>
+                            </div>
+                        </section>
+
+                        <!-- Submit Button -->
+                        <button type="submit" id="submit-btn" class="btn btn-primary btn-full" disabled>
+                            <span id="btn-text">Cadastrar como Coletor</span>
+                            <div id="btn-loading" class="loading hidden">
+                                <i data-lucide="loader-2"></i>
+                                <span>Enviando...</span>
+                            </div>
+                        </button>
+                    </form>
+                </div>
             </div>
 
-            <label for="senha">Senha:</label>
-            <input type="password" id="senha" name="senha" required>
-
-            <label for="confirmarSenha">Confirmar Senha:</label>
-            <input type="password" id="confirmarSenha" name="confirmarSenha" required>
-
-            <button type="submit">Cadastrar</button>
-        </form>
+            <!-- Footer -->
+            <footer class="footer">
+                <div class="footer-content">
+                    <i data-lucide="shield"></i>
+                    <span>Seus dados estão protegidos e serão usados apenas para o projeto EcoColeta.</span>
+                </div>
+            </footer>
+        </div>
     </div>
-    <script src="../src/js/cadastro-coletor.js"></script>
+
+    <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
+    <script src="script.js"></script>
 </body>
 </html>

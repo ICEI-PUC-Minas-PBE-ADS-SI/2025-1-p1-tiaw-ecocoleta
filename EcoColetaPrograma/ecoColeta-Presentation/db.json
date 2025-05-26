@@ -79,7 +79,7 @@
       "estado": "MG",
       "tipoUsuario": "coletor",
       "senha": "12345678910",
-      "imagem": "assets/img/AvatarScrollMaster.jpg",
+      "imagem": "assets/img/avatarCaique.jpg",
       "emailVerificado": false,
       "razaoSocial": "",
       "cnpj": "",
@@ -87,7 +87,8 @@
       "coletaDomiciliar": "sim",
       "horarioColeta": "",
       "materiaisColeta": [],
-      "id": 6
+      "id": 6,
+      "bio": ""
     }
   ],
   "pontosDeColeta": [
