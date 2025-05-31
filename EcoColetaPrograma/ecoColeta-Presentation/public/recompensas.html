@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Seus Pontos EcoPontos</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="app">
+    <header class="header">
+      <div class="container">
+        <div class="header-content">
+          <div class="logo">
+            <i class="icon" data-lucide="leaf"></i>
+            <div>
+              <h1>Seus Pontos <span class="accent">EcoPontos</span></h1>
+              <p>Recompensas sustentáveis</p>
+            </div>
+          </div>
+          
+          <nav class="desktop-nav">
+            <a href="#" class="nav-link">Início</a>
+            <a href="#" class="nav-link">Recompensas</a>
+            <a href="#" class="nav-link">Como Funciona</a>
+            <a href="#" class="nav-link">Contato</a>
+            <a href="#" class="nav-link user-link">
+              <i class="icon" data-lucide="user"></i>
+              <span>Minha Conta</span>
+            </a>
+          </nav>
+
+          <button class="menu-button" aria-label="Menu">
+            <i class="icon" data-lucide="menu"></i>
+          </button>
+        </div>
+
+        <nav class="mobile-nav">
+          <a href="#" class="nav-link">Início</a>
+          <a href="#" class="nav-link">Recompensas</a>
+          <a href="#" class="nav-link">Como Funciona</a>
+          <a href="#" class="nav-link">Contato</a>
+          <a href="#" class="nav-link user-link">
+            <i class="icon" data-lucide="user"></i>
+            <span>Minha Conta</span>
+          </a>
+        </nav>
+      </div>
+    </header>
+
+    <main class="main container">
+      <div class="grid">
+        <div class="points-summary">
+          <div class="glass-card">
+            <div class="points-total">
+              <h2>Total de Pontos</h2>
+              <div class="points-value">
+                <span>485</span>
+                <i class="icon award" data-lucide="award"></i>
+              </div>
+            </div>
+
+            <div class="points-stats">
+              <div class="stat-card available">
+                <div class="stat-icon">
+                  <i class="icon" data-lucide="gift"></i>
+                </div>
+                <span class="stat-label">Pontos disponíveis</span>
+                <span class="stat-value">230</span>
+              </div>
+
+              <div class="stat-card monthly">
+                <div class="stat-icon">
+                  <i class="icon" data-lucide="trending-up"></i>
+                </div>
+                <span class="stat-label">Pontos no último mês</span>
+                <span class="stat-value">485</span>
+              </div>
+            </div>
+
+            <button class="btn btn-primary exchange-btn">
+              <span>Trocar Pontos</span>
+              <i class="icon" data-lucide="gift"></i>
+            </button>
+
+            <a href="#" class="history-link">Ver histórico completo</a>
+          </div>
+        </div>
+
+        <div class="content-area">
+          <section class="rewards-section">
+            <div class="section-header">
+              <h2>Recompensas Disponíveis</h2>
+              <a href="#" class="see-all">Ver todas</a>
+            </div>
+
+            <div class="rewards-grid" id="rewards-grid">
+              <!-- Rewards will be dynamically inserted here -->
+            </div>
+          </section>
+
+          <section class="activity-section">
+            <div class="section-header">
+              <h2>Atividades Recentes</h2>
+              <a href="#" class="see-all">Ver todas</a>
+            </div>
+
+            <div class="activity-list" id="activity-list">
+              <!-- Activities will be dynamically inserted here -->
+            </div>
+          </section>
+        </div>
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="container">
+        <div class="footer-grid">
+          <div class="footer-brand">
+            <div class="logo">
+              <i class="icon" data-lucide="leaf"></i>
+              <h3>Seus Pontos <span class="accent">EcoPontos</span></h3>
+            </div>
+            <p>Transformando pequenas ações em grandes impactos para nosso planeta.</p>
+            <div class="social-links">
+              <a href="#"><i class="icon" data-lucide="facebook"></i></a>
+              <a href="#"><i class="icon" data-lucide="twitter"></i></a>
+              <a href="#"><i class="icon" data-lucide="instagram"></i></a>
+              <a href="#"><i class="icon" data-lucide="mail"></i></a>
+            </div>
+          </div>
+
+          <div class="footer-links">
+            <h3>Links Rápidos</h3>
+            <ul>
+              <li><a href="#">Início</a></li>
+              <li><a href="#">Recompensas</a></li>
+              <li><a href="#">Como Funciona</a></li>
+              <li><a href="#">Contato</a></li>
+            </ul>
+          </div>
+
+          <div class="footer-links">
+            <h3>Programa</h3>
+            <ul>
+              <li><a href="#">Sobre Nós</a></li>
+              <li><a href="#">Parceiros</a></li>
+              <li><a href="#">Sustentabilidade</a></li>
+              <li><a href="#">Blog</a></li>
+            </ul>
+          </div>
+
+          <div class="footer-contact">
+            <h3>Contato</h3>
+            <address>
+              <p>Av. Verde, 123</p>
+              <p>São Paulo, SP</p>
+              <p>Brasil</p>
+              <p>contato@ecopontos.com.br</p>
+              <p>(11) 9876-5432</p>
+            </address>
+          </div>
+        </div>
+
+        <div class="footer-bottom">
+          <p>&copy; <span id="current-year"></span> Seus Pontos EcoPontos. Todos os direitos reservados.</p>
+        </div>
+      </div>
+    </footer>
+  </div>
+
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <script src="app.js"></script>
+</body>
+</html>
