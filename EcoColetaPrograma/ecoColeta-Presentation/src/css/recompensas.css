@@ -1,0 +1,143 @@
+/* recompensas.css */
+body {
+  background: #f6f8f6;
+  font-family: 'Segoe UI', Arial, sans-serif;
+}
+.recompensas-container {
+  max-width: 900px;
+  margin: 40px auto;
+  background: #fff;
+  border-radius: 18px;
+  box-shadow: 0 4px 24px rgba(0,0,0,0.08);
+  padding: 32px 24px 40px 24px;
+  text-align: center;
+}
+.recompensas-titulo {
+  font-size: 2.5rem;
+  color: #2e7d32;
+  margin-bottom: 32px;
+  font-weight: 700;
+}
+.recompensas-ecopontos {
+  font-size: 1.2rem;
+  color: #388e3c;
+  margin-bottom: 24px;
+  font-weight: 500;
+}
+.recompensas-cards {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 32px;
+  justify-content: center;
+}
+.recompensas-card {
+  background: #f1f8e9;
+  border-radius: 14px;
+  box-shadow: 0 2px 8px rgba(46,125,50,0.08);
+  width: 260px;
+  padding: 24px 16px 20px 16px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+.recompensas-card:hover {
+  transform: translateY(-6px) scale(1.03);
+  box-shadow: 0 8px 24px rgba(46,125,50,0.15);
+}
+.recompensas-card-img {
+  width: 90px;
+  height: 90px;
+  object-fit: contain;
+  margin-bottom: 18px;
+}
+.recompensas-card-title {
+  font-size: 1.3rem;
+  color: #2e7d32;
+  margin-bottom: 8px;
+  font-weight: 600;
+}
+.recompensas-card-desc {
+  font-size: 1rem;
+  color: #555;
+  margin-bottom: 12px;
+}
+.recompensas-card-points {
+  font-size: 1.1rem;
+  color: #388e3c;
+  font-weight: 600;
+  margin-bottom: 16px;
+}
+.recompensas-verde {
+  color: #43a047;
+}
+.recompensas-card-btn {
+  background: linear-gradient(90deg, #43a047 60%, #66bb6a 100%);
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  padding: 10px 28px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s, box-shadow 0.2s;
+  box-shadow: 0 2px 8px rgba(67,160,71,0.08);
+}
+.recompensas-card-btn:hover {
+  background: linear-gradient(90deg, #388e3c 60%, #81c784 100%);
+  box-shadow: 0 4px 16px rgba(67,160,71,0.18);
+}
+.recompensas-historico-box {
+  margin-top: 40px;
+  background: #f9fbe7;
+  border-radius: 12px;
+  padding: 24px 18px;
+  box-shadow: 0 2px 8px rgba(67,160,71,0.07);
+  max-width: 600px;
+  margin-left: auto;
+  margin-right: auto;
+}
+.recompensas-historico-titulo {
+  font-size: 1.3rem;
+  color: #2e7d32;
+  margin-bottom: 18px;
+  font-weight: 600;
+}
+.recompensas-historico-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: #fff;
+  border-radius: 8px;
+  padding: 10px 16px;
+  margin-bottom: 10px;
+  box-shadow: 0 1px 4px rgba(67,160,71,0.05);
+  font-size: 1rem;
+}
+.recompensas-historico-recompensa {
+  color: #388e3c;
+  font-weight: 500;
+}
+.recompensas-historico-pontos {
+  color: #d32f2f;
+  font-weight: 600;
+}
+.recompensas-historico-data {
+  color: #888;
+  font-size: 0.95em;
+}
+.recompensas-historico-vazio {
+  color: #888;
+  text-align: center;
+  margin-top: 10px;
+}
+@media (max-width: 900px) {
+  .recompensas-cards {
+    flex-direction: column;
+    align-items: center;
+  }
+  .recompensas-card {
+    width: 90%;
+    margin-bottom: 24px;
+  }
+}

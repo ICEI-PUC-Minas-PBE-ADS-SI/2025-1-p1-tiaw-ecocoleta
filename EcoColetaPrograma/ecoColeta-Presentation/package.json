@@ -1,7 +1,8 @@
 {
   "name": "ecocoleta-presentation",
   "version": "1.0.0",
-  "description": "Frontend da aplicação EcoColeta",  "scripts": {
+  "description": "Frontend da aplicação EcoColeta",
+  "scripts": {
     "start": "node server.js",
     "dev": "node server.js",
     "json-server": "json-server --watch db.json --port 3000",
@@ -17,5 +18,13 @@
     "json-server": "^0.17.4",
     "multer": "^2.0.0",
     "stripe": "^14.19.0"
-  }
+  },
+  "main": "server.js",
+  "directories": {
+    "doc": "docs"
+  },
+  "devDependencies": {},
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
 }
