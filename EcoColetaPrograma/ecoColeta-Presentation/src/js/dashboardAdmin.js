@@ -64,31 +64,38 @@ class DashboardAdmin {
       return false;
     }
 
-    sidebarToggle?.addEventListener("click", toggleSidebar);
-    sidebarOverlay?.addEventListener("click", toggleSidebar);
-
-    // Ajuste responsivo
-    const adjustLayout = () => {
-      if (window.innerWidth < 768) {
-        sidebar.classList.remove("open");
-        sidebarOverlay.classList.remove("visible");
-        mainContent.style.marginLeft = "0";
-      } else {
-        mainContent.style.marginLeft = `${sidebar.offsetWidth}px`;
+    // Verificar se o token ainda é válido (opcional)
+    const lastLogin = localStorage.getItem('lastLoginTime');
+    if (lastLogin) {
+      const loginTime = new Date(lastLogin);
+      const now = new Date();
+      const hoursDiff = (now - loginTime) / (1000 * 60 * 60);
+      
+      // Expirar sessão após 24 horas
+      if (hoursDiff > 24) {
+        console.warn('Sessão expirada. Redirecionando para login...');
+        localStorage.removeItem('usuarioLogado');
+        localStorage.removeItem('lastLoginTime');
+        this.showError('Sessão expirada. Faça login novamente.');
+        
+        setTimeout(() => {
+          window.location.href = 'autent.html';
+        }, 2000);
+        
+        return false;
       }
-    };
+    }
 
-    adjustLayout();
-    window.addEventListener("resize", adjustLayout);
-  }
+    console.log(`Dashboard carregado para usuário: ${this.currentUser.nome} (ID: ${this.currentUser.id})`);
+    return true;  }
 
   // Carregamento de dados da API
   async loadAllData() {
     try {
       const [usuariosRes, pontosRes, donationsRes] = await Promise.all([
-        fetch(`${API_BASE_URL}/api/usuarios`),
-        fetch(`${API_BASE_URL}/api/pontosDeColeta`),
-        fetch(`${API_BASE_URL}/api/donations`)
+        fetch(`${API_BASE_URL}/usuarios`),
+        fetch(`${API_BASE_URL}/pontosDeColeta`),
+        fetch(`${API_BASE_URL}/donations`)
       ]);
 
       this.usuarios = await usuariosRes.json();
