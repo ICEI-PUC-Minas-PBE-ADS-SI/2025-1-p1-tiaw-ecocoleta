@@ -1,6 +1,6 @@
 // Dashboard Administrativo - EcoColeta
 // Configuração da API
-const API_BASE_URL = 'http://localhost:3000';
+const API_BASE_URL = 'http://localhost:3000/api';
 
 // Classe principal para gerenciar o dashboard
 class DashboardAdmin {

@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Teste da API - EcoColeta</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+        .container {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .endpoint {
+            margin: 20px 0;
+            padding: 15px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            background: #f9f9f9;
+        }
+        .success {
+            border-color: #4CAF50;
+            background: #e8f5e9;
+        }
+        .error {
+            border-color: #f44336;
+            background: #ffebee;
+        }
+        button {
+            background: #4CAF50;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            margin: 5px;
+        }
+        button:hover {
+            background: #45a049;
+        }
+        pre {
+            background: #f4f4f4;
+            padding: 10px;
+            border-radius: 4px;
+            overflow-x: auto;
+            max-height: 200px;
+            overflow-y: auto;
+        }
+        .loading {
+            color: #666;
+            font-style: italic;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🌱 EcoColeta - Teste da API</h1>
+        <p>Esta página testa se todos os endpoints da API estão funcionando corretamente.</p>
+        
+        <button onclick="testAllEndpoints()">Testar Todos os Endpoints</button>
+        <button onclick="clearResults()">Limpar Resultados</button>
+        
+        <div id="results"></div>
+    </div>
+
+    <script>
+        const API_BASE_URL = 'http://localhost:3000/api';
+        
+        const endpoints = [
+            { name: 'Usuários', url: '/usuarios' },
+            { name: 'Pontos de Coleta', url: '/pontosDeColeta' },
+            { name: 'Comunidades', url: '/comunidades' },
+            { name: 'Donations', url: '/donations' },
+            { name: 'Agendamentos', url: '/agendamentos' }
+        ];
+
+        async function testEndpoint(endpoint) {
+            const resultDiv = document.getElementById(`result-${endpoint.name.replace(/\s+/g, '-').toLowerCase()}`);
+            resultDiv.innerHTML = '<div class="loading">Testando...</div>';
+            
+            try {
+                const response = await fetch(`${API_BASE_URL}${endpoint.url}`);
+                const data = await response.json();
+                
+                if (response.ok) {
+                    resultDiv.className = 'endpoint success';
+                    resultDiv.innerHTML = `
+                        <h3>✅ ${endpoint.name}</h3>
+                        <p><strong>Status:</strong> ${response.status} ${response.statusText}</p>
+                        <p><strong>Total de registros:</strong> ${Array.isArray(data) ? data.length : 'N/A'}</p>
+                        <details>
+                            <summary>Ver dados (primeiros 3 registros)</summary>
+                            <pre>${JSON.stringify(Array.isArray(data) ? data.slice(0, 3) : data, null, 2)}</pre>
+                        </details>
+                    `;
+                } else {
+                    throw new Error(`${response.status} ${response.statusText}`);
+                }
+            } catch (error) {
+                resultDiv.className = 'endpoint error';
+                resultDiv.innerHTML = `
+                    <h3>❌ ${endpoint.name}</h3>
+                    <p><strong>Erro:</strong> ${error.message}</p>
+                `;
+            }
+        }
+
+        async function testAllEndpoints() {
+            const resultsDiv = document.getElementById('results');
+            resultsDiv.innerHTML = '';
+            
+            // Criar divs para cada endpoint
+            endpoints.forEach(endpoint => {
+                const div = document.createElement('div');
+                div.id = `result-${endpoint.name.replace(/\s+/g, '-').toLowerCase()}`;
+                div.className = 'endpoint';
+                resultsDiv.appendChild(div);
+            });
+            
+            // Testar todos os endpoints em paralelo
+            await Promise.all(endpoints.map(testEndpoint));
+        }
+
+        function clearResults() {
+            document.getElementById('results').innerHTML = '';
+        }
+
+        // Testar automaticamente quando a página carregar
+        window.addEventListener('load', () => {
+            setTimeout(testAllEndpoints, 500);
+        });
+    </script>
+</body>
+</html>

@@ -66,7 +66,7 @@ async function trocarRecompensa(pontosNecessarios, nomeRecompensa) {
     data: new Date().toISOString()
   });
   // Atualiza no backend
-  await fetch(`http://localhost:3000/usuarios/${usuario.id}`, {
+  await fetch(`http://localhost:3000/api/usuarios/${usuario.id}`, {
     method: "PATCH",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({

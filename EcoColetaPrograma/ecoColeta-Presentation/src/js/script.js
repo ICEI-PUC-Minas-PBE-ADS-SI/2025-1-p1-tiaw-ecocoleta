@@ -114,14 +114,14 @@ function filtrarPontos(termo = "", filtros = []) {
 }
 
 // Configuração da URL base do servidor
-const API_BASE_URL = "http://localhost:3000";
+const API_BASE_URL = "http://localhost:3000/api";
 
 // Atualizar a função de carregamento inicial
 document.addEventListener("DOMContentLoaded", () => {
   // Corrige: seleciona a área de filtros
   const areaFiltros = document.querySelector(".area-filtros");
   // Carregar dados do json-server
-  fetch(`${API_BASE_URL}/api/pontosDeColeta`)
+  fetch(`${API_BASE_URL}/pontosDeColeta`)
     .then((response) => {
       if (!response.ok) {
         throw new Error(`HTTP error! status: ${response.status}`);
