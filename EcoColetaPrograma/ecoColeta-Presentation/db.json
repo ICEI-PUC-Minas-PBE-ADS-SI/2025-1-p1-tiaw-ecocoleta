@@ -119,6 +119,33 @@
       "dataCadastro": "2025-05-27T18:20:40.084Z",
       "id": 7,
       "ecopontoId": 31
+    },
+    {
+      "nome": "Jonas",
+      "email": "samuelfig@gmail.com",
+      "telefone": "(31) 99226-8649",
+      "cep": "32628-114",
+      "endereco": "Rua Cravo",
+      "cidade": "Betim",
+      "estado": "MG",
+      "tipoUsuario": "coletor",
+      "razaoSocial": "Organização EcoColeta",
+      "cnpj": "87.654.677/6565-55",
+      "areaAtuacao": "residencial",
+      "coletaDomiciliar": "sim",
+      "horarioColeta": "13h as 17h",
+      "materiaisColeta": [
+        "papel",
+        "vidro",
+        "metal",
+        "eletronicos"
+      ],
+      "senha": "Samuca02.",
+      "imagem": "",
+      "emailVerificado": false,
+      "dataCadastro": "2025-06-04T18:31:44.433Z",
+      "id": 8,
+      "ecopontoId": 40
     }
   ],
   "pontosDeColeta": [
@@ -138,7 +165,8 @@
       ],
       "contato": "(31) 3512-3000",
       "coletaDomiciliar": true,
-      "criadoPor": 2,      "agenda": [
+      "criadoPor": 2,
+      "agenda": [
         {
           "idAgenda": "agenda-ecoponto1-001",
           "idUsuarioAgendamento": 2,
@@ -225,7 +253,10 @@
           "id": "hist_001",
           "coletorId": 7,
           "dataColeta": "2025-05-15T10:00:00Z",
-          "materiaisColetados": ["eletronicos", "baterias"],
+          "materiaisColetados": [
+            "eletronicos",
+            "baterias"
+          ],
           "quantidadeKg": 45,
           "status": "concluido",
           "observacoes": "Coleta de equipamentos eletrônicos antigos"
@@ -234,7 +265,11 @@
           "id": "hist_002",
           "coletorId": 6,
           "dataColeta": "2025-05-10T14:00:00Z",
-          "materiaisColetados": ["plastico", "papel", "metal"],
+          "materiaisColetados": [
+            "plastico",
+            "papel",
+            "metal"
+          ],
           "quantidadeKg": 25,
           "status": "concluido",
           "observacoes": "Coleta domiciliar regular"
@@ -243,7 +278,9 @@
           "id": "hist_003",
           "coletorId": 7,
           "dataColeta": "2025-05-05T16:00:00Z",
-          "materiaisColetados": ["eletronicos"],
+          "materiaisColetados": [
+            "eletronicos"
+          ],
           "quantidadeKg": 30,
           "status": "concluido",
           "observacoes": "Coleta de computadores e periféricos"
@@ -261,7 +298,8 @@
         "plastico",
         "papel",
         "metal"
-      ],      "contato": "(31) 3512-3001",
+      ],
+      "contato": "(31) 3512-3001",
       "coletaDomiciliar": false,
       "criadoPor": 7,
       "agenda": [
@@ -302,7 +340,10 @@
           "id": "hist_alt_001",
           "coletorId": 6,
           "dataColeta": "2025-05-12T09:00:00Z",
-          "materiaisColetados": ["plastico", "papel"],
+          "materiaisColetados": [
+            "plastico",
+            "papel"
+          ],
           "quantidadeKg": 20,
           "status": "concluido",
           "observacoes": "Coleta regular de materiais recicláveis"
@@ -942,6 +983,25 @@
       "lat": -19.97669986378522,
       "lng": -44.19887672871801,
       "id": 39
+    },
+    {
+      "nome": "Ecoponto Organização EcoColeta",
+      "lat": -19.9438629,
+      "lng": -44.2691989,
+      "endereco": "Rua Cravo, Betim - MG",
+      "horario": "13h as 17h",
+      "materiaisAceitos": [
+        "papel",
+        "vidro",
+        "metal",
+        "eletronicos"
+      ],
+      "contato": "(31) 99226-8649",
+      "coletaDomiciliar": true,
+      "agenda": [],
+      "coletorId": 8,
+      "status": "ativo",
+      "id": 40
     }
   ],
   "donations": [

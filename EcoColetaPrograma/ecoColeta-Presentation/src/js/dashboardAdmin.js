@@ -110,8 +110,7 @@ class DashboardAdmin {
       console.error('Erro ao carregar dados:', error);
       this.showError('Erro ao carregar dados do servidor');
     }
-  }
-  // Filtrar pontos de coleta do usuário logado
+  }  // Filtrar pontos de coleta do usuário logado
   loadUserCollectionPoints() {
     if (!this.currentUser) {
       console.warn('Usuário não está logado');
@@ -119,11 +118,20 @@ class DashboardAdmin {
       return;
     }
 
-    this.userCollectionPoints = this.pontosDeColeta.filter(ponto => 
-      ponto.criadoPor === this.currentUser.id
-    );
+    // Se for coletor, incluir pontos criados pelo usuário E pontos onde ele é o coletor responsável
+    if (this.currentUser.tipoUsuario === 'coletor') {
+      this.userCollectionPoints = this.pontosDeColeta.filter(ponto => 
+        ponto.criadoPor === this.currentUser.id || ponto.coletorId === this.currentUser.id
+      );
+    } else {
+      // Para outros tipos de usuário, manter a lógica original
+      this.userCollectionPoints = this.pontosDeColeta.filter(ponto => 
+        ponto.criadoPor === this.currentUser.id
+      );
+    }
 
-    console.log(`Pontos de coleta do usuário ${this.currentUser.nome}:`, this.userCollectionPoints.length);
+    console.log(`Pontos de coleta do usuário ${this.currentUser.nome} (${this.currentUser.tipoUsuario}):`, this.userCollectionPoints.length);
+    console.log('Pontos encontrados:', this.userCollectionPoints.map(p => ({ id: p.id, nome: p.nome, criadoPor: p.criadoPor, coletorId: p.coletorId })));
   }
   // Obter coletores associados aos pontos de coleta do usuário
   getUserAssociatedCollectors() {
