@@ -498,9 +498,123 @@ function abrirFormularioAgendamento(idPonto) {
       if (!horario) {
         formValido = false;
         alert("Selecione um horário para a coleta");
-      }
-      if (formValido) {
-        alert("Agendamento realizado com sucesso!");
+      }      if (formValido) {
+        salvarAgendamento(idPonto, e.target);
       }
     });
+}
+
+// Função para salvar agendamento na API
+async function salvarAgendamento(idPonto, formulario) {
+  try {
+    // Mostrar loading
+    const btnAgendar = formulario.querySelector('.btn-agendar');
+    const textoOriginal = btnAgendar.textContent;
+    btnAgendar.textContent = 'Salvando...';
+    btnAgendar.disabled = true;
+
+    // Coletar dados do formulário
+    const formData = new FormData(formulario);
+    const data = formData.get('data');
+    const horario = formData.get('horario');
+    const materiais = formData.get('materiais').split(',').filter(m => m.trim());
+    
+    // Criar ID único para o agendamento
+    const idAgenda = `agenda-ecoponto${idPonto}-${Date.now()}`;
+      // Criar objeto de agendamento
+    const novoAgendamento = {
+      idAgenda: idAgenda,
+      idUsuarioAgendamento: getCurrentUserId(),
+      coletorId: pontoAtual.coletorId || pontoAtual.criadoPor || null, // Usar coletor associado ao ponto
+      dataHoraInicio: `${data}T${horario}:00`,
+      dataHoraFim: `${data}T${addHour(horario)}:00`,
+      tipo: "entrega_voluntaria",
+      descricao: `Entrega de materiais recicláveis por ${formData.get('nome')}`,
+      status: "agendado",
+      materiais: materiais,
+      contatoResponsavel: formData.get('nome'),
+      observacoes: `Contato: ${formData.get('telefone')} - Email: ${formData.get('email')}`
+    };// Buscar ponto de coleta atual
+    const response = await fetch('http://localhost:3000/api/pontosDeColeta');
+    const pontos = await response.json();
+    const pontoAtual = pontos.find(p => p.id === idPonto);
+    
+    if (!pontoAtual) {
+      throw new Error('Ponto de coleta não encontrado');
+    }
+
+    // Adicionar novo agendamento à agenda do ponto
+    pontoAtual.agenda.push(novoAgendamento);    // Atualizar ponto de coleta na API
+    const updateResponse = await fetch(`http://localhost:3000/api/pontosDeColeta/${idPonto}`, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(pontoAtual)
+    });
+
+    if (!updateResponse.ok) {
+      throw new Error('Erro ao salvar agendamento');
+    }
+
+    // Sucesso - mostrar mensagem e limpar formulário
+    alert('Agendamento realizado com sucesso! Você receberá uma confirmação em breve.');
+    formulario.remove();
+    
+    // Atualizar informações do ponto no painel
+    atualizarInfoPonto(pontoAtual);
+
+  } catch (error) {
+    console.error('Erro ao salvar agendamento:', error);
+    alert('Erro ao realizar agendamento. Tente novamente.');
+  } finally {
+    // Restaurar botão
+    const btnAgendar = formulario.querySelector('.btn-agendar');
+    if (btnAgendar) {
+      btnAgendar.textContent = textoOriginal;
+      btnAgendar.disabled = false;
+    }
+  }
+}
+
+// Função auxiliar para adicionar uma hora
+function addHour(timeString) {
+  const [hours, minutes] = timeString.split(':').map(Number);
+  const newHours = (hours + 1) % 24;
+  return `${newHours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}`;
+}
+
+// Função para obter ID do usuário atual
+function getCurrentUserId() {
+  try {
+    const userData = localStorage.getItem("usuarioLogado");
+    if (userData) {
+      const user = JSON.parse(userData);
+      return user.id;
+    }
+  } catch (error) {
+    console.error('Erro ao obter ID do usuário:', error);
+  }
+  
+  // Fallback para teste - retorna o ID do Samuel
+  return 5;
+}
+
+// Função para atualizar informações do ponto após agendamento
+function atualizarInfoPonto(ponto) {
+  const infoContent = document.querySelector('.info-content');
+  const agendamentosCount = ponto.agenda.filter(a => a.status === 'agendado').length;
+  
+  infoContent.innerHTML = `
+    <h3>${ponto.nome}</h3>
+    <p><strong>Endereço:</strong> ${ponto.endereco}</p>
+    <p><strong>Horário:</strong> ${ponto.horario}</p>
+    <p><strong>Contato:</strong> ${ponto.contato}</p>
+    <p><strong>Materiais aceitos:</strong> ${ponto.materiaisAceitos.join(', ')}</p>
+    <p><strong>Agendamentos pendentes:</strong> ${agendamentosCount}</p>
+    <p><strong>Coleta domiciliar:</strong> ${ponto.coletaDomiciliar ? 'Disponível' : 'Não disponível'}</p>
+    <button class="btn-agendar-novamente" onclick="abrirFormularioAgendamento(${ponto.id})">
+      Agendar Nova Coleta
+    </button>
+  `;
 }

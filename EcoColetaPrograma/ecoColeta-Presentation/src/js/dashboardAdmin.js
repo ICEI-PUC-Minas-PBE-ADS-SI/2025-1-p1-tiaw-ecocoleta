@@ -132,97 +132,96 @@ class DashboardAdmin {
 
     console.log(`Pontos de coleta do usuário ${this.currentUser.nome} (${this.currentUser.tipoUsuario}):`, this.userCollectionPoints.length);
     console.log('Pontos encontrados:', this.userCollectionPoints.map(p => ({ id: p.id, nome: p.nome, criadoPor: p.criadoPor, coletorId: p.coletorId })));
-  }
-  // Obter coletores associados aos pontos de coleta do usuário
-  getUserAssociatedCollectors() {
+  }  // Obter doadores associados aos pontos de coleta do usuário
+  getUserAssociatedDonors() {
     if (!this.currentUser) {
       return [];
     }
 
-    const userCollectorIds = new Set();
-    const userCollectors = [];
-    const collectorAssociations = new Map(); // Para rastrear o tipo de associação
+    const userDonorIds = new Set();
+    const userDonors = [];
+    const donorAssociations = new Map(); // Para rastrear o tipo de associação
 
-    // 1. Verificar coletores diretamente associados aos pontos
+    // 1. Verificar doadores diretamente associados aos pontos
     this.userCollectionPoints.forEach(ponto => {
-      // Coletores específicos associados
-      if (ponto.coletoresAssociados && ponto.coletoresAssociados.length > 0) {
-        ponto.coletoresAssociados.forEach(coletorId => {
-          userCollectorIds.add(coletorId);
-          if (!collectorAssociations.has(coletorId)) {
-            collectorAssociations.set(coletorId, []);
+      // Doadores específicos associados
+      if (ponto.doadoresAssociados && ponto.doadoresAssociados.length > 0) {
+        ponto.doadoresAssociados.forEach(doadorId => {
+          userDonorIds.add(doadorId);
+          if (!donorAssociations.has(doadorId)) {
+            donorAssociations.set(doadorId, []);
           }
-          collectorAssociations.get(coletorId).push(`Associado ao ${ponto.nome}`);
+          donorAssociations.get(doadorId).push(`Associado ao ${ponto.nome}`);
         });
       }
 
-      // Coletor atribuído diretamente ao ponto
-      if (ponto.coletorId) {
-        userCollectorIds.add(ponto.coletorId);
-        if (!collectorAssociations.has(ponto.coletorId)) {
-          collectorAssociations.set(ponto.coletorId, []);
+      // Doador atribuído diretamente ao ponto
+      if (ponto.doadorId) {
+        userDonorIds.add(ponto.doadorId);
+        if (!donorAssociations.has(ponto.doadorId)) {
+          donorAssociations.set(ponto.doadorId, []);
         }
-        collectorAssociations.get(ponto.coletorId).push(`Atribuído ao ${ponto.nome}`);
+        donorAssociations.get(ponto.doadorId).push(`Atribuído ao ${ponto.nome}`);
       }
 
-      // Verificar agendas para coletores que agendaram coletas
+      // Verificar agendas para doadores que agendaram doações
       if (ponto.agenda && ponto.agenda.length > 0) {
         ponto.agenda.forEach(agenda => {
-          if (agenda.coletorId) {
-            userCollectorIds.add(agenda.coletorId);
-            if (!collectorAssociations.has(agenda.coletorId)) {
-              collectorAssociations.set(agenda.coletorId, []);
+          if (agenda.doadorId) {
+            userDonorIds.add(agenda.doadorId);
+            if (!donorAssociations.has(agenda.doadorId)) {
+              donorAssociations.set(agenda.doadorId, []);
             }
-            collectorAssociations.get(agenda.coletorId).push(`Agendamento em ${ponto.nome}`);
+            donorAssociations.get(agenda.doadorId).push(`Agendamento em ${ponto.nome}`);
           }
         });
       }
     });
 
-    // 2. Buscar coletores por cidade/região (incluindo todos os coletores de Betim)
+    // 2. Buscar doadores por cidade/região (incluindo todos os doadores de Betim)
     const userCities = [...new Set(this.userCollectionPoints.map(p => p.cidade || 'Betim'))];
     userCities.push('Betim'); // Garantir que Betim esteja incluído
     
-    this.usuarios.filter(u => u.tipoUsuario === 'coletor').forEach(coletor => {
-      if (userCities.includes(coletor.cidade)) {
-        userCollectorIds.add(coletor.id);
-        if (!collectorAssociations.has(coletor.id)) {
-          collectorAssociations.set(coletor.id, []);
+    this.usuarios.filter(u => u.tipoUsuario === 'doador').forEach(doador => {
+      if (userCities.includes(doador.cidade)) {
+        userDonorIds.add(doador.id);
+        if (!donorAssociations.has(doador.id)) {
+          donorAssociations.set(doador.id, []);
         }
-        collectorAssociations.get(coletor.id).push(`Atende região: ${coletor.cidade}`);
+        donorAssociations.get(doador.id).push(`Atende região: ${doador.cidade}`);
       }
     });
 
-    // 3. Garantir que coletores específicos sejam incluídos (Samuel e Matheus)
-    const priorityCollectors = [
+    // 3. Garantir que doadores específicos sejam incluídos (Samuel e Matheus)
+    const priorityDonors = [
       'samuelsilvamaciel02@gmail.com',
       'matheusaagd298765@gmail.com'
     ];
     
-    this.usuarios.filter(u => u.tipoUsuario === 'coletor').forEach(coletor => {
-      if (priorityCollectors.includes(coletor.email)) {
-        userCollectorIds.add(coletor.id);
-        if (!collectorAssociations.has(coletor.id)) {
-          collectorAssociations.set(coletor.id, []);
+    this.usuarios.filter(u => u.tipoUsuario === 'doador').forEach(doador => {
+      if (priorityDonors.includes(doador.email)) {
+        userDonorIds.add(doador.id);
+        if (!donorAssociations.has(doador.id)) {
+          donorAssociations.set(doador.id, []);
         }
-        collectorAssociations.get(coletor.id).push('Coletor ativo na região');
+        donorAssociations.get(doador.id).push('Doador ativo na região');
       }
     });
 
-    // 4. Obter dados completos dos coletores com informações de associação
-    userCollectorIds.forEach(coletorId => {
-      const coletor = this.usuarios.find(u => u.id === coletorId);
-      if (coletor) {
-        userCollectors.push({
-          ...coletor,
-          associationInfo: collectorAssociations.get(coletorId) || []
+    // 4. Obter dados completos dos doadores com informações de associação
+    userDonorIds.forEach(doadorId => {
+      const doador = this.usuarios.find(u => u.id === doadorId);
+      if (doador) {
+        userDonors.push({
+          ...doador,
+          associationInfo: donorAssociations.get(doadorId) || []
         });
       }
     });
 
-    console.log(`Coletores associados aos pontos do usuário:`, userCollectors.length);
-    console.log('Coletores encontrados:', userCollectors.map(c => ({ nome: c.nome, email: c.email, associacoes: c.associationInfo })));
-    return userCollectors;
+    console.log(`Doadores associados aos pontos do usuário:`, userDonors.length);
+    console.log('Doadores encontrados:', userDonors.map(c => ({ nome: c.nome, email: c.email, associacoes: c.associationInfo })));
+    return userDonors;
   }
 
   // Carregar todas as agendas dos pontos de coleta do usuário
@@ -244,11 +243,9 @@ class DashboardAdmin {
 
     console.log(`Total de agendas do usuário:`, this.userAgendas.length);
   }
-
   // Cálculo de estatísticas
   calculateStats() {
     const totalPontosColeta = this.pontosDeColeta.length;
-    const totalColetores = this.usuarios.filter(u => u.tipoUsuario === 'coletor').length;
     const totalDoadores = this.usuarios.filter(u => u.tipoUsuario === 'doador').length;
     const totalDonations = this.donations.length;
     
@@ -261,7 +258,6 @@ class DashboardAdmin {
 
     return {
       totalPontosColeta,
-      totalColetores,
       totalDoadores,
       totalDonations,
       coletasFeitas,
@@ -276,7 +272,7 @@ class DashboardAdmin {
     
     // Atualizar cards principais
     this.updateCard('total-pontos', stats.totalPontosColeta);
-    this.updateCard('total-coletores', stats.totalColetores);
+    this.updateCard('total-doadores', stats.totalDoadores);
     this.updateCard('coletas-feitas', stats.coletasFeitas);
     this.updateCard('coletas-pendentes', stats.coletasPendentes);
 
@@ -424,9 +420,8 @@ class DashboardAdmin {
 
   // Renderização das listas dinâmicas
   renderDynamicLists() {
-    this.renderPontosAtivosList();
-    this.renderColetoresList();
-    this.renderColetoresPerformance();
+    this.renderPontosAtivosList();    this.renderDoadoresList();
+    this.renderDoadoresAgendamentos();
   }
 
   renderPontosAtivosList() {
@@ -459,99 +454,97 @@ class DashboardAdmin {
       </div>
     `).join('');
 
-    container.innerHTML = listHTML;
-  }  renderColetoresList() {
-    const container = document.getElementById('coletores-list');
+    container.innerHTML = listHTML;  }  renderDoadoresList() {
+    const container = document.getElementById('doadores-list');
     if (!container) return;
 
-    // Obter coletores associados aos pontos de coleta do usuário logado
-    const coletoresAssociados = this.getUserAssociatedCollectors();
+    // Obter doadores associados aos pontos de coleta do usuário logado
+    const doadoresAssociados = this.getUserAssociatedDonors();
     
-    if (coletoresAssociados.length === 0) {
+    if (doadoresAssociados.length === 0) {
       container.innerHTML = `
         <div class="empty-state">
           <div class="empty-icon">👥</div>
-          <h3>Nenhum coletor encontrado</h3>
-          <p>Ainda não há coletores disponíveis para seus pontos de coleta.</p>
+          <h3>Nenhum doador encontrado</h3>
+          <p>Ainda não há doadores disponíveis para seus pontos de coleta.</p>
         </div>
       `;
       return;
     }
 
-    const listHTML = coletoresAssociados.map(coletor => {
-      // Calcular estatísticas baseadas nos pontos do usuário
-      const coletasRealizadas = this.calculateCollectorStats(coletor);
-      const statusAtivo = this.isCollectorActive(coletor);
-      const ultimaColeta = this.getLastCollectionDate(coletor);
+    const listHTML = doadoresAssociados.map(doador => {      // Calcular estatísticas baseadas nos pontos do usuário
+      const doacoesRealizadas = this.calculateDonorStats(doador);
+      const statusAtivo = this.isDonorActive(doador);
+      const ultimaDoacao = this.getLastDonationDate(doador);
       
-      // Determinar se é um coletor prioritário
-      const isPriority = ['samuelsilvamaciel02@gmail.com', 'matheusaagd298765@gmail.com'].includes(coletor.email);
+      // Determinar se é um doador prioritário
+      const isPriority = ['samuelsilvamaciel02@gmail.com', 'matheusaagd298765@gmail.com'].includes(doador.email);
       
       return `
-        <div class="collector-item ${isPriority ? 'priority-collector' : ''}">
-          <div class="collector-avatar">
-            <img src="${coletor.imagem || 'https://placehold.co/50'}" alt="${coletor.nome}">
+        <div class="donor-item ${isPriority ? 'priority-donor' : ''}">
+          <div class="donor-avatar">
+            <img src="${doador.imagem || 'https://placehold.co/50'}" alt="${doador.nome}">
             <div class="status-indicator ${statusAtivo ? 'active' : 'inactive'}"></div>
             ${isPriority ? '<div class="priority-badge">⭐</div>' : ''}
           </div>
-          <div class="collector-info">
-            <div class="collector-header">
-              <span class="collector-name">${coletor.nome}${isPriority ? ' (Coletor Verificado)' : ''}</span>
-              <span class="collector-status ${statusAtivo ? 'active' : 'inactive'}">
+          <div class="donor-info">
+            <div class="donor-header">
+              <span class="donor-name">${doador.nome}${isPriority ? ' (Doador Verificado)' : ''}</span>
+              <span class="donor-status ${statusAtivo ? 'active' : 'inactive'}">
                 ${statusAtivo ? '✅ Ativo' : '⏸️ Inativo'}
               </span>
             </div>
-            <div class="collector-details">
+            <div class="donor-details">
               <div class="detail-item">
                 <span class="label">📧 Email:</span>
-                <span class="value">${coletor.email}</span>
+                <span class="value">${doador.email}</span>
               </div>
               <div class="detail-item">
                 <span class="label">📱 Telefone:</span>
-                <span class="value">${coletor.telefone || 'Não informado'}</span>
+                <span class="value">${doador.telefone || 'Não informado'}</span>
               </div>
               <div class="detail-item">
-                <span class="label">♻️ Coletas:</span>
-                <span class="value">${coletasRealizadas} realizadas</span>
+                <span class="label">🎁 Doações:</span>
+                <span class="value">${doacoesRealizadas} realizadas</span>
               </div>
               <div class="detail-item">
-                <span class="label">📅 Última coleta:</span>
-                <span class="value">${ultimaColeta}</span>
+                <span class="label">📅 Última doação:</span>
+                <span class="value">${ultimaDoacao}</span>
               </div>
-              ${coletor.areaAtuacao ? `
+              ${doador.areaAtuacao ? `
                 <div class="detail-item">
                   <span class="label">📍 Área de Atuação:</span>
-                  <span class="value">${coletor.areaAtuacao}</span>
+                  <span class="value">${doador.areaAtuacao}</span>
                 </div>
               ` : ''}
-              ${coletor.horarioColeta ? `
+              ${doador.horarioColeta ? `
                 <div class="detail-item">
                   <span class="label">🕒 Horário:</span>
-                  <span class="value">${coletor.horarioColeta}</span>
+                  <span class="value">${doador.horarioColeta}</span>
                 </div>
               ` : ''}
-              ${coletor.materiaisColeta ? `
+              ${doador.materiaisColeta ? `
                 <div class="detail-item">
                   <span class="label">🏷️ Materiais:</span>
-                  <span class="value">${coletor.materiaisColeta.join(', ')}</span>
+                  <span class="value">${doador.materiaisColeta.join(', ')}</span>
                 </div>
               ` : ''}
-              ${coletor.associationInfo && coletor.associationInfo.length > 0 ? `
+              ${doador.associationInfo && doador.associationInfo.length > 0 ? `
                 <div class="detail-item">
                   <span class="label">🔗 Associação:</span>
-                  <span class="value">${coletor.associationInfo.join(', ')}</span>
+                  <span class="value">${doador.associationInfo.join(', ')}</span>
                 </div>
               ` : ''}
             </div>
           </div>
-          <div class="collector-actions">
-            <button class="btn-small btn-primary" onclick="window.open('tel:${coletor.telefone}')">
+          <div class="donor-actions">
+            <button class="btn-small btn-primary" onclick="window.open('tel:${doador.telefone}')">
               📞 Ligar
             </button>
-            <button class="btn-small btn-secondary" onclick="window.open('mailto:${coletor.email}')">
+            <button class="btn-small btn-secondary" onclick="window.open('mailto:${doador.email}')">
               ✉️ Email
             </button>
-            <button class="btn-small btn-info" onclick="window.dashboardAdmin.viewCollectorDetails(${coletor.id})">
+            <button class="btn-small btn-info" onclick="window.dashboardAdmin.viewDonorDetails(${doador.id})">
               👁️ Detalhes
             </button>
           </div>
@@ -561,26 +554,24 @@ class DashboardAdmin {
 
     container.innerHTML = listHTML;
   }
-
-  // Calcular estatísticas do coletor baseado nos pontos do usuário
-  calculateCollectorStats(coletor) {
-    // Simular coletas baseado nos pontos de coleta do usuário
+  // Calcular estatísticas do doador baseado nos pontos do usuário
+  calculateDonorStats(doador) {
+    // Simular doações baseado nos pontos de coleta do usuário
     const pontosAssociados = this.userCollectionPoints.filter(ponto => {
-      return ponto.cidade === coletor.cidade || 
-             (ponto.coletoresAssociados && ponto.coletoresAssociados.includes(coletor.id));
+      return ponto.cidade === doador.cidade || 
+             (ponto.doadoresAssociados && ponto.doadoresAssociados.includes(doador.id));
     });
     
-    // Base de coletas: 5-15 por ponto de coleta
+    // Base de doações: 5-15 por ponto de coleta
     return pontosAssociados.length * (Math.floor(Math.random() * 10) + 5);
   }
-
-  // Verificar se o coletor está ativo
-  isCollectorActive(coletor) {
+  // Verificar se o doador está ativo
+  isDonorActive(doador) {
     // Simular status baseado na última atividade
     return Math.random() > 0.2; // 80% chance de estar ativo
   }
-  // Obter data da última coleta
-  getLastCollectionDate(coletor) {
+  // Obter data da última doação
+  getLastDonationDate(doador) {
     const daysAgo = Math.floor(Math.random() * 30) + 1;
     const lastDate = new Date();
     lastDate.setDate(lastDate.getDate() - daysAgo);
@@ -1629,57 +1620,105 @@ class DashboardAdmin {
     }).join('');
 
     container.innerHTML = pointsHTML;
-  }
-
-  // Renderizar performance dos coletores
-  renderColetoresPerformance() {
-    const container = document.getElementById('coletores-performance-list');
+  }  // Renderizar agendamentos dos doadores
+  renderDoadoresAgendamentos() {
+    const container = document.getElementById('doadores-agendamentos-list');
     if (!container) return;
 
-    const coletoresAssociados = this.getUserAssociatedCollectors();
+    // Obter todos os agendamentos dos pontos de coleta do usuário
+    const agendamentosDoadores = [];
     
-    if (coletoresAssociados.length === 0) {
+    this.userCollectionPoints.forEach(ponto => {
+      if (ponto.agenda && ponto.agenda.length > 0) {
+        ponto.agenda.forEach(agenda => {
+          // Buscar dados do doador que fez o agendamento
+          const doador = this.usuarios.find(u => u.id === agenda.idUsuarioAgendamento);
+          if (doador && doador.tipoUsuario === 'doador') {
+            agendamentosDoadores.push({
+              ...agenda,
+              doadorNome: doador.nome,
+              doadorEmail: doador.email,
+              doadorTelefone: doador.telefone || 'Não informado',
+              pontoNome: ponto.nome,
+              pontoId: ponto.id
+            });
+          }
+        });
+      }
+    });
+    
+    if (agendamentosDoadores.length === 0) {
       container.innerHTML = `
         <div class="empty-state-small">
-          <p>Nenhum coletor associado encontrado</p>
+          <div class="empty-icon">📅</div>
+          <p>Nenhum agendamento de doadores encontrado</p>
+          <small>Aguarde doadores agendarem coletas em seus pontos</small>
         </div>
       `;
       return;
     }
 
-    // Ordenar coletores por performance (coletas realizadas)
-    const coletoresComStats = coletoresAssociados.map(coletor => ({
-      ...coletor,
-      coletas: this.calculateCollectorStats(coletor),
-      status: this.isCollectorActive(coletor)
-    })).sort((a, b) => b.coletas - a.coletas);
+    // Ordenar por data mais recente
+    agendamentosDoadores.sort((a, b) => new Date(b.dataHoraInicio) - new Date(a.dataHoraInicio));
 
-    const performanceHTML = coletoresComStats.slice(0, 5).map((coletor, index) => {
-      const rank = index + 1;
-      const percentage = Math.round((coletor.coletas / coletoresComStats[0].coletas) * 100);
+    // Exibir apenas os 5 mais recentes
+    const agendamentosHTML = agendamentosDoadores.slice(0, 5).map((agendamento, index) => {
+      const dataAgendamento = new Date(agendamento.dataHoraInicio);
+      const dataFormatada = dataAgendamento.toLocaleDateString('pt-BR');
+      const horaFormatada = dataAgendamento.toLocaleTimeString('pt-BR', {hour: '2-digit', minute: '2-digit'});
+      
+      const statusClass = agendamento.status.toLowerCase();
+      const statusText = this.getStatusText(agendamento.status);
       
       return `
-        <div class="performance-item">
-          <div class="performance-rank">#${rank}</div>
-          <div class="performance-info">
-            <div class="performance-header">
-              <span class="performance-name">${coletor.nome}</span>
-              <span class="performance-value">${coletor.coletas} coletas</span>
+        <div class="agendamento-item ${statusClass}">
+          <div class="agendamento-header">
+            <div class="doador-info">
+              <div class="doador-avatar">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M20 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/>
+                  <circle cx="9" cy="7" r="4"/>
+                </svg>
+              </div>
+              <div class="doador-details">
+                <span class="doador-nome">${agendamento.doadorNome}</span>
+                <span class="agendamento-ponto">${agendamento.pontoNome}</span>
+              </div>
             </div>
-            <div class="performance-bar">
-              <div class="performance-fill" style="width: ${percentage}%"></div>
+            <span class="agendamento-status ${statusClass}">${statusText}</span>
+          </div>
+          <div class="agendamento-info">
+            <div class="agendamento-data">
+              <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="12" cy="12" r="10"/>
+                <polyline points="12,6 12,12 16,14"/>
+              </svg>
+              ${dataFormatada} às ${horaFormatada}
             </div>
-            <div class="performance-details">
-              <span class="performance-status ${coletor.status ? 'active' : 'inactive'}">
-                ${coletor.status ? '🟢 Ativo' : '🔴 Inativo'}
-              </span>
+            <div class="materiais-agendamento">
+              ${agendamento.materiais ? agendamento.materiais.map(material => 
+                `<span class="material-tag">${material}</span>`
+              ).join('') : ''}
             </div>
+          </div>
+          <div class="agendamento-actions">
+            <button class="btn-small btn-info" onclick="window.dashboardAdmin.viewAgendaDetails(${agendamento.idAgenda})" title="Ver detalhes">
+              👁️
+            </button>
+            <button class="btn-small btn-secondary" onclick="window.open('tel:${agendamento.doadorTelefone}')" title="Ligar para doador">
+              📞
+            </button>
+            <button class="btn-small btn-primary" onclick="window.open('mailto:${agendamento.doadorEmail}')" title="Enviar email">
+              ✉️
+            </button>
           </div>
         </div>
       `;
     }).join('');
 
-    container.innerHTML = performanceHTML;
+    container.innerHTML = agendamentosHTML;
+    
+    console.log(`Renderizados ${agendamentosDoadores.length} agendamentos de doadores`);
   }
 
   // Renderizar legenda dinâmica do gráfico de performance

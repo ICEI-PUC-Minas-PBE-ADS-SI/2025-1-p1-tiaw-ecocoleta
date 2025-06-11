@@ -1956,7 +1956,7 @@ textarea:hover {
   border: 1px solid rgba(239, 68, 68, 0.2);
 }
 
-/* Collectors List - Lista de Coletores */
+/* Donors List - Lista de Doadores */
 .collectors-list .collector-item {
   display: flex;
   align-items: center;
@@ -2076,8 +2076,8 @@ textarea:hover {
   color: var(--color-gray-700);
 }
 
-/* Performance List - Coletores Performance */
-.coletores-performance .performance-item {
+/* Performance List - Doadores Performance */
+.doadores-performance .performance-item {
   border-left: 4px solid var(--color-primary);
   position: relative;
 }
@@ -2708,6 +2708,203 @@ textarea:hover {
 .modal .checkbox-group input[type="checkbox"] {
   width: auto;
   margin: 0;
+}
+
+/* Estilos para agendamentos de doadores */
+.agendamento-item {
+  background: var(--color-white);
+  border: 1px solid var(--color-gray-200);
+  border-radius: var(--border-radius-md);
+  padding: 1rem;
+  margin-bottom: 0.75rem;
+  transition: all var(--transition-base);
+  box-shadow: var(--shadow-sm);
+}
+
+.agendamento-item:hover {
+  box-shadow: var(--shadow-md);
+  transform: translateY(-1px);
+}
+
+.agendamento-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 0.75rem;
+}
+
+.doador-info {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.doador-avatar {
+  width: 2.5rem;
+  height: 2.5rem;
+  background: var(--gradient-primary);
+  border-radius: var(--border-radius-full);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--color-white);
+  flex-shrink: 0;
+}
+
+.doador-details {
+  display: flex;
+  flex-direction: column;
+}
+
+.doador-nome {
+  font-weight: 600;
+  color: var(--color-gray-900);
+  font-size: 0.9rem;
+}
+
+.agendamento-ponto {
+  font-size: 0.8rem;
+  color: var(--color-gray-600);
+}
+
+.agendamento-status {
+  padding: 0.25rem 0.75rem;
+  border-radius: var(--border-radius-full);
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.agendamento-status.agendado {
+  background: rgba(59, 130, 246, 0.1);
+  color: var(--color-blue);
+}
+
+.agendamento-status.confirmado {
+  background: rgba(16, 185, 129, 0.1);
+  color: var(--color-green);
+}
+
+.agendamento-status.concluido {
+  background: rgba(34, 197, 94, 0.1);
+  color: #16a34a;
+}
+
+.agendamento-status.cancelado {
+  background: rgba(239, 68, 68, 0.1);
+  color: var(--color-red);
+}
+
+.agendamento-status.em-andamento {
+  background: rgba(245, 158, 11, 0.1);
+  color: var(--color-yellow);
+}
+
+.agendamento-info {
+  margin-bottom: 1rem;
+}
+
+.agendamento-data {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.85rem;
+  color: var(--color-gray-700);
+  margin-bottom: 0.5rem;
+}
+
+.agendamento-data svg {
+  color: var(--color-gray-500);
+}
+
+.materiais-agendamento {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.25rem;
+}
+
+.material-tag {
+  background: var(--color-gray-100);
+  color: var(--color-gray-700);
+  padding: 0.125rem 0.5rem;
+  border-radius: var(--border-radius);
+  font-size: 0.75rem;
+  font-weight: 500;
+}
+
+.agendamento-actions {
+  display: flex;
+  gap: 0.5rem;
+  justify-content: flex-end;
+}
+
+.btn-small {
+  padding: 0.375rem 0.75rem;
+  border: none;
+  border-radius: var(--border-radius);
+  font-size: 0.75rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all var(--transition-base);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
+  min-width: 2rem;
+}
+
+.btn-small:hover {
+  transform: translateY(-1px);
+  box-shadow: var(--shadow);
+}
+
+.btn-info {
+  background: rgba(59, 130, 246, 0.1);
+  color: var(--color-blue);
+}
+
+.btn-info:hover {
+  background: rgba(59, 130, 246, 0.2);
+}
+
+.btn-secondary {
+  background: var(--color-gray-100);
+  color: var(--color-gray-700);
+}
+
+.btn-secondary:hover {
+  background: var(--color-gray-200);
+}
+
+.btn-primary {
+  background: var(--gradient-primary);
+  color: var(--color-white);
+}
+
+.btn-primary:hover {
+  background: var(--color-primary-dark);
+}
+
+.empty-state-small {
+  text-align: center;
+  padding: 2rem 1rem;
+  color: var(--color-gray-500);
+}
+
+.empty-icon {
+  font-size: 2rem;
+  margin-bottom: 0.5rem;
+}
+
+.empty-state-small p {
+  font-weight: 500;
+  margin-bottom: 0.25rem;
+}
+
+.empty-state-small small {
+  font-size: 0.8rem;
+  color: var(--color-gray-400);
 }
 
 
