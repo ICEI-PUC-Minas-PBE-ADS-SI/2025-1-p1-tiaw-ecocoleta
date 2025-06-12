@@ -485,13 +485,14 @@ body.dark-mode .community-card {
   box-shadow: 0 2px 8px 0 #14161833 !important;
 }
 body.dark-mode .historia-card {
-  background: #26292f !important;
+  background: linear-gradient(135deg, #23272e 0%, #23272e 100%) !important;
   color: #e3e6eb !important;
-  border-color: #2f3237 !important;
+  border-radius: 16px !important;
+  border: 1px solid #30343a !important;
   box-shadow: 0 2px 8px 0 #181a1b33 !important;
 }
 body.dark-mode .historia-card-content {
-  background: #292c31 !important;
+  background: transparent !important;
 }
 body.dark-mode .buscar-comunidade {
   background: #1e2126 !important;
@@ -510,10 +511,10 @@ body.dark-mode .pontos-contribuinte {
   color: #b5bac1 !important;
 }
 body.dark-mode .historia-card h3 {
-  color: #b5bac1 !important;
+  color: #10b981 !important;
 }
 body.dark-mode .historia-card p {
-  color: #b5bac1 !important;
+  color: #e3e6eb !important;
 }
 body.dark-mode .autor {
   background: #23272e !important;
@@ -568,30 +569,78 @@ body.dark-mode .form-textarea::placeholder {
 }
 body.dark-mode .footer,
 body.dark-mode footer {
-  background: #23272e !important;
+  background: none !important;
+  color: inherit !important;
+  border: none !important;
+}
+
+/* --- AJUSTES DARK MODE: TÍTULOS, EVENTOS, CONTRIBUINTES, FOOTER --- */
+body.dark-mode h2, body.dark-mode .section-header h2 {
   color: #e3e6eb !important;
+  text-shadow: 0 1px 2px #181a1b55;
 }
-body.dark-mode .footer-links a {
-  color: #b5bac1 !important;
+
+body.dark-mode .eventos-container {
+  background: #23272e !important;
 }
-body.dark-mode .footer-links a:hover {
+body.dark-mode .evento-card {
+  background: linear-gradient(135deg, #23272e 0%, #23272e 100%) !important;
+  border: 1px solid #30343a !important;
+  box-shadow: 0 2px 8px 0 #181a1b33 !important;
+}
+body.dark-mode .evento-info {
+  background: transparent !important;
+}
+body.dark-mode .evento-titulo {
   color: #10b981 !important;
 }
-body.dark-mode .footer-social-icons a {
-  background: #26292f !important;
+body.dark-mode .evento-descricao {
   color: #e3e6eb !important;
 }
-body.dark-mode .footer-social-icons a:hover {
-  background: #10b981 !important;
-  color: #fff !important;
-}
-body.dark-mode .community-title,
-body.dark-mode .community-description,
-body.dark-mode .form-label,
-body.dark-mode .form-check-label,
-body.dark-mode .form-actions {
+body.dark-mode .evento-detalhes {
   color: #b5bac1 !important;
 }
+body.dark-mode .evento-autor-footer {
+  background: #1e2126 !important;
+  border-top: 1px solid #30343a !important;
+}
+body.dark-mode .evento-autor-nome {
+  color: #10b981 !important;
+}
+body.dark-mode .evento-autor-img {
+  background: #23272e !important;
+  border: 2px solid #10b98133 !important;
+}
+
+body.dark-mode .contribuintes-container {
+  background: none !important;
+  box-shadow: none !important;
+}
+body.dark-mode .contribuinte {
+  background: linear-gradient(135deg, #23272e 0%, #23272e 100%) !important;
+  border-radius: 16px !important;
+  box-shadow: 0 2px 8px 0 #181a1b33 !important;
+  border: 1px solid #30343a !important;
+}
+body.dark-mode .contribuinte img {
+  border: 2px solid #10b98155 !important;
+  background: #181a1b !important;
+}
+body.dark-mode .nome-contribuinte {
+  color: #10b981 !important;
+}
+body.dark-mode .pontos-contribuinte {
+  color: #b5bac1 !important;
+}
+
+/* Footer: deixe o controle do visual para navFooter.css, não defina background aqui! */
+body.dark-mode .footer,
+body.dark-mode footer {
+  background: none !important;
+  color: inherit !important;
+  border: none !important;
+}
+
 /* Remover animações de fade no dark mode */
 body.dark-mode .community-card,
 body.dark-mode .btn,
@@ -641,4 +690,22 @@ body.dark-mode .nao-usado {
   color: #222;
   overflow: visible;
   background: none;
+}
+body.dark-mode .autor-card-footer {
+  background: #1e2126 !important;
+  border-top: 1px solid #30343a !important;
+  color: #e3e6eb !important;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  box-sizing: border-box;
+  z-index: 2;
+}
+body.dark-mode .autor-card-footer img {
+  background: #23272e !important;
+  border: 2px solid #10b98133 !important;
+}
+body.dark-mode .autor-card-footer span {
+  color: #10b981 !important;
 }

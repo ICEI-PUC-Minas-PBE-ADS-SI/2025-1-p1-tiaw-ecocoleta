@@ -58,7 +58,7 @@
       "tipoUsuario": "doador",
       "ecopontos": 700,
       "historicoEcopontos": 0,
-      "senha": "ScrumMaster@123",
+      "senha": "123",
       "imagem": "assets/img/AvatarKauan.jpg",
       "emailVerificado": false,
       "id": 4
@@ -1127,32 +1127,6 @@
         "comunidade"
       ],
       "id": 4
-    },
-    {
-      "nome": "Arthuzinho Rei Delas",
-      "descricao": "qwertyukliuytrgdeswartyuilkjhgqwertyukliuytrgdeswartyuilkjhg",
-      "tipo": "cultura",
-      "regras": "qwertyukliuytrgdeswartyuilkjhg",
-      "banner": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAKEAAABrCAYAAAAfIuJkAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAEtSURBVHhe7dIxAYAwEMDAp/4FA0u71EOWuyUG8rzfvwdC6xYyJiRnQnImJGdCciYkZ0JyJiRnQnImJGdCciYkZ0JyJiRnQnImJGdCciYkZ0JyJiRnQnImJGdCciYkZ0JyJiRnQnImJGdCciYkZ0JyJiRnQnImJGdCciYkZ0JyJiRnQnImJGdCciYkZ0JyJiRnQnImJGdCciYkZ0JyJiRnQnImJGdCciYkZ0JyJiRnQnImJGdCciYkZ0JyJiRnQnImJGdCciYkZ0JyJiRnQnImJGdCciYkZ0JyJiRnQnImJGdCciYkZ0JyJiRnQnImJGdCciYkZ0JyJiRnQnImJGdCciYkZ0JyJiRnQnImJGdCciYkZ0JyJiRnQnImJGdCciYkZ0JyJiRnQnImJDZzACdlBMD+sbJEAAAAAElFTkSuQmCC",
-      "autor": {
-        "id": 4,
-        "nome": "kauan gomes marques",
-        "email": "kayangomes849@gmail.com",
-        "foto": "assets/img/AvatarKauan.jpg"
-      },
-      "dataCriacao": "2025-06-04T01:21:27.927Z",
-      "status": "ativa",
-      "membros": [
-        4
-      ],
-      "curtidas": 0,
-      "comentarios": [],
-      "visualizacoes": 0,
-      "tags": [
-        "cultura",
-        "comunidade"
-      ],
-      "id": 5
     }
   ],
   "eventos": [

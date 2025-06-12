@@ -879,3 +879,18 @@ body.dark-mode .footer-links a {
 body.dark-mode .footer-links a:hover {
   color: #10b981 !important;
 }
+body.dark-mode .footer-content {
+  background: transparent !important;
+  color: #f3f4f6 !important;
+  box-shadow: none !important;
+}
+body.dark-mode .footer-logo h3,
+body.dark-mode .link-group h4 {
+  color: #f3f4f6 !important;
+}
+body.dark-mode .footer-links {
+  background: transparent !important;
+}
+body.dark-mode .footer-logo p {
+  color: #b5bac1 !important;
+}
