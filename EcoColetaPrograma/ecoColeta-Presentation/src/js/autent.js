@@ -286,8 +286,9 @@ document.addEventListener("DOMContentLoaded", function () {
           id: usuario.id,
           nome: usuario.nome,
           email: usuario.email,
+          tipoUsuario: usuario.admin === true ? 'admin' : usuario.tipoUsuario,
           imagem: usuario.imagem,
-          provider: userData.provider,
+          admin: usuario.admin
         })
       );
 
@@ -332,6 +333,8 @@ document.addEventListener("DOMContentLoaded", function () {
           id: usuario.id,
           nome: usuario.nome,
           email: usuario.email,
+          tipoUsuario: usuario.admin === true ? 'admin' : usuario.tipoUsuario,
+          imagem: usuario.imagem,
         })
       );
       window.location.href = "perfil.html";
@@ -421,8 +424,9 @@ document.addEventListener("DOMContentLoaded", function () {
               id: novoUsuario.id,
               nome: novoUsuario.nome,
               email: novoUsuario.email,
-              tipoUsuario: novoUsuario.tipoUsuario,
+              tipoUsuario: novoUsuario.admin === true ? 'admin' : novoUsuario.tipoUsuario,
               imagem: novoUsuario.imagem || "",
+              admin: novoUsuario.admin
             })
           );
 

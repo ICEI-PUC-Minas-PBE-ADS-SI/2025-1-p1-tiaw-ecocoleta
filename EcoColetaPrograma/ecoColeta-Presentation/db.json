@@ -11,20 +11,19 @@
       "dataNascimento": "1990-01-01",
       "tipoUsuario": "doador",
       "ecopontos": 100000000000,
-      "historicoEcopontos": 0,
       "imagem": "https://cdn.builder.io/api/v1/image/assets/4c6f6ec200514327a30a7409483092ac/0f6c0c0c0c0c0c0c0c0c0c0c0c0c0c0c0c0c0c0c"
     },
     {
       "nome": "Matheus Augusto",
       "email": "matheusaagd2@gmail.com",
+      "admin": true,
       "telefone": "(31) 99065-1262",
       "cep": "32606-044",
       "endereco": "Rua Amapá, Novo Horizonte",
       "cidade": "Betim",
       "estado": "MG",
       "tipoUsuario": "coletor",
-      "ecopontos": 100000,
-      "historicoEcopontos": 0,
+      "ecopontos": 25900,
       "senha": "2603Betim#2",
       "imagem": "assets/img/AvatarScrollMaster.jpg",
       "emailVerificado": false,
@@ -34,6 +33,7 @@
     {
       "nome": "Matheus Augusto",
       "email": "matheusaagd22@gmail.com",
+      "admin": true,
       "telefone": "(31) 99065-1262",
       "cep": "32606-044",
       "endereco": "Rua Amapá, Novo Horizonte",
@@ -41,7 +41,6 @@
       "estado": "MG",
       "tipoUsuario": "coletor",
       "ecopontos": 100000,
-      "historicoEcopontos": 0,
       "senha": "2603Betim#2",
       "imagem": "https://cdn.builder.io/api/v1/image/assets/4c6f6ec200514327a30a7409483092ac/7c3b0c0c0c0c0c0c0c0c0c0c0c0c0c0c0c0c0c0c",
       "emailVerificado": false,
@@ -50,14 +49,14 @@
     {
       "nome": "kauan gomes marques",
       "email": "kayangomes849@gmail.com",
+      "admin": true,
       "telefone": "(31) 97170-7010",
       "cep": "32450-000",
       "endereco": "Alameda Beija Flor 113",
       "cidade": "Sarzedo",
       "estado": "MG",
       "tipoUsuario": "doador",
-      "ecopontos": 700,
-      "historicoEcopontos": 0,
+      "ecopontos": 170,
       "senha": "ScrumMaster@123",
       "imagem": "assets/img/AvatarKauan.jpg",
       "emailVerificado": false,
@@ -73,7 +72,6 @@
       "estado": "MG",
       "tipoUsuario": "doador",
       "ecopontos": 0,
-      "historicoEcopontos": 0,
       "senha": "Samuca02.",
       "imagem": "assets/img/AvatarScrollMaster.jpg",
       "emailVerificado": false,
@@ -90,7 +88,6 @@
       "estado": "MG",
       "tipoUsuario": "coletor",
       "ecopontos": 0,
-      "historicoEcopontos": 0,
       "senha": "12345678910",
       "imagem": "assets/img/AvatarScrollMaster.jpg",
       "emailVerificado": false,
@@ -116,7 +113,6 @@
       "estado": "MG",
       "tipoUsuario": "coletor",
       "ecopontos": 0,
-      "historicoEcopontos": 0,
       "razaoSocial": "Organização EcoColeta",
       "cnpj": "87.654.677/6565-55",
       "areaAtuacao": "comercial",
@@ -139,7 +135,6 @@
       "email": "teste.cors.1748391441533@ecocoleta.com",
       "tipoUsuario": "doador",
       "ecopontos": 0,
-      "historicoEcopontos": 0,
       "telefone": "(31) 99999-9999",
       "endereco": "Rua de Teste, 123 - CORS City",
       "id": 8
@@ -164,7 +159,6 @@
       "estado": "MG",
       "tipoUsuario": "coletor",
       "ecopontos": 0,
-      "historicoEcopontos": 0,
       "razaoSocial": "quero mudar o mundo",
       "cnpj": "12345678999",
       "areaAtuacao": "residencial",
@@ -227,6 +221,20 @@
       "dataCadastro": "2025-06-05T00:14:36.995Z",
       "id": 12,
       "ecopontoId": 33
+    },
+    {
+      "nome": "Ronaldo Augusto Oliveira Lacerda",
+      "email": "ro.augustolacerda@gmail.com",
+      "telefone": "(31) 97353-4463",
+      "cep": "32604-610",
+      "endereco": "Rua Maria dos Anjos Ribeiro de Jesus, Senhora das Graças",
+      "cidade": "Betim",
+      "estado": "MG",
+      "tipoUsuario": null,
+      "senha": "kauan147",
+      "imagem": "assets/img/AvatarArthurzin.jpg",
+      "emailVerificado": false,
+      "id": 13
     }
   ],
   "pontosDeColeta": [
@@ -994,6 +1002,7 @@
       "status": "completed"
     }
   ],
+  "recompensas": [],
   "comunidades": [
     {
       "nome": "Desmatamento na amazonia",
@@ -1013,7 +1022,8 @@
         2,
         3,
         1,
-        4
+        4,
+        13
       ],
       "curtidas": 0,
       "comentarios": [
@@ -1117,10 +1127,43 @@
       "dataCriacao": "2025-06-04T01:21:05.489Z",
       "status": "ativa",
       "membros": [
-        4
+        4,
+        13
       ],
       "curtidas": 0,
-      "comentarios": [],
+      "comentarios": [
+        {
+          "id": 1749688036880,
+          "texto": "gostei muito dessa comunidade!!",
+          "autorId": 13,
+          "autorNome": "Ronaldo Augusto Oliveira Lacerda",
+          "autorFoto": "assets/img/AvatarArthurzin.jpg",
+          "data": "2025-06-12T00:27:16.880Z",
+          "parentId": null,
+          "respostas": [
+            {
+              "id": 1749688051284,
+              "texto": "eu também!",
+              "autorId": 13,
+              "autorNome": "Ronaldo Augusto Oliveira Lacerda",
+              "autorFoto": "assets/img/AvatarArthurzin.jpg",
+              "data": "2025-06-12T00:27:31.284Z",
+              "parentId": "1749688036880",
+              "respostas": [
+                {
+                  "id": 1749688060838,
+                  "texto": "engual eu",
+                  "autorId": 13,
+                  "autorNome": "Ronaldo Augusto Oliveira Lacerda",
+                  "autorFoto": "assets/img/AvatarArthurzin.jpg",
+                  "data": "2025-06-12T00:27:40.838Z",
+                  "parentId": "1749688051284"
+                }
+              ]
+            }
+          ]
+        }
+      ],
       "visualizacoes": 0,
       "tags": [
         "tecnologia",

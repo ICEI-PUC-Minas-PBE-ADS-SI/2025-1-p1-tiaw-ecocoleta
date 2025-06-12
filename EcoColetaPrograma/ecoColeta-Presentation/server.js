@@ -75,6 +75,50 @@ app.use(express.static('public')); // Servir arquivos estáticos da pasta public
 app.use('/src', express.static('src')); // Servir arquivos CSS e JS
 app.use('/uploads', express.static(path.join(__dirname, 'public', 'uploads')));
 
+// PATCH para deduzir ecopontos de usuário ao resgatar recompensa
+app.patch('/api/usuarios/:id/resgatar-recompensa', (req, res) => {
+  try {
+    const { id } = req.params;
+    const { pontosNecessarios, nomeRecompensa, recompensaId } = req.body;
+    if (!pontosNecessarios || !nomeRecompensa || !recompensaId) {
+      return res.status(400).json({ error: 'Dados insuficientes para resgate.' });
+    }
+    const usuario = jsonServerRouter.db.get('usuarios').find({ id: parseInt(id) }).value();
+    if (!usuario) {
+      return res.status(404).json({ error: 'Usuário não encontrado' });
+    }
+    if ((usuario.ecopontos || 0) < pontosNecessarios) {
+      return res.status(400).json({ error: 'Ecopontos insuficientes.' });
+    }
+    // Deduz apenas os ecopontos
+    usuario.ecopontos = (usuario.ecopontos || 0) - pontosNecessarios;
+    jsonServerRouter.db.get('usuarios')
+      .find({ id: parseInt(id) })
+      .assign({ ecopontos: usuario.ecopontos })
+      .write();
+    // Decrementa a quantidade da recompensa
+    const recompensa = jsonServerRouter.db.get('recompensas').find({ id: recompensaId }).value();
+    if (!recompensa) {
+      return res.status(404).json({ error: 'Recompensa não encontrada' });
+    }
+    if (!recompensa.quantidade || recompensa.quantidade <= 0) {
+      return res.status(400).json({ error: 'Recompensa indisponível.' });
+    }
+    recompensa.quantidade = recompensa.quantidade - 1;
+    jsonServerRouter.db.get('recompensas')
+      .find({ id: recompensaId })
+      .assign({ quantidade: recompensa.quantidade })
+      .write();
+    res.json({
+      message: 'Recompensa resgatada com sucesso!',
+      ecopontos: usuario.ecopontos,
+      quantidadeRestante: recompensa.quantidade
+    });
+  } catch (error) {
+    res.status(500).json({ error: 'Erro ao resgatar recompensa', details: error.message });
+  }
+});
+
 // Configuração específica do JSON Server com CORS
 app.use('/api', (req, res, next) => {
   // Headers CORS específicos para JSON Server
@@ -411,43 +455,6 @@ app.post('/api/comunidades/:id/curtir', (req, res) => {
     
   } catch (error) {
     res.status(500).json({ error: 'Erro ao processar curtida', details: error.message });
-  }
-});
-
-// PATCH para deduzir ecopontos de usuário ao resgatar recompensa
-app.patch('/api/usuarios/:id/resgatar-recompensa', (req, res) => {
-  try {
-    const { id } = req.params;
-    const { pontosNecessarios, nomeRecompensa } = req.body;
-    if (!pontosNecessarios || !nomeRecompensa) {
-      return res.status(400).json({ error: 'Dados insuficientes para resgate.' });
-    }
-    const usuario = jsonServerRouter.db.get('usuarios').find({ id: parseInt(id) }).value();
-    if (!usuario) {
-      return res.status(404).json({ error: 'Usuário não encontrado' });
-    }
-    if ((usuario.ecopontos || 0) < pontosNecessarios) {
-      return res.status(400).json({ error: 'Ecopontos insuficientes.' });
-    }
-    // Deduz ecopontos e adiciona ao histórico
-    usuario.ecopontos = (usuario.ecopontos || 0) - pontosNecessarios;
-    usuario.historicoEcopontos = usuario.historicoEcopontos || [];
-    usuario.historicoEcopontos.unshift({
-      recompensa: nomeRecompensa,
-      pontos: pontosNecessarios,
-      data: new Date().toISOString()
-    });
-    jsonServerRouter.db.get('usuarios')
-      .find({ id: parseInt(id) })
-      .assign({ ecopontos: usuario.ecopontos, historicoEcopontos: usuario.historicoEcopontos })
-      .write();
-    res.json({
-      message: 'Recompensa resgatada com sucesso!',
-      ecopontos: usuario.ecopontos,
-      historicoEcopontos: usuario.historicoEcopontos
-    });
-  } catch (error) {
-    res.status(500).json({ error: 'Erro ao resgatar recompensa', details: error.message });
   }
 });
 
