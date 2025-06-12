@@ -1,6 +1,6 @@
 // Agendas - EcoColeta
 // Configuração da API
-const API_BASE_URL = 'http://localhost:3000';
+const API_BASE_URL = 'http://localhost:3000/api';
 
 // Classe principal para gerenciar as agendas
 class AgendasManager {
@@ -93,6 +93,9 @@ class AgendasManager {
       // Carregar agendas dos pontos do usuário
       this.loadUserAgendas();
       
+      // Log para diagnóstico
+      this.logDiagnosticInfo();
+      
       // Atualizar estatísticas
       this.updateAgendaStats();
       
@@ -113,27 +116,83 @@ class AgendasManager {
       document.querySelector('.agendas-empty').style.display = 'flex';
       document.querySelector('.agendas-empty-text').textContent = 'Erro ao carregar as agendas. Tente novamente.';
     }
-  }
-
-  // Carregar pontos de coleta do usuário
+  }  // Carregar pontos de coleta do usuário
   async loadUserCollectionPoints() {
-    // Filtrar pontos de coleta baseado no email do usuário
-    this.userCollectionPoints = this.pontosDeColeta.filter(ponto => {
-      // Verificar se o ponto tem relação com o usuário logado (pelo email)
-      return ponto.criadoPor === this.currentUser.id || 
-             (ponto.email && ponto.email === this.currentUser.email);
-    });
+    console.log(`Buscando pontos de coleta para usuário ${this.currentUser.nome} (ID: ${this.currentUser.id}, Tipo: ${this.currentUser.tipoUsuario})`);
+    
+    // Verificar se o usuário é um coletor ou administrador de ponto
+    if (this.currentUser.tipoUsuario === 'coletor') {
+      // Se for coletor, buscar todos os pontos que têm agendas associadas a este coletor
+      this.userCollectionPoints = this.pontosDeColeta.filter(ponto => {
+        if (!ponto.agenda || ponto.agenda.length === 0) return false;
+        
+        // Verificar se existe alguma agenda com este coletor (tratando IDs como string e como number)
+        const userId = this.currentUser.id;
+        const userIdStr = String(userId);
+        const hasAgenda = ponto.agenda.some(agenda => {
+          const coletorId = agenda.coletorId;
+          return coletorId === userId || coletorId === userIdStr;
+        });
+        
+        if (hasAgenda) {
+          console.log(`Ponto encontrado para coletor: ${ponto.nome} (ID: ${ponto.id})`);
+        }
+        
+        return hasAgenda;
+      });
+    } else {
+      // Se for administrador de ponto, filtrar pelos pontos que ele criou
+      this.userCollectionPoints = this.pontosDeColeta.filter(ponto => {
+        const userId = this.currentUser.id;
+        const userIdStr = String(userId);
+        const userEmail = this.currentUser.email;
+        
+        const isCreatedByUser = ponto.criadoPor === userId || 
+                               String(ponto.criadoPor) === userIdStr ||
+                               (ponto.email && ponto.email === userEmail);
+        
+        if (isCreatedByUser) {
+          console.log(`Ponto encontrado para admin: ${ponto.nome} (ID: ${ponto.id}), criado por: ${ponto.criadoPor}`);
+        }
+        
+        return isCreatedByUser;
+      });
+    }
     
     console.log(`Pontos de coleta do usuário: ${this.userCollectionPoints.length}`);
   }
-
   // Carregar todas as agendas dos pontos de coleta do usuário
   loadUserAgendas() {
     this.userAgendas = [];
+    const userId = this.currentUser.id;
+    const userIdStr = String(userId);
+    
+    console.log(`Carregando agendas para ${this.currentUser.tipoUsuario} (ID: ${userId})`);
     
     this.userCollectionPoints.forEach(ponto => {
       if (ponto.agenda && ponto.agenda.length > 0) {
-        ponto.agenda.forEach(agenda => {
+        // Filtrar agendas conforme o tipo de usuário
+        let agendasFiltradas = ponto.agenda;
+        
+        // Se for coletor, filtrar apenas as agendas designadas para ele
+        if (this.currentUser.tipoUsuario === 'coletor') {
+          agendasFiltradas = ponto.agenda.filter(agenda => {
+            const coletorId = agenda.coletorId;
+            const isForThisCollector = coletorId === userId || coletorId === userIdStr;
+            
+            if (isForThisCollector) {
+              console.log(`Agenda encontrada para coletor: ${agenda.descricao} (ID: ${agenda.idAgenda || 'N/A'})`);
+            }
+            
+            return isForThisCollector;
+          });
+          
+          console.log(`Ponto ${ponto.nome}: ${agendasFiltradas.length} agendas filtradas de ${ponto.agenda.length} totais`);
+        } else {
+          console.log(`Ponto ${ponto.nome}: incluindo todas as ${ponto.agenda.length} agendas (usuário admin)`);
+        }
+        
+        agendasFiltradas.forEach(agenda => {
           this.userAgendas.push({
             ...agenda,
             pontoColetaId: ponto.id,
@@ -141,10 +200,77 @@ class AgendasManager {
             pontoColetaEndereco: ponto.endereco
           });
         });
+      } else {
+        console.log(`Ponto ${ponto.nome}: sem agendas disponíveis`);
       }
     });
 
     console.log(`Total de agendas do usuário: ${this.userAgendas.length}`);
+  }
+  // Função de diagnóstico para verificar o carregamento de dados
+  logDiagnosticInfo() {
+    console.log('=== DIAGNÓSTICO DE AGENDAMENTOS ===');
+    console.log(`Usuário logado: ${this.currentUser.nome} (ID: ${this.currentUser.id})`);
+    console.log(`Tipo de usuário: ${this.currentUser.tipoUsuario}`);
+    console.log(`Total de pontos de coleta na base: ${this.pontosDeColeta.length}`);
+    console.log(`Total de pontos filtrados para o usuário: ${this.userCollectionPoints.length}`);
+    
+    // Listar pontos encontrados
+    if (this.userCollectionPoints.length > 0) {
+      console.log('Pontos encontrados:');
+      this.userCollectionPoints.forEach(ponto => {
+        console.log(`- ${ponto.nome} (ID: ${ponto.id})`);
+        console.log(`  Criado por: ${ponto.criadoPor}`);
+        console.log(`  Endereço: ${ponto.endereco}`);
+        
+        // Verificar agendas
+        if (ponto.agenda && ponto.agenda.length > 0) {
+          console.log(`  Agendas totais neste ponto: ${ponto.agenda.length}`);
+          
+          // Mostrar detalhes das primeiras 3 agendas
+          console.log('  Detalhes das agendas:');
+          ponto.agenda.slice(0, 3).forEach((agenda, idx) => {
+            console.log(`  [${idx+1}] ID: ${agenda.idAgenda || 'N/A'}`);
+            console.log(`      Descrição: ${agenda.descricao}`);
+            console.log(`      Status: ${agenda.status}`);
+            console.log(`      Data/Hora: ${agenda.dataHoraInicio}`);
+            console.log(`      Coletor ID: ${agenda.coletorId}`);
+            console.log(`      Usuário Agendamento: ${agenda.idUsuarioAgendamento}`);
+          });
+          
+          if (this.currentUser.tipoUsuario === 'coletor') {
+            const agendasDoColetor = ponto.agenda.filter(agenda => agenda.coletorId === this.currentUser.id || 
+                                                                   agenda.coletorId === String(this.currentUser.id));
+            console.log(`  Agendas para este coletor: ${agendasDoColetor.length}`);
+            console.log(`  IDs de coletores nas agendas: ${[...new Set(ponto.agenda.map(a => a.coletorId))].join(', ')}`);
+            
+            if (agendasDoColetor.length > 0) {
+              console.log('  Exemplo de agenda para este coletor:');
+              const exemplo = agendasDoColetor[0];
+              console.log(`    ID: ${exemplo.idAgenda}`);
+              console.log(`    Descrição: ${exemplo.descricao}`);
+              console.log(`    Status: ${exemplo.status}`);
+              console.log(`    Data: ${new Date(exemplo.dataHoraInicio).toLocaleString()}`);
+            }
+          }
+        } else {
+          console.log('  Sem agendas neste ponto.');
+        }
+      });
+    }
+    
+    // Mostrar detalhes das agendas finais
+    console.log(`Total de agendas carregadas: ${this.userAgendas.length}`);
+    if (this.userAgendas.length > 0) {
+      console.log('Detalhes das primeiras agendas carregadas:');
+      this.userAgendas.slice(0, 3).forEach((agenda, idx) => {
+        console.log(`[${idx+1}] Descrição: ${agenda.descricao}`);
+        console.log(`    Ponto: ${agenda.pontoColetaNome}`);
+        console.log(`    Status: ${agenda.status}`);
+        console.log(`    Data: ${new Date(agenda.dataHoraInicio).toLocaleString()}`);
+      });
+    }
+    console.log('=== FIM DO DIAGNÓSTICO ===');
   }
 
   // Atualizar estatísticas das agendas
@@ -378,7 +504,6 @@ class AgendasManager {
       verTodasButton.addEventListener('click', () => this.showAllAgendas());
     }
   }
-
   // Configurar event listeners
   setupEventListeners() {
     // Botão de atualizar
@@ -393,6 +518,47 @@ class AgendasManager {
       filterSelect.addEventListener('change', () => {
         const value = filterSelect.value;
         this.filterAgendas(value);
+      });
+    }
+    
+    // Botão de diagnóstico
+    const diagnosticoBtn = document.getElementById('diagnostico-btn');
+    if (diagnosticoBtn) {
+      diagnosticoBtn.addEventListener('click', () => {
+        console.clear();
+        this.logDiagnosticInfo();
+        alert('Diagnóstico gerado no console. Abra as ferramentas do desenvolvedor (F12) para visualizar.');
+        
+        // Mostrar informações extras para depuração
+        console.log('=== INFORMAÇÕES EXTRAS DE DEPURAÇÃO ===');
+        console.log('Verificando possíveis problemas de tipo de dados:');
+        
+        if (this.currentUser.id) {
+          console.log(`ID do usuário atual: ${this.currentUser.id} (Tipo: ${typeof this.currentUser.id})`);
+        }
+        
+        // Verificar se existem problemas de correspondência de IDs
+        if (this.pontosDeColeta.length > 0) {
+          console.log('Exemplo de estrutura de ponto de coleta:');
+          const exemploPonto = this.pontosDeColeta[0];
+          console.log(`ID do ponto: ${exemploPonto.id} (Tipo: ${typeof exemploPonto.id})`);
+          console.log(`criadoPor: ${exemploPonto.criadoPor} (Tipo: ${typeof exemploPonto.criadoPor})`);
+          
+          if (exemploPonto.agenda && exemploPonto.agenda.length > 0) {
+            const exemploAgenda = exemploPonto.agenda[0];
+            console.log('Exemplo de estrutura de agenda:');
+            console.log(`coletorId: ${exemploAgenda.coletorId} (Tipo: ${typeof exemploAgenda.coletorId})`);
+            console.log(`idUsuarioAgendamento: ${exemploAgenda.idUsuarioAgendamento} (Tipo: ${typeof exemploAgenda.idUsuarioAgendamento})`);
+          }
+        }
+        
+        // Verificar usuário armazenado no localStorage
+        try {
+          const rawUserData = localStorage.getItem('usuarioLogado');
+          console.log('Dados brutos do localStorage (usuarioLogado):', rawUserData);
+        } catch (error) {
+          console.error('Erro ao acessar localStorage:', error);
+        }
       });
     }
   }
