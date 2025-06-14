@@ -5,36 +5,6 @@ document.addEventListener("DOMContentLoaded", () => {
   // Configuração da API
   const API_BASE_URL = "http://localhost:3000/api";
 
-  const topContribuintes = [
-    { 
-        nome: "João Silva", 
-        pontos: "2.5k", 
-        foto: "https://placehold.co/400" 
-    },
-    { 
-        nome: "Maria Oliveira", 
-        pontos: "2.3k", 
-        foto: "https://placehold.co/400" 
-    },
-    { 
-        nome: "Lucas Pereira", 
-        pontos: "2.1k", 
-        foto: "https://placehold.co/400" 
-    },
-    { 
-        nome: "Ana Souza", 
-        pontos: "2.0k", 
-        foto: "https://placehold.co/400" 
-
-    },
-    { 
-        nome: "Carlos Lima", 
-        pontos: "1.9k", 
-        foto: "https://placehold.co/400" 
-
-    },
-  ];
-
   // Função para carregar comunidades da API
   async function carregarComunidades() {
     try {
@@ -101,6 +71,10 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // Função para adicionar nova comunidade
   async function adicionarComunidade(dadosComunidade) {
+    // Se não houver imagem definida, usa TelaBranca.png
+    if (!dadosComunidade.imagemCapa || dadosComunidade.imagemCapa.trim() === '') {
+      dadosComunidade.imagemCapa = 'assets/img/TelaBranca.png';
+    }
     try {
       const response = await fetch(`${API_BASE_URL}/comunidades`, {
         method: 'POST',
@@ -130,19 +104,54 @@ document.addEventListener("DOMContentLoaded", () => {
   // Expor função globalmente para uso em outras páginas
   window.adicionarComunidade = adicionarComunidade;
 
-  // Popula Top Contribuintes
-  containerContribuintes.innerHTML = "";
-  topContribuintes.forEach((c, index) => {
-    containerContribuintes.innerHTML += `
-      <div class="contribuinte">
-        <img src="${c.foto}" alt="Foto de ${c.nome}">
-        <p class="nome-contribuinte">${c.nome}</p>
-        <p class="pontos-contribuinte">${c.pontos} pontos</p>
-      </div>
-    `;
-  });
+  // Função para carregar top contribuintes dinamicamente
+  async function carregarTopContribuintes() {
+    try {
+      const res = await fetch(`${API_BASE_URL}/usuarios?_sort=ecopontos&_order=desc`);
+      if (!res.ok) throw new Error('Erro ao buscar contribuintes');
+      const usuarios = await res.json();
+      exibirTopContribuintes(usuarios);
+    } catch (e) {
+      // Exibe mensagem de erro na interface
+      if (containerContribuintes) {
+        containerContribuintes.innerHTML = `<div class="erro-contribuintes" style="color: #fff; background: #e74c3c; padding: 12px; border-radius: 8px; text-align: center; margin: 16px 0; font-weight: bold;">Não foi possível carregar os top contribuintes no momento.</div>`;
+      }
+    }
+  }
+
+  function exibirTopContribuintes(lista) {
+    if (!containerContribuintes) return;
+    containerContribuintes.innerHTML = '';
+    lista.filter(c => c.ecopontos && c.ecopontos > 0).forEach((c, index) => {
+      // Pega apenas o primeiro e segundo nome
+      const nomes = c.nome.split(' ');
+      const nome1 = nomes[0] || '';
+      const nome2 = nomes[1] || '';
+      // Formata pontos com sufixo
+      const pontosFormatados = formatarPontuacao(c.ecopontos);
+      containerContribuintes.innerHTML += `
+        <div class="contribuinte">
+          <div class="contribuinte-img-wrapper">
+            <img src="${c.imagem || 'assets/img/AvatarThiagão.jpg'}" alt="Foto de ${nome1} ${nome2}" class="img-contribuinte">
+          </div>
+          <div class="contribuinte-info">
+            <p class="nome-contribuinte"><span>${nome1}</span><br><span>${nome2}</span></p>
+            <p class="pontos-contribuinte">${pontosFormatados} pontos</p>
+          </div>
+        </div>
+      `;
+    });
+  }
+
+  function formatarPontuacao(pontos) {
+    if (pontos >= 1_000_000) return (pontos / 1_000_000).toFixed(1).replace('.0','') + 'M';
+    if (pontos >= 1_000) return (pontos / 1_000).toFixed(1).replace('.0','') + 'K';
+    return pontos.toLocaleString('pt-BR');
+  }
+
   // Carregar e exibir comunidades da API
   carregarComunidades();
+  carregarTopContribuintes();
 });
 
 // Função para carregar eventos do db.json e exibir na seção de eventos
@@ -211,7 +220,7 @@ function exibirEventos(eventos) {
     }
     containerEventos.innerHTML += `
       <div class="evento-card" data-id="${evento.id}" style="cursor:pointer;">
-        <img src="${evento.imagem || 'assets/img/calendar.svg'}" alt="Imagem do Evento" class="evento-img">
+        <img src="${evento.imagem || 'assets/img/TelaBranca.png'}" alt="Imagem do Evento" class="evento-img">
         <div class="evento-info">
           <h3 class="evento-titulo">${evento.titulo}</h3>
           <div class="evento-detalhes">

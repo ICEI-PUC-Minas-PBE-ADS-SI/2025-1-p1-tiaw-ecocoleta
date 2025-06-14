@@ -111,6 +111,15 @@ document.addEventListener("DOMContentLoaded", () => {
                 mostrarMensagem('Preencha todos os campos obrigatórios.', 'error');
                 return;
             }
+            // Validação de data e hora
+            const agora = new Date();
+            const dataHoraEvento = new Date(`${data}T${hora}`);
+            if (dataHoraEvento < agora) {
+                mostrarMensagem('Não é possível criar um evento com data ou horário no passado.', 'error');
+                submitBtn.disabled = false;
+                submitBtn.innerHTML = originalText;
+                return;
+            }
             // Obter imagem
             let imagem = '';
             if (previewImage && previewImage.src && !previewImage.src.includes('placehold')) {
