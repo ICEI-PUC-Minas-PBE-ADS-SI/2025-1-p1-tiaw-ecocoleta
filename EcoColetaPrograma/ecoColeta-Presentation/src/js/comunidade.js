@@ -254,3 +254,140 @@ function exibirEventos(eventos) {
 window.addEventListener('DOMContentLoaded', () => {
   carregarEventos();
 });
+
+// --- Busca Unificada (ajuste para filtros dropdown) ---
+(function() {
+  const input = document.getElementById('buscaUnificadaInput');
+  const resultados = document.getElementById('buscaUnificadaResultados');
+  const btnFiltros = document.getElementById('btnFiltros');
+  const filtrosDropdown = document.getElementById('buscaFiltrosDropdown');
+  let radios = filtrosDropdown.querySelectorAll('input[name="buscaTipo"]');
+  let dados = { contribuintes: [], comunidades: [], eventos: [] };
+  let carregou = { contribuintes: false, comunidades: false, eventos: false };
+
+  // Mostra/oculta filtros ao clicar no botão
+  btnFiltros.addEventListener('click', function(e) {
+    e.stopPropagation();
+    filtrosDropdown.style.display = filtrosDropdown.style.display === 'block' ? 'none' : 'block';
+  });
+  // Fecha filtros ao clicar fora
+  document.addEventListener('click', function(e) {
+    if (!filtrosDropdown.contains(e.target) && e.target !== btnFiltros) {
+      filtrosDropdown.style.display = 'none';
+    }
+  });
+
+  // Carrega todos os dados necessários para busca
+  async function carregarDadosBusca() {
+    try {
+      const resC = await fetch('http://localhost:3000/api/usuarios?_sort=ecopontos&_order=desc');
+      dados.contribuintes = await resC.json();
+      carregou.contribuintes = true;
+    } catch {}
+    try {
+      const resCom = await fetch('http://localhost:3000/api/comunidades');
+      dados.comunidades = await resCom.json();
+      carregou.comunidades = true;
+    } catch {}
+    try {
+      const resE = await fetch('http://localhost:3000/api/eventos');
+      dados.eventos = await resE.json();
+      carregou.eventos = true;
+    } catch {}
+  }
+
+  function normaliza(str) {
+    return (str||'').toLowerCase().normalize('NFD').replace(/[^\w\s\-@.]/g, '');
+  }
+
+  function filtrarResultados(texto, tipo) {
+    const t = normaliza(texto);
+    let res = [];
+    if (tipo === 'todos' || tipo === 'contribuinte') {
+      res = res.concat(dados.contribuintes.filter(u =>
+        normaliza(u.nome).includes(t) || normaliza(u.email).includes(t)
+      ).map(u => ({
+        tipo: 'Top Contribuinte',
+        nome: u.nome,
+        desc: u.email,
+        img: u.imagem || 'assets/img/AvatarThiagão.jpg',
+        link: '#',
+        id: u.id
+      })));
+    }
+    if (tipo === 'todos' || tipo === 'comunidade') {
+      res = res.concat(dados.comunidades.filter(c =>
+        normaliza(c.nome).includes(t) || normaliza(c.descricao).includes(t) || normaliza((c.autor && c.autor.nome) || '').includes(t)
+      ).map(c => ({
+        tipo: 'Comunidade',
+        nome: c.nome,
+        desc: c.descricao,
+        img: c.banner || c.imagemCapa || 'assets/img/TelaBranca.png',
+        link: `detalhe-comunidade.html?id=${c.id}`,
+        id: c.id
+      })));
+    }
+    if (tipo === 'todos' || tipo === 'evento') {
+      res = res.concat(dados.eventos.filter(e =>
+        normaliza(e.titulo).includes(t) || normaliza(e.descricao).includes(t) || normaliza((e.autor && e.autor.nome) || '').includes(t)
+      ).map(e => ({
+        tipo: 'Evento',
+        nome: e.titulo,
+        desc: e.descricao,
+        img: e.imagem || 'assets/img/TelaBranca.png',
+        link: `detalhe-evento.html?id=${e.id}`,
+        id: e.id
+      })));
+    }
+    return res;
+  }
+
+  function renderResultados(lista) {
+    if (!lista.length) {
+      resultados.innerHTML = '<div class="busca-unificada-item">Nenhum resultado encontrado.</div>';
+      resultados.classList.add('ativa');
+      return;
+    }
+    resultados.innerHTML = lista.map(item => `
+      <div class="busca-unificada-item" tabindex="0" data-link="${item.link}">
+        <img class="busca-unificada-img" src="${item.img}" alt="${item.nome}">
+        <div class="busca-unificada-info">
+          <div class="busca-unificada-tipo">${item.tipo}</div>
+          <div class="busca-unificada-nome">${item.nome}</div>
+          <div class="busca-unificada-desc">${item.desc ? item.desc.substring(0, 60) : ''}</div>
+        </div>
+      </div>
+    `).join('');
+    resultados.classList.add('ativa');
+    resultados.querySelectorAll('.busca-unificada-item').forEach(el => {
+      el.addEventListener('click', function() {
+        const link = this.getAttribute('data-link');
+        if (link && link !== '#') window.location.href = link;
+      });
+    });
+  }
+
+  function atualizarBusca() {
+    const texto = input.value;
+    const tipo = filtrosDropdown.querySelector('input[name="buscaTipo"]:checked').value;
+    if (!texto.trim()) {
+      resultados.classList.remove('ativa');
+      resultados.innerHTML = '';
+      return;
+    }
+    const lista = filtrarResultados(texto, tipo);
+    renderResultados(lista);
+  }
+
+  input.addEventListener('input', atualizarBusca);
+  filtrosDropdown.querySelectorAll('input[name="buscaTipo"]').forEach(r => r.addEventListener('change', atualizarBusca));
+  document.addEventListener('click', e => {
+    if (!resultados.contains(e.target) && e.target !== input) {
+      resultados.classList.remove('ativa');
+    }
+  });
+  input.addEventListener('focus', atualizarBusca);
+
+  carregarDadosBusca();
+})();
+// --- Fim Busca Unificada ---
