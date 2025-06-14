@@ -1082,11 +1082,12 @@ input[type="number"] {
   color: #222;
 }
 
-.ecoimpact-result-value {
+.ecoimpact-result-label {
   font-size: 1rem;
   color: #555;
   margin-top: 2px;
 }
+
 /* Melhorias no scroll */
 ::-webkit-scrollbar {
   width: 8px;
@@ -1112,71 +1113,62 @@ body.dark-mode {
   background: #23272e !important;
   color: #e3e6eb !important;
 }
-body.dark-mode .hero,
-body.dark-mode .ecoimpact-body,
-body.dark-mode .ecoimpact-form-box,
-body.dark-mode .ecoimpact-result-box,
-body.dark-mode .calculator-card,
-body.dark-mode .calculator-form,
-body.dark-mode .form-group,
-body.dark-mode .form-label,
-body.dark-mode .form-input,
-body.dark-mode .calculator-button,
-body.dark-mode .impact-results,
-body.dark-mode .impact-result,
-body.dark-mode .rewards,
-body.dark-mode .reward-card,
-body.dark-mode .stats,
-body.dark-mode .stats-card,
-body.dark-mode .testimonial-card {
-  background: #26292f !important;
+body.dark-mode .container,
+body.dark-mode .frame,
+body.dark-mode .main,
+body.dark-mode .body {
+  background: #23272e !important;
   color: #e3e6eb !important;
   border-color: #35383d !important;
 }
-body.dark-mode .hero-title,
-body.dark-mode .hero-description,
-body.dark-mode .ecoimpact-label,
-body.dark-mode .ecoimpact-result-value,
-body.dark-mode .reward-title,
-body.dark-mode .reward-description,
-body.dark-mode .stats-description,
-body.dark-mode .testimonial-location,
-body.dark-mode .testimonial-text {
-  color: #b5bac1 !important;
-}
-body.dark-mode .primary-button,
-body.dark-mode .calculator-button,
-body.dark-mode .cta-button,
-body.dark-mode .cta-button-dark {
-  background: linear-gradient(135deg, #059669 0%, #047857 100%) !important;
-  color: #fff !important;
-  border: none !important;
-}
-body.dark-mode .primary-button:hover,
-body.dark-mode .calculator-button:hover,
-body.dark-mode .cta-button:hover,
-body.dark-mode .cta-button-dark:hover {
-  background: #10b981 !important;
-}
-body.dark-mode .form-input,
-body.dark-mode .form-label {
-  color: #e3e6eb !important;
-  background: #26292f !important;
-  border-color: #35383d !important;
-}
-body.dark-mode .form-input::placeholder {
-  color: #888 !important;
-}
-body.dark-mode .footer,
-body.dark-mode footer {
+body.dark-mode .hero {
   background: #23272e !important;
   color: #e3e6eb !important;
 }
-body.dark-mode .footer-links a {
+body.dark-mode .hero-title {
+  color: #10b981 !important;
+}
+body.dark-mode .hero-description {
   color: #b5bac1 !important;
 }
-body.dark-mode .footer-links a:hover {
+body.dark-mode .ecoimpact-form-box,
+body.dark-mode .ecoimpact-result-box {
+  background: #26292f !important;
+  color: #e3e6eb !important;
+  border-color: #35383d !important;
+}
+body.dark-mode .ecoimpact-label {
+  color: #b5bac1 !important;
+}
+body.dark-mode select,
+body.dark-mode input[type="number"] {
+  background: #23272e !important;
+  color: #e3e6eb !important;
+  border-color: #35383d !important;
+}
+body.dark-mode #calcular {
+  background: linear-gradient(135deg, #059669 0%, #047857 100%) !important;
+  color: #fff !important;
+}
+body.dark-mode .ecoimpact-result-value {
   color: #10b981 !important;
+}
+body.dark-mode .material-icons {
+  color: #10b981 !important;
+  /* Removido o background para não criar fundo nos ícones no dark mode */
+  background: none !important;
+}
+body.dark-mode .impact-icon {
+  width: 26px;
+  object-fit: contain;
+  align-self: stretch;
+  margin: auto 0;
+}
+body.dark-mode .how-it-works-icon {
+  width: 4rem;
+  border-radius: 100px;
+  background-color: #D1FAE5;
+  padding: 10px;
 }
 /* Remover animações de fade no dark mode */
 body.dark-mode .ecoimpact-form-box,
@@ -1349,4 +1341,165 @@ body.dark-mode .historia-card h3 {
 }
 body.dark-mode .historia-card p {
   color: #b5bac1 !important;
+}
+
+/* --- DARK MODE INDEX: HERO, STATS, HOW-IT-WORKS, MAP, IMPACT, RECOMPENSAS, CTA --- */
+body.dark-mode .container,
+body.dark-mode .frame,
+body.dark-mode .main,
+body.dark-mode .body {
+  background: #23272e !important;
+  color: #e3e6eb !important;
+  border-color: #35383d !important;
+}
+body.dark-mode .hero,
+body.dark-mode .stats,
+body.dark-mode .how-it-works,
+body.dark-mode .map-section,
+body.dark-mode .impact-calculator,
+body.dark-mode .recompensas-container,
+body.dark-mode .cta {
+  background: #23272e !important;
+  color: #e3e6eb !important;
+}
+body.dark-mode .hero-title,
+body.dark-mode .section-title,
+body.dark-mode .cta-title {
+  color: #10b981 !important;
+}
+body.dark-mode .hero-description,
+body.dark-mode .stats-description,
+body.dark-mode .how-it-works-description,
+body.dark-mode .map-description,
+body.dark-mode .cta-description {
+  color: #b5bac1 !important;
+}
+body.dark-mode .primary-button,
+body.dark-mode .calculator-button,
+body.dark-mode .cta-button,
+body.dark-mode .cta-button-dark {
+  background: linear-gradient(135deg, #059669 0%, #047857 100%) !important;
+  color: #fff !important;
+  border: none !important;
+}
+body.dark-mode .primary-button:hover,
+body.dark-mode .calculator-button:hover,
+body.dark-mode .cta-button:hover,
+body.dark-mode .cta-button-dark:hover {
+  background: #10b981 !important;
+}
+body.dark-mode .secondary-button,
+body.dark-mode .cta-button-white {
+  background: #23272e !important;
+  color: #10b981 !important;
+  border: 2px solid #10b981 !important;
+}
+body.dark-mode .stats-card,
+body.dark-mode .how-it-works-card,
+body.dark-mode .calculator-card,
+body.dark-mode .reward-card,
+body.dark-mode .ecoimpact-form-box,
+body.dark-mode .ecoimpact-result-box {
+  background: #26292f !important;
+  color: #e3e6eb !important;
+  border-color: #35383d !important;
+  box-shadow: 0 2px 8px 0 #181a1b33 !important;
+}
+body.dark-mode .stats-number,
+body.dark-mode .ecoimpact-result-value {
+  color: #10b981 !important;
+}
+body.dark-mode .form-label,
+body.dark-mode .ecoimpact-label,
+body.dark-mode .how-it-works-title,
+body.dark-mode .reward-title {
+  color: #b5bac1 !important;
+}
+body.dark-mode .form-input,
+body.dark-mode select,
+body.dark-mode input[type="number"] {
+  background: #23272e !important;
+  color: #e3e6eb !important;
+  border-color: #35383d !important;
+}
+body.dark-mode .form-input::placeholder {
+  color: #888 !important;
+}
+body.dark-mode .material-icons,
+body.dark-mode .impact-icon,
+body.dark-mode .how-it-works-icon {
+  color: #10b981 !important;
+  /* Removido o background para não criar fundo nos ícones no dark mode */
+  background: none !important;
+}
+body.dark-mode .recompensas-card {
+  background: #26292f !important;
+  color: #e3e6eb !important;
+  border: 1px solid #35383d !important;
+  box-shadow: 0 2px 8px 0 #181a1b33 !important;
+}
+body.dark-mode .recompensas-card-title {
+  color: #10b981 !important;
+}
+body.dark-mode .recompensas-card-desc {
+  color: #b5bac1 !important;
+}
+body.dark-mode .recompensas-card-btn {
+  background: linear-gradient(135deg, #059669 0%, #047857 100%) !important;
+  color: #fff !important;
+}
+body.dark-mode .recompensas-card-btn:hover {
+  background: #10b981 !important;
+}
+body.dark-mode .recompensas-verde {
+  color: #10b981 !important;
+}
+body.dark-mode .map-image-container {
+  background: #181a1b !important;
+}
+body.dark-mode .footer,
+body.dark-mode footer {
+  background: #23272e !important;
+  color: #e3e6eb !important;
+}
+body.dark-mode .footer-links a {
+  color: #b5bac1 !important;
+}
+body.dark-mode .footer-links a:hover {
+  color: #10b981 !important;
+}
+body.dark-mode .footer-logo h3,
+body.dark-mode .link-group h4 {
+  color: #e3e6eb !important;
+}
+body.dark-mode .footer-logo p {
+  color: #b5bac1 !important;
+}
+
+
+body.dark-mode .autor-card-footer {
+  background: #1e2126 !important;
+  border-top: 1px solid #30343a !important;
+  color: #e3e6eb !important;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  box-sizing: border-box;
+  z-index: 2;
+}
+body.dark-mode .autor-card-footer img {
+  background: #23272e !important;
+  border: 2px solid #10b98133 !important;
+}
+body.dark-mode .autor-card-footer span {
+  color: #10b981 !important;
+
+}
+
+body.dark-mode .historia-card h3 {
+  color: #10b981 !important;
+}
+body.dark-mode .historia-card p {
+  color: #e3e6eb !important;
 }
