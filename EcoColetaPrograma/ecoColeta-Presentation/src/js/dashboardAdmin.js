@@ -224,6 +224,86 @@ class DashboardAdmin {
     return userDonors;
   }
 
+  // Obter coletores associados aos pontos de coleta do usuário
+  getUserAssociatedCollectors() {
+    if (!this.currentUser) {
+      return [];
+    }
+
+    const coletores = this.usuarios.filter(u => u.tipoUsuario === 'coletor');
+    const userCollectors = [];
+    const collectorAssociations = new Map(); // Para rastrear o tipo de associação
+
+    // 1. Verificar coletores diretamente associados aos pontos
+    this.userCollectionPoints.forEach(ponto => {
+      // Coletor específico associado ao ponto
+      if (ponto.coletorId) {
+        const coletor = coletores.find(c => c.id === ponto.coletorId);
+        if (coletor && !userCollectors.find(uc => uc.id === coletor.id)) {
+          userCollectors.push(coletor);
+          if (!collectorAssociations.has(coletor.id)) {
+            collectorAssociations.set(coletor.id, []);
+          }
+          collectorAssociations.get(coletor.id).push(`Responsável pelo ${ponto.nome}`);
+        }
+      }
+
+      // Coletores associados em lista
+      if (ponto.coletoresAssociados && ponto.coletoresAssociados.length > 0) {
+        ponto.coletoresAssociados.forEach(coletorId => {
+          const coletor = coletores.find(c => c.id === coletorId);
+          if (coletor && !userCollectors.find(uc => uc.id === coletor.id)) {
+            userCollectors.push(coletor);
+            if (!collectorAssociations.has(coletor.id)) {
+              collectorAssociations.set(coletor.id, []);
+            }
+            collectorAssociations.get(coletor.id).push(`Associado ao ${ponto.nome}`);
+          }
+        });
+      }
+    });
+
+    // 2. Buscar coletores por cidade/região (incluindo todos os coletores de Betim)
+    const userCities = [...new Set(this.userCollectionPoints.map(p => p.cidade || 'Betim'))];
+    userCities.push('Betim'); // Garantir que Betim esteja incluído
+    
+    coletores.forEach(coletor => {
+      if (userCities.includes(coletor.cidade) && !userCollectors.find(uc => uc.id === coletor.id)) {
+        userCollectors.push(coletor);
+        if (!collectorAssociations.has(coletor.id)) {
+          collectorAssociations.set(coletor.id, []);
+        }
+        collectorAssociations.get(coletor.id).push(`Atua na região: ${coletor.cidade}`);
+      }
+    });
+
+    // 3. Garantir que coletores específicos sejam incluídos (se existirem)
+    const priorityCollectors = [
+      'coletor@ecocoleta.com',
+      'joao.coletor@gmail.com'
+    ];
+    
+    coletores.forEach(coletor => {
+      if (priorityCollectors.includes(coletor.email) && !userCollectors.find(uc => uc.id === coletor.id)) {
+        userCollectors.push(coletor);
+        if (!collectorAssociations.has(coletor.id)) {
+          collectorAssociations.set(coletor.id, []);
+        }
+        collectorAssociations.get(coletor.id).push('Coletor ativo na região');
+      }
+    });
+
+    // Adicionar informações de associação aos coletores
+    const enrichedCollectors = userCollectors.map(coletor => ({
+      ...coletor,
+      associationInfo: collectorAssociations.get(coletor.id) || []
+    }));
+
+    console.log(`Coletores associados aos pontos do usuário:`, enrichedCollectors.length);
+    console.log('Coletores encontrados:', enrichedCollectors.map(c => ({ nome: c.nome, email: c.email, associacoes: c.associationInfo })));
+    return enrichedCollectors;
+  }
+
   // Carregar todas as agendas dos pontos de coleta do usuário
   loadUserAgendas() {
     this.userAgendas = [];
@@ -417,11 +497,11 @@ class DashboardAdmin {
     this.renderPerformanceChart(performanceData);
     this.renderRegionChart(regionData);
   }
+
   // Renderização das listas dinâmicas
   renderDynamicLists() {
     this.renderPontosAtivosList();    this.renderDoadoresList();
     this.renderDoadoresAgendamentos();
-    this.renderPointsPerformance(); // Adicionar renderização da performance por ponto
   }
 
   renderPontosAtivosList() {
@@ -1344,8 +1424,7 @@ class DashboardAdmin {
         <div class="agenda-main-info">
           <div class="agenda-icon">
             <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-              <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/>
-              <circle cx="12" cy="12" r="3"/>
+              <path d="M8 2v4M16 2v4M3 10h18M5 6h14a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2z"/>
             </svg>
           </div>          <div class="agenda-details">
             <h3 class="agenda-title">${agenda.descricao}</h3>
@@ -1716,6 +1795,7 @@ class DashboardAdmin {
         </div>
       `;
     }).join('');
+
 
     container.innerHTML = agendamentosHTML;
     
@@ -2483,163 +2563,6 @@ Relatório gerado automaticamente pela plataforma EcoColeta
   // Public method to reinitialize modal management for dynamically loaded content
   reinitializeModals() {
     this.setupModalButtons();
-  }
-
-  // Renderizar performance por ponto de coleta
-  renderPointsPerformance() {
-    const container = document.getElementById('points-performance-list');
-    if (!container) return;
-
-    if (!this.userCollectionPoints || this.userCollectionPoints.length === 0) {
-      container.innerHTML = `
-        <div class="no-points-message">
-          <div class="no-points-icon">
-            <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-              <path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/>
-              <circle cx="12" cy="10" r="3"/>
-            </svg>
-          </div>
-          <h3>Nenhum ponto de coleta encontrado</h3>
-          <p>Você ainda não possui pontos de coleta cadastrados ou não há dados de performance disponíveis.</p>
-        </div>
-      `;
-      return;
-    }
-
-    const performanceHTML = this.userCollectionPoints.map(ponto => {
-      // Calcular métricas do ponto
-      const agendas = ponto.agenda || [];
-      const agendamentosTotal = agendas.length;
-      const agendamentosConcluidos = agendas.filter(a => a.status === 'concluido').length;
-      const agendamentosAtivos = agendas.filter(a => a.status === 'agendado' || a.status === 'pendente').length;
-      
-      // Taxa de conclusão
-      const taxaConclusao = agendamentosTotal > 0 ? Math.round((agendamentosConcluidos / agendamentosTotal) * 100) : 0;
-      
-      // Materiais mais coletados
-      const materiaisStats = {};
-      agendas.forEach(agenda => {
-        if (agenda.materiais && Array.isArray(agenda.materiais)) {
-          agenda.materiais.forEach(material => {
-            materiaisStats[material] = (materiaisStats[material] || 0) + 1;
-          });
-        }
-      });
-      
-      const materialMaisColetado = Object.keys(materiaisStats).length > 0 
-        ? Object.entries(materiaisStats).sort((a, b) => b[1] - a[1])[0][0]
-        : 'N/A';
-      
-      // Determinar status do ponto
-      let statusPonto = 'ativo';
-      let statusColor = '#10B981';
-      if (agendamentosAtivos === 0 && agendamentosTotal > 0) {
-        statusPonto = 'inativo';
-        statusColor = '#F59E0B';
-      } else if (agendamentosTotal === 0) {
-        statusPonto = 'novo';
-        statusColor = '#6B7280';
-      }
-
-      return `
-        <div class="point-performance-card">
-          <div class="point-header">
-            <div class="point-info">
-              <h3 class="point-name">${ponto.nome}</h3>
-              <p class="point-address">${ponto.endereco}</p>
-              <span class="point-status" style="background-color: ${statusColor}20; color: ${statusColor};">
-                ${statusPonto.charAt(0).toUpperCase() + statusPonto.slice(1)}
-              </span>
-            </div>
-            <div class="point-completion-rate">
-              <div class="completion-circle">
-                <svg viewBox="0 0 36 36" class="circular-chart">
-                  <path class="circle-bg" d="M18 2.0845
-                    a 15.9155 15.9155 0 0 1 0 31.831
-                    a 15.9155 15.9155 0 0 1 0 -31.831"></path>
-                  <path class="circle" stroke-dasharray="${taxaConclusao}, 100" d="M18 2.0845
-                    a 15.9155 15.9155 0 0 1 0 31.831
-                    a 15.9155 15.9155 0 0 1 0 -31.831"></path>
-                  <text x="18" y="20.35" class="percentage">${taxaConclusao}%</text>
-                </svg>
-              </div>
-              <span class="completion-label">Taxa de Conclusão</span>
-            </div>
-          </div>
-          
-          <div class="point-metrics">
-            <div class="metric">
-              <div class="metric-value">${agendamentosTotal}</div>
-              <div class="metric-label">Total de Agendamentos</div>
-            </div>
-            <div class="metric">
-              <div class="metric-value">${agendamentosConcluidos}</div>
-              <div class="metric-label">Concluídos</div>
-            </div>
-            <div class="metric">
-              <div class="metric-value">${agendamentosAtivos}</div>
-              <div class="metric-label">Ativos</div>
-            </div>
-            <div class="metric">
-              <div class="metric-value">${this.formatMaterialName(materialMaisColetado)}</div>
-              <div class="metric-label">Material Principal</div>
-            </div>
-          </div>
-          
-          <div class="point-materials">
-            <h4>Materiais Aceitos:</h4>
-            <div class="materials-tags">
-              ${(ponto.materiaisAceitos || []).map(material => 
-                `<span class="material-tag ${material}">${this.formatMaterialName(material)}</span>`
-              ).join('')}
-            </div>
-          </div>
-          
-          <div class="point-actions">
-            <button class="btn-view-details" data-ponto-id="${ponto.id}">
-              Ver Detalhes
-            </button>
-          </div>
-        </div>
-      `;
-    }).join('');
-
-    container.innerHTML = performanceHTML;
-    
-    // Adicionar event listeners para os botões de detalhes
-    container.querySelectorAll('.btn-view-details').forEach(btn => {
-      btn.addEventListener('click', (e) => {
-        const pontoId = e.target.dataset.pontoId;
-        this.showPointDetails(pontoId);
-      });
-    });
-  }
-
-  // Formatar nome do material
-  formatMaterialName(material) {
-    const materialMap = {
-      'plastico': 'Plástico',
-      'papel': 'Papel',
-      'vidro': 'Vidro',
-      'metal': 'Metal',
-      'eletronicos': 'Eletrônicos',
-      'pilhas': 'Pilhas',
-      'baterias': 'Baterias',
-      'oleo': 'Óleo',
-      'organico': 'Orgânico'
-    };
-    
-    return materialMap[material] || (material !== 'N/A' ? material.charAt(0).toUpperCase() + material.slice(1) : 'N/A');
-  }
-
-  // Mostrar detalhes do ponto
-  showPointDetails(pontoId) {
-    const ponto = this.userCollectionPoints.find(p => p.id == pontoId);
-    if (!ponto) return;
-
-    // Redirecionar para página de agendas filtrada por este ponto
-    // ou abrir modal com detalhes
-    window.location.href = `agendas.html?ponto=${pontoId}`;
   }
 }
 
