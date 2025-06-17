@@ -23,7 +23,7 @@
       "cidade": "Betim",
       "estado": "MG",
       "tipoUsuario": "coletor",
-      "ecopontos": 25900,
+      "ecopontos": 25637,
       "senha": "2603Betim#2",
       "imagem": "assets/img/AvatarScrollMaster.jpg",
       "emailVerificado": false,
@@ -56,7 +56,7 @@
       "cidade": "Sarzedo",
       "estado": "MG",
       "tipoUsuario": "doador",
-      "ecopontos": 170,
+      "ecopontos": 167,
       "senha": "ScrumMaster@123",
       "imagem": "assets/img/AvatarKauan.jpg",
       "emailVerificado": false,
@@ -1002,7 +1002,16 @@
       "status": "completed"
     }
   ],
-  "recompensas": [],
+  "recompensas": [
+    {
+      "nome": "colekkauna",
+      "descricao": "ah",
+      "imagem": "assets/img/gift.svg",
+      "pontosNecessarios": 3,
+      "quantidade": 0,
+      "id": 1
+    }
+  ],
   "comunidades": [
     {
       "nome": "Desmatamento na amazonia",

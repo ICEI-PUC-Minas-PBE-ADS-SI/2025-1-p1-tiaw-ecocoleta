@@ -10,14 +10,21 @@ async function buscarUsuarioCompleto(id) {
   return res.json();
 }
 
-// Função para obter histórico de resgates do localStorage
+// Função para obter histórico de resgates do localStorage apenas do usuário logado
 function getHistoricoResgates() {
-  return JSON.parse(localStorage.getItem('historicoResgates')) || [];
+  const usuario = getUsuarioLogado();
+  if (!usuario) return [];
+  const historicoAll = JSON.parse(localStorage.getItem('historicoResgatesPorUsuario')) || {};
+  return historicoAll[usuario.id] || [];
 }
 
-// Função para salvar histórico de resgates no localStorage
+// Função para salvar histórico de resgates no localStorage por usuário
 function setHistoricoResgates(historico) {
-  localStorage.setItem('historicoResgates', JSON.stringify(historico));
+  const usuario = getUsuarioLogado();
+  if (!usuario) return;
+  const historicoAll = JSON.parse(localStorage.getItem('historicoResgatesPorUsuario')) || {};
+  historicoAll[usuario.id] = historico;
+  localStorage.setItem('historicoResgatesPorUsuario', JSON.stringify(historicoAll));
 }
 
 // Função para adicionar um novo resgate ao histórico
