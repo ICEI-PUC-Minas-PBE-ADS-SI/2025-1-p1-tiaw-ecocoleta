@@ -220,11 +220,22 @@ async function renderComentarios(comentarios, usuario, comunidadeId, nivel = 0, 
                     enviarBtn.onclick = async () => {
                         const texto = textarea.value.trim();
                         if (!texto) return;
+                        if (contemPalavraOfensiva(texto)) {
+                            mostrarErroComentario('Comentário não publicado: sua mensagem contém palavras ofensivas.');
+                            return;
+                        }
                         enviarBtn.disabled = true;
                         const usuario = getUsuarioLogado();
                         await postarComentario(comunidadeId, texto, usuario, btn.dataset.id);
                         carregarComentarios();
                     };
+                    // Permite enviar resposta com Enter
+                    textarea.addEventListener('keydown', async (e) => {
+                        if (e.key === 'Enter' && !e.shiftKey) {
+                            e.preventDefault();
+                            enviarBtn.click();
+                        }
+                    });
                 };
             });
         }
@@ -256,12 +267,23 @@ function setupComentarioForm(comunidadeId, participando) {
     btn.onclick = async () => {
         const texto = input.value.trim();
         if (!texto) return;
+        if (contemPalavraOfensiva(texto)) {
+            mostrarErroComentario('Comentário não publicado: sua mensagem contém palavras ofensivas.');
+            return;
+        }
         btn.disabled = true;
         await postarComentario(comunidadeId, texto, usuario);
         input.value = "";
         btn.disabled = false;
         carregarComentarios();
     };
+    // Permite enviar comentário com Enter
+    input.addEventListener('keydown', async (e) => {
+        if (e.key === 'Enter' && !e.shiftKey) {
+            e.preventDefault();
+            btn.click();
+        }
+    });
 }
 
 // Handler de participação
@@ -343,6 +365,24 @@ function mostrarBotaoExcluirComunidade(comunidade) {
 function removerBotaoExcluirComunidade() {
     const btnExcluir = document.getElementById("btn-excluir-comunidade");
     if (btnExcluir) btnExcluir.remove();
+}
+
+// Lista de palavras ofensivas (pode ser expandida conforme necessário)
+const PALAVRAS_OFENSIVAS = ['abestado', 'animal', 'anta', 'arrombada', 'arrombado', 'asno', 'babaca', 'besta', 'bicha', 'boceta', 'boçal', 'boquete', 'bosta', 'buceta', 'burra', 'burro', 'cabaço', 'cachorra', 'cachorro', 'cadela', 'cacete', 'cafajeste', 'canalha', 'caralho', 'chifrudo', 'corno', 'cretina', 'cretino', 'crápula', 'cu', 'cuzão', 'cuzona', 'débil', 'demente', 'desgraçada', 'desgraçado', 'égua', 'energúmeno', 'escrota', 'escroto', 'estrupício', 'estúpida', 'estúpido', 'fdp', 'foder', 'gentalha', 'idiota', 'ignorante', 'imbecil', 'imundo', 'lazarenta', 'lazarento', 'lesma', 'merda', 'mocorongo', 'mongol', 'nojenta', 'nojento', 'ordinária', 'ordinário', 'otária', 'otário', 'palhaço', 'parasita', 'paspalho', 'patife', 'pau', 'peste', 'pilantra', 'pinto', 'piranha', 'porco', 'porra', 'pqp', 'prostituta', 'punheta', 'puta', 'puto', 'rameira', 'retardada', 'retardado', 'rola', 'safada', 'safado', 'seboso', 'siririca', 'sórdido', 'tarada', 'tarado', 'tnc', 'traste', 'trapaceiro', 'trouxa', 'vaca', 'vagabunda', 'vagabundo', 'veado', 'verme', 'viado', 'vsf', 'xoxota'];
+
+function contemPalavraOfensiva(texto) {
+  const textoNormalizado = texto.toLowerCase();
+  return PALAVRAS_OFENSIVAS.some(palavra => textoNormalizado.includes(palavra));
+}
+
+// Mensagem de erro ao publicar comentário
+function mostrarErroComentario(msg) {
+  const erroDiv = document.getElementById('comentario-erro');
+  if (erroDiv) {
+    erroDiv.textContent = msg;
+    erroDiv.style.display = 'block';
+    setTimeout(() => { erroDiv.style.display = 'none'; }, 4000);
+  }
 }
 
 // Inicialização

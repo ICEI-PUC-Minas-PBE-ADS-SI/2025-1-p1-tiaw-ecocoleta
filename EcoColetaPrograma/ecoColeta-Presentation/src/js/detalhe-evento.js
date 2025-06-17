@@ -76,14 +76,9 @@ document.addEventListener('DOMContentLoaded', async () => {
     // Descrição
     document.getElementById('eventoDescricao').textContent = evento.descricao;
 
-    // --- AÇÕES: editar/notificar ---
+    // --- AÇÕES: editar ---
     const acoesDiv = document.getElementById('eventoAcoes');
     acoesDiv.innerHTML = '';
-    if (!isAutor) {
-      // Botão notificar
-      acoesDiv.innerHTML += `<button id="btnNotificarEvento" class="btn-notificar-evento"><i class='fa fa-bell'></i> Quero ser notificado</button>`;
-    }
-
     // Eventos dos botões
     if (isAutor) {
       document.getElementById('btnExcluirEvento').onclick = async () => {
@@ -108,6 +103,14 @@ document.addEventListener('DOMContentLoaded', async () => {
           input.focus();
           input.onblur = async () => {
             if (input.value && input.value !== evento.data) {
+              // Validação: não permitir data passada
+              const hoje = new Date();
+              const novaData = new Date(`${input.value}T${evento.hora || '00:00'}`);
+              if (novaData < hoje) {
+                exibirMensagemEvento('Não é possível definir uma data no passado.', 'error');
+                input.replaceWith(dataSpanEdit);
+                return;
+              }
               await fetch(`${API_BASE_URL}/eventos/${evento.id}`, {
                 method: 'PATCH',
                 headers: {'Content-Type': 'application/json'},
@@ -132,6 +135,15 @@ document.addEventListener('DOMContentLoaded', async () => {
           input.focus();
           input.onblur = async () => {
             if (input.value && input.value !== evento.hora) {
+              // Validação: não permitir hora passada se for hoje
+              const hoje = new Date();
+              const dataEvento = evento.data || hoje.toISOString().slice(0,10);
+              const novaDataHora = new Date(`${dataEvento}T${input.value}`);
+              if (novaDataHora < hoje) {
+                exibirMensagemEvento('Não é possível definir um horário no passado.', 'error');
+                input.replaceWith(horaSpanEdit);
+                return;
+              }
               await fetch(`${API_BASE_URL}/eventos/${evento.id}`, {
                 method: 'PATCH',
                 headers: {'Content-Type': 'application/json'},
@@ -144,16 +156,35 @@ document.addEventListener('DOMContentLoaded', async () => {
           };
         };
       }
-    } else {
-      document.getElementById('btnNotificarEvento').onclick = () => {
-        // Simulação: salva interesse no localStorage
-        let notificados = JSON.parse(localStorage.getItem('notificacoesEvento') || '{}');
-        notificados[evento.id] = true;
-        localStorage.setItem('notificacoesEvento', JSON.stringify(notificados));
-        alert('Você será avisado quando a data do evento estiver próxima!');
-      };
-    }
+    } 
   } catch (e) {
     document.body.innerHTML = '<p style="color:#c00;text-align:center;margin-top:40px">Erro ao carregar evento.</p>';
   }
 });
+
+// Função para exibir mensagem de erro/sucesso
+function exibirMensagemEvento(msg, tipo) {
+  let div = document.getElementById('evento-msg-feedback');
+  if (!div) {
+    div = document.createElement('div');
+    div.id = 'evento-msg-feedback';
+    div.style.position = 'fixed';
+    div.style.top = '24px';
+    div.style.left = '50%';
+    div.style.transform = 'translateX(-50%)';
+    div.style.zIndex = '9999';
+    div.style.background = tipo === 'error' ? '#e53935' : '#10b981';
+    div.style.color = '#fff';
+    div.style.padding = '12px 32px';
+    div.style.borderRadius = '10px';
+    div.style.fontSize = '1.1em';
+    div.style.boxShadow = '0 2px 12px #0002';
+    div.style.maxWidth = '90vw';
+    div.style.minWidth = '200px';
+    div.style.textAlign = 'center';
+    document.body.appendChild(div);
+  }
+  div.textContent = msg;
+  div.style.display = 'block';
+  setTimeout(() => { div.style.display = 'none'; }, 4000);
+}

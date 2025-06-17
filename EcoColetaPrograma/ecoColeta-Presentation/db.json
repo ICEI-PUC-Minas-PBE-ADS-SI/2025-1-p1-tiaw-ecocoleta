@@ -42,7 +42,7 @@
       "tipoUsuario": "coletor",
       "ecopontos": 100000,
       "senha": "2603Betim#2",
-      "imagem": "https://cdn.builder.io/api/v1/image/assets/4c6f6ec200514327a30a7409483092ac/7c3b0c0c0c0c0c0c0c0c0c0c0c0c0c0c0c0c0c0c",
+      "imagem": "",
       "emailVerificado": false,
       "id": 3
     },
@@ -1052,7 +1052,8 @@
               "autorNome": "kauan gomes marques",
               "autorFoto": "assets/img/AvatarKauan.jpg",
               "data": "2025-06-04T00:39:04.116Z",
-              "parentId": "1748660205683"
+              "parentId": "1748660205683",
+              "respostas": []
             }
           ]
         },
@@ -1081,7 +1082,8 @@
                   "autorNome": "kauan gomes marques",
                   "autorFoto": "assets/img/AvatarScrollMaster.jpg",
                   "data": "2025-06-04T00:20:45.085Z",
-                  "parentId": "1748804322383"
+                  "parentId": "1748804322383",
+                  "respostas": []
                 }
               ]
             }
@@ -1140,71 +1142,13 @@
         13
       ],
       "curtidas": 0,
-      "comentarios": [
-        {
-          "id": 1749688036880,
-          "texto": "gostei muito dessa comunidade!!",
-          "autorId": 13,
-          "autorNome": "Ronaldo Augusto Oliveira Lacerda",
-          "autorFoto": "assets/img/AvatarArthurzin.jpg",
-          "data": "2025-06-12T00:27:16.880Z",
-          "parentId": null,
-          "respostas": [
-            {
-              "id": 1749688051284,
-              "texto": "eu também!",
-              "autorId": 13,
-              "autorNome": "Ronaldo Augusto Oliveira Lacerda",
-              "autorFoto": "assets/img/AvatarArthurzin.jpg",
-              "data": "2025-06-12T00:27:31.284Z",
-              "parentId": "1749688036880",
-              "respostas": [
-                {
-                  "id": 1749688060838,
-                  "texto": "engual eu",
-                  "autorId": 13,
-                  "autorNome": "Ronaldo Augusto Oliveira Lacerda",
-                  "autorFoto": "assets/img/AvatarArthurzin.jpg",
-                  "data": "2025-06-12T00:27:40.838Z",
-                  "parentId": "1749688051284"
-                }
-              ]
-            }
-          ]
-        }
-      ],
+      "comentarios": [],
       "visualizacoes": 0,
       "tags": [
         "tecnologia",
         "comunidade"
       ],
       "id": 4
-    },
-    {
-      "nome": "Arthuzinho Rei Delas",
-      "descricao": "qwertyukliuytrgdeswartyuilkjhgqwertyukliuytrgdeswartyuilkjhg",
-      "tipo": "cultura",
-      "regras": "qwertyukliuytrgdeswartyuilkjhg",
-      "banner": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAKEAAABrCAYAAAAfIuJkAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAEtSURBVHhe7dIxAYAwEMDAp/4FA0u71EOWuyUG8rzfvwdC6xYyJiRnQnImJGdCciYkZ0JyJiRnQnImJGdCciYkZ0JyJiRnQnImJGdCciYkZ0JyJiRnQnImJGdCciYkZ0JyJiRnQnImJGdCciYkZ0JyJiRnQnImJGdCciYkZ0JyJiRnQnImJGdCciYkZ0JyJiRnQnImJGdCciYkZ0JyJiRnQnImJGdCciYkZ0JyJiRnQnImJGdCciYkZ0JyJiRnQnImJGdCciYkZ0JyJiRnQnImJGdCciYkZ0JyJiRnQnImJGdCciYkZ0JyJiRnQnImJGdCciYkZ0JyJiRnQnImJGdCciYkZ0JyJiRnQnImJGdCciYkZ0JyJiRnQnImJGdCciYkZ0JyJiRnQnImJDZzACdlBMD+sbJEAAAAAElFTkSuQmCC",
-      "autor": {
-        "id": 4,
-        "nome": "kauan gomes marques",
-        "email": "kayangomes849@gmail.com",
-        "foto": "assets/img/AvatarKauan.jpg"
-      },
-      "dataCriacao": "2025-06-04T01:21:27.927Z",
-      "status": "ativa",
-      "membros": [
-        4
-      ],
-      "curtidas": 0,
-      "comentarios": [],
-      "visualizacoes": 0,
-      "tags": [
-        "cultura",
-        "comunidade"
-      ],
-      "id": 5
     }
   ],
   "eventos": [
@@ -1222,19 +1166,6 @@
       "id": 1
     },
     {
-      "titulo": "Evento 2",
-      "descricao": "Esse é o segundo teste de eventos",
-      "data": "2025-07-08",
-      "hora": "20:00",
-      "imagem": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAKEAAABrCAYAAAAfIuJkAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAEtSURBVHhe7dIxAYAwEMDAp/4FA0u71EOWuyUG8rzfvwdC6xYyJiRnQnImJGdCciYkZ0JyJiRnQnImJGdCciYkZ0JyJiRnQnImJGdCciYkZ0JyJiRnQnImJGdCciYkZ0JyJiRnQnImJGdCciYkZ0JyJiRnQnImJGdCciYkZ0JyJiRnQnImJGdCciYkZ0JyJiRnQnImJGdCciYkZ0JyJiRnQnImJGdCciYkZ0JyJiRnQnImJGdCciYkZ0JyJiRnQnImJGdCciYkZ0JyJiRnQnImJGdCciYkZ0JyJiRnQnImJGdCciYkZ0JyJiRnQnImJGdCciYkZ0JyJiRnQnImJGdCciYkZ0JyJiRnQnImJGdCciYkZ0JyJiRnQnImJGdCciYkZ0JyJiRnQnImJDZzACdlBMD+sbJEAAAAAElFTkSuQmCC",
-      "autor": {
-        "nome": "kauan gomes marques",
-        "email": "kayangomes849@gmail.com",
-        "foto": "assets/img/AvatarKauan.jpg"
-      },
-      "id": 2
-    },
-    {
       "titulo": "Teste 3",
       "descricao": "teste de notificação",
       "data": "2025-06-04",
@@ -1246,6 +1177,45 @@
         "foto": "assets/img/AvatarKauan.jpg"
       },
       "id": 3
+    },
+    {
+      "titulo": "Teste 2",
+      "descricao": "Testando funcionalidade",
+      "data": "2025-06-27",
+      "hora": "12:00",
+      "imagem": "http://localhost:3000/criar-evento.html",
+      "autor": {
+        "nome": "Matheus Augusto",
+        "email": "matheusaagd2@gmail.com",
+        "foto": "assets/img/AvatarScrollMaster.jpg"
+      },
+      "id": 4
+    },
+    {
+      "titulo": "Teste 3",
+      "descricao": "Teste 3",
+      "data": "2025-06-27",
+      "hora": "12:03",
+      "imagem": "http://localhost:3000/criar-evento.html",
+      "autor": {
+        "nome": "Matheus Augusto",
+        "email": "matheusaagd2@gmail.com",
+        "foto": "assets/img/AvatarScrollMaster.jpg"
+      },
+      "id": 5
+    },
+    {
+      "titulo": "w",
+      "descricao": "w",
+      "data": "2025-06-20",
+      "hora": "22:12",
+      "imagem": "http://localhost:3000/criar-evento.html",
+      "autor": {
+        "nome": "Matheus Augusto",
+        "email": "matheusaagd2@gmail.com",
+        "foto": "assets/img/AvatarScrollMaster.jpg"
+      },
+      "id": 6
     }
   ],
   "relatorios": [
