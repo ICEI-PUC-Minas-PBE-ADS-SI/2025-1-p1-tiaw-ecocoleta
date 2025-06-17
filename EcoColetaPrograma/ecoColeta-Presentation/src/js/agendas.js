@@ -457,10 +457,14 @@ class AgendasManager {
     const materiaisHTML = agenda.materiais ? 
       agenda.materiais.map(material => 
         `<span class="material-tag ${material.toLowerCase()}">${this.formatMaterialName(material)}</span>`
-      ).join('') : '';
-
+      ).join('') : '';    // Verificar se o agendamento pode ser cancelado
+    // Só permitir cancelamento para agendamentos que ainda não aconteceram e que não foram cancelados ou concluídos
+    const now = new Date();
+    const canCancel = (startDate > now) && 
+                      (agenda.status !== 'cancelado' && agenda.status !== 'concluido');
+    
     return `
-      <div class="agenda-item ${statusClass}">
+      <div class="agenda-item ${statusClass}" data-agenda-id="${agenda.idAgenda}" data-ponto-id="${agenda.pontoColetaId}">
         <div class="agenda-header">
           <div class="agenda-date">
             <div class="date-day">${day}</div>
@@ -479,6 +483,14 @@ class AgendasManager {
         <div class="agenda-materials">
           ${materiaisHTML}
         </div>
+        ${canCancel ? 
+          `<div style="display: flex; justify-content: flex-end; margin-top: 10px;">
+            <button class="btn-cancelar-agendamento" data-agenda-id="${agenda.idAgenda}" data-ponto-id="${agenda.pontoColetaId}" 
+            style="background-color: #f44336; color: white; border: none; border-radius: 4px; padding: 5px 10px; cursor: pointer;">
+              Cancelar
+            </button>
+          </div>` : ''
+        }
       </div>
     `;
   }
@@ -495,13 +507,87 @@ class AgendasManager {
     
     return statusMap[status] || status.charAt(0).toUpperCase() + status.slice(1);
   }
-
   // Configurar ações para agendas
   setupAgendaActions() {
     // Listener para o botão "Ver Todas as Agendas"
     const verTodasButton = document.getElementById('ver-todas-agendas');
     if (verTodasButton) {
       verTodasButton.addEventListener('click', () => this.showAllAgendas());
+    }
+    
+    // Configurar os botões de cancelamento de agendamentos
+    document.querySelectorAll('.btn-cancelar-agendamento').forEach(button => {
+      button.addEventListener('click', async (e) => {
+        e.preventDefault();
+        
+        const agendaId = button.dataset.agendaId;
+        const pontoId = button.dataset.pontoId;
+        
+        if (!agendaId || !pontoId) {
+          alert('Não foi possível identificar o agendamento');
+          return;
+        }
+        
+        if (confirm('Tem certeza que deseja cancelar este agendamento?')) {
+          try {
+            await this.cancelarAgendamento(agendaId, pontoId);
+          } catch (error) {
+            console.error('Erro ao cancelar agendamento:', error);
+            alert('Erro ao cancelar o agendamento. Tente novamente.');
+          }
+        }
+      });
+    });
+  }
+  
+  // Método para cancelar um agendamento
+  async cancelarAgendamento(agendaId, pontoId) {
+    try {
+      // 1. Buscar os dados atualizados do ponto de coleta
+      const response = await fetch(`${API_BASE_URL}/pontosDeColeta/${pontoId}`);
+      if (!response.ok) {
+        throw new Error(`Erro ao buscar dados do ponto de coleta: ${response.status}`);
+      }
+      
+      const pontoDeColeta = await response.json();
+      
+      // 2. Encontrar o agendamento específico
+      if (!pontoDeColeta.agenda || !Array.isArray(pontoDeColeta.agenda)) {
+        throw new Error('Dados de agendamento inválidos');
+      }
+      
+      const agendaIndex = pontoDeColeta.agenda.findIndex(a => a.idAgenda === agendaId);
+      if (agendaIndex === -1) {
+        throw new Error('Agendamento não encontrado');
+      }
+      
+      // 3. Atualizar o status do agendamento para "cancelado"
+      pontoDeColeta.agenda[agendaIndex].status = 'cancelado';
+      
+      // 4. Salvar as alterações no servidor
+      const updateResponse = await fetch(`${API_BASE_URL}/pontosDeColeta/${pontoId}`, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(pontoDeColeta)
+      });
+      
+      if (!updateResponse.ok) {
+        throw new Error(`Erro ao atualizar agendamento: ${updateResponse.status}`);
+      }
+      
+      // 5. Mostrar mensagem de sucesso
+      alert('Agendamento cancelado com sucesso');
+      
+      // 6. Recarregar os dados para atualizar a interface
+      await this.loadData();
+      
+      return true;
+    } catch (error) {
+      console.error('Erro ao cancelar agendamento:', error);
+      alert(`Erro ao cancelar agendamento: ${error.message}`);
+      throw error;
     }
   }
   // Configurar event listeners
