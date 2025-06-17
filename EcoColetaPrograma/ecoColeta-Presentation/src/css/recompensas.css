@@ -104,6 +104,7 @@ body {
 }
 .historico-container {
   margin-top: 48px;
+  margin-bottom: 20px;
   background: #f9fbe7;
   border-radius: 12px;
   padding: 32px 18px 24px 18px;
@@ -252,6 +253,83 @@ body {
   font-size: 0.95em;
   margin-top: 4px;
   white-space: nowrap;
+}
+body.dark-mode {
+  background: #23272E !important;
+  color: #f3f3f3;
+}
+body.dark-mode .recompensas-container,
+body.dark-mode .historico-container,
+body.dark-mode .recompensas-form {
+  background: #23272E !important;
+  color: #f3f3f3 !important;
+  box-shadow: 0 4px 24px rgba(0,0,0,0.18);
+}
+body.dark-mode .recompensas-titulo,
+body.dark-mode .recompensas-ecopontos,
+body.dark-mode .recompensas-card-title,
+body.dark-mode .recompensas-card-points,
+body.dark-mode #historico h2,
+body.dark-mode .recompensas-form label {
+  color: #7fffaf !important;
+}
+body.dark-mode .recompensas-cards {
+  background: transparent !important;
+}
+body.dark-mode .recompensas-card {
+  background: #23272E !important;
+  color: #f3f3f3 !important;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.28);
+}
+body.dark-mode .recompensas-card-desc,
+body.dark-mode .recompensas-card-quantidade,
+body.dark-mode .recompensas-historico-data,
+body.dark-mode .recompensas-historico-vazio {
+  color: #bdbdbd !important;
+}
+body.dark-mode .recompensas-card-btn,
+body.dark-mode .recompensas-card-btn:active,
+body.dark-mode .recompensas-card-btn:focus {
+  background: linear-gradient(90deg, #10b981 60%, #059669 100%) !important;
+  color: #fff !important;
+  box-shadow: 0 2px 8px rgba(16,185,129,0.18);
+}
+body.dark-mode .recompensas-card-btn:hover {
+  background: linear-gradient(90deg, #059669 60%, #10b981 100%) !important;
+}
+body.dark-mode .recompensas-excluir-btn {
+  background: #d32f2f !important;
+  color: #fff !important;
+}
+body.dark-mode .recompensas-excluir-btn:hover {
+  background: #b71c1c !important;
+}
+body.dark-mode .historico-container {
+  background: #23272E !important;
+  color: #f3f3f3 !important;
+}
+body.dark-mode .recompensas-historico-item {
+  background: #181a1b !important;
+  color: #f3f3f3 !important;
+  box-shadow: 0 1px 4px rgba(16,185,129,0.10);
+}
+body.dark-mode .recompensas-form input,
+body.dark-mode .recompensas-form textarea {
+  background: #181a1b !important;
+  color: #f3f3f3 !important;
+  border: 1.5px solid #10b981 !important;
+}
+body.dark-mode .recompensas-form input:focus,
+body.dark-mode .recompensas-form textarea:focus {
+  border: 1.5px solid #059669 !important;
+}
+body.dark-mode .btn-indisponivel {
+  background: #444 !important;
+  color: #bbb !important;
+}
+body.dark-mode .recompensas-card-btn[disabled]:hover::after {
+  background: #444 !important;
+  color: #bbb !important;
 }
 @media (max-width: 900px) {
   .recompensas-cards {

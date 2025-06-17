@@ -56,7 +56,7 @@
       "cidade": "Sarzedo",
       "estado": "MG",
       "tipoUsuario": "doador",
-      "ecopontos": 167,
+      "ecopontos": 112,
       "senha": "ScrumMaster@123",
       "imagem": "assets/img/AvatarKauan.jpg",
       "emailVerificado": false,
@@ -1004,10 +1004,10 @@
   ],
   "recompensas": [
     {
-      "nome": "colekkauna",
-      "descricao": "ah",
+      "nome": "agua",
+      "descricao": "é agua pô",
       "imagem": "assets/img/gift.svg",
-      "pontosNecessarios": 3,
+      "pontosNecessarios": 5,
       "quantidade": 0,
       "id": 1
     }
