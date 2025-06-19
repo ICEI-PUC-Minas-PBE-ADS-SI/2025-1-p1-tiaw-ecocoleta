@@ -114,7 +114,7 @@ function filtrarPontos(termo = "", filtros = []) {
 }
 
 // Configuração da URL base do servidor
-const API_BASE_URL = "http://localhost:3000";
+const API_BASE_URL = "https://two025-1-p1-tiaw-ecocoleta.onrender.com";
 
 // Atualizar a função de carregamento inicial
 document.addEventListener("DOMContentLoaded", () => {

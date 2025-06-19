@@ -139,7 +139,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 }
             };
             // Enviar para API
-            const API_BASE_URL = 'http://localhost:3000/api';
+            const API_BASE_URL = 'https://two025-1-p1-tiaw-ecocoleta.onrender.com/api';
             const response = await fetch(`${API_BASE_URL}/eventos`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },

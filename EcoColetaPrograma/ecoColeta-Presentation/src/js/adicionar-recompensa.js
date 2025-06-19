@@ -1,5 +1,7 @@
 // Script para adicionar recompensa
 
+const API_BASE_URL = 'https://two025-1-p1-tiaw-ecocoleta.onrender.com';
+
 document.getElementById('form-adicionar-recompensa').addEventListener('submit', async function(e) {
   e.preventDefault();
   const imagem = document.getElementById('imagem').value.trim() || 'assets/img/gift.svg'; // Imagem padrão
@@ -27,7 +29,7 @@ document.getElementById('form-adicionar-recompensa').addEventListener('submit', 
   };
 
   try {
-    const res = await fetch('http://localhost:3000/api/recompensas', {
+    const res = await fetch(`${API_BASE_URL}/api/recompensas`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(recompensa)

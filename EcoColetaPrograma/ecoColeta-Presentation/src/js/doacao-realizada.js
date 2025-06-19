@@ -1,5 +1,5 @@
 document.addEventListener('DOMContentLoaded', function() {
-    const API_URL = 'http://localhost:3000';
+    const API_URL = 'https://two025-1-p1-tiaw-ecocoleta.onrender.com';
 
     // Função para formatar o valor em reais
     function formatCurrency(value) {
@@ -71,4 +71,4 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Carrega os detalhes da doação quando a página é carregada
     loadDonationDetails();
-}); 
+});

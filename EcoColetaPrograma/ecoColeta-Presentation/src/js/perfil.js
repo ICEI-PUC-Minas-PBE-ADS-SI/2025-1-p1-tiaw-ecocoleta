@@ -2,6 +2,8 @@
 // Busca dados do usuário, permite edição, atualização e logout
 // Adapte a URL do JSON Server conforme necessário
 
+const API_BASE_URL = "https://two025-1-p1-tiaw-ecocoleta.onrender.com";
+
 const usuarioLogado = JSON.parse(localStorage.getItem("usuarioLogado"));
 if (!usuarioLogado) {
   window.location.href = "autent.html";

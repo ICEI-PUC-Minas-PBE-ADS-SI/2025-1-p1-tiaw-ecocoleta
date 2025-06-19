@@ -1,3 +1,5 @@
+const API_BASE_URL = "https://two025-1-p1-tiaw-ecocoleta.onrender.com";
+
 // Função para obter usuário logado
 function getUsuarioLogado() {
   return JSON.parse(localStorage.getItem("usuarioLogado"));
@@ -5,7 +7,7 @@ function getUsuarioLogado() {
 
 // Função para buscar dados completos do usuário logado na API
 async function buscarUsuarioCompleto(id) {
-  const res = await fetch(`http://localhost:3000/api/usuarios/${id}`);
+  const res = await fetch(`${API_BASE_URL}/api/usuarios/${id}`);
   if (!res.ok) throw new Error("Usuário não encontrado");
   return res.json();
 }
@@ -90,7 +92,7 @@ async function trocarRecompensa(pontosNecessarios, nomeRecompensa, recompensaId)
     return;
   }
   // Chama o endpoint seguro do backend para deduzir ecopontos e decrementar quantidade
-  const resposta = await fetch(`http://localhost:3000/api/usuarios/${usuario.id}/resgatar-recompensa`, {
+  const resposta = await fetch(`${API_BASE_URL}/api/usuarios/${usuario.id}/resgatar-recompensa`, {
     method: "PATCH",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({ pontosNecessarios, nomeRecompensa, recompensaId })
@@ -111,7 +113,7 @@ async function trocarRecompensa(pontosNecessarios, nomeRecompensa, recompensaId)
 
 // Função para buscar recompensas do backend
 async function buscarRecompensas() {
-  const res = await fetch('http://localhost:3000/api/recompensas');
+  const res = await fetch(`${API_BASE_URL}/api/recompensas`);
   if (!res.ok) return [];
   return res.json();
 }
@@ -158,7 +160,7 @@ async function renderizarRecompensas() {
       btn.addEventListener('click', async function () {
         if (confirm('Tem certeza que deseja excluir esta recompensa?')) {
           const id = btn.getAttribute('data-id');
-          await fetch(`http://localhost:3000/api/recompensas/${id}`, { method: 'DELETE' });
+          await fetch(`${API_BASE_URL}/api/recompensas/${id}`, { method: 'DELETE' });
           renderizarRecompensas();
         }
       });

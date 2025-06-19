@@ -1,6 +1,7 @@
 // Configurações das APIs sociais
 const GOOGLE_CLIENT_ID = "SEU_GOOGLE_CLIENT_ID.apps.googleusercontent.com";
 const FACEBOOK_APP_ID = "SEU_FACEBOOK_APP_ID";
+const API_BASE_URL = "https://two025-1-p1-tiaw-ecocoleta.onrender.com";
 
 document.addEventListener("DOMContentLoaded", function () {
   // Elementos principais
@@ -239,7 +240,7 @@ document.addEventListener("DOMContentLoaded", function () {
   async function handleSocialLogin(userData) {
     try {      // Verifica se o usuário já existe
       const response = await fetch(
-        `http://localhost:3000/api/usuarios?email=${encodeURIComponent(
+        `${API_BASE_URL}/api/usuarios?email=${encodeURIComponent(
           userData.email
         )}`
       );
@@ -248,7 +249,7 @@ document.addEventListener("DOMContentLoaded", function () {
       let usuario;
       if (usuarios.length === 0) {
         // Cria novo usuário
-        const createResponse = await fetch("http://localhost:3000/api/usuarios", {
+        const createResponse = await fetch("${API_BASE_URL}/api/usuarios", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({
@@ -265,13 +266,13 @@ document.addEventListener("DOMContentLoaded", function () {
       } else {        usuario = usuarios[0];
         // Atualiza informações do usuário se necessário
         if (userData.provider === "google" && !usuario.googleId) {
-          await fetch(`http://localhost:3000/api/usuarios/${usuario.id}`, {
+          await fetch(`${API_BASE_URL}/api/usuarios/${usuario.id}`, {
             method: "PATCH",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({ googleId: userData.googleId }),
           });
         } else if (userData.provider === "facebook" && !usuario.facebookId) {
-          await fetch(`http://localhost:3000/api/usuarios/${usuario.id}`, {
+          await fetch(`${API_BASE_URL}/api/usuarios/${usuario.id}`, {
             method: "PATCH",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({ facebookId: userData.facebookId }),

@@ -1,7 +1,7 @@
 // comunidades-home.js
 // Carrega até 3 comunidades e exibe na home, removendo a section se não houver
 
-const API_BASE_URL = "http://localhost:3000/api";
+const API_BASE_URL = "https://two025-1-p1-tiaw-ecocoleta.onrender.com/api";
 
 document.addEventListener("DOMContentLoaded", async () => {
   const section = document.getElementById("community-section");
