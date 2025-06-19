@@ -421,7 +421,7 @@ async function salvarAlteracoes(dados) {
   // localStorage.setItem("usuarioLogado", JSON.stringify(usuarioAtualizadoTemporariamente));
 
   try {
-    const response = await fetch(`http://localhost:3000/api/usuarios/${usuarioLogado.id}`, {
+    const response = await fetch(`${API_BASE_URL}/api/usuarios/${usuarioLogado.id}`, {
       method: "PATCH",
       headers: {
         "Content-Type": "application/json",
@@ -473,7 +473,7 @@ async function salvarAlteracoes(dados) {
 async function preencherPerfil() {
   try {
     const response = await fetch(
-      `http://localhost:3000/api/usuarios/${usuarioLogado.id}`
+      `${API_BASE_URL}/api/usuarios/${usuarioLogado.id}`
     );
     const usuario = await response.json();
     
@@ -700,7 +700,7 @@ form.addEventListener("submit", async function (e) {
   };
   try {
     const response = await fetch(
-      `http://localhost:3000/api/usuarios/${usuarioLogado.id}`,
+      `${API_BASE_URL}/api/usuarios/${usuarioLogado.id}`,
       {
         method: "PATCH",
         headers: { "Content-Type": "application/json" },
@@ -949,7 +949,7 @@ function initAvatarModal() {
 
     try {
       const response = await fetch(
-        `http://localhost:3000/api/usuarios/${usuarioLogado.id}`,
+        `${API_BASE_URL}/api/usuarios/${usuarioLogado.id}`,
         {
           method: "PATCH",
           headers: {

@@ -278,15 +278,38 @@ const validacoes = {
 // Máscara para telefone
 function mascaraTelefone(evento) {
   let valor = evento.target.value.replace(/\D/g, "");
-  valor = valor.replace(/^(\d{2})(\d)/g, "($1) $2");
-  valor = valor.replace(/(\d)(\d{4})$/, "$1-$2");
-  evento.target.value = valor;
+  if (valor.length > 11) valor = valor.slice(0, 11);
+  if (valor.length > 10) {
+    valor = valor.replace(/(\d{2})(\d{5})(\d{4})/, "($1) $2-$3");
+  } else if (valor.length > 6) {
+    valor = valor.replace(/(\d{2})(\d{4})(\d{0,4})/, "($1) $2-$3");
+  } else if (valor.length > 2) {
+    valor = valor.replace(/(\d{2})(\d{0,5})/, "($1) $2");
+  } else {
+    valor = valor.replace(/(\d{0,2})/, "($1");
+  }
+  evento.target.value = valor.trim();
 }
+
+// Aplica a máscara ao digitar
+document.addEventListener("input", function(e) {
+  if (e.target && e.target.name === "telefone") {
+    mascaraTelefone(e);
+  }
+});
 
 // Validação em tempo real
 function validarCampo(input) {
-  const valor = input.value;
+  let valor = input.value;
   const tipo = input.name;
+  if (tipo === "telefone") {
+    // Aplica a máscara antes de validar
+    let temp = document.createElement('input');
+    temp.value = valor;
+    mascaraTelefone({ target: temp });
+    valor = temp.value;
+    input.value = valor;
+  }
   const mensagemErro = validacoes[tipo](valor);
 
   let feedbackElement = input.nextElementSibling;
