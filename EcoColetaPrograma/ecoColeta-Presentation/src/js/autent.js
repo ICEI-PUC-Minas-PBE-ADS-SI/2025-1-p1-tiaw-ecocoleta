@@ -321,7 +321,7 @@ document.addEventListener("DOMContentLoaded", function () {
     const senha = loginForm.querySelector('#loginSenha').value;
     try {
       const response = await fetch(
-        `${API_BASE_URL}/usuarios?email=${encodeURIComponent(email)}`
+        `${API_BASE_URL}/api/usuarios?email=${encodeURIComponent(email)}`
       );
       const usuarios = await response.json();
       if (usuarios.length === 0) {
@@ -365,7 +365,7 @@ document.addEventListener("DOMContentLoaded", function () {
       // Verifica se o e-mail já está cadastrado
       const email = formData.get("email");      try {
         const verificaResponse = await fetch(
-          `${API_BASE_URL}/usuarios?email=${encodeURIComponent(email)}`
+          `${API_BASE_URL}/api/usuarios?email=${encodeURIComponent(email)}`
         );
         const usuariosExistentes = await verificaResponse.json();
         if (usuariosExistentes.length > 0) {
@@ -414,7 +414,7 @@ document.addEventListener("DOMContentLoaded", function () {
         usuario.horarioColeta = formData.get("horarioColeta");
         usuario.materiaisColeta = materiaisColeta;
       }      try {
-        const response = await fetch(`${API_BASE_URL}/usuarios`, {
+        const response = await fetch(`${API_BASE_URL}/api/usuarios`, {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify(usuario),
