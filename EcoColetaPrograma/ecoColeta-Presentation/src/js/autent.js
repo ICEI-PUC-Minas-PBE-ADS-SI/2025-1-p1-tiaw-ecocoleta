@@ -312,8 +312,10 @@ document.addEventListener("DOMContentLoaded", function () {
   // Submissão do formulário de login
   loginForm.addEventListener("submit", async function (e) {
     e.preventDefault();
-    const email = loginForm.email.value;
-    const senha = loginForm.senha.value;    try {
+    // Use os IDs corretos dos inputs
+    const email = loginForm.querySelector('#loginEmail').value;
+    const senha = loginForm.querySelector('#loginSenha').value;
+    try {
       const response = await fetch(
         `http://localhost:3000/api/usuarios?email=${encodeURIComponent(email)}`
       );

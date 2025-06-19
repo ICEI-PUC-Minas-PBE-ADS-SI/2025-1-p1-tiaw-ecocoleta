@@ -265,6 +265,14 @@ const validacoes = {
   materiais: (valor) => {
     return valor.length > 0 ? "" : "Selecione pelo menos um material";
   },
+  data: (valor) => {
+    if (!valor) return "Selecione uma data";
+    const hoje = new Date();
+    const dataSelecionada = new Date(valor);
+    hoje.setHours(0,0,0,0);
+    if (dataSelecionada < hoje) return "A data não pode ser no passado";
+    return "";
+  },
 };
 
 // Máscara para telefone
@@ -281,14 +289,12 @@ function validarCampo(input) {
   const tipo = input.name;
   const mensagemErro = validacoes[tipo](valor);
 
-  const feedbackElement = input.nextElementSibling;
-  if (
-    !feedbackElement ||
-    !feedbackElement.classList.contains("feedback-mensagem")
-  ) {
+  let feedbackElement = input.nextElementSibling;
+  if (!feedbackElement || !feedbackElement.classList.contains("feedback-mensagem")) {
     const novoFeedback = document.createElement("div");
     novoFeedback.classList.add("feedback-mensagem");
     input.parentNode.insertBefore(novoFeedback, input.nextSibling);
+    feedbackElement = novoFeedback; // Usa o novo elemento criado
   }
 
   if (mensagemErro) {
@@ -369,11 +375,15 @@ function selecionarHorario(elemento, horario) {
 
   todosHorarios.forEach((h) => h.classList.remove("horario-selecionado"));
   elemento.classList.add("horario-selecionado");
-  horarioInput.value = horario;
+  if (horarioInput) {
+    horarioInput.value = horario;
+    console.log('Horário selecionado:', horarioInput.value); // DEBUG
+  }
 }
 
 // Função para abrir o formulário de agendamento
 function abrirFormularioAgendamento(idPonto) {
+  console.log('abrirFormularioAgendamento chamado', idPonto); // DEBUG
   const ponto = pontosDeColetaData.find((p) => p.id === idPonto);
   if (!ponto) return;
   const infoContent = document.querySelector(".info-content");
@@ -416,91 +426,123 @@ function abrirFormularioAgendamento(idPonto) {
         <button type="submit" class="btn-agendar">Confirmar Agendamento</button>
       </form>
     `;
-  infoContent.insertAdjacentHTML("beforeend", formHtml);
+  infoContent.innerHTML = formHtml;
+  const formAgendamento = infoContent.querySelector(".formulario-agendamento");
+  console.log('Form criado!', formAgendamento); // DEBUG
 
-  // Adiciona eventos e máscaras novamente
-  document
-    .getElementById("telefone")
-    .addEventListener("input", mascaraTelefone);
-  const camposParaValidar = ["nome", "email", "telefone"];
-  camposParaValidar.forEach((campo) => {
-    const input = document.getElementById(campo);
-    input.addEventListener("input", () => validarCampo(input));
-    input.addEventListener("blur", () => validarCampo(input));
-  });
-  document.getElementById("data").addEventListener("change", gerarHorarios);
-  // Gera horários iniciais
-  document.getElementById("data").value = new Date()
-    .toISOString()
-    .split("T")[0];
-  gerarHorarios();
-
-  // Produtos: adicionar/remover campos dinamicamente
-  const produtosLista = document.querySelector(".produtos-lista");
-  const btnAdicionarProduto = document.querySelector(".btn-adicionar-produto");
-  const inputMateriais = document.getElementById("materiaisSelecionados");
-  let produtos = [];
-
-  // Lista de pré-seleção de produtos
-  const produtosPreSelecao = [
-    "Plástico",
-    "Papel",
-    "Vidro",
-    "Pilhas",
-    "Eletrônicos",
-    "Baterias",
-    "Óleo",
-    "Metal",
-  ];
+  // Produtos: seleção dos materiais aceitos pelo ponto
+  const produtosLista = formAgendamento.querySelector(".produtos-lista");
+  const inputMateriais = formAgendamento.querySelector("#materiaisSelecionados");
+  produtosLista.innerHTML = "";
+  const materiaisAceitos = ponto.materiaisAceitos || [];
+  function nomeAmigavel(material) {
+    const nomes = {
+      plastico: "Plástico",
+      papel: "Papel",
+      vidro: "Vidro",
+      pilhas: "Pilhas",
+      eletronicos: "Eletrônicos",
+      baterias: "Baterias",
+      oleo: "Óleo",
+      metal: "Metal",
+    };
+    return nomes[material?.toLowerCase?.()] || material;
+  }
   const preselecaoDiv = document.createElement("div");
   preselecaoDiv.className = "preselecao-produtos";
-  produtosPreSelecao.forEach((nome) => {
+  materiaisAceitos.forEach((material) => {
+    if (!material) return;
     const btn = document.createElement("button");
     btn.type = "button";
     btn.className = "preselecao-produto-btn";
-    btn.textContent = nome;
+    btn.textContent = nomeAmigavel(material);
     btn.onclick = function () {
       btn.classList.toggle("selecionado");
       atualizarProdutosHidden();
     };
     preselecaoDiv.appendChild(btn);
   });
-  produtosLista.parentNode.insertBefore(preselecaoDiv, produtosLista);
+  produtosLista.appendChild(preselecaoDiv);
 
   function atualizarProdutosHidden() {
+    if (!preselecaoDiv) return;
     const selecionados = Array.from(
       preselecaoDiv.querySelectorAll(".preselecao-produto-btn.selecionado")
     ).map((btn) => btn.textContent);
     inputMateriais.value = selecionados.join(",");
   }
 
-  btnAdicionarProduto.onclick = function () {
-    criarCampoProduto();
-  };
+  // Garante que o input de data chama gerarHorarios ao mudar
+  const inputData = formAgendamento.querySelector('#data');
+  if (inputData) {
+    inputData.addEventListener('change', gerarHorarios);
+  }
 
-  // Validação do formulário
-  document
-    .querySelector(".formulario-agendamento")
-    .addEventListener("submit", (e) => {
-      e.preventDefault();
-      let formValido = true;
-      camposParaValidar.forEach((campo) => {
-        const input = document.getElementById(campo);
-        if (!validarCampo(input)) {
-          formValido = false;
-        }
-      });
-      if (produtos.filter((p) => p.trim() !== "").length === 0) {
+  // Garante que o input hidden de horário está limpo ao abrir
+  const inputHorario = formAgendamento.querySelector('#horario');
+  if (inputHorario) inputHorario.value = '';
+
+  // Chama gerarHorarios ao abrir o modal
+  gerarHorarios();
+
+  // Lista de campos obrigatórios para validação
+  const camposParaValidar = ["nome", "email", "telefone", "data"];
+
+  // Adiciona o event listener de submit IMEDIATAMENTE após inserir o form
+  formAgendamento.addEventListener("submit", function (e) {
+    e.preventDefault();
+    console.log('Submit interceptado!'); // DEBUG
+    let formValido = true;
+    camposParaValidar.forEach((campo) => {
+      const input = formAgendamento.querySelector(`#${campo}`);
+      if (!input) return;
+      if (!validarCampo(input)) {
         formValido = false;
-        alert("Adicione pelo menos um produto/material para coleta");
-      }
-      const horario = document.getElementById("horario").value;
-      if (!horario) {
-        formValido = false;
-        alert("Selecione um horário para a coleta");
-      }
-      if (formValido) {
-        alert("Agendamento realizado com sucesso!");
       }
     });
+    if (!inputMateriais.value || inputMateriais.value.split(",").filter((p) => p.trim() !== "").length === 0) {
+      formValido = false;
+      alert("Selecione pelo menos um material para coleta");
+    }
+    const horario = formAgendamento.querySelector("#horario").value;
+    if (!horario) {
+      formValido = false;
+      alert("Selecione um horário para a coleta");
+    }
+    if (formValido) {
+      // Monta objeto de agendamento
+      const agendamento = {
+        nome: formAgendamento.querySelector("#nome").value,
+        email: formAgendamento.querySelector("#email").value,
+        telefone: formAgendamento.querySelector("#telefone").value,
+        materiais: inputMateriais.value.split(","),
+        data: formAgendamento.querySelector("#data").value,
+        horario: formAgendamento.querySelector("#horario").value,
+        pontoId: idPonto,
+        dataHoraInicio: `${formAgendamento.querySelector("#data").value}T${formAgendamento.querySelector("#horario").value.padStart(5, '0')}:00`,
+        status: "pendente"
+      };
+      console.log("Enviando agendamento:", agendamento); // DEBUG
+      fetch(`${API_BASE_URL}/api/pontosDeColeta/${idPonto}/agendar`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(agendamento)
+      })
+      .then(res => {
+        console.log('Resposta do backend:', res); // DEBUG
+        if (!res.ok) throw new Error("Erro ao salvar agendamento");
+        return res.json();
+      })
+      .then((data) => {
+        console.log('Agendamento salvo:', data); // DEBUG
+        alert("Agendamento realizado com sucesso!");
+      })
+      .catch((err) => {
+        alert("Erro ao salvar agendamento. Tente novamente.");
+        console.error("Erro ao salvar agendamento:", err);
+      });
+    }
+  });
 }
+
+console.log('Script carregado!');

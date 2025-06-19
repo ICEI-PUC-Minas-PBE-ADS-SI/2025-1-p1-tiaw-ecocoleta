@@ -458,6 +458,33 @@ app.post('/api/comunidades/:id/curtir', (req, res) => {
   }
 });
 
+// ROTA PARA AGENDAR COLETA E SALVAR NO db.json
+app.post('/api/pontosDeColeta/:id/agendar', (req, res) => {
+  try {
+    const { id } = req.params;
+    const agendamento = req.body;
+    // Busca o ponto de coleta
+    const ponto = jsonServerRouter.db.get('pontosDeColeta').find({ id: parseInt(id) }).value();
+    if (!ponto) {
+      return res.status(404).json({ error: 'Ponto de coleta não encontrado' });
+    }
+    // Gera id único para o agendamento
+    agendamento.idAgenda = `agenda-${id}-${Date.now()}`;
+    agendamento.status = agendamento.status || 'pendente';
+    // Adiciona ao array agenda
+    if (!Array.isArray(ponto.agenda)) ponto.agenda = [];
+    ponto.agenda.push(agendamento);
+    // Salva no db.json
+    jsonServerRouter.db.get('pontosDeColeta')
+      .find({ id: parseInt(id) })
+      .assign({ agenda: ponto.agenda })
+      .write();
+    res.status(201).json({ message: 'Agendamento salvo com sucesso!', agendamento });
+  } catch (error) {
+    res.status(500).json({ error: 'Erro ao salvar agendamento', details: error.message });
+  }
+});
+
 // Função auxiliar para gerar tags
 function gerarTags(nome, descricao, tipo) {
   const texto = `${nome} ${descricao} ${tipo}`.toLowerCase();
