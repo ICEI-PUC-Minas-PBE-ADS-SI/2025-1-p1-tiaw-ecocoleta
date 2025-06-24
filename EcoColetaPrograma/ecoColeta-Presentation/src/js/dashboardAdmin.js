@@ -35,7 +35,7 @@ class DashboardAdmin {
     // Sidebar é agora gerenciado automaticamente pelo sidebar.js
     await this.loadAllData();
     this.loadUserCollectionPoints();
-    this.loadUserAgendas();
+    await this.loadUserAgendas();
     this.updateDashboardStats();
     this.updateStatsWithAnimation();
     this.renderCharts();
@@ -305,23 +305,48 @@ class DashboardAdmin {
   }
 
   // Carregar todas as agendas dos pontos de coleta do usuário
-  loadUserAgendas() {
+  async loadUserAgendas() {
     this.userAgendas = [];
     
-    this.userCollectionPoints.forEach(ponto => {
-      if (ponto.agenda && ponto.agenda.length > 0) {
-        ponto.agenda.forEach(agenda => {
-          this.userAgendas.push({
-            ...agenda,
-            pontoColetaId: ponto.id,
-            pontoColetaNome: ponto.nome,
-            pontoColetaEndereco: ponto.endereco
-          });
-        });
+    try {
+      // Buscar todos os agendamentos via API
+      const response = await fetch(`${API_BASE_URL}/agendamentos`);
+      if (!response.ok) {
+        throw new Error('Erro ao buscar agendamentos');
       }
-    });
+      
+      const todosAgendamentos = await response.json();
+      console.log('Todos os agendamentos encontrados:', todosAgendamentos);
+      
+      // Filtrar agendamentos relacionados aos pontos do usuário
+      const pontosUsuarioIds = this.userCollectionPoints.map(p => p.id.toString());
+      console.log('IDs dos pontos do usuário:', pontosUsuarioIds);
+      
+      // Filtrar agendamentos do usuário atual ou dos pontos do usuário
+      this.userAgendas = todosAgendamentos.filter(agendamento => {
+        const isUserAgenda = agendamento.doadorEmail === this.currentUser?.email;
+        const isPontoDoUsuario = pontosUsuarioIds.includes(agendamento.pontoColetaId.toString());
+        
+        return isUserAgenda || isPontoDoUsuario;
+      });
+      
+      // Enriquecer com dados do ponto de coleta
+      this.userAgendas = this.userAgendas.map(agenda => {
+        const ponto = this.pontosDeColeta.find(p => p.id.toString() === agenda.pontoColetaId.toString());
+        return {
+          ...agenda,
+          pontoColetaNome: ponto?.nome || 'Ponto não encontrado',
+          pontoColetaEndereco: ponto?.endereco || 'Endereço não disponível'
+        };
+      });
 
-    console.log(`Total de agendas do usuário:`, this.userAgendas.length);
+      console.log(`Total de agendas do usuário:`, this.userAgendas.length);
+      console.log('Agendas do usuário:', this.userAgendas);
+      
+    } catch (error) {
+      console.error('Erro ao carregar agendas do usuário:', error);
+      this.userAgendas = [];
+    }
   }
   // Cálculo de estatísticas
   calculateStats() {

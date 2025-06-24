@@ -1812,5 +1812,61 @@
         "acaoRecomendada": "Avaliar viabilidade de inclusão."
       }
     ]
-  }
+  },
+  "agendamentos": [
+    {
+      "pontoColetaId": "1",
+      "doadorEmail": "samuelsilvamaciel02@gmail.com",
+      "dataAgendamento": "2024-12-30",
+      "horarioAgendamento": "14:00",
+      "tipoMaterial": "plastico",
+      "observacoes": "Teste de agendamento via Postman",
+      "id": 1
+    },
+    {
+      "pontoColetaId": "1",
+      "doadorEmail": "jonas@gmail.com",
+      "dataAgendamento": "2025-12-29",
+      "horarioAgendamento": "14:00",
+      "tipoMaterial": "plastico",
+      "observacoes": "Teste de agendamento via Postman",
+      "id": 2
+    },
+    {
+      "pontoColetaId": "31",
+      "doadorEmail": "samuelsilvamaciel02@gmail.com",
+      "dataAgendamento": "2025-06-25",
+      "horarioAgendamento": "15:00",
+      "tipoMaterial": "baterias",
+      "observacoes": "Agendamento para o ponto do coletor Samuel",
+      "id": 3
+    },
+    {
+      "pontoColetaId": "31",
+      "doadorEmail": "percy@gmail.com",
+      "dataAgendamento": "2025-06-25",
+      "horarioAgendamento": "15:00",
+      "tipoMaterial": "baterias",
+      "observacoes": "Agendamento para o ponto do coletor Samuel",
+      "id": 4
+    },
+    {
+      "pontoColetaId": "1",
+      "doadorEmail": "percy@gmail.com",
+      "dataAgendamento": "2025-06-25",
+      "horarioAgendamento": "15:00",
+      "tipoMaterial": "baterias",
+      "observacoes": "Agendamento para o ponto do coletor Samuel",
+      "id": 5
+    },
+    {
+      "pontoColetaId": "31",
+      "doadorEmail": "jana@gmail.com",
+      "dataAgendamento": "2025-06-25",
+      "horarioAgendamento": "15:00",
+      "tipoMaterial": "baterias",
+      "observacoes": "Agendamento para o ponto do coletor Samuel",
+      "id": 6
+    }
+  ]
 }
