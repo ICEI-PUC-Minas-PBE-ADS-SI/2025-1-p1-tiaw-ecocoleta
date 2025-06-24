@@ -451,6 +451,145 @@ app.patch('/api/usuarios/:id/resgatar-recompensa', (req, res) => {
   }
 });
 
+// POST criar agendamento para ponto de coleta
+app.post('/api/pontosDeColeta/:id/agendamentos', (req, res) => {
+  try {
+    const { id } = req.params;
+    const agendamentoData = req.body;
+    
+    // Buscar o ponto de coleta
+    const ponto = jsonServerRouter.db.get('pontosDeColeta').find({ id: parseInt(id) }).value();
+    
+    if (!ponto) {
+      return res.status(404).json({ error: 'Ponto de coleta não encontrado' });
+    }
+    
+    // Gerar ID único para o agendamento
+    const agendamentoId = `agenda-ecoponto${id}-${Date.now()}`;
+    
+    // Criar objeto do agendamento
+    const novoAgendamento = {
+      idAgenda: agendamentoId,
+      idUsuarioAgendamento: agendamentoData.idUsuarioAgendamento || 2,
+      coletorId: ponto.coletorId || agendamentoData.coletorId || 8,
+      dataHoraInicio: agendamentoData.dataHoraInicio,
+      dataHoraFim: agendamentoData.dataHoraFim,
+      tipo: agendamentoData.tipo || 'coleta_agendada',
+      descricao: agendamentoData.descricao,
+      status: agendamentoData.status || 'agendado',
+      materiais: agendamentoData.materiais || [],
+      contatoResponsavel: agendamentoData.contatoResponsavel,
+      observacoes: agendamentoData.observacoes || '',
+      dataCriacao: new Date().toISOString()
+    };
+    
+    // Inicializar array de agenda se não existir
+    if (!ponto.agenda) {
+      ponto.agenda = [];
+    }
+    
+    // Adicionar o agendamento ao array
+    ponto.agenda.push(novoAgendamento);
+    
+    // Atualizar o ponto de coleta no banco
+    jsonServerRouter.db.get('pontosDeColeta')
+      .find({ id: parseInt(id) })
+      .assign({ agenda: ponto.agenda })
+      .write();
+    
+    res.status(201).json({
+      message: 'Agendamento criado com sucesso!',
+      agendamento: novoAgendamento,
+      pontoColeta: ponto.nome
+    });
+    
+  } catch (error) {
+    console.error('Erro ao criar agendamento:', error);
+    res.status(500).json({ error: 'Erro ao criar agendamento', details: error.message });
+  }
+});
+
+// GET listar agendamentos de um ponto de coleta
+app.get('/api/pontosDeColeta/:id/agendamentos', (req, res) => {
+  try {
+    const { id } = req.params;
+    const { status, dataInicio, dataFim } = req.query;
+    
+    const ponto = jsonServerRouter.db.get('pontosDeColeta').find({ id: parseInt(id) }).value();
+    
+    if (!ponto) {
+      return res.status(404).json({ error: 'Ponto de coleta não encontrado' });
+    }
+    
+    let agendamentos = ponto.agenda || [];
+    
+    // Filtrar por status se fornecido
+    if (status) {
+      agendamentos = agendamentos.filter(a => a.status === status);
+    }
+    
+    // Filtrar por período se fornecido
+    if (dataInicio && dataFim) {
+      agendamentos = agendamentos.filter(a => {
+        const dataAgenda = new Date(a.dataHoraInicio);
+        return dataAgenda >= new Date(dataInicio) && dataAgenda <= new Date(dataFim);
+      });
+    }
+    
+    res.json({
+      pontoColeta: {
+        id: ponto.id,
+        nome: ponto.nome,
+        endereco: ponto.endereco
+      },
+      agendamentos: agendamentos
+    });
+    
+  } catch (error) {
+    res.status(500).json({ error: 'Erro ao buscar agendamentos', details: error.message });
+  }
+});
+
+// PATCH atualizar status de agendamento
+app.patch('/api/pontosDeColeta/:pontoId/agendamentos/:agendaId', (req, res) => {
+  try {
+    const { pontoId, agendaId } = req.params;
+    const { status, observacoes } = req.body;
+    
+    const ponto = jsonServerRouter.db.get('pontosDeColeta').find({ id: parseInt(pontoId) }).value();
+    
+    if (!ponto) {
+      return res.status(404).json({ error: 'Ponto de coleta não encontrado' });
+    }
+    
+    const agendamentos = ponto.agenda || [];
+    const agendamentoIndex = agendamentos.findIndex(a => a.idAgenda === agendaId);
+    
+    if (agendamentoIndex === -1) {
+      return res.status(404).json({ error: 'Agendamento não encontrado' });
+    }
+    
+    // Atualizar agendamento
+    if (status) agendamentos[agendamentoIndex].status = status;
+    if (observacoes) agendamentos[agendamentoIndex].observacoes = observacoes;
+    agendamentos[agendamentoIndex].dataAtualizacao = new Date().toISOString();
+    
+    // Salvar alterações
+    jsonServerRouter.db.get('pontosDeColeta')
+      .find({ id: parseInt(pontoId) })
+      .assign({ agenda: agendamentos })
+      .write();
+    
+    res.json({
+      message: 'Agendamento atualizado com sucesso!',
+      agendamento: agendamentos[agendamentoIndex]
+    });
+    
+  } catch (error) {
+    res.status(500).json({ error: 'Erro ao atualizar agendamento', details: error.message });
+  }
+});
+
 // Função auxiliar para gerar tags
 function gerarTags(nome, descricao, tipo) {
   const texto = `${nome} ${descricao} ${tipo}`.toLowerCase();
