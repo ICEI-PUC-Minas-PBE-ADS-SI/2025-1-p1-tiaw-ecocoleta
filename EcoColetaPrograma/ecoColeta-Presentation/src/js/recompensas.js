@@ -1,4 +1,4 @@
-const API_BASE_URL = "https://two025-1-p1-tiaw-ecocoleta.onrender.com";
+const API_BASE_URL = "http://localhost:3000/api";
 
 // Função para obter usuário logado
 function getUsuarioLogado() {

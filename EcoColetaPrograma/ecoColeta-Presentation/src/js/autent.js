@@ -4,7 +4,7 @@ const FACEBOOK_APP_ID = "SEU_FACEBOOK_APP_ID";
 // Detecta ambiente e define a base da API corretamente
 const API_BASE_URL = window.location.hostname === "localhost"
   ? "http://localhost:3000"
-  : "https://two025-1-p1-tiaw-ecocoleta.onrender.com";
+  : "http://localhost:3000/api";
 
 document.addEventListener("DOMContentLoaded", function () {
   // Elementos principais

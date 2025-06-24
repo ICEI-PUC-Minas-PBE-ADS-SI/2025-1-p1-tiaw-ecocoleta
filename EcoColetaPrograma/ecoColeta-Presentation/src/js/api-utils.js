@@ -5,7 +5,7 @@
 
 // Configuração da API
 const API_CONFIG = {
-    BASE_URL: 'https://two025-1-p1-tiaw-ecocoleta.onrender.com/api',
+    BASE_URL: 'http://localhost:3000/api',
     TIMEOUT: 10000, // 10 segundos
     RETRY_ATTEMPTS: 3
 };
