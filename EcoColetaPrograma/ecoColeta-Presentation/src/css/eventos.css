@@ -1,0 +1,374 @@
+/* Detalhe do Evento - estilos principais */
+.detalhe-evento-container {
+  max-width: 700px;
+  margin: 40px auto;
+  background: #fff;
+  border-radius: 16px;
+  box-shadow: 0 4px 16px rgba(4, 170, 109, 0.10), 0 2px 8px rgba(0,0,0,0.07);
+  overflow: hidden;
+  position: relative;
+}
+.evento-banner img {
+  width: 100%;
+  max-height: 320px;
+  object-fit: cover;
+  border-radius: 16px 16px 0 0;
+  display: block;
+}
+.evento-detalhe-content {
+  padding: 32px 32px 0 32px;
+}
+.evento-detalhe-content h1 {
+  font-size: 2em;
+  color: #047857;
+  margin-bottom: 12px;
+  font-weight: 700;
+}
+.evento-status-data {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 18px;
+  flex-wrap: wrap;
+}
+.evento-status {
+  font-weight: 600;
+  font-size: 1.05em;
+  padding: 4px 14px;
+  border-radius: 8px;
+  background: #e0f7fa;
+  color: #047857;
+  border: 1px solid #b2f5ea;
+  margin-right: 8px;
+}
+.status-breve {
+  background: #fffbe6;
+  color: #b59f00;
+  border-color: #ffe066;
+}
+.status-agora {
+  background: #e6fffa;
+  color: #059669;
+  border-color: #34d399;
+}
+.status-finalizado {
+  background: #f8f9fa;
+  color: #888;
+  border-color: #e0e0e0;
+}
+.evento-autor-detalhe {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 0;
+  margin-top: 32px;
+  padding: 18px;
+  border-top: 1px solid #e0e0e0;
+  background: #fff;
+  border-radius: 0 0 16px 16px;
+  min-height: 64px;
+  position: static;
+}
+.evento-autor-detalhe img {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid #04aa6d22;
+  background: #fff;
+}
+.evento-autor-nome {
+  color: #047857;
+  font-weight: 600;
+  font-size: 1.08em;
+}
+.evento-detalhe-descricao {
+  font-size: 1.13em;
+  color: #444;
+  line-height: 1.7;
+  margin-top: 10px;
+  white-space: pre-line;
+}
+.btn-voltar {
+  position: absolute;
+  left: 24px;
+  top: 24px;
+  background: rgba(4, 170, 109, 0.12);
+  color: #047857;
+  border: none;
+  padding: 10px 18px;
+  border-radius: 8px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 1em;
+  font-weight: 500;
+  transition: all 0.3s ease;
+  z-index: 10;
+}
+.btn-voltar:hover {
+  background: #e0f7fa;
+  color: #065f46;
+  transform: translateX(-2px);
+}
+
+/* Botões de ação na página de detalhe do evento */
+.btn-editar-evento, .btn-excluir-evento, .btn-notificar-evento {
+  background: linear-gradient(135deg, #04aa6d 0%, #047857 100%);
+  color: #fff;
+  border: none;
+  padding: 10px 18px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 1em;
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  transition: background 0.3s, color 0.3s, box-shadow 0.3s;
+  box-shadow: 0 2px 4px rgba(4, 170, 109, 0.13);
+}
+.btn-editar-evento:hover {
+  background: linear-gradient(135deg, #059669 0%, #065f46 100%);
+}
+.btn-excluir-evento {
+  background: linear-gradient(135deg, #e53935 0%, #b71c1c 100%);
+}
+.btn-excluir-evento:hover {
+  background: linear-gradient(135deg, #b71c1c 0%, #e53935 100%);
+}
+.btn-notificar-evento {
+  background: linear-gradient(135deg, #fbbf24 0%, #f59e42 100%);
+  color: #333;
+}
+.btn-notificar-evento:hover {
+  background: linear-gradient(135deg, #f59e42 0%, #fbbf24 100%);
+  color: #222;
+}
+.evento-acoes {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 0;
+  margin-top: 18px;
+}
+
+/* Linha de data + botão excluir alinhado à direita */
+.evento-data-excluir-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  width: 100%;
+}
+.btn-excluir-evento-inline {
+  background: none;
+  border: none;
+  color: #e53935;
+  font-size: 1em;
+  margin-left: 8px;
+  cursor: pointer;
+  padding: 4px 12px;
+  border-radius: 6px;
+  transition: background 0.2s, color 0.2s;
+  vertical-align: middle;
+  display: flex;
+  align-items: center;
+  font-weight: 500;
+  gap: 6px;
+}
+.btn-excluir-evento-inline:hover {
+  background: #ffeaea;
+  color: #b71c1c;
+}
+
+/* Bloco vertical para data e hora no detalhe do evento */
+.evento-data-hora-bloco {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  align-items: flex-start;
+  width: 100%;
+}
+.evento-data-hora-bloco .editavel {
+  margin-bottom: 0;
+  margin-top: 0;
+}
+.btn-excluir-evento-inline {
+  margin-left: 0;
+  margin-top: 6px;
+  align-self: flex-start;
+}
+@media (max-width: 600px) {
+  .evento-data-hora-bloco {
+    gap: 6px;
+  }
+  .btn-excluir-evento-inline {
+    margin-top: 10px;
+  }
+}
+
+/* Hover para campos editáveis de data/hora do evento (detalhe) - incluindo ícone */
+#dataEditavel[style], #horaEditavel[style],
+#dataEditavel[style]:hover, #horaEditavel[style]:hover,
+#dataEditavel[style]:hover ~ i, #horaEditavel[style]:hover ~ i,
+#dataEditavel[style]:hover, #dataEditavel[style]:hover + i,
+#horaEditavel[style]:hover, #horaEditavel[style]:hover + i {
+  transition: background 0.2s, color 0.2s;
+  border-radius: 6px;
+}
+.evento-status-data i.fa-regular.fa-calendar,
+.evento-status-data i.fa-regular.fa-clock {
+  transition: color 0.2s, background 0.2s;
+}
+#dataEditavel[style]:hover, #horaEditavel[style]:hover,
+#dataEditavel[style]:hover ~ i, #horaEditavel[style]:hover ~ i,
+#dataEditavel[style]:hover + i, #horaEditavel[style]:hover + i {
+  background: #e0f7fa;
+  color: #047857 !important;
+  text-decoration: underline solid #10b981 2px;
+  cursor: pointer;
+}
+#dataEditavel[style]:hover ~ i.fa-regular,
+#dataEditavel[style]:hover + i.fa-regular,
+#horaEditavel[style]:hover ~ i.fa-regular,
+#horaEditavel[style]:hover + i.fa-regular {
+  color: #10b981 !important;
+}
+/* Aplica também ao passar o mouse no container */
+.evento-status-data span:hover > #dataEditavel[style],
+.evento-status-data span:hover > #horaEditavel[style] {
+  background: #e0f7fa;
+  color: #047857 !important;
+  text-decoration: underline solid #10b981 2px;
+  cursor: pointer;
+}
+.evento-status-data span:hover > i.fa-regular {
+  color: #10b981 !important;
+}
+
+/* Hover para container de data/hora editável (aplica fundo no span inteiro, incluindo ícone e texto) */
+.evento-status-data span.editavel {
+  display: inline-flex;
+  align-items: center;
+  border-radius: 6px;
+  transition: background 0.2s, color 0.2s;
+  cursor: pointer;
+}
+.evento-status-data span.editavel:hover {
+  background: #e0f7fa;
+  color: #047857 !important;
+}
+.evento-status-data span.editavel:hover .icon-evento {
+  filter: brightness(0) saturate(100%) invert(54%) sepia(77%) saturate(400%) hue-rotate(120deg) brightness(1.1);
+}
+.evento-status-data span.editavel:hover #dataEditavel,
+.evento-status-data span.editavel:hover #horaEditavel {
+  color: #047857 !important;
+  text-decoration: underline solid #10b981 2px;
+}
+
+/* Ícones locais para data/hora/excluir */
+.icon-evento {
+  display: inline-block;
+  vertical-align: middle;
+  filter: none;
+  transition: filter 0.2s, background 0.2s, color 0.2s;
+}
+#dataEditavel[style]:hover ~ .icon-evento,
+#horaEditavel[style]:hover ~ .icon-evento,
+.icon-evento:hover {
+  filter: brightness(0) saturate(100%) invert(54%) sepia(77%) saturate(400%) hue-rotate(120deg) brightness(1.1);
+}
+.evento-status-data img.icon-evento {
+  margin-right: 4px;
+}
+.btn-excluir-evento-inline img {
+  margin-right: 4px;
+}
+
+/* Linha horizontal para data e hora acima da descrição */
+.evento-data-hora-row {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  margin-bottom: 10px;
+  margin-top: 0;
+}
+.evento-data-hora-row .editavel {
+  display: inline-flex;
+  align-items: center;
+  border-radius: 6px;
+  transition: background 0.2s, color 0.2s;
+  cursor: pointer;
+}
+.evento-data-hora-row .editavel:hover {
+  background: #e0f7fa;
+  color: #047857 !important;
+}
+.evento-data-hora-row .editavel:hover .icon-evento {
+  filter: brightness(0) saturate(100%) invert(54%) sepia(77%) saturate(400%) hue-rotate(120deg) brightness(1.1);
+}
+.evento-data-hora-row .editavel:hover #dataEditavel,
+.evento-data-hora-row .editavel:hover #horaEditavel {
+  color: #047857 !important;
+  text-decoration: underline solid #10b981 2px;
+}
+
+@media (max-width: 700px) {
+  .detalhe-evento-container {
+    max-width: 98vw;
+    margin: 10px;
+    border-radius: 10px;
+  }
+  .evento-detalhe-content {
+    padding: 18px 8px 0 8px;
+  }
+  .evento-autor-detalhe {
+    padding: 12px 8px 0 8px;
+    min-height: 56px;
+  }
+  .detalhe-evento-container {
+    padding-bottom: 0;
+  }
+}
+
+/* Estilos para modo noturno */
+body.dark-mode .detalhe-evento-container {
+  background: #23272a !important;
+  color: #f3f4f6 !important;
+  box-shadow: 0 4px 16px #181a1b33, 0 2px 8px #181a1b22 !important;
+}
+body.dark-mode .evento-banner img {
+  filter: brightness(0.8) !important;
+}
+body.dark-mode .evento-detalhe-content h1,
+body.dark-mode .evento-autor-nome {
+  color: #10b981 !important;
+}
+body.dark-mode .evento-detalhe-descricao,
+body.dark-mode .evento-status-data,
+body.dark-mode .evento-status,
+body.dark-mode .evento-data-hora-row {
+  color: #b5bac1 !important;
+}
+body.dark-mode .evento-status {
+  background: #23272a !important;
+  border-color: #10b981 !important;
+}
+body.dark-mode .btn-voltar,
+body.dark-mode .btn-editar-evento,
+body.dark-mode .btn-excluir-evento,
+body.dark-mode .btn-notificar-evento {
+  background: linear-gradient(135deg, #059669 0%, #047857 100%) !important;
+  color: #fff !important;
+  border: none !important;
+}
+body.dark-mode .btn-voltar:hover {
+  background: #10b981 !important;
+  color: #fff !important;
+}
+body.dark-mode .evento-autor-detalhe {
+  background: #181a1b !important;
+  color: #b5bac1 !important;
+}

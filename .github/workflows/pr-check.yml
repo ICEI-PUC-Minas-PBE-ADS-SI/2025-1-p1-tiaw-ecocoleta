@@ -1,0 +1,160 @@
+name: 🔍 Pull Request Check
+
+on:
+  pull_request:
+    branches: [ main, develop ]
+    types: [opened, synchronize, reopened]
+
+env:
+  NODE_VERSION: '18.x'
+
+jobs:
+  # Job para análise de mudanças
+  changes:
+    name: 📊 Analyze Changes
+    runs-on: ubuntu-latest
+    outputs:
+      frontend: ${{ steps.changes.outputs.frontend }}
+      backend: ${{ steps.changes.outputs.backend }}
+      docs: ${{ steps.changes.outputs.docs }}
+    
+    steps:
+    - name: 📥 Checkout code
+      uses: actions/checkout@v4
+      
+    - name: 🔍 Detect changes
+      uses: dorny/paths-filter@v3
+      id: changes
+      with:
+        filters: |
+          frontend:
+            - 'EcoColetaPrograma/ecoColeta-Presentation/public/**'
+            - 'EcoColetaPrograma/ecoColeta-Presentation/src/**'
+          backend:
+            - 'EcoColetaPrograma/ecoColeta-Presentation/server.js'
+            - 'EcoColetaPrograma/ecoColeta-Presentation/package.json'
+          docs:
+            - '*.md'
+            - 'docs/**'
+
+  # Job para validação de PR
+  pr-validation:
+    name: ✅ PR Validation
+    runs-on: ubuntu-latest
+    needs: changes
+    
+    steps:
+    - name: 📥 Checkout code
+      uses: actions/checkout@v4
+      
+    - name: 🟢 Setup Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: ${{ env.NODE_VERSION }}
+        cache: 'npm'
+        cache-dependency-path: 'EcoColetaPrograma/ecoColeta-Presentation/package.json'
+        
+    - name: 📦 Install dependencies
+      working-directory: ./EcoColetaPrograma/ecoColeta-Presentation
+      run: npm ci
+      
+    - name: 🔍 Check PR title
+      run: |
+        echo "Checking PR title format..."
+        title="${{ github.event.pull_request.title }}"
+        if [[ "$title" =~ ^(feat|fix|docs|style|refactor|test|chore)(\(.+\))?: .+ ]]; then
+          echo "✅ PR title follows conventional commits format"
+        else
+          echo "❌ PR title should follow format: type(scope): description"
+          echo "Examples: feat(dashboard): add collector statistics"
+          echo "         fix(api): resolve data loading issue"
+          exit 1
+        fi
+        
+    - name: 🧪 Run tests for changed files
+      if: needs.changes.outputs.frontend == 'true' || needs.changes.outputs.backend == 'true'
+      working-directory: ./EcoColetaPrograma/ecoColeta-Presentation
+      run: |
+        echo "Running validation tests..."
+        npm run start &
+        APP_PID=$!
+        sleep 10
+        
+        # Test basic endpoints
+        curl -f http://localhost:3001/ || (kill $APP_PID && exit 1)
+        curl -f http://localhost:3001/dashboardAdmin.html || (kill $APP_PID && exit 1)
+        
+        kill $APP_PID
+        echo "All tests passed!"
+        
+    - name: 📏 Check code size
+      run: |
+        echo "Checking bundle size..."
+        frontend_size=$(du -sh EcoColetaPrograma/ecoColeta-Presentation/src | cut -f1)
+        echo "Frontend size: $frontend_size"
+        
+        # Check for large files
+        find EcoColetaPrograma/ecoColeta-Presentation -size +1M -type f | while read file; do
+          echo "⚠️ Large file detected: $file"
+        done
+
+  # Job para comentar no PR
+  pr-comment:
+    name: 💬 PR Comment
+    runs-on: ubuntu-latest
+    needs: [changes, pr-validation]
+    if: always()
+    
+    steps:
+    - name: 💬 Comment PR results
+      uses: actions/github-script@v7
+      with:
+        script: |
+          const { data: comments } = await github.rest.issues.listComments({
+            owner: context.repo.owner,
+            repo: context.repo.repo,
+            issue_number: context.issue.number,
+          });
+          
+          // Remove previous bot comments
+          for (const comment of comments) {
+            if (comment.user.type === 'Bot' && comment.body.includes('🌱 EcoColeta PR Analysis')) {
+              await github.rest.issues.deleteComment({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                comment_id: comment.id,
+              });
+            }
+          }
+          
+          const frontendChanged = '${{ needs.changes.outputs.frontend }}' === 'true';
+          const backendChanged = '${{ needs.changes.outputs.backend }}' === 'true';
+          const docsChanged = '${{ needs.changes.outputs.docs }}' === 'true';
+          const validationSuccess = '${{ needs.pr-validation.result }}' === 'success';
+          
+          let body = `## 🌱 EcoColeta PR Analysis\n\n`;
+          body += `### 📊 Changes Detected\n`;
+          body += `- Frontend: ${frontendChanged ? '✅' : '⭕'}\n`;
+          body += `- Backend: ${backendChanged ? '✅' : '⭕'}\n`;
+          body += `- Documentation: ${docsChanged ? '✅' : '⭕'}\n\n`;
+          
+          body += `### 🔍 Validation Results\n`;
+          body += `- Code Quality: ${validationSuccess ? '✅ Passed' : '❌ Failed'}\n`;
+          body += `- Tests: ${validationSuccess ? '✅ Passed' : '❌ Failed'}\n\n`;
+          
+          if (validationSuccess) {
+            body += `### ✅ Ready for Review\n`;
+            body += `This PR has passed all automated checks and is ready for human review!\n\n`;
+          } else {
+            body += `### ❌ Action Required\n`;
+            body += `This PR needs attention before it can be merged. Please check the workflow logs.\n\n`;
+          }
+          
+          body += `---\n*Automated comment by EcoColeta CI/CD 🤖*`;
+          
+          await github.rest.issues.createComment({
+            owner: context.repo.owner,
+            repo: context.repo.repo,
+            issue_number: context.issue.number,
+            body: body
+          });

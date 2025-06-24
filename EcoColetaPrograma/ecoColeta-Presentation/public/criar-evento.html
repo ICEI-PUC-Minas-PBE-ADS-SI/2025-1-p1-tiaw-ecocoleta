@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Criar Evento</title>
+  <link rel="icon" type="image/png" href="assets/img/logo.svg">
+  <link rel="stylesheet" href="../src/css/criar-comunidade.css"/>
+  <link rel="stylesheet" href="../src/css/criar-eventos.css"/>
+  <link rel="stylesheet" href="../src/css/navFooter.css">
+</head>
+<body>
+  <main>
+    <div class="container">
+      <div class="header">
+        <button class="btn-voltar" onclick="window.history.back()"><i class="fas fa-arrow-left"></i> Voltar</button>
+        <h1>Criar Evento</h1>
+        <p class="subtitle">Preencha as informações do evento para engajar a comunidade!</p>
+      </div>
+      <form id="formCriarEvento" class="form-criar-comunidade" autocomplete="off">
+        <div class="form-section">
+          <h2><i class="fa-regular fa-calendar"></i> Dados do Evento</h2>
+          <div class="form-group">
+                        <label for="bannerComunidade" class="form-label">
+                            Banner do Evento
+                        </label>
+                        <div class="upload-area" id="uploadArea">
+                            <div class="upload-content">
+                                <i class="fas fa-cloud-upload-alt upload-icon"></i>
+                                <p>Clique para enviar ou arraste uma imagem</p>
+                                <small>Formatos aceitos: JPEG, PNG, JPG, GIF (máx. 5MB)</small>
+                                <small>Dimensões recomendadas: 1200x300px</small>
+                            </div>                            <input 
+                                type="file" 
+                                id="bannerComunidade" 
+                                name="bannerComunidade" 
+                                class="form-file" 
+                                accept="image/jpeg,image/png,image/jpg,image/gif"
+                            />
+                        </div>
+                        <div class="banner-preview" id="bannerPreview" style="display: none;">
+                            <img id="previewImage" src="" alt="Preview do banner">
+                            <button type="button" class="btn-remove-banner" onclick="removeBanner()">
+                                <i class="fas fa-times"></i>
+                            </button>
+                        </div>
+                    </div>
+          <div class="form-group">
+            <label class="form-label" for="tituloEvento">Título do Evento</label>
+            <input type="text" id="tituloEvento" class="form-input" maxlength="80" required>
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="descricaoEvento">Descrição</label>
+            <textarea id="descricaoEvento" class="form-textarea" maxlength="500" required></textarea>
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="dataEvento">Data</label>
+            <input type="date" id="dataEvento" class="form-input" required>
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="horaEvento">Hora</label>
+            <input type="time" id="horaEvento" class="form-input" required>
+          </div>
+        </div>
+        <div class="form-section">
+          <h2><i class="fa-regular fa-user"></i> Autor</h2>
+          <div class="autor-section" id="autorSection">
+          </div>
+        </div>
+        <div class="form-actions">
+          <button type="submit" class="btn btn-primary">Criar Evento</button>
+        </div>
+      </form>
+    </div>
+  </main>
+  <script src="../src/js/api-utils.js"></script>
+  <script src="../src/js/navFooter.js"></script>
+  <script src="../src/js/criar-evento.js"></script>
+  <script src="../src/js/theme.js"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"/>
+</body>
+</html>

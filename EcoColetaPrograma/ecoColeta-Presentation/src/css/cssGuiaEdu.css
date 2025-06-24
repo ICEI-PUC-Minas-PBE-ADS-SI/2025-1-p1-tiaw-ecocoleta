@@ -449,22 +449,104 @@ section {
     .download-info {
         margin-bottom: 15px;
     }
-}/* Melhorias no scroll */
-::-webkit-scrollbar {
-  width: 8px;
-  height: 8px;
 }
 
-::-webkit-scrollbar-track {
-  background: #f1f1f1;
-  border-radius: 4px;
+body.dark-mode {
+  background-color: #23272E !important;
+  color: #f3f3f3;
 }
-
-::-webkit-scrollbar-thumb {
+body.dark-mode .container,
+body.dark-mode section,
+body.dark-mode .hero,
+body.dark-mode .materials-library,
+body.dark-mode .download-materials {
+  background-color: #23272E !important;
+}
+body.dark-mode h1,
+body.dark-mode h2,
+body.dark-mode h3,
+body.dark-mode h4,
+body.dark-mode p,
+body.dark-mode label,
+body.dark-mode .file-size {
+  color: #f3f3f3 !important;
+}
+body.dark-mode a,
+body.dark-mode .learn-more {
+  color: #10b981 !important;
+}
+body.dark-mode .btn-primary,
+body.dark-mode .btn-confirm,
+body.dark-mode .btn-next,
+body.dark-mode .btn-restart,
+body.dark-mode .download-btn {
+  background-color: #10b981 !important;
+  color: #fff !important;
+}
+body.dark-mode .btn-primary:hover,
+body.dark-mode .btn-confirm:hover,
+body.dark-mode .btn-next:hover,
+body.dark-mode .btn-restart:hover,
+body.dark-mode .download-btn:hover {
+  background-color: #059669 !important;
+}
+body.dark-mode .cycle-step,
+body.dark-mode .material-card,
+body.dark-mode .quiz-container,
+body.dark-mode .option,
+body.dark-mode .explanation,
+body.dark-mode .download-card {
+  background-color: #26292F !important;
+  color: #f3f3f3 !important;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.4);
+}
+body.dark-mode .option:hover {
+  background-color: #222d2f !important;
+}
+body.dark-mode .progress-bar {
+  background-color: #222d2f !important;
+}
+body.dark-mode .progress {
+  background-color: #10b981 !important;
+}
+body.dark-mode .search-container input {
+  background-color: #232526 !important;
+  color: #f3f3f3 !important;
+  border: 1px solid #333 !important;
+}
+body.dark-mode .search-btn {
+  background-color: #10b981 !important;
+  color: #fff !important;
+}
+body.dark-mode .icon-container.green {
+  background-color: #10b981 !important;
+}
+body.dark-mode .icon-container.blue {
+  background-color: #2563eb !important;
+}
+body.dark-mode .icon-container.orange {
+  background-color: #f59e0b !important;
+}
+body.dark-mode .icon-container.purple {
+  background-color: #8b5cf6 !important;
+}
+body.dark-mode .material-icon,
+body.dark-mode .download-icon {
+  color: #10b981 !important;
+  background: none !important;
+}
+body.dark-mode .material-icon,
+body.dark-mode .icon-container img,
+body.dark-mode .download-icon img {
+  background: none !important;
+  filter: brightness(0.85) invert(0.85);
+}
+body.dark-mode ::-webkit-scrollbar-track {
+  background: #232526;
+}
+body.dark-mode ::-webkit-scrollbar-thumb {
   background: #10b981;
-  border-radius: 4px;
 }
-
-::-webkit-scrollbar-thumb:hover {
+body.dark-mode ::-webkit-scrollbar-thumb:hover {
   background: #059669;
 }

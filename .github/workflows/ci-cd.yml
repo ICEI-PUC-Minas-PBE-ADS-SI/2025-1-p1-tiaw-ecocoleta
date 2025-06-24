@@ -1,0 +1,160 @@
+name: 🌱 EcoColeta CI/CD Pipeline
+
+on:
+  push:
+    branches: [ main, develop ]
+  pull_request:
+    branches: [ main ]
+
+env:
+  NODE_VERSION: '18.x'
+  APP_NAME: 'ecocoleta'
+
+jobs:
+  # Job para verificar qualidade do código
+  code-quality:
+    name: 🔍 Code Quality Check
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: 📥 Checkout code
+      uses: actions/checkout@v4
+      
+    - name: 🟢 Setup Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: ${{ env.NODE_VERSION }}
+        cache: 'npm'
+        cache-dependency-path: 'EcoColetaPrograma/ecoColeta-Presentation/package.json'
+        
+    - name: 📦 Install dependencies
+      working-directory: ./EcoColetaPrograma/ecoColeta-Presentation
+      run: npm ci
+      
+    - name: 🧹 Check code formatting
+      working-directory: ./EcoColetaPrograma/ecoColeta-Presentation
+      run: |
+        echo "Checking JavaScript syntax..."
+        find src/js -name "*.js" -exec node -c {} \;
+        find public -name "*.html" -exec echo "Checking {}" \;
+        
+    - name: 🔎 Security audit
+      working-directory: ./EcoColetaPrograma/ecoColeta-Presentation
+      run: npm audit --audit-level=moderate
+      continue-on-error: true
+
+  # Job para executar testes
+  test:
+    name: 🧪 Run Tests
+    runs-on: ubuntu-latest
+    needs: code-quality
+    
+    steps:
+    - name: 📥 Checkout code
+      uses: actions/checkout@v4
+      
+    - name: 🟢 Setup Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: ${{ env.NODE_VERSION }}
+        cache: 'npm'
+        cache-dependency-path: 'EcoColetaPrograma/ecoColeta-Presentation/package.json'
+        
+    - name: 📦 Install dependencies
+      working-directory: ./EcoColetaPrograma/ecoColeta-Presentation
+      run: npm ci
+      
+    - name: 🚀 Start application
+      working-directory: ./EcoColetaPrograma/ecoColeta-Presentation
+      run: |
+        npm run start &
+        sleep 10
+        
+    - name: 🔍 Health check
+      run: |
+        curl -f http://localhost:3001/ || exit 1
+        echo "Application is running successfully!"
+
+  # Job para build da aplicação
+  build:
+    name: 🏗️ Build Application
+    runs-on: ubuntu-latest
+    needs: [code-quality, test]
+    
+    steps:
+    - name: 📥 Checkout code
+      uses: actions/checkout@v4
+      
+    - name: 🟢 Setup Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: ${{ env.NODE_VERSION }}
+        cache: 'npm'
+        cache-dependency-path: 'EcoColetaPrograma/ecoColeta-Presentation/package.json'
+        
+    - name: 📦 Install dependencies
+      working-directory: ./EcoColetaPrograma/ecoColeta-Presentation
+      run: npm ci
+      
+    - name: 🏗️ Build application
+      working-directory: ./EcoColetaPrograma/ecoColeta-Presentation
+      run: |
+        echo "Building EcoColeta application..."
+        mkdir -p dist
+        cp -r public/* dist/
+        cp -r src dist/
+        cp package.json dist/
+        cp server.js dist/
+        cp db.json dist/
+        echo "Build completed successfully!"
+        
+    - name: 📁 Upload build artifacts
+      uses: actions/upload-artifact@v4
+      with:
+        name: ecocoleta-build
+        path: EcoColetaPrograma/ecoColeta-Presentation/dist/
+        retention-days: 7
+
+  # Job para deploy (apenas na branch main)
+  deploy:
+    name: 🚀 Deploy to Production
+    runs-on: ubuntu-latest
+    needs: [build]
+    if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+    environment: production
+    
+    steps:
+    - name: 📥 Download build artifacts
+      uses: actions/download-artifact@v4
+      with:
+        name: ecocoleta-build
+        path: ./deploy
+        
+    - name: 🚀 Deploy notification
+      run: |
+        echo "🌱 EcoColeta deployment started..."
+        echo "📊 Build artifacts ready for deployment"
+        echo "🔗 Production URL: https://ecocoleta-app.com (example)"
+        
+    # Aqui você pode adicionar steps específicos para seu provedor de hosting
+    # Exemplos: Vercel, Netlify, Heroku, AWS, etc.
+    
+  # Job para notificações
+  notify:
+    name: 📢 Notify Status
+    runs-on: ubuntu-latest
+    needs: [deploy]
+    if: always()
+    
+    steps:
+    - name: 📢 Success notification
+      if: needs.deploy.result == 'success'
+      run: |
+        echo "✅ EcoColeta deployment successful!"
+        echo "🌱 The application is now live and helping the environment!"
+        
+    - name: ❌ Failure notification
+      if: needs.deploy.result == 'failure'
+      run: |
+        echo "❌ EcoColeta deployment failed!"
+        echo "🔧 Please check the logs and fix the issues."

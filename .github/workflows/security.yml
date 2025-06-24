@@ -1,0 +1,233 @@
+name: 🔒 Security & Dependencies Check
+
+on:
+  schedule:
+    # Run every Monday at 9:00 AM UTC
+    - cron: '0 9 * * 1'
+  workflow_dispatch:
+  push:
+    paths:
+      - 'EcoColetaPrograma/ecoColeta-Presentation/package.json'
+      - 'EcoColetaPrograma/ecoColeta-Presentation/package-lock.json'
+
+env:
+  NODE_VERSION: '18.x'
+
+jobs:
+  # Job para auditoria de segurança
+  security-audit:
+    name: 🔍 Security Audit
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: 📥 Checkout code
+      uses: actions/checkout@v4
+      
+    - name: 🟢 Setup Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: ${{ env.NODE_VERSION }}
+        cache: 'npm'
+        cache-dependency-path: 'EcoColetaPrograma/ecoColeta-Presentation/package.json'
+        
+    - name: 📦 Install dependencies
+      working-directory: ./EcoColetaPrograma/ecoColeta-Presentation
+      run: npm ci
+      
+    - name: 🔒 Run npm audit
+      working-directory: ./EcoColetaPrograma/ecoColeta-Presentation
+      run: |
+        echo "Running security audit..."
+        npm audit --audit-level=moderate --json > audit-results.json || true
+        
+        # Parse and display results
+        if [ -s audit-results.json ]; then
+          echo "🔍 Security audit results:"
+          cat audit-results.json | jq -r '.metadata | "Total vulnerabilities: \(.vulnerabilities.total)"'
+          cat audit-results.json | jq -r '.metadata | "Critical: \(.vulnerabilities.critical)"'
+          cat audit-results.json | jq -r '.metadata | "High: \(.vulnerabilities.high)"'
+          cat audit-results.json | jq -r '.metadata | "Moderate: \(.vulnerabilities.moderate)"'
+          cat audit-results.json | jq -r '.metadata | "Low: \(.vulnerabilities.low)"'
+          
+          # Fail if critical or high vulnerabilities found
+          CRITICAL=$(cat audit-results.json | jq -r '.metadata.vulnerabilities.critical // 0')
+          HIGH=$(cat audit-results.json | jq -r '.metadata.vulnerabilities.high // 0')
+          
+          if [ "$CRITICAL" -gt 0 ] || [ "$HIGH" -gt 0 ]; then
+            echo "❌ Critical or high vulnerabilities found!"
+            echo "Please run 'npm audit fix' to resolve them."
+            exit 1
+          else
+            echo "✅ No critical or high vulnerabilities found!"
+          fi
+        else
+          echo "✅ No vulnerabilities found!"
+        fi
+
+  # Job para verificar dependências desatualizadas
+  dependency-check:
+    name: 📦 Dependencies Check
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: 📥 Checkout code
+      uses: actions/checkout@v4
+      
+    - name: 🟢 Setup Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: ${{ env.NODE_VERSION }}
+        cache: 'npm'
+        cache-dependency-path: 'EcoColetaPrograma/ecoColeta-Presentation/package.json'
+        
+    - name: 📦 Check outdated packages
+      working-directory: ./EcoColetaPrograma/ecoColeta-Presentation
+      run: |
+        echo "Checking for outdated packages..."
+        npm outdated --json > outdated.json || true
+        
+        if [ -s outdated.json ]; then
+          echo "📋 Outdated packages found:"
+          cat outdated.json | jq -r 'to_entries[] | "\(.key): \(.value.current) → \(.value.latest)"'
+          
+          # Count outdated packages
+          OUTDATED_COUNT=$(cat outdated.json | jq 'length')
+          echo "📊 Total outdated packages: $OUTDATED_COUNT"
+          
+          if [ "$OUTDATED_COUNT" -gt 10 ]; then
+            echo "⚠️ Many packages are outdated. Consider updating them."
+          fi
+        else
+          echo "✅ All packages are up to date!"
+        fi
+        
+    - name: 📊 Analyze package.json
+      working-directory: ./EcoColetaPrograma/ecoColeta-Presentation
+      run: |
+        echo "📊 Package analysis:"
+        echo "Dependencies: $(cat package.json | jq '.dependencies | length')"
+        echo "DevDependencies: $(cat package.json | jq '.devDependencies | length // 0')"
+        
+        # Check for common security packages
+        if cat package.json | jq -e '.dependencies | has("helmet")' > /dev/null; then
+          echo "✅ Security headers package (helmet) is installed"
+        else
+          echo "⚠️ Consider adding helmet for security headers"
+        fi
+        
+        if cat package.json | jq -e '.dependencies | has("express-rate-limit")' > /dev/null; then
+          echo "✅ Rate limiting package is installed"
+        else
+          echo "⚠️ Consider adding express-rate-limit for API protection"
+        fi
+
+  # Job para verificar licenças
+  license-check:
+    name: 📄 License Check
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: 📥 Checkout code
+      uses: actions/checkout@v4
+      
+    - name: 🟢 Setup Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: ${{ env.NODE_VERSION }}
+        cache: 'npm'
+        cache-dependency-path: 'EcoColetaPrograma/ecoColeta-Presentation/package.json'
+        
+    - name: 📦 Install license checker
+      run: npm install -g license-checker
+      
+    - name: 📄 Check licenses
+      working-directory: ./EcoColetaPrograma/ecoColeta-Presentation
+      run: |
+        echo "Checking package licenses..."
+        license-checker --summary > license-summary.txt
+        cat license-summary.txt
+        
+        # Check for problematic licenses
+        PROBLEMATIC_LICENSES="GPL-3.0,AGPL-3.0,LGPL-3.0"
+        
+        if license-checker --failOn "$PROBLEMATIC_LICENSES" --onlyAllow "MIT;ISC;Apache-2.0;BSD-2-Clause;BSD-3-Clause;CC0-1.0;Unlicense" > /dev/null 2>&1; then
+          echo "✅ All licenses are compatible"
+        else
+          echo "⚠️ Some packages may have license compatibility issues"
+          echo "Please review the license summary above"
+        fi
+
+  # Job para gerar relatório de segurança
+  security-report:
+    name: 📊 Generate Security Report
+    runs-on: ubuntu-latest
+    needs: [security-audit, dependency-check, license-check]
+    if: always()
+    
+    steps:
+    - name: 📊 Create security report
+      run: |
+        cat > security-report.md << EOF
+        # 🔒 EcoColeta Security Report
+        
+        **Generated:** $(date -u '+%Y-%m-%d %H:%M:%S UTC')
+        **Workflow:** ${{ github.workflow }}
+        **Run:** ${{ github.run_number }}
+        
+        ## 📋 Summary
+        
+        - Security Audit: ${{ needs.security-audit.result == 'success' && '✅ Passed' || '❌ Failed' }}
+        - Dependencies Check: ${{ needs.dependency-check.result == 'success' && '✅ Passed' || '❌ Failed' }}
+        - License Check: ${{ needs.license-check.result == 'success' && '✅ Passed' || '❌ Failed' }}
+        
+        ## 🛡️ Security Status
+        
+        ${{ needs.security-audit.result == 'success' && 'No critical vulnerabilities detected.' || 'Security issues require attention.' }}
+        
+        ## 📦 Dependencies Status
+        
+        ${{ needs.dependency-check.result == 'success' && 'Dependencies are properly managed.' || 'Some dependencies may need updates.' }}
+        
+        ## 📄 License Compliance
+        
+        ${{ needs.license-check.result == 'success' && 'All licenses are compatible.' || 'License review may be required.' }}
+        
+        ## 🔧 Recommendations
+        
+        - Run \`npm audit fix\` to resolve any security issues
+        - Update outdated packages regularly
+        - Review dependency licenses for compliance
+        - Consider adding security middleware (helmet, rate limiting)
+        
+        ---
+        *This report is automatically generated by EcoColeta CI/CD pipeline 🤖*
+        EOF
+        
+        echo "Security report generated successfully!"
+        cat security-report.md
+        
+    - name: 📁 Upload security report
+      uses: actions/upload-artifact@v4
+      with:
+        name: security-report-${{ github.run_number }}
+        path: security-report.md
+        retention-days: 30
+
+  # Job para notificar sobre problemas de segurança
+  notify-security:
+    name: 📢 Security Notifications
+    runs-on: ubuntu-latest
+    needs: [security-audit, dependency-check, license-check]
+    if: failure()
+    
+    steps:
+    - name: 🚨 Security alert
+      run: |
+        echo "🚨 SECURITY ALERT: EcoColeta Security Check Failed!"
+        echo "📅 Date: $(date -u '+%Y-%m-%d %H:%M:%S UTC')"
+        echo "🔗 Workflow: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}"
+        echo ""
+        echo "Please review the security issues and take appropriate action."
+        echo "Security is crucial for protecting user data and maintaining trust."
+        echo ""
+        echo "🌱 Remember: A secure EcoColeta helps protect both data and the environment!"

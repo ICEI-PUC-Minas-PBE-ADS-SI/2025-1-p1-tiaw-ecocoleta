@@ -1,6 +1,10 @@
 // Configurações das APIs sociais
 const GOOGLE_CLIENT_ID = "SEU_GOOGLE_CLIENT_ID.apps.googleusercontent.com";
 const FACEBOOK_APP_ID = "SEU_FACEBOOK_APP_ID";
+// Detecta ambiente e define a base da API corretamente
+const API_BASE_URL = window.location.hostname === "localhost"
+  ? "http://localhost:3000"
+  : "https://two025-1-p1-tiaw-ecocoleta.onrender.com";
 
 document.addEventListener("DOMContentLoaded", function () {
   // Elementos principais
@@ -239,7 +243,7 @@ document.addEventListener("DOMContentLoaded", function () {
   async function handleSocialLogin(userData) {
     try {      // Verifica se o usuário já existe
       const response = await fetch(
-        `http://localhost:3000/api/usuarios?email=${encodeURIComponent(
+        `${API_BASE_URL}/api/usuarios?email=${encodeURIComponent(
           userData.email
         )}`
       );
@@ -248,7 +252,7 @@ document.addEventListener("DOMContentLoaded", function () {
       let usuario;
       if (usuarios.length === 0) {
         // Cria novo usuário
-        const createResponse = await fetch("http://localhost:3000/api/usuarios", {
+        const createResponse = await fetch("${API_BASE_URL}/api/usuarios", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({
@@ -265,13 +269,13 @@ document.addEventListener("DOMContentLoaded", function () {
       } else {        usuario = usuarios[0];
         // Atualiza informações do usuário se necessário
         if (userData.provider === "google" && !usuario.googleId) {
-          await fetch(`http://localhost:3000/api/usuarios/${usuario.id}`, {
+          await fetch(`${API_BASE_URL}/api/usuarios/${usuario.id}`, {
             method: "PATCH",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({ googleId: userData.googleId }),
           });
         } else if (userData.provider === "facebook" && !usuario.facebookId) {
-          await fetch(`http://localhost:3000/api/usuarios/${usuario.id}`, {
+          await fetch(`${API_BASE_URL}/api/usuarios/${usuario.id}`, {
             method: "PATCH",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({ facebookId: userData.facebookId }),
@@ -286,8 +290,9 @@ document.addEventListener("DOMContentLoaded", function () {
           id: usuario.id,
           nome: usuario.nome,
           email: usuario.email,
+          tipoUsuario: usuario.admin === true ? 'admin' : usuario.tipoUsuario,
           imagem: usuario.imagem,
-          provider: userData.provider,
+          admin: usuario.admin
         })
       );
 
@@ -311,10 +316,12 @@ document.addEventListener("DOMContentLoaded", function () {
   // Submissão do formulário de login
   loginForm.addEventListener("submit", async function (e) {
     e.preventDefault();
-    const email = loginForm.email.value;
-    const senha = loginForm.senha.value;    try {
+    // Use os IDs corretos dos inputs
+    const email = loginForm.querySelector('#loginEmail').value;
+    const senha = loginForm.querySelector('#loginSenha').value;
+    try {
       const response = await fetch(
-        `http://localhost:3000/api/usuarios?email=${encodeURIComponent(email)}`
+        `${API_BASE_URL}/api/usuarios?email=${encodeURIComponent(email)}`
       );
       const usuarios = await response.json();
       if (usuarios.length === 0) {
@@ -332,6 +339,8 @@ document.addEventListener("DOMContentLoaded", function () {
           id: usuario.id,
           nome: usuario.nome,
           email: usuario.email,
+          tipoUsuario: usuario.admin === true ? 'admin' : usuario.tipoUsuario,
+          imagem: usuario.imagem,
         })
       );
       window.location.href = "perfil.html";
@@ -356,7 +365,7 @@ document.addEventListener("DOMContentLoaded", function () {
       // Verifica se o e-mail já está cadastrado
       const email = formData.get("email");      try {
         const verificaResponse = await fetch(
-          `http://localhost:3000/api/usuarios?email=${encodeURIComponent(email)}`
+          `${API_BASE_URL}/api/usuarios?email=${encodeURIComponent(email)}`
         );
         const usuariosExistentes = await verificaResponse.json();
         if (usuariosExistentes.length > 0) {
@@ -405,7 +414,7 @@ document.addEventListener("DOMContentLoaded", function () {
         usuario.horarioColeta = formData.get("horarioColeta");
         usuario.materiaisColeta = materiaisColeta;
       }      try {
-        const response = await fetch("http://localhost:3000/api/usuarios", {
+        const response = await fetch(`${API_BASE_URL}/api/usuarios`, {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify(usuario),
@@ -421,8 +430,9 @@ document.addEventListener("DOMContentLoaded", function () {
               id: novoUsuario.id,
               nome: novoUsuario.nome,
               email: novoUsuario.email,
-              tipoUsuario: novoUsuario.tipoUsuario,
+              tipoUsuario: novoUsuario.admin === true ? 'admin' : novoUsuario.tipoUsuario,
               imagem: novoUsuario.imagem || "",
+              admin: novoUsuario.admin
             })
           );
 

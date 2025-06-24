@@ -12,9 +12,15 @@
 <body>
     <main>
   <div class="buscar-comunidade">
-    <input type="text" placeholder="Buscar na comunidade...">
-    <button class="filtros">Filtros</button>
-    <button class="local">Local</button>
+    <input type="text" id="buscaUnificadaInput" placeholder="Buscar na comunidade..." autocomplete="off">
+    <button class="filtros" id="btnFiltros" type="button">Filtros</button>
+    <div class="busca-filtros-dropdown" id="buscaFiltrosDropdown" style="display:none;">
+      <label><input type="radio" name="buscaTipo" value="todos" checked> Todos</label>
+      <label><input type="radio" name="buscaTipo" value="contribuinte"> Top Contribuintes</label>
+      <label><input type="radio" name="buscaTipo" value="comunidade"> Comunidades</label>
+      <label><input type="radio" name="buscaTipo" value="evento"> Eventos</label>
+    </div>
+    <div id="buscaUnificadaResultados" class="busca-unificada-resultados"></div>
   </div>
 
   <h2>Top Contribuintes</h2>
@@ -22,12 +28,22 @@
     
   </div>
   <div class="section-header">
-    <h2>Histórias em Destaque</h2>
+    <h2>Comunidades</h2>
     <button class="btn-criar-comunidade" onclick="window.location.href='criar-comunidade.html'">
       <i class="fas fa-plus"></i> Nova Comunidade
     </button>
   </div>
   <div class="historias-container">
+  </div>
+
+  <div class="section-header">
+    <h2>Eventos</h2>
+    <button class="btn-criar-evento" onclick="window.location.href='criar-evento.html'">
+      <i class="fas fa-plus"></i> Criar Evento
+    </button>
+  </div>
+  <div class="eventos-container">
+    <!-- Os cards de eventos serão inseridos dinamicamente pelo JS -->
   </div>
 </main>    <script src="../src/js/api-utils.js"></script>
     <script src="../src/js/navFooter.js"></script>

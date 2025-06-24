@@ -114,7 +114,7 @@ function filtrarPontos(termo = "", filtros = []) {
 }
 
 // Configuração da URL base do servidor
-const API_BASE_URL = "http://localhost:3000/api";
+const API_BASE_URL = "https://two025-1-p1-tiaw-ecocoleta.onrender.com";
 
 // Atualizar a função de carregamento inicial
 document.addEventListener("DOMContentLoaded", () => {
@@ -265,30 +265,59 @@ const validacoes = {
   materiais: (valor) => {
     return valor.length > 0 ? "" : "Selecione pelo menos um material";
   },
+  data: (valor) => {
+    if (!valor) return "Selecione uma data";
+    const hoje = new Date();
+    const dataSelecionada = new Date(valor);
+    hoje.setHours(0,0,0,0);
+    if (dataSelecionada < hoje) return "A data não pode ser no passado";
+    return "";
+  },
 };
 
 // Máscara para telefone
 function mascaraTelefone(evento) {
   let valor = evento.target.value.replace(/\D/g, "");
-  valor = valor.replace(/^(\d{2})(\d)/g, "($1) $2");
-  valor = valor.replace(/(\d)(\d{4})$/, "$1-$2");
-  evento.target.value = valor;
+  if (valor.length > 11) valor = valor.slice(0, 11);
+  if (valor.length > 10) {
+    valor = valor.replace(/(\d{2})(\d{5})(\d{4})/, "($1) $2-$3");
+  } else if (valor.length > 6) {
+    valor = valor.replace(/(\d{2})(\d{4})(\d{0,4})/, "($1) $2-$3");
+  } else if (valor.length > 2) {
+    valor = valor.replace(/(\d{2})(\d{0,5})/, "($1) $2");
+  } else {
+    valor = valor.replace(/(\d{0,2})/, "($1");
+  }
+  evento.target.value = valor.trim();
 }
+
+// Aplica a máscara ao digitar
+document.addEventListener("input", function(e) {
+  if (e.target && e.target.name === "telefone") {
+    mascaraTelefone(e);
+  }
+});
 
 // Validação em tempo real
 function validarCampo(input) {
-  const valor = input.value;
+  let valor = input.value;
   const tipo = input.name;
+  if (tipo === "telefone") {
+    // Aplica a máscara antes de validar
+    let temp = document.createElement('input');
+    temp.value = valor;
+    mascaraTelefone({ target: temp });
+    valor = temp.value;
+    input.value = valor;
+  }
   const mensagemErro = validacoes[tipo](valor);
 
-  const feedbackElement = input.nextElementSibling;
-  if (
-    !feedbackElement ||
-    !feedbackElement.classList.contains("feedback-mensagem")
-  ) {
+  let feedbackElement = input.nextElementSibling;
+  if (!feedbackElement || !feedbackElement.classList.contains("feedback-mensagem")) {
     const novoFeedback = document.createElement("div");
     novoFeedback.classList.add("feedback-mensagem");
     input.parentNode.insertBefore(novoFeedback, input.nextSibling);
+    feedbackElement = novoFeedback; // Usa o novo elemento criado
   }
 
   if (mensagemErro) {
@@ -369,11 +398,15 @@ function selecionarHorario(elemento, horario) {
 
   todosHorarios.forEach((h) => h.classList.remove("horario-selecionado"));
   elemento.classList.add("horario-selecionado");
-  horarioInput.value = horario;
+  if (horarioInput) {
+    horarioInput.value = horario;
+    console.log('Horário selecionado:', horarioInput.value); // DEBUG
+  }
 }
 
 // Função para abrir o formulário de agendamento
 function abrirFormularioAgendamento(idPonto) {
+  console.log('abrirFormularioAgendamento chamado', idPonto); // DEBUG
   const ponto = pontosDeColetaData.find((p) => p.id === idPonto);
   if (!ponto) return;
   const infoContent = document.querySelector(".info-content");
@@ -416,205 +449,123 @@ function abrirFormularioAgendamento(idPonto) {
         <button type="submit" class="btn-agendar">Confirmar Agendamento</button>
       </form>
     `;
-  infoContent.insertAdjacentHTML("beforeend", formHtml);
+  infoContent.innerHTML = formHtml;
+  const formAgendamento = infoContent.querySelector(".formulario-agendamento");
+  console.log('Form criado!', formAgendamento); // DEBUG
 
-  // Adiciona eventos e máscaras novamente
-  document
-    .getElementById("telefone")
-    .addEventListener("input", mascaraTelefone);
-  const camposParaValidar = ["nome", "email", "telefone"];
-  camposParaValidar.forEach((campo) => {
-    const input = document.getElementById(campo);
-    input.addEventListener("input", () => validarCampo(input));
-    input.addEventListener("blur", () => validarCampo(input));
-  });
-  document.getElementById("data").addEventListener("change", gerarHorarios);
-  // Gera horários iniciais
-  document.getElementById("data").value = new Date()
-    .toISOString()
-    .split("T")[0];
-  gerarHorarios();
-
-  // Produtos: adicionar/remover campos dinamicamente
-  const produtosLista = document.querySelector(".produtos-lista");
-  const btnAdicionarProduto = document.querySelector(".btn-adicionar-produto");
-  const inputMateriais = document.getElementById("materiaisSelecionados");
-  let produtos = [];
-
-  // Lista de pré-seleção de produtos
-  const produtosPreSelecao = [
-    "Plástico",
-    "Papel",
-    "Vidro",
-    "Pilhas",
-    "Eletrônicos",
-    "Baterias",
-    "Óleo",
-    "Metal",
-  ];
+  // Produtos: seleção dos materiais aceitos pelo ponto
+  const produtosLista = formAgendamento.querySelector(".produtos-lista");
+  const inputMateriais = formAgendamento.querySelector("#materiaisSelecionados");
+  produtosLista.innerHTML = "";
+  const materiaisAceitos = ponto.materiaisAceitos || [];
+  function nomeAmigavel(material) {
+    const nomes = {
+      plastico: "Plástico",
+      papel: "Papel",
+      vidro: "Vidro",
+      pilhas: "Pilhas",
+      eletronicos: "Eletrônicos",
+      baterias: "Baterias",
+      oleo: "Óleo",
+      metal: "Metal",
+    };
+    return nomes[material?.toLowerCase?.()] || material;
+  }
   const preselecaoDiv = document.createElement("div");
   preselecaoDiv.className = "preselecao-produtos";
-  produtosPreSelecao.forEach((nome) => {
+  materiaisAceitos.forEach((material) => {
+    if (!material) return;
     const btn = document.createElement("button");
     btn.type = "button";
     btn.className = "preselecao-produto-btn";
-    btn.textContent = nome;
+    btn.textContent = nomeAmigavel(material);
     btn.onclick = function () {
       btn.classList.toggle("selecionado");
       atualizarProdutosHidden();
     };
     preselecaoDiv.appendChild(btn);
   });
-  produtosLista.parentNode.insertBefore(preselecaoDiv, produtosLista);
+  produtosLista.appendChild(preselecaoDiv);
 
   function atualizarProdutosHidden() {
+    if (!preselecaoDiv) return;
     const selecionados = Array.from(
       preselecaoDiv.querySelectorAll(".preselecao-produto-btn.selecionado")
     ).map((btn) => btn.textContent);
     inputMateriais.value = selecionados.join(",");
   }
 
-  btnAdicionarProduto.onclick = function () {
-    criarCampoProduto();
-  };
+  // Garante que o input de data chama gerarHorarios ao mudar
+  const inputData = formAgendamento.querySelector('#data');
+  if (inputData) {
+    inputData.addEventListener('change', gerarHorarios);
+  }
 
-  // Validação do formulário
-  document
-    .querySelector(".formulario-agendamento")
-    .addEventListener("submit", (e) => {
-      e.preventDefault();
-      let formValido = true;
-      camposParaValidar.forEach((campo) => {
-        const input = document.getElementById(campo);
-        if (!validarCampo(input)) {
-          formValido = false;
-        }
+  // Garante que o input hidden de horário está limpo ao abrir
+  const inputHorario = formAgendamento.querySelector('#horario');
+  if (inputHorario) inputHorario.value = '';
+
+  // Chama gerarHorarios ao abrir o modal
+  gerarHorarios();
+
+  // Lista de campos obrigatórios para validação
+  const camposParaValidar = ["nome", "email", "telefone", "data"];
+
+  // Adiciona o event listener de submit IMEDIATAMENTE após inserir o form
+  formAgendamento.addEventListener("submit", function (e) {
+    e.preventDefault();
+    console.log('Submit interceptado!'); // DEBUG
+    let formValido = true;
+    camposParaValidar.forEach((campo) => {
+      const input = formAgendamento.querySelector(`#${campo}`);
+      if (!input) return;
+      if (!validarCampo(input)) {
+        formValido = false;
+      }
+    });
+    if (!inputMateriais.value || inputMateriais.value.split(",").filter((p) => p.trim() !== "").length === 0) {
+      formValido = false;
+      alert("Selecione pelo menos um material para coleta");
+    }
+    const horario = formAgendamento.querySelector("#horario").value;
+    if (!horario) {
+      formValido = false;
+      alert("Selecione um horário para a coleta");
+    }
+    if (formValido) {
+      // Monta objeto de agendamento
+      const agendamento = {
+        nome: formAgendamento.querySelector("#nome").value,
+        email: formAgendamento.querySelector("#email").value,
+        telefone: formAgendamento.querySelector("#telefone").value,
+        materiais: inputMateriais.value.split(","),
+        data: formAgendamento.querySelector("#data").value,
+        horario: formAgendamento.querySelector("#horario").value,
+        pontoId: idPonto,
+        dataHoraInicio: `${formAgendamento.querySelector("#data").value}T${formAgendamento.querySelector("#horario").value.padStart(5, '0')}:00`,
+        status: "pendente"
+      };
+      console.log("Enviando agendamento:", agendamento); // DEBUG
+      fetch(`${API_BASE_URL}/api/pontosDeColeta/${idPonto}/agendar`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(agendamento)
+      })
+      .then(res => {
+        console.log('Resposta do backend:', res); // DEBUG
+        if (!res.ok) throw new Error("Erro ao salvar agendamento");
+        return res.json();
+      })
+      .then((data) => {
+        console.log('Agendamento salvo:', data); // DEBUG
+        alert("Agendamento realizado com sucesso!");
+      })
+      .catch((err) => {
+        alert("Erro ao salvar agendamento. Tente novamente.");
+        console.error("Erro ao salvar agendamento:", err);
       });
-      if (produtos.filter((p) => p.trim() !== "").length === 0) {
-        formValido = false;
-        alert("Adicione pelo menos um produto/material para coleta");
-      }
-      const horario = document.getElementById("horario").value;
-      if (!horario) {
-        formValido = false;
-        alert("Selecione um horário para a coleta");
-      }      if (formValido) {
-        salvarAgendamento(idPonto, e.target);
-      }
-    });
-}
-
-// Função para salvar agendamento na API
-async function salvarAgendamento(idPonto, formulario) {
-  try {
-    // Mostrar loading
-    const btnAgendar = formulario.querySelector('.btn-agendar');
-    const textoOriginal = btnAgendar.textContent;
-    btnAgendar.textContent = 'Salvando...';
-    btnAgendar.disabled = true;
-
-    // Coletar dados do formulário
-    const formData = new FormData(formulario);
-    const data = formData.get('data');
-    const horario = formData.get('horario');
-    const materiais = formData.get('materiais').split(',').filter(m => m.trim());
-    
-    // Criar ID único para o agendamento
-    const idAgenda = `agenda-ecoponto${idPonto}-${Date.now()}`;
-      // Criar objeto de agendamento
-    const novoAgendamento = {
-      idAgenda: idAgenda,
-      idUsuarioAgendamento: getCurrentUserId(),
-      coletorId: pontoAtual.coletorId || pontoAtual.criadoPor || null, // Usar coletor associado ao ponto
-      dataHoraInicio: `${data}T${horario}:00`,
-      dataHoraFim: `${data}T${addHour(horario)}:00`,
-      tipo: "entrega_voluntaria",
-      descricao: `Entrega de materiais recicláveis por ${formData.get('nome')}`,
-      status: "agendado",
-      materiais: materiais,
-      contatoResponsavel: formData.get('nome'),
-      observacoes: `Contato: ${formData.get('telefone')} - Email: ${formData.get('email')}`
-    };// Buscar ponto de coleta atual
-    const response = await fetch('http://localhost:3000/api/pontosDeColeta');
-    const pontos = await response.json();
-    const pontoAtual = pontos.find(p => p.id === idPonto);
-    
-    if (!pontoAtual) {
-      throw new Error('Ponto de coleta não encontrado');
     }
-
-    // Adicionar novo agendamento à agenda do ponto
-    pontoAtual.agenda.push(novoAgendamento);    // Atualizar ponto de coleta na API
-    const updateResponse = await fetch(`http://localhost:3000/api/pontosDeColeta/${idPonto}`, {
-      method: 'PUT',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(pontoAtual)
-    });
-
-    if (!updateResponse.ok) {
-      throw new Error('Erro ao salvar agendamento');
-    }
-
-    // Sucesso - mostrar mensagem e limpar formulário
-    alert('Agendamento realizado com sucesso! Você receberá uma confirmação em breve.');
-    formulario.remove();
-    
-    // Atualizar informações do ponto no painel
-    atualizarInfoPonto(pontoAtual);
-
-  } catch (error) {
-    console.error('Erro ao salvar agendamento:', error);
-    alert('Erro ao realizar agendamento. Tente novamente.');
-  } finally {
-    // Restaurar botão
-    const btnAgendar = formulario.querySelector('.btn-agendar');
-    if (btnAgendar) {
-      btnAgendar.textContent = textoOriginal;
-      btnAgendar.disabled = false;
-    }
-  }
+  });
 }
 
-// Função auxiliar para adicionar uma hora
-function addHour(timeString) {
-  const [hours, minutes] = timeString.split(':').map(Number);
-  const newHours = (hours + 1) % 24;
-  return `${newHours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}`;
-}
-
-// Função para obter ID do usuário atual
-function getCurrentUserId() {
-  try {
-    const userData = localStorage.getItem("usuarioLogado");
-    if (userData) {
-      const user = JSON.parse(userData);
-      return user.id;
-    }
-  } catch (error) {
-    console.error('Erro ao obter ID do usuário:', error);
-  }
-  
-  // Fallback para teste - retorna o ID do Samuel
-  return 5;
-}
-
-// Função para atualizar informações do ponto após agendamento
-function atualizarInfoPonto(ponto) {
-  const infoContent = document.querySelector('.info-content');
-  const agendamentosCount = ponto.agenda.filter(a => a.status === 'agendado').length;
-  
-  infoContent.innerHTML = `
-    <h3>${ponto.nome}</h3>
-    <p><strong>Endereço:</strong> ${ponto.endereco}</p>
-    <p><strong>Horário:</strong> ${ponto.horario}</p>
-    <p><strong>Contato:</strong> ${ponto.contato}</p>
-    <p><strong>Materiais aceitos:</strong> ${ponto.materiaisAceitos.join(', ')}</p>
-    <p><strong>Agendamentos pendentes:</strong> ${agendamentosCount}</p>
-    <p><strong>Coleta domiciliar:</strong> ${ponto.coletaDomiciliar ? 'Disponível' : 'Não disponível'}</p>
-    <button class="btn-agendar-novamente" onclick="abrirFormularioAgendamento(${ponto.id})">
-      Agendar Nova Coleta
-    </button>
-  `;
-}
+console.log('Script carregado!');

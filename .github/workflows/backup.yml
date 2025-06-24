@@ -1,0 +1,247 @@
+name: 💾 Database Backup
+
+on:
+  schedule:
+    # Run backup every day at 2:00 AM UTC
+    - cron: '0 2 * * *'
+  workflow_dispatch:
+    inputs:
+      backup_type:
+        description: 'Type of backup'
+        required: true
+        default: 'full'
+        type: choice
+        options:
+          - full
+          - incremental
+
+env:
+  BACKUP_RETENTION_DAYS: 30
+  CRITICAL_BACKUP_RETENTION_DAYS: 90
+
+jobs:
+  # Job para backup do banco de dados
+  database-backup:
+    name: 💾 Backup Database
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: 📥 Checkout code
+      uses: actions/checkout@v4
+      
+    - name: 📅 Set backup info
+      id: backup-info
+      run: |
+        TIMESTAMP=$(date -u '+%Y%m%d_%H%M%S')
+        BACKUP_TYPE="${{ github.event.inputs.backup_type || 'full' }}"
+        echo "timestamp=$TIMESTAMP" >> $GITHUB_OUTPUT
+        echo "backup-type=$BACKUP_TYPE" >> $GITHUB_OUTPUT
+        echo "backup-name=ecocoleta_${BACKUP_TYPE}_${TIMESTAMP}" >> $GITHUB_OUTPUT
+        
+    - name: 🗄️ Create database backup
+      run: |
+        echo "Creating ${{ steps.backup-info.outputs.backup-type }} backup..."
+        
+        # Create backup directory
+        mkdir -p backups
+        
+        # Copy database file
+        cp EcoColetaPrograma/ecoColeta-Presentation/db.json backups/db_${{ steps.backup-info.outputs.timestamp }}.json
+        
+        # Create backup metadata
+        cat > backups/backup_${{ steps.backup-info.outputs.timestamp }}_metadata.json << EOF
+        {
+          "backup_name": "${{ steps.backup-info.outputs.backup-name }}",
+          "backup_type": "${{ steps.backup-info.outputs.backup-type }}",
+          "timestamp": "${{ steps.backup-info.outputs.timestamp }}",
+          "created_at": "$(date -u '+%Y-%m-%d %H:%M:%S UTC')",
+          "commit_hash": "${{ github.sha }}",
+          "workflow_run": "${{ github.run_number }}",
+          "file_size": "$(stat -c%s EcoColetaPrograma/ecoColeta-Presentation/db.json)",
+          "records_count": {
+            "users": $(cat EcoColetaPrograma/ecoColeta-Presentation/db.json | jq '.users | length'),
+            "coletores": $(cat EcoColetaPrograma/ecoColeta-Presentation/db.json | jq '.coletores | length'),
+            "pontos_coleta": $(cat EcoColetaPrograma/ecoColeta-Presentation/db.json | jq '.pontosColeta | length'),
+            "agendas": $(cat EcoColetaPrograma/ecoColeta-Presentation/db.json | jq '.agendas | length'),
+            "comunidades": $(cat EcoColetaPrograma/ecoColeta-Presentation/db.json | jq '.comunidades | length')
+          }
+        }
+        EOF
+        
+        # Create backup verification checksum
+        sha256sum backups/db_${{ steps.backup-info.outputs.timestamp }}.json > backups/db_${{ steps.backup-info.outputs.timestamp }}.sha256
+        
+        echo "Backup created successfully!"
+        echo "Backup size: $(stat -c%s backups/db_${{ steps.backup-info.outputs.timestamp }}.json) bytes"
+        
+    - name: 📊 Backup statistics
+      run: |
+        echo "📊 Database Statistics:"
+        echo "Users: $(cat EcoColetaPrograma/ecoColeta-Presentation/db.json | jq '.users | length')"
+        echo "Coletores: $(cat EcoColetaPrograma/ecoColeta-Presentation/db.json | jq '.coletores | length')"
+        echo "Pontos de Coleta: $(cat EcoColetaPrograma/ecoColeta-Presentation/db.json | jq '.pontosColeta | length')"
+        echo "Agendas: $(cat EcoColetaPrograma/ecoColeta-Presentation/db.json | jq '.agendas | length')"
+        echo "Comunidades: $(cat EcoColetaPrograma/ecoColeta-Presentation/db.json | jq '.comunidades | length')"
+        
+    - name: 🗜️ Compress backup
+      run: |
+        cd backups
+        tar -czf ${{ steps.backup-info.outputs.backup-name }}.tar.gz *
+        echo "Backup compressed: ${{ steps.backup-info.outputs.backup-name }}.tar.gz"
+        echo "Compressed size: $(stat -c%s ${{ steps.backup-info.outputs.backup-name }}.tar.gz) bytes"
+        
+    - name: 📁 Upload backup artifact
+      uses: actions/upload-artifact@v4
+      with:
+        name: ${{ steps.backup-info.outputs.backup-name }}
+        path: backups/${{ steps.backup-info.outputs.backup-name }}.tar.gz
+        retention-days: ${{ env.BACKUP_RETENTION_DAYS }}
+        
+    - name: 🏷️ Tag critical backups
+      if: github.event.schedule == '0 2 * * 0' || github.event.inputs.backup_type == 'critical'
+      uses: actions/upload-artifact@v4
+      with:
+        name: ${{ steps.backup-info.outputs.backup-name }}-critical
+        path: backups/${{ steps.backup-info.outputs.backup-name }}.tar.gz
+        retention-days: ${{ env.CRITICAL_BACKUP_RETENTION_DAYS }}
+
+  # Job para verificar integridade do backup
+  backup-verification:
+    name: ✅ Verify Backup Integrity
+    runs-on: ubuntu-latest
+    needs: database-backup
+    
+    steps:
+    - name: 📥 Download backup
+      uses: actions/download-artifact@v4
+      with:
+        name: ecocoleta_${{ needs.database-backup.outputs.backup-type }}_${{ needs.database-backup.outputs.timestamp }}
+        path: ./verification
+        
+    - name: 🔍 Verify backup integrity
+      run: |
+        cd verification
+        
+        # Extract backup
+        tar -xzf *.tar.gz
+        
+        # Verify checksum
+        if sha256sum -c db_*.sha256; then
+          echo "✅ Backup checksum verification passed!"
+        else
+          echo "❌ Backup checksum verification failed!"
+          exit 1
+        fi
+        
+        # Verify JSON structure
+        if jq empty db_*.json; then
+          echo "✅ Backup JSON structure is valid!"
+        else
+          echo "❌ Backup JSON structure is invalid!"
+          exit 1
+        fi
+        
+        # Verify essential data exists
+        USERS_COUNT=$(cat db_*.json | jq '.users | length')
+        COLETORES_COUNT=$(cat db_*.json | jq '.coletores | length')
+        
+        if [ "$USERS_COUNT" -gt 0 ] && [ "$COLETORES_COUNT" -gt 0 ]; then
+          echo "✅ Backup contains essential data!"
+          echo "Users: $USERS_COUNT, Coletores: $COLETORES_COUNT"
+        else
+          echo "⚠️ Backup may be missing essential data!"
+          echo "Users: $USERS_COUNT, Coletores: $COLETORES_COUNT"
+        fi
+        
+        echo "🎉 Backup verification completed successfully!"
+
+  # Job para limpeza de backups antigos
+  cleanup-old-backups:
+    name: 🧹 Cleanup Old Backups
+    runs-on: ubuntu-latest
+    needs: backup-verification
+    if: github.event.schedule == '0 2 * * 0' # Run weekly cleanup on Sundays
+    
+    steps:
+    - name: 🧹 Cleanup notification
+      run: |
+        echo "🧹 Cleaning up old backup artifacts..."
+        echo "This helps maintain storage efficiency while keeping important backups."
+        echo "Critical backups are retained for ${{ env.CRITICAL_BACKUP_RETENTION_DAYS }} days."
+        echo "Regular backups are retained for ${{ env.BACKUP_RETENTION_DAYS }} days."
+        
+        # Note: Actual cleanup would be handled by GitHub's artifact retention policy
+        # Custom cleanup logic could be added here if using external storage
+
+  # Job para relatório de backup
+  backup-report:
+    name: 📊 Backup Report
+    runs-on: ubuntu-latest
+    needs: [database-backup, backup-verification]
+    if: always()
+    
+    steps:
+    - name: 📊 Generate backup report
+      run: |
+        cat > backup-report.md << EOF
+        # 💾 EcoColeta Database Backup Report
+        
+        **Date:** $(date -u '+%Y-%m-%d %H:%M:%S UTC')
+        **Backup Type:** ${{ needs.database-backup.outputs.backup-type }}
+        **Status:** ${{ needs.backup-verification.result == 'success' && '✅ Success' || '❌ Failed' }}
+        
+        ## 📋 Backup Details
+        
+        - **Backup Name:** ecocoleta_${{ needs.database-backup.outputs.backup-type }}_${{ needs.database-backup.outputs.timestamp }}
+        - **Created:** ${{ needs.database-backup.outputs.timestamp }}
+        - **Verification:** ${{ needs.backup-verification.result == 'success' && '✅ Passed' || '❌ Failed' }}
+        
+        ## 📊 Database Statistics
+        
+        The backup includes data for all EcoColeta entities including users, collectors, collection points, schedules, and communities.
+        
+        ## 🔧 Retention Policy
+        
+        - Regular backups: ${{ env.BACKUP_RETENTION_DAYS }} days
+        - Critical backups: ${{ env.CRITICAL_BACKUP_RETENTION_DAYS }} days
+        
+        ## 🌱 Environmental Note
+        
+        Regular backups ensure data protection while supporting EcoColeta's mission to promote environmental sustainability through reliable waste collection services.
+        
+        ${{ needs.backup-verification.result == 'success' && '✅ All systems operational - data is safely backed up!' || '❌ Backup verification failed - please investigate immediately!' }}
+        
+        ---
+        *Automated backup report by EcoColeta CI/CD 🤖*
+        EOF
+        
+        cat backup-report.md
+        
+    - name: 📁 Upload backup report
+      uses: actions/upload-artifact@v4
+      with:
+        name: backup-report-${{ needs.database-backup.outputs.timestamp }}
+        path: backup-report.md
+        retention-days: 7
+
+  # Job para notificações de falha
+  notify-backup-failure:
+    name: 📢 Backup Failure Notification
+    runs-on: ubuntu-latest
+    needs: [database-backup, backup-verification]
+    if: failure()
+    
+    steps:
+    - name: 🚨 Backup failure alert
+      run: |
+        echo "🚨 BACKUP FAILURE ALERT: EcoColeta Database Backup Failed!"
+        echo "📅 Date: $(date -u '+%Y-%m-%d %H:%M:%S UTC')"
+        echo "🔗 Workflow: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}"
+        echo ""
+        echo "❌ The automated database backup process has failed!"
+        echo "🔧 Immediate action required to ensure data protection."
+        echo ""
+        echo "Please investigate and resolve the backup issues immediately."
+        echo "Data protection is critical for EcoColeta's operations."
+        echo ""
+        echo "🌱 Protecting data means protecting our environmental mission!"

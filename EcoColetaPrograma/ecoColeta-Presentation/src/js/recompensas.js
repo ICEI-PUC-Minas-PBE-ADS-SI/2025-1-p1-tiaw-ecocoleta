@@ -1,3 +1,5 @@
+const API_BASE_URL = "https://two025-1-p1-tiaw-ecocoleta.onrender.com";
+
 // Função para obter usuário logado
 function getUsuarioLogado() {
   return JSON.parse(localStorage.getItem("usuarioLogado"));
@@ -5,46 +7,78 @@ function getUsuarioLogado() {
 
 // Função para buscar dados completos do usuário logado na API
 async function buscarUsuarioCompleto(id) {
-  const res = await fetch(`http://localhost:3000/api/usuarios/${id}`);
+  const res = await fetch(`${API_BASE_URL}/api/usuarios/${id}`);
   if (!res.ok) throw new Error("Usuário não encontrado");
   return res.json();
 }
 
-// Função para exibir histórico de pontos
-function exibirHistoricoEcopontos(historico) {
-  const historicoDiv = document.getElementById("historico-ecopontos");
-  if (!historicoDiv) return;
-  if (!historico || historico.length === 0) {
-    historicoDiv.innerHTML = '<p class="recompensas-historico-vazio">Nenhum ponto gasto ainda.</p>';
+// Função para obter histórico de resgates do localStorage apenas do usuário logado
+function getHistoricoResgates() {
+  const usuario = getUsuarioLogado();
+  if (!usuario) return [];
+  const historicoAll = JSON.parse(localStorage.getItem('historicoResgatesPorUsuario')) || {};
+  return historicoAll[usuario.id] || [];
+}
+
+// Função para salvar histórico de resgates no localStorage por usuário
+function setHistoricoResgates(historico) {
+  const usuario = getUsuarioLogado();
+  if (!usuario) return;
+  const historicoAll = JSON.parse(localStorage.getItem('historicoResgatesPorUsuario')) || {};
+  historicoAll[usuario.id] = historico;
+  localStorage.setItem('historicoResgatesPorUsuario', JSON.stringify(historicoAll));
+}
+
+// Função para adicionar um novo resgate ao histórico
+function adicionarResgateAoHistorico(nomeRecompensa, pontosNecessarios) {
+  const historico = getHistoricoResgates();
+  historico.unshift({
+    recompensa: nomeRecompensa,
+    pontos: pontosNecessarios,
+    data: new Date().toISOString()
+  });
+  setHistoricoResgates(historico);
+}
+
+// Função para exibir o histórico de resgates na tela
+function exibirHistoricoResgates() {
+  const ul = document.getElementById('historico-resgates');
+  if (!ul) return;
+  const historico = getHistoricoResgates();
+  ul.innerHTML = '';
+  if (historico.length === 0) {
+    ul.innerHTML = '<li class="recompensas-historico-vazio">Nenhum resgate realizado ainda.</li>';
     return;
   }
-  historicoDiv.innerHTML = historico.map(item => `
-    <div class="recompensas-historico-item">
+  historico.forEach(item => {
+    const li = document.createElement('li');
+    li.className = 'recompensas-historico-item';
+    li.innerHTML = `
       <span class="recompensas-historico-recompensa">${item.recompensa}</span>
       <span class="recompensas-historico-pontos">-${item.pontos} pts</span>
       <span class="recompensas-historico-data">${new Date(item.data).toLocaleString('pt-BR')}</span>
-    </div>
-  `).join("");
+    `;
+    ul.appendChild(li);
+  });
 }
 
-// Atualiza ecopontos e histórico ao carregar
-async function atualizarEcopontosEHistorico() {
+// Atualiza ecopontos ao carregar e exibe histórico
+async function atualizarEcopontos() {
   const usuarioLogado = getUsuarioLogado();
   if (!usuarioLogado) return;
   try {
     const usuario = await buscarUsuarioCompleto(usuarioLogado.id);
     document.getElementById("ecopontos-usuario").textContent = usuario.ecopontos || 0;
-    exibirHistoricoEcopontos(usuario.historicoEcopontos || []);
   } catch (e) {
     document.getElementById("ecopontos-usuario").textContent = "-";
-    exibirHistoricoEcopontos([]);
   }
+  exibirHistoricoResgates();
 }
 
-document.addEventListener("DOMContentLoaded", atualizarEcopontosEHistorico);
+document.addEventListener("DOMContentLoaded", atualizarEcopontos);
 
-// Ao trocar recompensa, registrar no histórico e atualizar backend
-async function trocarRecompensa(pontosNecessarios, nomeRecompensa) {
+// Função para trocar recompensa e atualizar backend
+async function trocarRecompensa(pontosNecessarios, nomeRecompensa, recompensaId) {
   const usuarioLogado = getUsuarioLogado();
   if (!usuarioLogado) return alert("Faça login para resgatar recompensas.");
   let usuario;
@@ -57,40 +91,81 @@ async function trocarRecompensa(pontosNecessarios, nomeRecompensa) {
     alert("Você não possui ecopontos suficientes para esta recompensa.");
     return;
   }
-  // Reduz ecopontos do usuário
-  usuario.ecopontos = (usuario.ecopontos || 0) - pontosNecessarios;
-  usuario.historicoEcopontos = usuario.historicoEcopontos || [];
-  usuario.historicoEcopontos.unshift({
-    recompensa: nomeRecompensa,
-    pontos: pontosNecessarios,
-    data: new Date().toISOString()
-  });
-  // Atualiza no backend
-  await fetch(`http://localhost:3000/api/usuarios/${usuario.id}`, {
+  // Chama o endpoint seguro do backend para deduzir ecopontos e decrementar quantidade
+  const resposta = await fetch(`${API_BASE_URL}/api/usuarios/${usuario.id}/resgatar-recompensa`, {
     method: "PATCH",
     headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({
-      ecopontos: usuario.ecopontos,
-      historicoEcopontos: usuario.historicoEcopontos
-    })
+    body: JSON.stringify({ pontosNecessarios, nomeRecompensa, recompensaId })
   });
-  // Atualiza imediatamente o valor exibido dos ecopontos
-  document.getElementById("ecopontos-usuario").textContent = usuario.ecopontos;
-  atualizarEcopontosEHistorico();
-  alert(`Você resgatou: ${nomeRecompensa}!\nSeus ecopontos agora: ${usuario.ecopontos}`);
+  if (!resposta.ok) {
+    const erro = await resposta.json();
+    alert(erro.error || "Erro ao resgatar recompensa.");
+    return;
+  }
+  const dados = await resposta.json();
+  document.getElementById("ecopontos-usuario").textContent = dados.ecopontos;
+  adicionarResgateAoHistorico(nomeRecompensa, pontosNecessarios);
+  exibirHistoricoResgates();
+  // Atualiza quantidade no card
+  await renderizarRecompensas();
+  alert(`Você resgatou: ${nomeRecompensa}!\nSeus ecopontos agora: ${dados.ecopontos}`);
 }
 
-// Atualiza evento dos botões para usar a nova função
-document.addEventListener("DOMContentLoaded", function () {
-  document.querySelectorAll(".recompensas-card-btn").forEach((btn, idx) => {
-    btn.addEventListener("click", function () {
-      const recompensas = [
-        { nome: "Kit Sustentável", pontos: 500 },
-        { nome: "Vale Desconto", pontos: 1000 },
-        { nome: "Doe Pontos", pontos: 200 }
-      ];
+// Função para buscar recompensas do backend
+async function buscarRecompensas() {
+  const res = await fetch(`${API_BASE_URL}/api/recompensas`);
+  if (!res.ok) return [];
+  return res.json();
+}
+
+// Função para renderizar cards de recompensas dinamicamente
+async function renderizarRecompensas() {
+  const recompensas = await buscarRecompensas();
+  const usuarioLogado = getUsuarioLogado();
+  const admin = usuarioLogado && usuarioLogado.admin === true;
+  const cardsContainer = document.querySelector('.recompensas-cards');
+  cardsContainer.innerHTML = '';
+  if (!recompensas.length) {
+    cardsContainer.innerHTML = '<p>Nenhuma recompensa cadastrada.</p>';
+    return;
+  }
+  recompensas.forEach((r, idx) => {
+    const card = document.createElement('div');
+    card.className = 'recompensas-card';
+    card.innerHTML = `
+      <img src="${r.imagem}" alt="${r.nome}" class="recompensas-card-img">
+      <div class="recompensas-card-content">
+        <h2 class="recompensas-card-title">${r.nome}</h2>
+        <p class="recompensas-card-desc">${r.descricao}</p>
+        <p class="recompensas-card-points recompensas-verde">${r.pontosNecessarios} pontos</p>
+        <p class="recompensas-card-quantidade">Disponível: <span class="quantidade-restante">${r.quantidade || 0}</span></p>
+        <button class="recompensas-card-btn" data-idx="${idx}">
+          ${r.nome.toLowerCase().includes('doe') ? 'Doar' : 'Resgatar'}
+        </button>
+        ${admin ? `<button class=\"recompensas-card-btn recompensas-excluir-btn\" data-id=\"${r.id}\" style=\"background:#d32f2f;margin-top:8px;\">Excluir</button>` : ''}
+      </div>
+    `;
+    cardsContainer.appendChild(card);
+  });
+  // Adiciona eventos aos botões
+  document.querySelectorAll('.recompensas-card-btn:not(.recompensas-excluir-btn)').forEach((btn, idx) => {
+    btn.addEventListener('click', function () {
       const recompensa = recompensas[idx];
-      trocarRecompensa(recompensa.pontos, recompensa.nome);
+      trocarRecompensa(recompensa.pontosNecessarios, recompensa.nome, recompensa.id);
     });
   });
-});
+  // Evento de exclusão para admin
+  if (admin) {
+    document.querySelectorAll('.recompensas-excluir-btn').forEach(btn => {
+      btn.addEventListener('click', async function () {
+        if (confirm('Tem certeza que deseja excluir esta recompensa?')) {
+          const id = btn.getAttribute('data-id');
+          await fetch(`${API_BASE_URL}/api/recompensas/${id}`, { method: 'DELETE' });
+          renderizarRecompensas();
+        }
+      });
+    });
+  }
+}
+
+document.addEventListener('DOMContentLoaded', renderizarRecompensas);

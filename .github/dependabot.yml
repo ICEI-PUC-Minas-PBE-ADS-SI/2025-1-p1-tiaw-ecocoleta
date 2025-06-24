@@ -1,0 +1,115 @@
+# GitHub Dependabot configuration for EcoColeta
+# Automatically creates pull requests to update dependencies
+
+version: 2
+updates:
+  # Enable version updates for npm (Node.js dependencies)
+  - package-ecosystem: "npm"
+    directory: "/EcoColetaPrograma/ecoColeta-Presentation"
+    schedule:
+      interval: "weekly"
+      day: "monday"
+      time: "09:00"
+      timezone: "America/Sao_Paulo"
+    
+    # Limit number of open PRs
+    open-pull-requests-limit: 5
+    
+    # Automatically merge minor and patch updates
+    auto-merge:
+      dependency-type: "development"
+      update-type: "all"
+    
+    # PR configuration
+    reviewers:
+      - "samuel-maciel"  # Replace with actual GitHub usernames
+    assignees:
+      - "samuel-maciel"
+    
+    # Labels for categorization
+    labels:
+      - "dependencies"
+      - "javascript"
+      - "automated"
+    
+    # Commit message configuration
+    commit-message:
+      prefix: "⬆️"
+      prefix-development: "⬆️ dev"
+      include: "scope"
+    
+    # Group updates for better organization
+    groups:
+      # Group all production dependencies
+      production-dependencies:
+        dependency-type: "production"
+        patterns:
+          - "*"
+      
+      # Group development dependencies
+      development-dependencies:
+        dependency-type: "development"
+        patterns:
+          - "*"
+      
+      # Group security updates (always separate)
+      security-updates:
+        patterns:
+          - "*"
+        update-types:
+          - "security"
+    
+    # Ignore specific packages if needed
+    ignore:
+      # Ignore major version updates for critical packages
+      - dependency-name: "express"
+        update-types: ["version-update:semver-major"]
+      
+      # Ignore specific versions if they have known issues
+      # - dependency-name: "package-name"
+      #   versions: ["1.4.0", "1.5.0"]
+    
+    # Allow specific update types
+    allow:
+      - dependency-type: "direct"
+      - dependency-type: "indirect"
+        update-type: "security"
+    
+    # Pull request configuration
+    pull-request-branch-name:
+      separator: "/"
+    
+    # Target branch for PRs
+    target-branch: "develop"
+    
+    # Rebase strategy
+    rebase-strategy: "auto"
+
+  # Monitor GitHub Actions workflows
+  - package-ecosystem: "github-actions"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+      day: "monday"
+      time: "10:00"
+      timezone: "America/Sao_Paulo"
+    
+    open-pull-requests-limit: 3
+    
+    labels:
+      - "dependencies"
+      - "github-actions"
+      - "ci-cd"
+    
+    commit-message:
+      prefix: "🔧"
+      include: "scope"
+    
+    reviewers:
+      - "samuel-maciel"
+    
+    # Group all GitHub Actions updates
+    groups:
+      github-actions:
+        patterns:
+          - "*"

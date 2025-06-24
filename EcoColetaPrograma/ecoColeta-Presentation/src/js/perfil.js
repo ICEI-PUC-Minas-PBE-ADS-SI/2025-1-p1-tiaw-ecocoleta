@@ -2,6 +2,8 @@
 // Busca dados do usuário, permite edição, atualização e logout
 // Adapte a URL do JSON Server conforme necessário
 
+const API_BASE_URL = "https://two025-1-p1-tiaw-ecocoleta.onrender.com";
+
 const usuarioLogado = JSON.parse(localStorage.getItem("usuarioLogado"));
 if (!usuarioLogado) {
   window.location.href = "autent.html";
@@ -27,8 +29,9 @@ const defaultAvatars = [
   "assets/img/avatarCaique.jpg",
   "assets/img/AvatarThiagão.jpg",
   "assets/img/AvatarScrollMaster.jpg",
-  "assets/img/avatarCaique.jpg",
-  "assets/img/AvatarThiagão.jpg",
+  "assets/img/Avatarfenomeno.jpg",
+  "assets/img/AvatarMatheus.jpg",
+  "assets/img/AvatarKauan.jpg"
 ];
 
 // Função para mostrar feedback visual
@@ -418,7 +421,7 @@ async function salvarAlteracoes(dados) {
   // localStorage.setItem("usuarioLogado", JSON.stringify(usuarioAtualizadoTemporariamente));
 
   try {
-    const response = await fetch(`http://localhost:3000/api/usuarios/${usuarioLogado.id}`, {
+    const response = await fetch(`${API_BASE_URL}/api/usuarios/${usuarioLogado.id}`, {
       method: "PATCH",
       headers: {
         "Content-Type": "application/json",
@@ -470,7 +473,7 @@ async function salvarAlteracoes(dados) {
 async function preencherPerfil() {
   try {
     const response = await fetch(
-      `http://localhost:3000/api/usuarios/${usuarioLogado.id}`
+      `${API_BASE_URL}/api/usuarios/${usuarioLogado.id}`
     );
     const usuario = await response.json();
     
@@ -697,7 +700,7 @@ form.addEventListener("submit", async function (e) {
   };
   try {
     const response = await fetch(
-      `http://localhost:3000/api/usuarios/${usuarioLogado.id}`,
+      `${API_BASE_URL}/api/usuarios/${usuarioLogado.id}`,
       {
         method: "PATCH",
         headers: { "Content-Type": "application/json" },
@@ -946,7 +949,7 @@ function initAvatarModal() {
 
     try {
       const response = await fetch(
-        `http://localhost:3000/api/usuarios/${usuarioLogado.id}`,
+        `${API_BASE_URL}/api/usuarios/${usuarioLogado.id}`,
         {
           method: "PATCH",
           headers: {
