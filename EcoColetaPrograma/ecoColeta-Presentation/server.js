@@ -135,7 +135,37 @@ app.use('/api', (req, res, next) => {
   }
 });
 
-// JSON Server routes
+// ROTA PARA AGENDAR COLETA E SALVAR NO db.json
+app.post('/api/pontosDeColeta/:id/agendar', (req, res) => {
+  const db = jsonServerRouter.db;
+  const id = parseInt(req.params.id, 10);
+  const agendamento = req.body;
+
+  // LOGS DE DEPURAÇÃO
+  console.log('--- AGENDAR COLETA ---');
+  console.log('ID recebido:', id);
+  console.log('Body recebido:', agendamento);
+  const ponto = db.get('pontosDeColeta').find({ id }).value();
+  console.log('Ponto encontrado:', ponto);
+  if (!ponto) {
+    console.log('Ponto de coleta NÃO encontrado para o id:', id);
+    return res.status(404).json({ error: 'Ponto de coleta não encontrado' });
+  }
+
+  // Gera um idAgenda único
+  agendamento.idAgenda = `agenda-ecoponto${id}-${Date.now()}`;
+
+  // Adiciona ao array agenda
+  db.get('pontosDeColeta')
+    .find({ id })
+    .get('agenda')
+    .push(agendamento)
+    .write();
+
+  res.status(201).json(agendamento);
+});
+
+// JSON Server routes (deixe sempre por último)
 app.use('/api', jsonServerMiddlewares, jsonServerRouter);
 
 // Stripe payment intent endpoint
@@ -456,36 +486,6 @@ app.post('/api/comunidades/:id/curtir', (req, res) => {
   } catch (error) {
     res.status(500).json({ error: 'Erro ao processar curtida', details: error.message });
   }
-});
-
-// ROTA PARA AGENDAR COLETA E SALVAR NO db.json
-app.post('/api/pontosDeColeta/:id/agendar', (req, res) => {
-  const db = jsonServerRouter.db;
-  const id = parseInt(req.params.id, 10);
-  const agendamento = req.body;
-
-  // LOGS DE DEPURAÇÃO
-  console.log('--- AGENDAR COLETA ---');
-  console.log('ID recebido:', id);
-  console.log('Body recebido:', agendamento);
-  const ponto = db.get('pontosDeColeta').find({ id }).value();
-  console.log('Ponto encontrado:', ponto);
-  if (!ponto) {
-    console.log('Ponto de coleta NÃO encontrado para o id:', id);
-    return res.status(404).json({ error: 'Ponto de coleta não encontrado' });
-  }
-
-  // Gera um idAgenda único
-  agendamento.idAgenda = `agenda-ecoponto${id}-${Date.now()}`;
-
-  // Adiciona ao array agenda
-  db.get('pontosDeColeta')
-    .find({ id })
-    .get('agenda')
-    .push(agendamento)
-    .write();
-
-  res.status(201).json(agendamento);
 });
 
 // Função auxiliar para gerar tags
