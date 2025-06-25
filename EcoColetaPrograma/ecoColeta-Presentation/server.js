@@ -464,9 +464,14 @@ app.post('/api/pontosDeColeta/:id/agendar', (req, res) => {
   const id = parseInt(req.params.id, 10);
   const agendamento = req.body;
 
-  // Busca o ponto de coleta pelo id
+  // LOGS DE DEPURAÇÃO
+  console.log('--- AGENDAR COLETA ---');
+  console.log('ID recebido:', id);
+  console.log('Body recebido:', agendamento);
   const ponto = db.get('pontosDeColeta').find({ id }).value();
+  console.log('Ponto encontrado:', ponto);
   if (!ponto) {
+    console.log('Ponto de coleta NÃO encontrado para o id:', id);
     return res.status(404).json({ error: 'Ponto de coleta não encontrado' });
   }
 
