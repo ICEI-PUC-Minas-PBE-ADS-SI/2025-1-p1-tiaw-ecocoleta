@@ -488,6 +488,88 @@ app.post('/api/comunidades/:id/curtir', (req, res) => {
   }
 });
 
+// ================= Stripe Checkout Plans =================
+const PLANOS = {
+  basic: 'prod_SZOkqI4RE3cfxz',      // ID do produto Basic do Stripe
+  pro: 'prod_SZOmOqrbUT0HmJ',        // ID do produto Pro do Stripe
+  premium: 'prod_SZOnOjnqFwLiV0'     // ID do produto Premium do Stripe
+};
+
+// Função auxiliar para obter o priceId de um produto Stripe
+async function getPriceIdByProduct(productId) {
+  const prices = await stripe.prices.list({ product: productId, active: true, limit: 1 });
+  if (prices.data.length > 0) {
+    return prices.data[0].id;
+  }
+  throw new Error('Nenhum preço ativo encontrado para o produto: ' + productId);
+}
+
+// Endpoint para criar sessão de checkout Stripe
+app.post('/api/stripe/create-checkout-session', async (req, res) => {
+  try {
+    const { plano } = req.body;
+    const productId = PLANOS[plano];
+    if (!productId) return res.status(400).json({ error: 'Plano inválido' });
+
+    // Busca o priceId do produto Stripe
+    const priceId = await getPriceIdByProduct(productId);
+
+    // Busca usuário autenticado pelo cookie de sessão ou token (exemplo para front simples)
+    let userId = null;
+    let userEmail = null;
+    if (req.body.userId && req.body.email) {
+      userId = req.body.userId;
+      userEmail = req.body.email;
+    } else if (req.headers['x-user-id'] && req.headers['x-user-email']) {
+      userId = req.headers['x-user-id'];
+      userEmail = req.headers['x-user-email'];
+    } else {
+      return res.status(401).json({ error: 'Usuário não autenticado' });
+    }
+
+    const session = await stripe.checkout.sessions.create({
+      payment_method_types: ['card'],
+      mode: 'subscription',
+      line_items: [{ price: priceId, quantity: 1 }],
+      customer_email: userEmail,
+      metadata: { userId, plano },
+      success_url: `${process.env.BASE_URL || 'http://localhost:3000'}/dashboard.html?assinatura=sucesso`,
+      cancel_url: `${process.env.BASE_URL || 'http://localhost:3000'}/assinatura.html?cancelado=1`
+    });
+    res.json({ sessionId: session.id });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
+// Webhook Stripe para ativar assinatura
+app.post('/api/stripe/webhook', express.raw({type: 'application/json'}), (req, res) => {
+  const endpointSecret = process.env.STRIPE_WEBHOOK_SECRET;
+  const sig = req.headers['stripe-signature'];
+  let event;
+  try {
+    event = stripe.webhooks.constructEvent(req.body, sig, endpointSecret);
+  } catch (err) {
+    return res.status(400).send(`Webhook Error: ${err.message}`);
+  }
+
+  if (event.type === 'checkout.session.completed') {
+    const session = event.data.object;
+    const userId = session.metadata.userId;
+    const plano = session.metadata.plano;
+    // Atualize o status do usuário no db.json
+    const db = jsonServerRouter.db;
+    const usuario = db.get('usuarios').find({ id: userId }).value();
+    if (usuario) {
+      db.get('usuarios')
+        .find({ id: userId })
+        .assign({ statusAssinatura: 'ativo', planoAssinatura: plano })
+        .write();
+    }
+  }
+  res.json({ received: true });
+});
+
 // Função auxiliar para gerar tags
 function gerarTags(nome, descricao, tipo) {
   const texto = `${nome} ${descricao} ${tipo}`.toLowerCase();
