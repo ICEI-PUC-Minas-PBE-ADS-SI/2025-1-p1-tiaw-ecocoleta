@@ -424,7 +424,7 @@ function abrirFormularioAgendamento(idPonto) {
         </div>
         <div class="form-group">
           <label for="email">E-mail</label>
-          <input type="email" id="email" name="email" required />
+          <input type="email" id="email" name="email" required readonly />
         </div>
         <div class="form-group">
           <label for="telefone">Telefone</label>
@@ -452,6 +452,18 @@ function abrirFormularioAgendamento(idPonto) {
   infoContent.innerHTML = formHtml;
   const formAgendamento = infoContent.querySelector(".formulario-agendamento");
   console.log('Form criado!', formAgendamento); // DEBUG
+
+  // Pré-preencher formulário com dados do usuário logado
+  const usuarioLogado = JSON.parse(localStorage.getItem('usuarioLogado') || '{}');
+  if (usuarioLogado.nome) {
+    formAgendamento.querySelector("#nome").value = usuarioLogado.nome;
+  }
+  if (usuarioLogado.email) {
+    formAgendamento.querySelector("#email").value = usuarioLogado.email;
+  }
+  if (usuarioLogado.telefone) {
+    formAgendamento.querySelector("#telefone").value = usuarioLogado.telefone;
+  }
 
   // Produtos: seleção dos materiais aceitos pelo ponto
   const produtosLista = formAgendamento.querySelector(".produtos-lista");
@@ -533,36 +545,58 @@ function abrirFormularioAgendamento(idPonto) {
       alert("Selecione um horário para a coleta");
     }
     if (formValido) {
-      // Monta objeto de agendamento
+      // Verificar se o usuário está logado
+      const usuarioLogado = JSON.parse(localStorage.getItem('usuarioLogado') || '{}');
+      
+      if (!usuarioLogado.email) {
+        alert("Você precisa estar logado para fazer um agendamento. Redirecionando para o login...");
+        window.location.href = 'autent.html';
+        return;
+      }
+      
+      // Monta objeto de agendamento conforme esperado pela API
       const agendamento = {
-        nome: formAgendamento.querySelector("#nome").value,
-        email: formAgendamento.querySelector("#email").value,
-        telefone: formAgendamento.querySelector("#telefone").value,
-        materiais: inputMateriais.value.split(","),
-        data: formAgendamento.querySelector("#data").value,
-        horario: formAgendamento.querySelector("#horario").value,
-        pontoId: idPonto,
-        dataHoraInicio: `${formAgendamento.querySelector("#data").value}T${formAgendamento.querySelector("#horario").value.padStart(5, '0')}:00`,
-        status: "pendente"
+        pontoColetaId: idPonto,
+        doadorEmail: usuarioLogado.email, // Usar email do usuário logado
+        dataAgendamento: formAgendamento.querySelector("#data").value,
+        horarioAgendamento: formAgendamento.querySelector("#horario").value,
+        tipoMaterial: inputMateriais.value.split(",").map(m => m.trim()).join(", "),
+        observacoes: `Nome: ${formAgendamento.querySelector("#nome").value}, Telefone: ${formAgendamento.querySelector("#telefone").value}`
       };
+      
       console.log("Enviando agendamento:", agendamento); // DEBUG
-      fetch(`${API_BASE_URL}/pontosDeColeta/${idPonto}/agendar`, {
+      
+      fetch(`${API_BASE_URL}/agendamentos`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(agendamento)
       })
       .then(res => {
         console.log('Resposta do backend:', res); // DEBUG
-        if (!res.ok) throw new Error("Erro ao salvar agendamento");
+        if (!res.ok) {
+          throw new Error(`Erro ${res.status}: ${res.statusText}`);
+        }
         return res.json();
       })
       .then((data) => {
         console.log('Agendamento salvo:', data); // DEBUG
-        alert("Agendamento realizado com sucesso!");
+        
+        // Exibir mensagem de sucesso com detalhes
+        const dataFormatada = new Date(formAgendamento.querySelector("#data").value).toLocaleDateString('pt-BR');
+        const horarioFormatado = formAgendamento.querySelector("#horario").value;
+        const materiais = inputMateriais.value;
+        
+        alert(`Agendamento realizado com sucesso!\n\nDetalhes:\n- Data: ${dataFormatada}\n- Horário: ${horarioFormatado}\n- Materiais: ${materiais}\n- Local: ${ponto.nome}\n\nVocê receberá uma confirmação em breve.`);
+        
+        // Limpar o formulário
+        formAgendamento.reset();
+        
+        // Opcionalmente, fechar o formulário e voltar aos detalhes do ponto
+        mostrarPontoNoPainel(ponto);
       })
       .catch((err) => {
-        alert("Erro ao salvar agendamento. Tente novamente.");
         console.error("Erro ao salvar agendamento:", err);
+        alert(`Erro ao salvar agendamento: ${err.message}\n\nPor favor, tente novamente.`);
       });
     }
   });
