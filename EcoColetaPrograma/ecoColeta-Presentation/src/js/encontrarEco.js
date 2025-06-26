@@ -114,14 +114,14 @@ function filtrarPontos(termo = "", filtros = []) {
 }
 
 // Configuração da URL base do servidor
-const API_BASE_URL = "https://two025-1-p1-tiaw-ecocoleta.onrender.com";
+const API_BASE_URL = "http://localhost:3000/api";
 
 // Atualizar a função de carregamento inicial
 document.addEventListener("DOMContentLoaded", () => {
   // Corrige: seleciona a área de filtros
   const areaFiltros = document.querySelector(".area-filtros");
   // Carregar dados do json-server
-  fetch(`${API_BASE_URL}/api/pontosDeColeta`)
+  fetch(`${API_BASE_URL}/pontosDeColeta`)
     .then((response) => {
       if (!response.ok) {
         throw new Error(`HTTP error! status: ${response.status}`);
@@ -134,8 +134,10 @@ document.addEventListener("DOMContentLoaded", () => {
     })
     .catch((error) => {
       console.error("Erro ao carregar pontos de coleta:", error);
-      alert(
-        "Erro ao carregar os pontos de coleta. Verifique se o servidor json-server está rodando na porta 3000."
+      mostrarAlertPersonalizado(
+        "Erro de Conexão",
+        "Não foi possível carregar os pontos de coleta.\n\nVerifique se:\n• Sua conexão com a internet está funcionando\n• O servidor está executando na porta 3000\n• Não há bloqueios de firewall",
+        "error"
       );
     });
 
@@ -424,7 +426,7 @@ function abrirFormularioAgendamento(idPonto) {
         </div>
         <div class="form-group">
           <label for="email">E-mail</label>
-          <input type="email" id="email" name="email" required />
+          <input type="email" id="email" name="email" required readonly />
         </div>
         <div class="form-group">
           <label for="telefone">Telefone</label>
@@ -452,6 +454,18 @@ function abrirFormularioAgendamento(idPonto) {
   infoContent.innerHTML = formHtml;
   const formAgendamento = infoContent.querySelector(".formulario-agendamento");
   console.log('Form criado!', formAgendamento); // DEBUG
+
+  // Pré-preencher formulário com dados do usuário logado
+  const usuarioLogado = JSON.parse(localStorage.getItem('usuarioLogado') || '{}');
+  if (usuarioLogado.nome) {
+    formAgendamento.querySelector("#nome").value = usuarioLogado.nome;
+  }
+  if (usuarioLogado.email) {
+    formAgendamento.querySelector("#email").value = usuarioLogado.email;
+  }
+  if (usuarioLogado.telefone) {
+    formAgendamento.querySelector("#telefone").value = usuarioLogado.telefone;
+  }
 
   // Produtos: seleção dos materiais aceitos pelo ponto
   const produtosLista = formAgendamento.querySelector(".produtos-lista");
@@ -512,7 +526,7 @@ function abrirFormularioAgendamento(idPonto) {
   const camposParaValidar = ["nome", "email", "telefone", "data"];
 
   // Adiciona o event listener de submit IMEDIATAMENTE após inserir o form
-  formAgendamento.addEventListener("submit", function (e) {
+  formAgendamento.addEventListener("submit", async function (e) {
     e.preventDefault();
     console.log('Submit interceptado!'); // DEBUG
     let formValido = true;
@@ -525,47 +539,352 @@ function abrirFormularioAgendamento(idPonto) {
     });
     if (!inputMateriais.value || inputMateriais.value.split(",").filter((p) => p.trim() !== "").length === 0) {
       formValido = false;
-      alert("Selecione pelo menos um material para coleta");
+      mostrarAlertPersonalizado("Atenção", "Selecione pelo menos um material para coleta", "warning");
+      return;
     }
     const horario = formAgendamento.querySelector("#horario").value;
     if (!horario) {
       formValido = false;
-      alert("Selecione um horário para a coleta");
+      mostrarAlertPersonalizado("Atenção", "Selecione um horário para a coleta", "warning");
+      return;
     }
     if (formValido) {
-      // Monta objeto de agendamento
+      // Verificar se o usuário está logado
+      const usuarioLogado = JSON.parse(localStorage.getItem('usuarioLogado') || '{}');
+      
+      if (!usuarioLogado.email) {
+        mostrarAlertPersonalizado("Login Necessário", "Você precisa estar logado para fazer um agendamento.", "error", () => {
+          window.location.href = 'autent.html';
+        });
+        return;
+      }
+      
+      // Monta objeto de agendamento conforme esperado pela API
       const agendamento = {
-        nome: formAgendamento.querySelector("#nome").value,
-        email: formAgendamento.querySelector("#email").value,
-        telefone: formAgendamento.querySelector("#telefone").value,
-        materiais: inputMateriais.value.split(","),
-        data: formAgendamento.querySelector("#data").value,
-        horario: formAgendamento.querySelector("#horario").value,
-        pontoId: idPonto,
-        dataHoraInicio: `${formAgendamento.querySelector("#data").value}T${formAgendamento.querySelector("#horario").value.padStart(5, '0')}:00`,
-        status: "pendente"
+        pontoColetaId: idPonto,
+        doadorEmail: usuarioLogado.email, // Usar email do usuário logado
+        dataAgendamento: formAgendamento.querySelector("#data").value,
+        horarioAgendamento: formAgendamento.querySelector("#horario").value,
+        tipoMaterial: inputMateriais.value.split(",").map(m => m.trim()).join(", "),
+        observacoes: `Nome: ${formAgendamento.querySelector("#nome").value}, Telefone: ${formAgendamento.querySelector("#telefone").value}`
       };
+      
       console.log("Enviando agendamento:", agendamento); // DEBUG
-      fetch(`${API_BASE_URL}/api/pontosDeColeta/${idPonto}/agendar`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(agendamento)
-      })
-      .then(res => {
-        console.log('Resposta do backend:', res); // DEBUG
-        if (!res.ok) throw new Error("Erro ao salvar agendamento");
-        return res.json();
-      })
-      .then((data) => {
+      
+      try {
+        // Usar EcoColetaService para criar o agendamento
+        const data = await EcoColetaService.agendamentos.criar(agendamento);
+        
         console.log('Agendamento salvo:', data); // DEBUG
-        alert("Agendamento realizado com sucesso!");
-      })
-      .catch((err) => {
-        alert("Erro ao salvar agendamento. Tente novamente.");
+        
+        // Exibir mensagem de sucesso com detalhes
+        const dataFormatada = new Date(formAgendamento.querySelector("#data").value).toLocaleDateString('pt-BR');
+        const horarioFormatado = formAgendamento.querySelector("#horario").value;
+        const materiais = inputMateriais.value;
+        
+        mostrarAlertPersonalizado(
+          "Agendamento Confirmado!", 
+          `Seu agendamento foi realizado com sucesso!\n\n📅 Data: ${dataFormatada}\n⏰ Horário: ${horarioFormatado}\n📦 Materiais: ${materiais}\n📍 Local: ${ponto.nome}\n\nVocê receberá uma confirmação em breve.`,
+          "success",
+          () => {
+            // Limpar o formulário
+            formAgendamento.reset();
+            // Fechar o formulário e voltar aos detalhes do ponto
+            mostrarPontoNoPainel(ponto);
+          }
+        );
+        
+      } catch (err) {
         console.error("Erro ao salvar agendamento:", err);
-      });
+        mostrarAlertPersonalizado("Erro", `Não foi possível salvar o agendamento: ${err.message}\n\nPor favor, tente novamente.`, "error");
+      }
     }
   });
+}
+
+// Função para criar e exibir modal personalizado
+function mostrarAlertPersonalizado(titulo, mensagem, tipo = 'info', callback = null) {
+  // Remove modal existente se houver
+  const modalExistente = document.getElementById('modal-alert-personalizado');
+  if (modalExistente) {
+    modalExistente.remove();
+  }
+
+  // Define ícones e cores para cada tipo
+  const tiposConfig = {
+    success: {
+      icon: '✅',
+      color: '#4CAF50',
+      backgroundColor: '#E8F5E8',
+      borderColor: '#4CAF50'
+    },
+    error: {
+      icon: '❌',
+      color: '#F44336',
+      backgroundColor: '#FFEBEE',
+      borderColor: '#F44336'
+    },
+    warning: {
+      icon: '⚠️',
+      color: '#FF9800',
+      backgroundColor: '#FFF3E0',
+      borderColor: '#FF9800'
+    },
+    info: {
+      icon: 'ℹ️',
+      color: '#2196F3',
+      backgroundColor: '#E3F2FD',
+      borderColor: '#2196F3'
+    }
+  };
+
+  const config = tiposConfig[tipo] || tiposConfig.info;
+
+  // Criar estrutura do modal
+  const modalHtml = `
+    <div 
+      id="modal-alert-personalizado" 
+      style="
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(135deg, rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.6));
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        z-index: 10000;
+        backdrop-filter: blur(5px);
+        animation: fadeIn 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+      "
+    >
+      <div 
+        class="modal-content"
+        style="
+          background: white;
+          border-radius: 16px;
+          padding: 0;
+          max-width: 500px;
+          width: 90%;
+          max-height: 90vh;
+          overflow-y: auto;
+          box-shadow: 
+            0 25px 50px rgba(0, 0, 0, 0.25),
+            0 0 0 1px rgba(255, 255, 255, 0.1);
+          animation: slideUp 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+          border-top: 5px solid ${config.borderColor};
+          position: relative;
+        "
+      >
+        <!-- Header com gradiente -->
+        <div 
+          style="
+            background: linear-gradient(135deg, ${config.backgroundColor}, ${config.backgroundColor}f0);
+            padding: 24px 28px 20px;
+            border-radius: 11px 11px 0 0;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+            position: relative;
+            overflow: hidden;
+          "
+        >
+          <!-- Decoração de fundo -->
+          <div style="
+            position: absolute;
+            top: -50%;
+            right: -30%;
+            width: 100px;
+            height: 100px;
+            background: ${config.color}20;
+            border-radius: 50%;
+            transform: scale(2);
+          "></div>
+          
+          <div style="display: flex; align-items: center; gap: 16px; position: relative;">
+            <div style="
+              font-size: 32px;
+              filter: drop-shadow(0 2px 4px rgba(0,0,0,0.1));
+              animation: bounce 0.6s ease-out 0.2s both;
+            ">${config.icon}</div>
+            <h3 
+              style="
+                margin: 0;
+                color: ${config.color};
+                font-size: 22px;
+                font-weight: 700;
+                font-family: 'Poppins', sans-serif;
+                text-shadow: 0 1px 2px rgba(0,0,0,0.1);
+              "
+            >
+              ${titulo}
+            </h3>
+          </div>
+        </div>
+
+        <!-- Conteúdo -->
+        <div style="padding: 28px;">
+          <p 
+            style="
+              margin: 0 0 28px 0;
+              color: #2c3e50;
+              font-size: 16px;
+              line-height: 1.6;
+              font-family: 'Poppins', sans-serif;
+              white-space: pre-line;
+              font-weight: 400;
+            "
+          >
+            ${mensagem}
+          </p>
+
+          <!-- Botões -->
+          <div style="display: flex; justify-content: flex-end; gap: 12px;">
+            <button 
+              id="btn-fechar-modal"
+              style="
+                background: linear-gradient(135deg, ${config.color}, ${config.color}dd);
+                color: white;
+                border: none;
+                padding: 14px 28px;
+                border-radius: 10px;
+                font-size: 16px;
+                font-weight: 600;
+                cursor: pointer;
+                transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+                font-family: 'Poppins', sans-serif;
+                box-shadow: 0 4px 12px ${config.color}40;
+                position: relative;
+                overflow: hidden;
+              "
+              onmouseover="
+                this.style.transform='translateY(-2px) scale(1.02)';
+                this.style.boxShadow='0 6px 20px ${config.color}50';
+              "
+              onmouseout="
+                this.style.transform='translateY(0) scale(1)';
+                this.style.boxShadow='0 4px 12px ${config.color}40';
+              "
+              onmousedown="this.style.transform='translateY(0) scale(0.98)'"
+              onmouseup="this.style.transform='translateY(-2px) scale(1.02)'"
+            >
+              <span style="position: relative; z-index: 1;">
+                ${tipo === 'success' ? '✨ Continuar' : tipo === 'error' ? '🔄 Tentar Novamente' : 'Entendi'}
+              </span>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <style>
+      @keyframes fadeIn {
+        from { 
+          opacity: 0;
+        }
+        to { 
+          opacity: 1;
+        }
+      }
+      
+      @keyframes slideUp {
+        from { 
+          opacity: 0;
+          transform: translateY(40px) scale(0.9);
+        }
+        to { 
+          opacity: 1;
+          transform: translateY(0) scale(1);
+        }
+      }
+
+      @keyframes bounce {
+        0%, 20%, 53%, 80%, 100% {
+          transform: translate3d(0,0,0) scale(1);
+        }
+        40%, 43% {
+          transform: translate3d(0,-8px,0) scale(1.1);
+        }
+        70% {
+          transform: translate3d(0,-4px,0) scale(1.05);
+        }
+        90% {
+          transform: translate3d(0,-1px,0) scale(1.02);
+        }
+      }
+
+      @media (max-width: 480px) {
+        .modal-content {
+          width: 95% !important;
+          margin: 20px !important;
+        }
+      }
+    </style>
+  `;
+
+  // Adicionar modal ao body
+  document.body.insertAdjacentHTML('beforeend', modalHtml);
+
+  // Event listeners
+  const modal = document.getElementById('modal-alert-personalizado');
+  const btnFechar = document.getElementById('btn-fechar-modal');
+
+  function fecharModal() {
+    const modalElement = document.getElementById('modal-alert-personalizado');
+    const modalContent = modalElement.querySelector('.modal-content');
+    
+    // Animação de saída
+    modalElement.style.animation = 'fadeOut 0.3s cubic-bezier(0.4, 0, 0.2, 1)';
+    modalContent.style.animation = 'slideDown 0.3s cubic-bezier(0.4, 0, 0.2, 1)';
+    
+    setTimeout(() => {
+      modalElement.remove();
+      if (callback && typeof callback === 'function') {
+        callback();
+      }
+    }, 300);
+  }
+
+  // Fechar ao clicar no botão
+  btnFechar.addEventListener('click', fecharModal);
+
+  // Fechar ao clicar fora do modal
+  modal.addEventListener('click', (e) => {
+    if (e.target === modal) {
+      fecharModal();
+    }
+  });
+
+  // Fechar com ESC
+  document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape' && document.getElementById('modal-alert-personalizado')) {
+      fecharModal();
+    }
+  });
+
+  // Adicionar animações de saída
+  const style = document.createElement('style');
+  style.textContent = `
+    @keyframes fadeOut {
+      from { 
+        opacity: 1;
+      }
+      to { 
+        opacity: 0;
+      }
+    }
+
+    @keyframes slideDown {
+      from { 
+        opacity: 1;
+        transform: translateY(0) scale(1);
+      }
+      to { 
+        opacity: 0;
+        transform: translateY(20px) scale(0.95);
+      }
+    }
+  `;
+  document.head.appendChild(style);
 }
 
 console.log('Script carregado!');

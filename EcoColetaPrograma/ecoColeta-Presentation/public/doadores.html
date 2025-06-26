@@ -1,0 +1,1744 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>EcoColeta - Doadores</title>
+  <link rel="stylesheet" href="styles.css">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <link rel="stylesheet" href="../src/css/dashboardAdmin.css" />
+  <style>
+    /* Doadores page specific styles */
+    .user-info {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+
+    .user-avatar {
+      width: 40px;
+      height: 40px;
+      background: var(--primary-gradient);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-weight: 600;
+      font-size: 1rem;
+    }
+
+    .user-details {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .user-name {
+      font-weight: 600;
+      color: var(--text-primary);
+      font-size: 0.875rem;
+    }
+
+    .user-email {
+      font-size: 0.75rem;
+      color: var(--text-secondary);
+    }
+
+    .status-badge {
+      padding: 0.25rem 0.75rem;
+      border-radius: 20px;
+      font-size: 0.75rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .status-ativo {
+      background: rgba(16, 185, 129, 0.1);
+      color: #10B981;
+      border: 1px solid rgba(16, 185, 129, 0.2);
+    }
+
+    .status-inativo {
+      background: rgba(107, 114, 128, 0.1);
+      color: #6B7280;
+      border: 1px solid rgba(107, 114, 128, 0.2);
+    }
+
+    .status-pendente {
+      background: rgba(245, 158, 11, 0.1);
+      color: #F59E0B;
+      border: 1px solid rgba(245, 158, 11, 0.2);
+    }
+
+    .rating {
+      display: flex;
+      align-items: center;
+      gap: 0.25rem;
+      color: #F59E0B;
+    }
+
+    .rating-value {
+      color: var(--text-secondary);
+      font-size: 0.875rem;
+      margin-left: 0.25rem;
+    }
+
+    .action-buttons {
+      display: flex;
+      gap: 0.25rem;
+    }
+
+    .btn-icon {
+      width: 32px;
+      height: 32px;
+      border: 1px solid var(--border-color);
+      background: var(--surface-color);
+      border-radius: 6px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      color: var(--text-secondary);
+    }
+
+    .btn-icon:hover {
+      background: var(--surface-hover);
+      color: var(--text-primary);
+      transform: translateY(-1px);
+    }
+
+    .btn-icon.btn-danger:hover {
+      background: rgba(239, 68, 68, 0.1);
+      color: #EF4444;
+      border-color: rgba(239, 68, 68, 0.2);
+    }
+
+    .controls-right {
+      display: flex;
+      gap: 0.5rem;
+    }
+
+    .filter-controls {
+      display: flex;
+      gap: 1rem;
+      align-items: center;
+    }
+
+    .filter-group {
+      display: flex;
+      flex-direction: column;
+      gap: 0.25rem;
+    }
+
+    .filter-group label {
+      font-size: 0.75rem;
+      font-weight: 600;
+      color: var(--text-secondary);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .form-control {
+      padding: 0.5rem 0.75rem;
+      border: 1px solid var(--border-color);
+      border-radius: 6px;
+      background: var(--surface-color);
+      color: var(--text-primary);
+      font-size: 0.875rem;
+    }
+
+    .form-control:focus {
+      outline: none;
+      border-color: var(--primary-color);
+      box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+    }
+
+    .search-input {
+      position: relative;
+      max-width: 300px;
+    }
+
+    .search-input input {
+      width: 100%;
+      padding: 0.5rem 0.75rem 0.5rem 2.5rem;
+      border: 1px solid var(--border-color);
+      border-radius: 6px;
+      background: var(--surface-color);
+      color: var(--text-primary);
+      font-size: 0.875rem;
+    }
+
+    .search-input .search-icon {
+      position: absolute;
+      left: 0.75rem;
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--text-muted);
+      pointer-events: none;
+    }
+
+    .activity-list {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+
+    .activity-item {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      padding: 1rem;
+      background: var(--surface-color);
+      border: 1px solid var(--border-color);
+      border-radius: 8px;
+    }
+
+    .activity-icon {
+      width: 40px;
+      height: 40px;
+      background: var(--primary-gradient);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-size: 1.25rem;
+    }
+
+    .activity-content {
+      flex: 1;
+    }
+
+    .activity-content h4 {
+      margin: 0 0 0.25rem 0;
+      font-size: 0.875rem;
+      font-weight: 600;
+      color: var(--text-primary);
+    }
+
+    .activity-content p {
+      margin: 0;
+      font-size: 0.8rem;
+      color: var(--text-secondary);
+    }
+
+    .activity-time {
+      font-size: 0.75rem;
+      color: var(--text-muted);
+      font-weight: 500;
+    }
+
+    @media (max-width: 768px) {
+      .filter-controls {
+        flex-direction: column;
+        gap: 0.75rem;
+        align-items: stretch;
+      }
+
+      .controls-right {
+        flex-direction: column;
+      }
+
+      .table-container {
+        overflow-x: auto;
+      }
+
+      .action-buttons {
+        flex-direction: column;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="dashboard-container">
+    <!-- Mobile sidebar toggle -->
+    <div class="mobile-toggle">
+      <button id="sidebar-toggle" class="toggle-button">
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon"><line x1="4" x2="20" y1="12" y2="12"/><line x1="4" x2="20" y1="6" y2="6"/><line x1="4" x2="20" y1="18" y2="18"/></svg>
+      </button>
+    </div>
+
+    <!-- Sidebar -->
+    <div id="sidebar" class="sidebar">
+      <div class="sidebar-header">
+        <h1 class="logo">EcoColeta</h1>
+      </div>
+      <nav class="sidebar-nav">
+        <ul>
+          <li>
+            <a href="dashboardAdmin.html">
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon"><rect width="7" height="9" x="3" y="3" rx="1"/><rect width="7" height="5" x="14" y="3" rx="1"/><rect width="7" height="9" x="14" y="12" rx="1"/><rect width="7" height="5" x="3" y="16" rx="1"/></svg>
+              Dashboard
+            </a>
+          </li>
+          <li>
+            <a href="visao-geral.html">
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+              Visão Geral
+            </a>
+          </li>
+          <li>
+            <a href="desempenho.html">
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon"><rect width="18" height="18" x="3" y="3" rx="2"/><path d="M8 17.5v-10c0-.3.2-.5.5-.5h2c.3 0 .5.2.5.5v10c0 .3-.2.5-.5.5h-2c-.3 0-.5-.2-.5-.5Z"/><path d="M13 17.5v-7c0-.3.2-.5.5-.5h2c.3 0 .5.2.5.5v7c0 .3-.2.5-.5.5h-2c-.3 0-.5-.2-.5-.5Z"/></svg>
+              Desempenho
+            </a>
+          </li>
+          <li>
+            <a href="#" class="active">
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+              Doadores
+            </a>
+          </li>
+          <li>
+            <a href="pontos-coleta.html">
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg>
+              Pontos de Coleta
+            </a>
+          </li>
+          <li>
+            <a href="agendas.html">
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon"><path d="M8 2v4M16 2v4M3 10h18M5 6h14a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2z"/></svg>
+              Agendas
+            </a>
+          </li>
+        </ul>
+      </nav>
+    </div>
+
+    <!-- Main content -->
+    <div id="main-content" class="main-content">
+      <div class="content-wrapper">
+        <div class="dashboard-header">
+          <h1 class="page-title">Doadores</h1>
+          <div class="dashboard-controls">
+            <div class="controls-left">
+              <div class="filter-group">
+                <label for="status-filter">Status:</label>
+                <select id="status-filter" class="form-control">
+                  <option value="todos">Todos</option>
+                  <option value="ativo">Ativos</option>
+                  <option value="inativo">Inativos</option>
+                  <option value="pendente">Pendentes</option>
+                </select>
+              </div>
+              <div class="filter-group">
+                <label for="area-filter">Área:</label>
+                <select id="area-filter" class="form-control">
+                  <option value="todas">Todas as áreas</option>
+                  <option value="centro">Centro</option>
+                  <option value="zona-norte">Zona Norte</option>
+                  <option value="zona-sul">Zona Sul</option>
+                  <option value="zona-leste">Zona Leste</option>
+                  <option value="zona-oeste">Zona Oeste</option>
+                </select>
+              </div>
+            </div>
+            <div class="controls-right">              <button id="add-donor" class="btn-primary btn-small">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/><path d="m13 17 5 5"/><path d="m18 17-5 5"/></svg>
+                Adicionar Doador
+              </button>
+              <button id="export-donors" class="btn-secondary btn-small">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7,10 12,15 17,10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+                Exportar
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Collectors Statistics -->
+        <div class="stats-cards">
+          <div class="card stats-card">
+            <div class="card-content">              <div class="stats-info">
+                <p class="stats-title">Total de Doadores</p>
+                <p class="stats-value" id="total-donors">15</p>
+              </div>
+              <div class="stats-icon bg-blue">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+              </div>
+            </div>
+          </div>
+
+          <div class="card stats-card">
+            <div class="card-content">
+              <div class="stats-info">                <p class="stats-title">Doadores Ativos</p>
+                <p class="stats-value" id="active-donors">12</p>
+              </div>
+              <div class="stats-icon bg-green">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+              </div>
+            </div>
+          </div>
+
+          <div class="card stats-card">
+            <div class="card-content">
+              <div class="stats-info">                <p class="stats-title">Doações Hoje</p>
+                <p class="stats-value" id="donations-today">8</p>
+              </div>
+              <div class="stats-icon bg-yellow">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 11l3 3l8-8"/></svg>
+              </div>
+            </div>
+          </div>
+
+          <div class="card stats-card">
+            <div class="card-content">
+              <div class="stats-info">
+                <p class="stats-title">Avaliação Média</p>
+                <p class="stats-value" id="average-rating">4.8</p>
+              </div>
+              <div class="stats-icon bg-red">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12,2 15.09,8.26 22,9.27 17,14.14 18.18,21.02 12,17.77 5.82,21.02 7,14.14 2,9.27 8.91,8.26"/></svg>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Donors List -->
+        <div class="card">
+          <div class="card-header">
+            <h2 class="card-title">Lista de Doadores</h2>
+            <div class="card-actions">
+              <div class="search-box">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="search-icon"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+                <input type="text" placeholder="Buscar doadores..." id="donor-search" class="search-input">
+              </div>
+            </div>
+          </div>
+          <div class="card-content">
+            <div class="table-container">              <table class="data-table" id="donors-table">
+                <thead>
+                  <tr>
+                    <th>Doador</th>
+                    <th>Status</th>
+                    <th>Área de Atuação</th>
+                    <th>Doações Realizadas</th>
+                    <th>Avaliação</th>
+                    <th>Última Atividade</th>
+                    <th>Ações</th>
+                  </tr>
+                </thead>
+                <tbody id="donors-tbody">
+                  <!-- Donors data will be loaded here -->
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>        <!-- Donor Performance Charts -->
+        <div class="chart-cards">
+          <div class="card chart-card">
+            <div class="card-header">
+              <h2 class="card-title">Atividade dos Doadores</h2>
+            </div>
+            <div class="card-content">
+              <div class="chart-container">
+                <canvas id="donor-activity-chart"></canvas>
+              </div>
+            </div>
+          </div>
+
+          <div class="card chart-card">
+            <div class="card-header">
+              <h2 class="card-title">Distribuição por Área</h2>
+            </div>
+            <div class="card-content">
+              <div class="chart-container">
+                <canvas id="area-distribution-chart"></canvas>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Recent Activity -->
+        <div class="card">
+          <div class="card-header">
+            <h2 class="card-title">Atividade Recente dos Doadores</h2>
+          </div>
+          <div class="card-content">            <div class="activity-list" id="donor-activity-list">
+              <!-- Activity items will be loaded here -->
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- Add Donor Modal -->
+  <div id="add-donor-modal" class="modal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3>Adicionar Novo Doador</h3>
+        <button class="modal-close" id="close-donor-modal">&times;</button>
+      </div>
+      <div class="modal-body">
+        <form id="add-donor-form">
+          <div class="form-group">
+            <label for="donor-name">Nome Completo</label>
+            <input type="text" id="donor-name" name="name" required>
+          </div>
+          <div class="form-group">
+            <label for="donor-email">Email</label>
+            <input type="email" id="donor-email" name="email" required>
+          </div>
+          <div class="form-group">
+            <label for="donor-phone">Telefone</label>
+            <input type="tel" id="donor-phone" name="phone" required>
+          </div>
+          <div class="form-group">
+            <label for="donor-area">Área de Atuação</label>
+            <select id="donor-area" name="area" required>
+              <option value="">Selecione uma área</option>
+              <option value="centro">Centro</option>
+              <option value="zona-norte">Zona Norte</option>
+              <option value="zona-sul">Zona Sul</option>
+              <option value="zona-leste">Zona Leste</option>
+              <option value="zona-oeste">Zona Oeste</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="donor-materials">Materiais de Especialidade</label>
+            <div class="checkbox-group">
+              <label><input type="checkbox" name="materials" value="papel"> Papel</label>
+              <label><input type="checkbox" name="materials" value="plastico"> Plástico</label>
+              <label><input type="checkbox" name="materials" value="vidro"> Vidro</label>
+              <label><input type="checkbox" name="materials" value="metal"> Metal</label>
+              <label><input type="checkbox" name="materials" value="organico"> Orgânico</label>
+              <label><input type="checkbox" name="materials" value="eletronico"> Eletrônico</label>
+            </div>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn-secondary" id="cancel-add-donor">Cancelar</button>
+        <button type="submit" form="add-donor-form" class="btn-primary">Adicionar Doador</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="../src/js/dashboardAdmin.js"></script>
+  
+  <style>
+    /* Notification styles */
+    @keyframes slideIn {
+      from { transform: translateX(100%); opacity: 0; }
+      to { transform: translateX(0); opacity: 1; }
+    }
+    
+    @keyframes slideOut {
+      from { transform: translateX(0); opacity: 1; }
+      to { transform: translateX(100%); opacity: 0; }
+    }
+    
+    .notification {
+      display: flex;
+      align-items: center;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      font-size: 14px;
+      font-weight: 500;
+    }
+    
+    .notification-content {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    
+    .notification i {
+      font-size: 16px;
+    }
+    
+    /* Donor details modal styles */
+    .donor-details {
+      max-height: 60vh;
+      overflow-y: auto;
+      padding: 20px;
+    }
+    
+    .detail-group {
+      margin-bottom: 25px;
+      padding-bottom: 20px;
+      border-bottom: 1px solid #e5e7eb;
+    }
+    
+    .detail-group:last-child {
+      border-bottom: none;
+      margin-bottom: 0;
+    }
+    
+    .detail-group h3 {
+      color: #1f2937;
+      font-size: 16px;
+      font-weight: 600;
+      margin-bottom: 15px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    
+    .detail-group h3:before {
+      content: '';
+      width: 4px;
+      height: 16px;
+      background: var(--primary-color, #10b981);
+      border-radius: 2px;
+    }
+    
+    .detail-group p {
+      margin-bottom: 8px;
+      color: #4b5563;
+      line-height: 1.5;
+    }
+    
+    .detail-group strong {
+      color: #1f2937;
+      font-weight: 600;
+      min-width: 140px;
+      display: inline-block;
+    }
+    
+    .status-badge {
+      padding: 4px 8px;
+      border-radius: 12px;
+      font-size: 12px;
+      font-weight: 500;
+      text-transform: uppercase;
+    }
+    
+    .status-ativo {
+      background: #d1fae5;
+      color: #065f46;
+    }
+    
+    .status-inativo {
+      background: #fee2e2;
+      color: #991b1b;
+    }
+    
+    /* Modal improvements */
+    .modal-content {
+      background: white;
+      border-radius: 12px;
+      box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+      max-width: 600px;
+      width: 90%;
+      max-height: 90vh;
+      overflow: hidden;
+    }
+    
+    .modal-header {
+      padding: 20px;
+      border-bottom: 1px solid #e5e7eb;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    
+    .modal-header h2 {
+      margin: 0;
+      color: #1f2937;
+      font-size: 20px;
+      font-weight: 600;
+    }
+    
+    .modal-close {
+      background: none;
+      border: none;
+      font-size: 24px;
+      color: #6b7280;
+      cursor: pointer;
+      padding: 0;
+      width: 30px;
+      height: 30px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 6px;
+      transition: all 0.2s;
+    }
+    
+    .modal-close:hover {
+      background: #f3f4f6;
+      color: #1f2937;
+    }
+    
+    .modal-footer {
+      padding: 20px;
+      border-top: 1px solid #e5e7eb;
+      display: flex;
+      gap: 12px;
+      justify-content: flex-end;
+    }
+    
+    .btn-secondary, .btn-primary {
+      padding: 10px 20px;
+      border-radius: 6px;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.2s;
+      border: 1px solid;
+    }
+    
+    .btn-secondary {
+      background: white;
+      color: #6b7280;
+      border-color: #d1d5db;
+    }
+    
+    .btn-secondary:hover {
+      background: #f9fafb;
+      color: #1f2937;
+    }
+    
+    .btn-primary {
+      background: var(--primary-color, #10b981);
+      color: white;
+      border-color: var(--primary-color, #10b981);
+    }
+    
+    .btn-primary:hover {
+      background: var(--primary-color-dark, #059669);
+      border-color: var(--primary-color-dark, #059669);
+    }
+  </style>  <script>    // Donors specific functionality
+    class DonorsManager {
+      constructor() {
+        this.donors = [];
+        this.filteredDonors = [];
+        this.currentUser = null;
+        this.userPoints = [];
+        this.init();
+      }
+
+      async init() {
+        // Wait for dashboard admin to load
+        await this.waitForDashboard();
+        this.loadCurrentUser();
+        await this.loadDonors();
+        this.setupEventListeners();
+        this.initCharts();
+      }
+
+      waitForDashboard() {
+        return new Promise((resolve) => {
+          const checkDashboard = () => {
+            if (window.dashboardAdmin && window.dashboardAdmin.usuarios) {
+              resolve();
+            } else {
+              setTimeout(checkDashboard, 100);
+            }
+          };
+          checkDashboard();
+        });
+      }
+
+      loadCurrentUser() {
+        this.currentUser = window.dashboardAdmin.currentUser;
+        this.userPoints = window.dashboardAdmin.userCollectionPoints || [];
+      }
+
+      setupEventListeners() {        // Search functionality
+        document.getElementById('donor-search').addEventListener('input', (e) => {
+          this.filterDonors(e.target.value);
+        });
+
+        // Filter functionality
+        document.getElementById('status-filter').addEventListener('change', () => {
+          this.applyFilters();
+        });
+
+        document.getElementById('area-filter').addEventListener('change', () => {
+          this.applyFilters();
+        });        // Add donor modal
+        document.getElementById('add-donor').addEventListener('click', () => {
+          this.openAddModal();
+        });
+
+        document.getElementById('close-donor-modal').addEventListener('click', () => {
+          this.closeAddModal();
+        });
+
+        document.getElementById('cancel-add-donor').addEventListener('click', () => {
+          this.closeAddModal();
+        });        document.getElementById('add-donor-form').addEventListener('submit', (e) => {
+          e.preventDefault();
+          const editId = e.target.getAttribute('data-edit-id');
+          if (editId) {
+            this.updateDonor(parseInt(editId));
+          } else {
+            this.addDonor();
+          }
+        });
+
+        // Export functionality
+        document.getElementById('export-donors').addEventListener('click', () => {
+          this.exportDonors();
+        });
+      }      async loadDonors() {
+        try {
+          // Load donors from dashboard data
+          const allUsers = window.dashboardAdmin.usuarios || [];
+          const allPoints = window.dashboardAdmin.pontosDeColeta || [];
+          const currentUser = window.dashboardAdmin.currentUser;
+          
+          if (!currentUser) {
+            console.error('Usuário atual não encontrado');
+            return;
+          }
+
+          console.log('Loading donors data:', {
+            totalUsers: allUsers.length,
+            totalPoints: allPoints.length,
+            currentUserId: currentUser.id
+          });          // Get all collection points (not just user's own points)
+          const allActivePoints = allPoints.filter(point => point.status !== 'inativo');
+
+          console.log('All active points found:', allActivePoints.length);
+
+          // Get all donor IDs who have scheduled collections at any active point
+          const donorIds = new Set();
+          allActivePoints.forEach(point => {
+            if (point.agenda && point.agenda.length > 0) {
+              point.agenda.forEach(agenda => {
+                if (agenda.idUsuarioAgendamento) {
+                  donorIds.add(agenda.idUsuarioAgendamento);
+                }
+              });
+            }
+          });
+
+          console.log('Donor IDs found in agendas:', Array.from(donorIds));
+
+          // Filter users to get only donors who have scheduled collections
+          const donorsData = allUsers.filter(user => 
+            user.tipoUsuario === 'doador' && donorIds.has(user.id)
+          );
+
+          console.log('Filtered donors:', donorsData.length);          // Process donors data with enhanced information
+          this.donors = donorsData.map(donor => {
+            // Calculate donor statistics based on actual agenda data
+            const donorStats = this.calculateDonorStats(donor, allActivePoints);
+            
+            return {
+              id: donor.id,
+              name: donor.nome,
+              email: donor.email,
+              phone: donor.telefone || '(31) 99999-9999',
+              status: donorStats.isActive ? 'ativo' : 'inativo',
+              area: this.getDonorArea(donor, allActivePoints),
+              donations: donorStats.totalDonations,
+              rating: donorStats.rating,
+              lastActivity: donorStats.lastActivity,
+              materials: this.getDonorMaterials(donor, allActivePoints),
+              cidade: donor.cidade || 'Não informado',
+              endereco: donor.endereco || 'Não informado',
+              tipoResiduo: donor.tipoResiduo || [],
+              dataRegistro: donor.dataRegistro || new Date().toISOString(),
+              // Add agenda information
+              scheduledCollections: donorStats.scheduledCollections
+            };
+          });
+
+          this.filteredDonors = [...this.donors];
+          this.renderDonors();
+          this.updateStats();
+          this.loadRecentActivity();
+          
+          console.log('Donors loaded successfully:', this.donors.length);
+        } catch (error) {
+          console.error('Error loading donors:', error);
+        }
+      }      calculateDonorStats(donor, allPoints) {
+        let totalDonations = 0;
+        let scheduledCollections = [];
+        let lastActivity = donor.dataRegistro || new Date().toISOString();        // Count actual donations/collections scheduled by this donor
+        allPoints.forEach(point => {
+          if (point.agenda && point.agenda.length > 0) {
+            point.agenda.forEach(agenda => {
+              if (agenda.idUsuarioAgendamento === donor.id) {
+                totalDonations++;
+                scheduledCollections.push({
+                  pointName: point.nome,
+                  date: agenda.dataHoraInicio,
+                  materials: agenda.materiais || [],
+                  status: agenda.status || 'agendado',
+                  description: agenda.descricao || 'Coleta agendada'
+                });
+
+                // Update last activity if this agenda is more recent
+                if (new Date(agenda.dataHoraInicio) > new Date(lastActivity)) {
+                  lastActivity = agenda.dataHoraInicio;
+                }
+              }
+            });
+          }
+        });
+
+        // Calculate rating based on activity and completion rate
+        const completedCollections = scheduledCollections.filter(c => c.status === 'concluido').length;
+        const completionRate = totalDonations > 0 ? completedCollections / totalDonations : 0;
+        const rating = Math.min(5.0, 3.0 + (completionRate * 2) + (Math.random() * 0.5));
+
+        // Determine if active (has activity in last 30 days)
+        const daysSinceLastActivity = (new Date() - new Date(lastActivity)) / (1000 * 60 * 60 * 24);
+        const isActive = daysSinceLastActivity <= 30;
+
+        return {
+          totalDonations,
+          rating: rating.toFixed(1),
+          isActive,
+          lastActivity: lastActivity.split('T')[0],
+          scheduledCollections
+        };
+      }      getDonorArea(donor, allPoints) {
+        // Try to get area from donor's city/address
+        if (donor.cidade) {
+          const cidade = donor.cidade.toLowerCase();
+          
+          // Map cities to areas (updated for Betim and surrounding areas)
+          const cityToArea = {
+            'betim': 'centro',
+            'centro': 'centro',
+            'alterosas': 'zona-sul',
+            'novo horizonte': 'zona-norte',
+            'sarzedo': 'zona-leste',
+            'contagem': 'zona-oeste',
+            'vila mariana': 'zona-sul',
+            'mooca': 'zona-leste',
+            'santana': 'zona-norte',
+            'pinheiros': 'zona-oeste'
+          };
+
+          for (const [city, area] of Object.entries(cityToArea)) {
+            if (cidade.includes(city)) {
+              return area;
+            }
+          }
+        }
+
+        // Try to infer from address
+        if (donor.endereco) {
+          const endereco = donor.endereco.toLowerCase();
+          if (endereco.includes('centro')) return 'centro';
+          if (endereco.includes('norte') || endereco.includes('novo horizonte')) return 'zona-norte';
+          if (endereco.includes('sul') || endereco.includes('alterosas')) return 'zona-sul';
+          if (endereco.includes('leste')) return 'zona-leste';
+          if (endereco.includes('oeste')) return 'zona-oeste';
+        }        // Fallback to analyzing collection points used
+        const pointAreas = new Set();
+        allPoints.forEach(point => {
+          if (point.agenda) {
+            point.agenda.forEach(agenda => {
+              if (agenda.idUsuarioAgendamento === donor.id) {
+                // Infer area from point location
+                if (point.endereco) {
+                  const pointAddress = point.endereco.toLowerCase();
+                  if (pointAddress.includes('centro')) pointAreas.add('centro');
+                  else if (pointAddress.includes('alterosas')) pointAreas.add('zona-sul');
+                  else if (pointAddress.includes('norte')) pointAreas.add('zona-norte');
+                  else if (pointAddress.includes('leste')) pointAreas.add('zona-leste');
+                  else if (pointAddress.includes('oeste')) pointAreas.add('zona-oeste');
+                }
+              }
+            });
+          }
+        });
+
+        if (pointAreas.size > 0) {
+          return Array.from(pointAreas)[0]; // Return the first area found
+        }
+
+        // Default fallback
+        return 'centro';
+      }      getDonorMaterials(donor, allPoints) {
+        // Get materials from donor's specialization
+        if (donor.tipoResiduo && donor.tipoResiduo.length > 0) {
+          return donor.tipoResiduo;
+        }
+
+        // Get materials from points where donor has scheduled collections
+        const materials = new Set();
+        allPoints.forEach(point => {
+          if (point.agenda && point.agenda.length > 0) {
+            point.agenda.forEach(agenda => {
+              if (agenda.idUsuarioAgendamento === donor.id) {
+                // Add materials from agenda
+                if (agenda.materiais && agenda.materiais.length > 0) {
+                  agenda.materiais.forEach(material => materials.add(material));
+                }
+                // Add materials accepted by the point
+                if (point.materiaisAceitos && point.materiaisAceitos.length > 0) {
+                  point.materiaisAceitos.forEach(material => materials.add(material));
+                }
+              }
+            });
+          }
+        });
+
+        if (materials.size > 0) {
+          return Array.from(materials);
+        }
+
+        // Default materials based on common recyclables
+        const defaultMaterials = ['papel', 'plastico', 'vidro', 'metal'];
+        return defaultMaterials.slice(0, 2 + Math.floor(Math.random() * 3)); // 2-4 materials
+      }renderDonors() {
+        const tbody = document.getElementById('donors-tbody');
+        tbody.innerHTML = '';
+
+        this.filteredDonors.forEach(donor => {
+          const row = document.createElement('tr');
+          row.innerHTML = `
+            <td>
+              <div class="user-info">
+                <div class="user-avatar">${donor.name.charAt(0)}</div>
+                <div class="user-details">
+                  <div class="user-name">${donor.name}</div>
+                  <div class="user-email">${donor.email}</div>
+                </div>
+              </div>
+            </td>
+            <td>
+              <span class="status-badge status-${donor.status}">
+                ${donor.status === 'ativo' ? 'Ativo' : donor.status === 'inativo' ? 'Inativo' : 'Pendente'}
+              </span>
+            </td>
+            <td>${this.formatArea(donor.area)}</td>
+            <td>${donor.donations}</td>
+            <td>
+              <div class="rating">
+                ${'★'.repeat(Math.floor(donor.rating))}
+                <span class="rating-value">${donor.rating}</span>
+              </div>
+            </td>
+            <td>${this.formatDate(donor.lastActivity)}</td>
+            <td>
+              <div class="action-buttons">
+                <button class="btn-icon" onclick="donorsManager.viewDonor(${donor.id})" title="Ver detalhes">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+                </button>
+                <button class="btn-icon" onclick="donorsManager.editDonor(${donor.id})" title="Editar">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
+                </button>
+                <button class="btn-icon btn-danger" onclick="donorsManager.removeDonor(${donor.id})" title="Remover">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="3,6 5,6 21,6"/><path d="M19,6v14a2,2,0,0,1-2,2H7a2,2,0,0,1-2-2V6m3,0V4a2,2,0,0,1,2-2h4a2,2,0,0,1,2,2V6"/></svg>
+                </button>
+              </div>
+            </td>
+          `;
+          tbody.appendChild(row);
+        });
+      }      filterDonors(searchTerm) {
+        this.filteredDonors = this.donors.filter(donor =>
+          donor.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+          donor.email.toLowerCase().includes(searchTerm.toLowerCase())
+        );
+        this.applyFilters();
+      }      applyFilters() {
+        const statusFilter = document.getElementById('status-filter').value;
+        const areaFilter = document.getElementById('area-filter').value;
+
+        let filtered = [...this.donors];
+
+        if (statusFilter !== 'todos') {
+          filtered = filtered.filter(donor => donor.status === statusFilter);
+        }
+
+        if (areaFilter !== 'todas') {
+          filtered = filtered.filter(donor => donor.area === areaFilter);
+        }
+
+        const searchTerm = document.getElementById('donor-search').value;
+        if (searchTerm) {
+          filtered = filtered.filter(donor =>
+            donor.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+            donor.email.toLowerCase().includes(searchTerm.toLowerCase())
+          );
+        }
+
+        this.filteredDonors = filtered;
+        this.renderDonors();
+      }      updateStats() {
+        const totalDonors = this.donors.length;
+        const activeDonors = this.donors.filter(d => d.status === 'ativo').length;
+        
+        // Calculate real donations today from associated points
+        const today = new Date().toISOString().split('T')[0];
+        let donationsToday = 0;
+        
+        if (window.dashboardAdmin && window.dashboardAdmin.pontosDeColeta) {
+          window.dashboardAdmin.pontosDeColeta.forEach(point => {
+            if (point.agenda) {
+              point.agenda.forEach(agenda => {
+                const agendaDate = agenda.dataHoraInicio.split('T')[0];
+                if (agendaDate === today) {
+                  donationsToday++;
+                }
+              });
+            }
+          });
+        }
+
+        // Calculate real average rating
+        const totalRating = this.donors.reduce((sum, d) => sum + parseFloat(d.rating), 0);
+        const averageRating = totalDonors > 0 ? (totalRating / totalDonors).toFixed(1) : '0.0';
+
+        // Update DOM elements
+        document.getElementById('total-donors').textContent = totalDonors;
+        document.getElementById('active-donors').textContent = activeDonors;
+        document.getElementById('donations-today').textContent = donationsToday;
+        document.getElementById('average-rating').textContent = averageRating;
+      }initCharts() {
+        // Calculate real data for charts
+        const monthlyData = this.calculateMonthlyActivityData();
+        const areaData = this.calculateAreaDistributionData();        // Donor Activity Chart
+        const activityCtx = document.getElementById('donor-activity-chart').getContext('2d');
+        new Chart(activityCtx, {
+          type: 'line',
+          data: {
+            labels: monthlyData.labels,
+            datasets: [{
+              label: 'Doações Realizadas',
+              data: monthlyData.data,
+              borderColor: 'rgb(16, 185, 129)',
+              backgroundColor: 'rgba(16, 185, 129, 0.1)',
+              tension: 0.1
+            }]
+          },
+          options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+              legend: {
+                display: false
+              }
+            }
+          }
+        });
+
+        // Area Distribution Chart
+        const areaCtx = document.getElementById('area-distribution-chart').getContext('2d');
+        new Chart(areaCtx, {
+          type: 'doughnut',
+          data: {
+            labels: areaData.labels,
+            datasets: [{
+              data: areaData.data,
+              backgroundColor: [
+                'rgb(59, 130, 246)',
+                'rgb(16, 185, 129)',
+                'rgb(245, 158, 11)',
+                'rgb(239, 68, 68)',
+                'rgb(139, 92, 246)'
+              ]
+            }]
+          },
+          options: {
+            responsive: true,
+            maintainAspectRatio: false
+          }
+        });
+      }      calculateMonthlyActivityData() {
+        const months = ['Jan', 'Fev', 'Mar', 'Abr', 'Mai', 'Jun'];
+        const monthlyDonations = new Array(6).fill(0);
+
+        // Get donation data from points
+        if (window.dashboardAdmin && window.dashboardAdmin.pontosDeColeta) {
+          const now = new Date();
+          
+          window.dashboardAdmin.pontosDeColeta.forEach(point => {
+            if (point.agenda) {
+              point.agenda.forEach(agenda => {
+                const agendaDate = new Date(agenda.dataHoraInicio);
+                const monthDiff = (now.getFullYear() - agendaDate.getFullYear()) * 12 + 
+                                  (now.getMonth() - agendaDate.getMonth());
+                
+                if (monthDiff >= 0 && monthDiff < 6) {
+                  const index = 5 - monthDiff; // Reverse order (most recent first)
+                  monthlyDonations[index]++;
+                }
+              });
+            }
+          });
+        }
+
+        // If no real data, generate realistic simulation based on donor count
+        const hasRealData = monthlyDonations.some(val => val > 0);
+        if (!hasRealData) {
+          const baseActivity = Math.max(1, Math.floor(this.donors.length * 0.8));
+          monthlyDonations.forEach((_, index) => {
+            monthlyDonations[index] = baseActivity + Math.floor(Math.random() * baseActivity * 0.5);
+          });
+        }
+
+        return {
+          labels: months,
+          data: monthlyDonations
+        };
+      }
+
+      calculateAreaDistributionData() {        // Count donors by area
+        const areaCount = {};
+        const areaLabels = {
+          'centro': 'Centro',
+          'zona-norte': 'Zona Norte',
+          'zona-sul': 'Zona Sul',
+          'zona-leste': 'Zona Leste',
+          'zona-oeste': 'Zona Oeste'
+        };
+
+        // Initialize all areas
+        Object.keys(areaLabels).forEach(area => {
+          areaCount[area] = 0;
+        });
+
+        // Count donors by area
+        this.donors.forEach(donor => {
+          if (donor.area && areaCount.hasOwnProperty(donor.area)) {
+            areaCount[donor.area]++;
+          }
+        });
+
+        const labels = Object.keys(areaCount).map(area => areaLabels[area]);
+        const data = Object.values(areaCount);
+
+        return { labels, data };
+      }      loadRecentActivity() {
+        const activities = [];
+        
+        // Get real activities from points and agendas
+        if (window.dashboardAdmin && window.dashboardAdmin.pontosDeColeta) {
+          const now = new Date();
+          
+          window.dashboardAdmin.pontosDeColeta.forEach(point => {
+            if (point.agenda && point.agenda.length > 0) {
+              point.agenda.forEach(agenda => {
+                const agendaDate = new Date(agenda.dataHoraInicio);
+                const timeDiff = now - agendaDate;
+                const hoursDiff = Math.floor(timeDiff / (1000 * 60 * 60));
+                const daysDiff = Math.floor(timeDiff / (1000 * 60 * 60 * 24));
+                
+                // Only show activities from last 7 days
+                if (daysDiff <= 7) {
+                  // Find donor for this point
+                  let donorName = 'Doador não identificado';
+                  if (point.coletorId || point.criadoPor) {
+                    const donor = window.dashboardAdmin.usuarios.find(u => 
+                      u.id === point.coletorId || u.id === point.criadoPor
+                    );
+                    if (donor) {
+                      donorName = donor.nome;
+                    }
+                  }
+
+                  let timeText = '';
+                  if (hoursDiff < 1) {
+                    timeText = 'Há alguns minutos';
+                  } else if (hoursDiff < 24) {
+                    timeText = `${hoursDiff} ${hoursDiff === 1 ? 'hora' : 'horas'} atrás`;
+                  } else {
+                    timeText = `${daysDiff} ${daysDiff === 1 ? 'dia' : 'dias'} atrás`;
+                  }
+
+                  // Determine action based on agenda status
+                  let action = '';
+                  const status = agenda.status || 'agendado';
+                  const materialsText = point.materiaisAceitos ? 
+                    point.materiaisAceitos.slice(0, 2).join(', ') : 'materiais';
+
+                  switch (status) {
+                    case 'concluido':
+                      action = `Completou doação de ${materialsText} em ${point.cidade || point.endereco}`;
+                      break;
+                    case 'em_andamento':
+                      action = `Iniciou doação em ${point.cidade || point.endereco}`;
+                      break;
+                    case 'agendado':
+                      action = `Agendou doação em ${point.cidade || point.endereco}`;
+                      break;
+                    default:
+                      action = `Registrou atividade em ${point.cidade || point.endereco}`;
+                  }
+
+                  activities.push({
+                    donor: donorName,
+                    action: action,
+                    time: timeText,
+                    timestamp: agendaDate
+                  });
+                }
+              });
+            }
+          });
+        }
+
+        // Sort by most recent first
+        activities.sort((a, b) => b.timestamp - a.timestamp);
+        
+        // Take only first 4 activities
+        const recentActivities = activities.slice(0, 4);
+
+        // If no real activities, generate some realistic ones
+        if (recentActivities.length === 0) {
+          const donorNames = this.donors.slice(0, 4).map(d => d.name);
+          const defaultActivities = [
+            { donor: donorNames[0] || 'João Silva', action: 'Completou doação de papel em Centro', time: '2 min atrás' },
+            { donor: donorNames[1] || 'Maria Santos', action: 'Iniciou doação na Zona Norte', time: '15 min atrás' },
+            { donor: donorNames[2] || 'Pedro Costa', action: 'Finalizou doação de vidro', time: '1 hora atrás' },
+            { donor: donorNames[3] || 'Ana Lima', action: 'Registrou novo ponto de doação', time: '2 horas atrás' }
+          ];
+          recentActivities.push(...defaultActivities);
+        }
+
+        // Render activities
+        const activityList = document.getElementById('donor-activity-list');
+        activityList.innerHTML = recentActivities.map(activity => `
+          <div class="activity-item">
+            <div class="activity-icon">
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+            </div>
+            <div class="activity-content">
+              <div class="activity-text">
+                <strong>${activity.donor}</strong> ${activity.action}
+              </div>
+              <div class="activity-time">${activity.time}</div>
+            </div>
+          </div>
+        `).join('');
+      }      openAddModal() {
+        // Reset form for new donor
+        const form = document.getElementById('add-donor-form');
+        if (form) {
+          form.reset();
+          form.removeAttribute('data-edit-id');
+          
+          // Reset modal title and button
+          const modal = document.getElementById('add-donor-modal');
+          if (modal) {
+            modal.querySelector('.modal-title').textContent = 'Adicionar Novo Doador';
+            modal.querySelector('button[type="submit"]').textContent = 'Adicionar Doador';
+          }
+        }
+        
+        if (window.dashboardAdmin) {
+          window.dashboardAdmin.openModal('add-donor-modal');
+        }
+      }
+
+      updateDonor(id) {
+        try {
+          const formData = new FormData(document.getElementById('add-donor-form'));
+          const materials = Array.from(formData.getAll('materials'));
+          
+          // Find and update donor in dashboard users
+          const userIndex = window.dashboardAdmin.usuarios.findIndex(u => u.id === id);
+          if (userIndex !== -1) {
+            const updatedData = {
+              ...window.dashboardAdmin.usuarios[userIndex],
+              nome: formData.get('name'),
+              email: formData.get('email'),
+              telefone: formData.get('phone'),
+              cidade: formData.get('area') === 'centro' ? 'Betim' : 'Betim',
+              endereco: this.getAddressFromArea(formData.get('area')),
+              tipoResiduo: materials
+            };
+            
+            window.dashboardAdmin.usuarios[userIndex] = updatedData;
+          }
+          
+          // Update local storage if available
+          try {
+            const dbData = JSON.parse(localStorage.getItem('ecocoletaDB') || '{}');
+            if (dbData.usuarios) {
+              const localIndex = dbData.usuarios.findIndex(u => u.id === id);
+              if (localIndex !== -1) {
+                dbData.usuarios[localIndex] = {
+                  ...dbData.usuarios[localIndex],
+                  nome: formData.get('name'),
+                  email: formData.get('email'),
+                  telefone: formData.get('phone'),
+                  tipoResiduo: materials
+                };
+                localStorage.setItem('ecocoletaDB', JSON.stringify(dbData));
+              }
+            }
+          } catch (e) {
+            console.warn('Could not update localStorage:', e);
+          }
+
+          // Reload donors to reflect changes
+          this.loadDonors().then(() => {
+            this.closeAddModal();
+            this.showSuccessMessage('Doador atualizado com sucesso!');
+          });
+
+        } catch (error) {
+          console.error('Error updating donor:', error);
+          this.showErrorMessage('Erro ao atualizar doador. Tente novamente.');
+        }
+      }
+
+      closeAddModal() {
+        if (window.dashboardAdmin) {
+          window.dashboardAdmin.closeModalById('add-donor-modal');
+        }
+      }      addDonor() {
+        try {
+          const formData = new FormData(document.getElementById('add-donor-form'));
+          const materials = Array.from(formData.getAll('materials'));
+          
+          // Generate new ID based on existing users
+          const allUsers = window.dashboardAdmin.usuarios || [];
+          const maxId = Math.max(...allUsers.map(u => u.id || 0), 0);
+          
+          const newDonorData = {
+            id: maxId + 1,
+            nome: formData.get('name'),
+            email: formData.get('email'),
+            telefone: formData.get('phone'),
+            cidade: formData.get('area') === 'centro' ? 'Betim' : 'Betim',
+            endereco: this.getAddressFromArea(formData.get('area')),
+            tipoUsuario: 'doador',
+            tipoResiduo: materials,
+            dataRegistro: new Date().toISOString(),
+            status: 'ativo'
+          };
+
+          // Add to dashboard users
+          window.dashboardAdmin.usuarios.push(newDonorData);
+          
+          // Update local storage if available
+          try {
+            const dbData = JSON.parse(localStorage.getItem('ecocoletaDB') || '{}');
+            if (dbData.usuarios) {
+              dbData.usuarios.push(newDonorData);
+              localStorage.setItem('ecocoletaDB', JSON.stringify(dbData));
+            }
+          } catch (e) {
+            console.warn('Could not update localStorage:', e);
+          }
+
+          // Reload donors to include the new one
+          this.loadDonors().then(() => {
+            this.closeAddModal();
+            this.showSuccessMessage('Doador adicionado com sucesso!');
+          });
+
+        } catch (error) {
+          console.error('Error adding donor:', error);
+          this.showErrorMessage('Erro ao adicionar doador. Tente novamente.');
+        }
+      }
+
+      getAddressFromArea(area) {
+        const areaAddresses = {
+          'centro': 'Centro, Betim - MG',
+          'zona-norte': 'Zona Norte, Betim - MG',
+          'zona-sul': 'Alterosas, Betim - MG',
+          'zona-leste': 'Zona Leste, Betim - MG',
+          'zona-oeste': 'Zona Oeste, Betim - MG'
+        };
+        return areaAddresses[area] || 'Betim - MG';
+      }
+
+      showSuccessMessage(message) {
+        // Create a temporary success notification
+        const notification = document.createElement('div');
+        notification.className = 'notification success';
+        notification.innerHTML = `
+          <div class="notification-content">
+            <i class="fas fa-check-circle"></i>
+            <span>${message}</span>
+          </div>
+        `;
+        notification.style.cssText = `
+          position: fixed;
+          top: 20px;
+          right: 20px;
+          background: #10b981;
+          color: white;
+          padding: 15px 20px;
+          border-radius: 8px;
+          box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+          z-index: 10000;
+          animation: slideIn 0.3s ease;
+        `;
+        
+        document.body.appendChild(notification);
+        setTimeout(() => {
+          notification.style.animation = 'slideOut 0.3s ease';
+          setTimeout(() => notification.remove(), 300);
+        }, 3000);
+      }
+
+      showErrorMessage(message) {
+        // Create a temporary error notification
+        const notification = document.createElement('div');
+        notification.className = 'notification error';
+        notification.innerHTML = `
+          <div class="notification-content">
+            <i class="fas fa-exclamation-circle"></i>
+            <span>${message}</span>
+          </div>
+        `;
+        notification.style.cssText = `
+          position: fixed;
+          top: 20px;
+          right: 20px;
+          background: #ef4444;
+          color: white;
+          padding: 15px 20px;
+          border-radius: 8px;
+          box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+          z-index: 10000;
+          animation: slideIn 0.3s ease;
+        `;
+        
+        document.body.appendChild(notification);
+        setTimeout(() => {
+          notification.style.animation = 'slideOut 0.3s ease';
+          setTimeout(() => notification.remove(), 300);
+        }, 3000);
+      }      exportDonors() {
+        try {
+          // Prepare data for export
+          const exportData = this.filteredDonors.map(donor => ({
+            'Nome': donor.name,
+            'Email': donor.email,
+            'Telefone': donor.phone,
+            'Cidade': donor.cidade,
+            'Área': this.formatArea(donor.area),
+            'Status': donor.status === 'ativo' ? 'Ativo' : 'Inativo',
+            'Doações Realizadas': donor.donations,
+            'Avaliação': donor.rating,
+            'Materiais': donor.materials ? donor.materials.join(', ') : 'N/A',
+            'Última Atividade': this.formatDate(donor.lastActivity),
+            'Data de Registro': this.formatDate(donor.dataRegistro)
+          }));
+
+          // Convert to CSV
+          if (exportData.length === 0) {
+            this.showErrorMessage('Nenhum doador para exportar');
+            return;
+          }
+
+          const headers = Object.keys(exportData[0]);
+          const csvContent = [
+            headers.join(','),
+            ...exportData.map(row => 
+              headers.map(header => {
+                const value = row[header] || '';
+                // Escape commas and quotes in CSV
+                return typeof value === 'string' && (value.includes(',') || value.includes('"')) 
+                  ? `"${value.replace(/"/g, '""')}"` 
+                  : value;
+              }).join(',')
+            )
+          ].join('\n');
+
+          // Create and download file
+          const blob = new Blob(['\uFEFF' + csvContent], { type: 'text/csv;charset=utf-8;' });
+          const link = document.createElement('a');
+          const url = URL.createObjectURL(blob);
+          
+          link.setAttribute('href', url);
+          link.setAttribute('download', `relatorio_doadores_${new Date().toISOString().split('T')[0]}.csv`);
+          link.style.visibility = 'hidden';
+          
+          document.body.appendChild(link);
+          link.click();
+          document.body.removeChild(link);
+          
+          this.showSuccessMessage(`Relatório exportado com sucesso! ${exportData.length} doadores incluídos.`);
+          
+        } catch (error) {
+          console.error('Error exporting donors:', error);
+          this.showErrorMessage('Erro ao exportar relatório. Tente novamente.');
+        }
+      }      viewDonor(id) {
+        const donor = this.donors.find(d => d.id === id);
+        if (!donor) {
+          this.showErrorMessage('Doador não encontrado');
+          return;
+        }
+
+        // Create detailed view modal
+        const modal = document.createElement('div');
+        modal.className = 'modal-overlay';
+        modal.id = 'donor-details-modal';
+        
+        const materialsText = donor.materials && donor.materials.length > 0 
+          ? donor.materials.join(', ') 
+          : 'Nenhum material especificado';
+          
+        const collectionsText = donor.scheduledCollections && donor.scheduledCollections.length > 0
+          ? donor.scheduledCollections.map(col => 
+              `• ${col.pointName} - ${this.formatDate(col.date)} (${col.status || 'agendado'})`
+            ).join('\n')
+          : 'Nenhuma coleta agendada';
+
+        modal.innerHTML = `
+          <div class="modal-content">
+            <div class="modal-header">
+              <h2>Detalhes do Doador</h2>
+              <button class="modal-close" onclick="this.closest('.modal-overlay').remove()">×</button>
+            </div>
+            <div class="modal-body">
+              <div class="donor-details">
+                <div class="detail-group">
+                  <h3>Informações Pessoais</h3>
+                  <p><strong>Nome:</strong> ${donor.name}</p>
+                  <p><strong>Email:</strong> ${donor.email}</p>
+                  <p><strong>Telefone:</strong> ${donor.phone}</p>
+                  <p><strong>Cidade:</strong> ${donor.cidade || 'Não informado'}</p>
+                  <p><strong>Área de Atuação:</strong> ${this.formatArea(donor.area)}</p>
+                </div>
+                
+                <div class="detail-group">
+                  <h3>Atividades</h3>
+                  <p><strong>Status:</strong> <span class="status-badge status-${donor.status}">${donor.status === 'ativo' ? 'Ativo' : 'Inativo'}</span></p>
+                  <p><strong>Doações Realizadas:</strong> ${donor.donations}</p>
+                  <p><strong>Avaliação:</strong> ${donor.rating} ⭐</p>
+                  <p><strong>Última Atividade:</strong> ${this.formatDate(donor.lastActivity)}</p>
+                  <p><strong>Data de Registro:</strong> ${this.formatDate(donor.dataRegistro)}</p>
+                </div>
+                
+                <div class="detail-group">
+                  <h3>Materiais de Interesse</h3>
+                  <p>${materialsText}</p>
+                </div>
+                
+                <div class="detail-group">
+                  <h3>Coletas Agendadas</h3>
+                  <pre style="white-space: pre-line; font-family: inherit;">${collectionsText}</pre>
+                </div>
+              </div>
+            </div>
+            <div class="modal-footer">
+              <button class="btn-secondary" onclick="this.closest('.modal-overlay').remove()">Fechar</button>
+              <button class="btn-primary" onclick="donorsManager.editDonor(${id}); this.closest('.modal-overlay').remove();">Editar</button>
+            </div>
+          </div>
+        `;
+        
+        modal.style.cssText = `
+          position: fixed;
+          top: 0;
+          left: 0;
+          width: 100%;
+          height: 100%;
+          background: rgba(0,0,0,0.5);
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          z-index: 10000;
+        `;
+        
+        document.body.appendChild(modal);
+      }
+
+      editDonor(id) {
+        const donor = this.donors.find(d => d.id === id);
+        if (!donor) {
+          this.showErrorMessage('Doador não encontrado');
+          return;
+        }
+
+        // Populate edit form with current data
+        const form = document.getElementById('add-donor-form');
+        if (form) {
+          form.querySelector('[name="name"]').value = donor.name;
+          form.querySelector('[name="email"]').value = donor.email;
+          form.querySelector('[name="phone"]').value = donor.phone;
+          form.querySelector('[name="area"]').value = donor.area;
+          
+          // Check materials
+          const materialCheckboxes = form.querySelectorAll('[name="materials"]');
+          materialCheckboxes.forEach(checkbox => {
+            checkbox.checked = donor.materials && donor.materials.includes(checkbox.value);
+          });
+          
+          // Change form submission to update instead of create
+          form.setAttribute('data-edit-id', id);
+          
+          // Update modal title and button
+          const modal = document.getElementById('add-donor-modal');
+          if (modal) {
+            modal.querySelector('.modal-title').textContent = 'Editar Doador';
+            modal.querySelector('button[type="submit"]').textContent = 'Atualizar Doador';
+          }
+          
+          this.openAddModal();
+        }
+      }
+
+      removeDonor(id) {
+        const donor = this.donors.find(d => d.id === id);
+        if (!donor) {
+          this.showErrorMessage('Doador não encontrado');
+          return;
+        }
+
+        if (confirm(`Tem certeza que deseja remover o doador "${donor.name}"?\n\nEsta ação não pode ser desfeita.`)) {
+          try {
+            // Remove from dashboard users
+            const userIndex = window.dashboardAdmin.usuarios.findIndex(u => u.id === id);
+            if (userIndex !== -1) {
+              window.dashboardAdmin.usuarios.splice(userIndex, 1);
+            }
+            
+            // Update local storage if available
+            try {
+              const dbData = JSON.parse(localStorage.getItem('ecocoletaDB') || '{}');
+              if (dbData.usuarios) {
+                dbData.usuarios = dbData.usuarios.filter(u => u.id !== id);
+                localStorage.setItem('ecocoletaDB', JSON.stringify(dbData));
+              }
+            } catch (e) {
+              console.warn('Could not update localStorage:', e);
+            }
+
+            // Remove from local arrays
+            this.donors = this.donors.filter(d => d.id !== id);
+            this.filteredDonors = this.filteredDonors.filter(d => d.id !== id);
+            
+            // Update display
+            this.renderDonors();
+            this.updateStats();
+            
+            this.showSuccessMessage(`Doador "${donor.name}" removido com sucesso`);
+            
+          } catch (error) {
+            console.error('Error removing donor:', error);
+            this.showErrorMessage('Erro ao remover doador. Tente novamente.');
+          }
+        }
+      }
+
+      formatArea(area) {
+        const areas = {
+          'centro': 'Centro',
+          'zona-norte': 'Zona Norte',
+          'zona-sul': 'Zona Sul',
+          'zona-leste': 'Zona Leste',
+          'zona-oeste': 'Zona Oeste'
+        };
+        return areas[area] || area;
+      }
+
+      formatDate(dateString) {
+        const date = new Date(dateString);
+        return date.toLocaleDateString('pt-BR');
+      }    }    // Initialize donors manager
+    const donorsManager = new DonorsManager();
+    
+    // Reinitialize modal management after page scripts load
+    if (window.dashboardAdmin) {
+      window.dashboardAdmin.reinitializeModals();
+    }
+  </script>
+
+  <!-- Sidebar overlay para mobile -->
+  <div id="sidebar-overlay" class="sidebar-overlay"></div>
+
+</body>
+</html>

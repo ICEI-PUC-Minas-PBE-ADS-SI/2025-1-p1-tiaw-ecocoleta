@@ -2,7 +2,7 @@
 document.addEventListener("DOMContentLoaded", function () {
   const form = document.getElementById("cadastroColetorForm");
   const cepInput = document.getElementById("cep");
-  const API_BASE_URL = "https://two025-1-p1-tiaw-ecocoleta.onrender.com";
+  const API_BASE_URL = "http://localhost:3000/api";
 
   // Função para buscar coordenadas baseadas no CEP
   async function buscarCoordenadas(cep, endereco, cidade, estado) {

@@ -1,6 +1,6 @@
 // Script para adicionar recompensa
 
-const API_BASE_URL = 'https://two025-1-p1-tiaw-ecocoleta.onrender.com';
+const API_BASE_URL = 'http://localhost:3000/api';
 
 document.getElementById('form-adicionar-recompensa').addEventListener('submit', async function(e) {
   e.preventDefault();

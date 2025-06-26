@@ -52,6 +52,116 @@
       color: #374151;
       font-weight: 600;
     }
+
+    /* Estilos para pontos de coleta personalizados por usuário */
+    .has-user-appointment {
+      border-left: 4px solid var(--color-primary);
+      background: linear-gradient(135deg, rgba(16, 185, 129, 0.05) 0%, rgba(16, 185, 129, 0.02) 100%);
+    }
+
+    .own-point {
+      border-left: 4px solid var(--color-blue);
+      background: linear-gradient(135deg, rgba(59, 130, 246, 0.05) 0%, rgba(59, 130, 246, 0.02) 100%);
+    }
+
+    .user-badge {
+      display: inline-block;
+      background: var(--color-primary);
+      color: white;
+      padding: 2px 8px;
+      border-radius: 10px;
+      font-size: 0.7rem;
+      font-weight: 600;
+      margin-left: 8px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .owner-badge {
+      display: inline-block;
+      background: var(--color-blue);
+      color: white;
+      padding: 2px 8px;
+      border-radius: 10px;
+      font-size: 0.7rem;
+      font-weight: 600;
+      margin-left: 8px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .point-metadata {
+      margin-top: 6px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+    }
+
+    .metadata-item {
+      font-size: 0.75rem;
+      padding: 2px 6px;
+      border-radius: 8px;
+      font-weight: 500;
+    }
+
+    .metadata-item.pending {
+      background: rgba(245, 158, 11, 0.1);
+      color: #f59e0b;
+    }
+
+    .metadata-item.service {
+      background: rgba(16, 185, 129, 0.1);
+      color: #10b981;
+    }
+
+    .pending-info {
+      font-size: 0.75rem;
+      color: var(--color-yellow);
+      font-weight: 500;
+      margin-top: 4px;
+    }
+
+    .empty-state {
+      text-align: center;
+      padding: 3rem 2rem;
+    }
+
+    .empty-content {
+      max-width: 400px;
+      margin: 0 auto;
+    }
+
+    .empty-icon {
+      font-size: 4rem;
+      margin-bottom: 1rem;
+      opacity: 0.5;
+    }
+
+    .empty-state h3 {
+      font-size: 1.25rem;
+      font-weight: 600;
+      color: var(--color-gray-700);
+      margin-bottom: 0.75rem;
+    }
+
+    .empty-state p {
+      font-size: 1rem;
+      color: var(--color-gray-500);
+      line-height: 1.6;
+    }
+
+    .btn-icon.btn-success {
+      background: rgba(16, 185, 129, 0.1);
+      color: var(--color-primary);
+      border: 1px solid rgba(16, 185, 129, 0.2);
+    }
+
+    .btn-icon.btn-success:hover {
+      background: var(--color-primary);
+      color: white;
+      transform: translateY(-1px);
+      box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3);
+    }
   </style>
 </head>
 <body>
@@ -87,11 +197,10 @@
               <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon"><rect width="18" height="18" x="3" y="3" rx="2"/><path d="M8 17.5v-10c0-.3.2-.5.5-.5h2c.3 0 .5.2.5.5v10c0 .3-.2.5-.5.5h-2c-.3 0-.5-.2-.5-.5Z"/><path d="M13 17.5v-7c0-.3.2-.5.5-.5h2c.3 0 .5.2.5.5v7c0 .3-.2.5-.5.5h-2c-.3 0-.5-.2-.5-.5Z"/></svg>
               Desempenho
             </a>
-          </li>
-          <li>
-            <a href="coletores.html">
+          </li>          <li>
+            <a href="doadores.html">
               <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
-              Coletores
+              Doadores
             </a>
           </li>
           <li>
@@ -104,12 +213,6 @@
             <a href="agendas.html">
               <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon"><path d="M8 2v4M16 2v4M3 10h18M5 6h14a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2z"/></svg>
               Agendas
-            </a>
-          </li>
-          <li>
-            <a href="relatorios.html">
-              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon"><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/><path d="M15 2H9a1 1 0 0 0-1 1v2a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V3a1 1 0 0 0-1-1Z"/><path d="M12 11h4"/><path d="M12 16h4"/><path d="M8 11h.01"/><path d="M8 16h.01"/></svg>
-              Relatórios
             </a>
           </li>
         </ul>
@@ -378,23 +481,14 @@
 
       async loadData() {
         try {
-          // Load all points from dashboard data
-          this.allPoints = window.dashboardAdmin.pontosDeColeta || [];
+          // Buscar dados dinamicamente da API
+          await this.fetchDataFromAPI();
           
           // Load all collectors
           this.collectors = window.dashboardAdmin.usuarios.filter(u => u.tipoUsuario === 'coletor') || [];
           
-          // Filter points based on user type
-          if (this.currentUser && this.currentUser.tipoUsuario === 'coletor') {
-            // For collectors, show only their own points
-            this.points = this.allPoints.filter(point => 
-              point.coletorId === this.currentUser.id || 
-              point.criadoPor === this.currentUser.id
-            );
-          } else {
-            // For admin or other users, show all points
-            this.points = this.allPoints;
-          }
+          // Filter points based on user type and admin permissions
+          this.filterPointsByUser();
 
           // Process points data to add required fields
           this.points = this.points.map(point => this.processPointData(point));
@@ -410,6 +504,135 @@
           this.renderPoints();
           this.updateStats();
         }
+      }
+
+      async fetchDataFromAPI() {
+        try {
+          const API_BASE_URL = 'http://localhost:3000/api';
+          
+          // Buscar pontos de coleta da API
+          const pontosResponse = await fetch(`${API_BASE_URL}/pontosDeColeta`);
+          if (!pontosResponse.ok) {
+            throw new Error(`Erro ao buscar pontos: ${pontosResponse.status}`);
+          }
+          this.allPoints = await pontosResponse.json();
+          
+          // Buscar usuários da API se não estiverem disponíveis
+          if (!window.dashboardAdmin || !window.dashboardAdmin.usuarios) {
+            const usuariosResponse = await fetch(`${API_BASE_URL}/usuarios`);
+            if (!usuariosResponse.ok) {
+              throw new Error(`Erro ao buscar usuários: ${usuariosResponse.status}`);
+            }
+            const usuarios = await usuariosResponse.json();
+            
+            // Inicializar dashboardAdmin se não existir
+            if (!window.dashboardAdmin) {
+              window.dashboardAdmin = {};
+            }
+            window.dashboardAdmin.usuarios = usuarios;
+            window.dashboardAdmin.pontosDeColeta = this.allPoints;
+          } else {
+            // Atualizar pontos no dashboardAdmin
+            window.dashboardAdmin.pontosDeColeta = this.allPoints;
+          }
+          
+          console.log(`Pontos carregados da API: ${this.allPoints.length}`);
+          
+        } catch (error) {
+          console.error('Erro ao buscar dados da API:', error);
+          
+          // Fallback para dados do dashboardAdmin se a API falhar
+          if (window.dashboardAdmin && window.dashboardAdmin.pontosDeColeta) {
+            this.allPoints = window.dashboardAdmin.pontosDeColeta;
+            console.log('Usando dados do dashboardAdmin como fallback');
+          } else {
+            this.allPoints = [];
+          }
+        }
+      }
+
+      filterPointsByUser() {
+        if (!this.currentUser) {
+          // Se não há usuário logado, mostrar todos os pontos
+          this.points = this.allPoints;
+          return;
+        }
+
+        console.log(`Filtrando pontos para usuário: ${this.currentUser.nome} (${this.currentUser.tipoUsuario})`);
+
+        switch (this.currentUser.tipoUsuario) {
+          case 'admin':
+            // Admin vê todos os pontos
+            this.points = this.allPoints;
+            console.log(`Admin - mostrando todos os ${this.allPoints.length} pontos`);
+            break;
+            
+          case 'coletor':
+            // Coletor vê apenas seus próprios pontos
+            this.points = this.allPoints.filter(point => 
+              point.coletorId === this.currentUser.id || 
+              point.criadoPor === this.currentUser.id
+            );
+            console.log(`Coletor - mostrando ${this.points.length} pontos próprios`);
+            break;
+            
+          case 'doador':
+            // Doador vê pontos onde tem agendamentos + pontos da região
+            this.points = this.allPoints.filter(point => {
+              // Pontos onde o doador tem agendamentos
+              const temAgendamento = point.agenda && point.agenda.some(agenda => 
+                agenda.idUsuarioAgendamento === this.currentUser.id
+              );
+              
+              // Pontos da mesma cidade/região do doador
+              const mesmaRegiao = this.isSameRegion(point, this.currentUser);
+              
+              // Pontos ativos (não desativados)
+              const isActive = point.status !== 'inativo' && point.status !== 'desativado';
+              
+              return (temAgendamento || mesmaRegiao) && isActive;
+            });
+            console.log(`Doador - mostrando ${this.points.length} pontos relevantes`);
+            break;
+            
+          default:
+            // Tipo de usuário desconhecido - mostrar pontos ativos gerais
+            this.points = this.allPoints.filter(point => 
+              point.status !== 'inativo' && point.status !== 'desativado'
+            );
+            console.log(`Usuário ${this.currentUser.tipoUsuario} - mostrando ${this.points.length} pontos ativos`);
+        }
+      }
+
+      isSameRegion(point, user) {
+        // Verificar se o ponto está na mesma região do usuário
+        if (!point.endereco || (!user.cidade && !user.endereco)) {
+          return false;
+        }
+        
+        const pointAddress = point.endereco.toLowerCase();
+        const userCity = (user.cidade || '').toLowerCase();
+        const userAddress = (user.endereco || '').toLowerCase();
+        
+        // Verificar cidade específica
+        if (userCity && pointAddress.includes(userCity)) {
+          return true;
+        }
+        
+        // Verificar se ambos são de Betim (cidade padrão)
+        if (pointAddress.includes('betim') && (userCity.includes('betim') || userAddress.includes('betim'))) {
+          return true;
+        }
+        
+        // Verificar regiões/bairros comuns
+        const commonRegions = ['centro', 'zona norte', 'zona sul', 'zona leste', 'zona oeste', 'alterosas', 'novo horizonte'];
+        for (const region of commonRegions) {
+          if (pointAddress.includes(region) && userAddress.includes(region)) {
+            return true;
+          }
+        }
+        
+        return false;
       }
 
       processPointData(point) {
@@ -737,19 +960,55 @@
         const tbody = document.getElementById('points-tbody');
         tbody.innerHTML = '';
 
+        if (this.filteredPoints.length === 0) {
+          tbody.innerHTML = `
+            <tr>
+              <td colspan="7" class="empty-state">
+                <div class="empty-content">
+                  <div class="empty-icon">📍</div>
+                  <h3>Nenhum ponto de coleta encontrado</h3>
+                  <p>${this.getEmptyStateMessage()}</p>
+                </div>
+              </td>
+            </tr>
+          `;
+          return;
+        }
+
         this.filteredPoints.forEach(point => {
+          // Verificar se o usuário tem agendamento neste ponto
+          const hasUserAppointment = this.currentUser && this.currentUser.tipoUsuario === 'doador' && 
+            point.agenda && point.agenda.some(agenda => agenda.idUsuarioAgendamento === this.currentUser.id);
+          
+          // Verificar se é ponto do próprio usuário (coletor)
+          const isOwnPoint = this.currentUser && this.currentUser.tipoUsuario === 'coletor' && 
+            (point.id && (point.coletorId === this.currentUser.id || point.criadoPor === this.currentUser.id));
+
           const row = document.createElement('tr');
+          if (hasUserAppointment) {
+            row.classList.add('has-user-appointment');
+          }
+          if (isOwnPoint) {
+            row.classList.add('own-point');
+          }
+
           row.innerHTML = `
             <td>
               <div class="point-info">
-                <div class="point-name">${point.name}</div>
+                <div class="point-name">
+                  ${point.name}
+                  ${hasUserAppointment ? '<span class="user-badge">Meu Agendamento</span>' : ''}
+                  ${isOwnPoint ? '<span class="owner-badge">Meu Ponto</span>' : ''}
+                </div>
                 <div class="point-address">${point.address}</div>
+                ${this.renderPointMetadata(point)}
               </div>
             </td>
             <td>
               <span class="status-badge status-${point.status}">
-                ${point.status === 'ativo' ? 'Ativo' : point.status === 'inativo' ? 'Inativo' : 'Pendente'}
+                ${this.formatStatus(point.status)}
               </span>
+              ${this.renderPendingInfo(point)}
             </td>
             <td>
               <div class="materials-list">
@@ -769,23 +1028,121 @@
             <td>${point.collector}</td>
             <td>
               <div class="action-buttons">
-                <button class="btn-icon" onclick="pointsManager.viewPoint(${point.id})" title="Ver detalhes">
-                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
-                </button>
-                <button class="btn-icon" onclick="pointsManager.editPoint(${point.id})" title="Editar">
-                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
-                </button>
-                <button class="btn-icon btn-success" onclick="pointsManager.scheduleCollection(${point.id})" title="Agendar coleta">
-                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 2v4M16 2v4M3 10h18M5 6h14a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2z"/></svg>
-                </button>
-                <button class="btn-icon btn-danger" onclick="pointsManager.removePoint(${point.id})" title="Remover">
-                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="3,6 5,6 21,6"/><path d="M19,6v14a2,2,0,0,1-2,2H7a2,2,0,0,1-2-2V6m3,0V4a2,2,0,0,1,2-2h4a2,2,0,0,1,2,2V6"/></svg>
-                </button>
+                ${this.renderActionButtons(point)}
               </div>
             </td>
           `;
           tbody.appendChild(row);
         });
+      }
+
+      getEmptyStateMessage() {
+        if (!this.currentUser) {
+          return 'Faça login para ver os pontos de coleta.';
+        }
+
+        switch (this.currentUser.tipoUsuario) {
+          case 'admin':
+            return 'Nenhum ponto de coleta cadastrado no sistema.';
+          case 'coletor':
+            return 'Você ainda não possui pontos de coleta cadastrados. Clique em "Adicionar Ponto" para criar seu primeiro ponto.';
+          case 'doador':
+            return 'Nenhum ponto de coleta disponível na sua região. Tente expandir a área de busca ou entre em contato com coletores locais.';
+          default:
+            return 'Nenhum ponto de coleta disponível.';
+        }
+      }
+
+      renderPointMetadata(point) {
+        const metadata = [];
+        
+        // Mostrar agendamentos pendentes
+        if (point.agenda) {
+          const pendingCount = point.agenda.filter(a => a.status === 'agendado' || a.status === 'pendente').length;
+          if (pendingCount > 0) {
+            metadata.push(`<span class="metadata-item pending">${pendingCount} agendamento(s) pendente(s)</span>`);
+          }
+        }
+        
+        // Mostrar se aceita coleta domiciliar
+        if (point.coletaDomiciliar) {
+          metadata.push(`<span class="metadata-item service">🏠 Coleta domiciliar</span>`);
+        }
+        
+        return metadata.length > 0 ? `<div class="point-metadata">${metadata.join('')}</div>` : '';
+      }
+
+      renderPendingInfo(point) {
+        if (!point.agenda) return '';
+        
+        const pendingAppointments = point.agenda.filter(a => a.status === 'agendado' || a.status === 'pendente');
+        if (pendingAppointments.length === 0) return '';
+        
+        return `<div class="pending-info">${pendingAppointments.length} pendente(s)</div>`;
+      }
+
+      formatStatus(status) {
+        const statusMap = {
+          'ativo': 'Ativo',
+          'inativo': 'Inativo',
+          'pendente': 'Pendente',
+          'manutencao': 'Manutenção'
+        };
+        return statusMap[status] || status;
+      }
+
+      renderActionButtons(point) {
+        const buttons = [];
+        
+        // Botão ver detalhes - sempre disponível
+        buttons.push(`
+          <button class="btn-icon" onclick="pointsManager.viewPoint(${point.id})" title="Ver detalhes">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+          </button>
+        `);
+        
+        // Botões baseados no tipo de usuário
+        if (this.currentUser) {
+          switch (this.currentUser.tipoUsuario) {
+            case 'admin':
+              // Admin pode editar e remover qualquer ponto
+              buttons.push(`
+                <button class="btn-icon" onclick="pointsManager.editPoint(${point.id})" title="Editar">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
+                </button>
+                <button class="btn-icon btn-danger" onclick="pointsManager.removePoint(${point.id})" title="Remover">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18m-2 0v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg>
+                </button>
+              `);
+              break;
+              
+            case 'coletor':
+              // Coletor pode editar apenas seus próprios pontos
+              const isOwnPoint = point.coletorId === this.currentUser.id || point.criadoPor === this.currentUser.id;
+              if (isOwnPoint) {
+                buttons.push(`
+                  <button class="btn-icon" onclick="pointsManager.editPoint(${point.id})" title="Editar">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
+                  </button>
+                  <button class="btn-icon btn-danger" onclick="pointsManager.removePoint(${point.id})" title="Remover">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18m-2 0v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg>
+                  </button>
+                `);
+              }
+              break;
+              
+            case 'doador':
+              // Doador pode agendar coleta
+              buttons.push(`
+                <button class="btn-icon btn-success" onclick="pointsManager.scheduleCollection(${point.id})" title="Agendar coleta">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 2v4M16 2v4M3 10h18M5 6h14a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2z"/></svg>
+                </button>
+              `);
+              break;
+          }
+        }
+        
+        return buttons.join('');
       }
 
       filterPoints(searchTerm) {
@@ -1118,47 +1475,65 @@
           return;
         }
 
-        const scheduleHtml = `
-          <div class="modal" id="schedule-modal" style="display: block;">
-            <div class="modal-content">
-              <div class="modal-header">
-                <h3>Agendar Coleta - ${point.name}</h3>
-                <button class="modal-close" onclick="pointsManager.closeScheduleModal()">&times;</button>
-              </div>
-              <div class="modal-body">
-                <form id="schedule-form">
-                  <div class="form-group">
-                    <label for="schedule-date">Data da Coleta</label>
-                    <input type="date" id="schedule-date" name="date" required min="${new Date().toISOString().split('T')[0]}">
-                  </div>
-                  <div class="form-group">
-                    <label for="schedule-time">Horário</label>
-                    <input type="time" id="schedule-time" name="time" required>
-                  </div>
-                  <div class="form-group">
-                    <label for="schedule-collector">Coletor</label>
-                    <select id="schedule-collector" name="collector" required>
-                      <option value="">Selecione um coletor</option>
-                      ${this.collectors.map(collector => 
-                        `<option value="${collector.id}" ${collector.id === point.coletorId ? 'selected' : ''}>${collector.nome}</option>`
-                      ).join('')}
-                    </select>
-                  </div>
-                  <div class="form-group">
-                    <label for="schedule-notes">Observações</label>
-                    <textarea id="schedule-notes" name="notes" rows="3" placeholder="Observações sobre a coleta..."></textarea>
-                  </div>
-                </form>
-              </div>
-              <div class="modal-footer">
-                <button type="button" class="btn-secondary" onclick="pointsManager.closeScheduleModal()">Cancelar</button>
-                <button type="button" class="btn-primary" onclick="pointsManager.confirmSchedule(${id})">Agendar</button>
-              </div>
+        // Criar modal dinamicamente
+        const modal = document.createElement('div');
+        modal.className = 'modal';
+        modal.id = 'schedule-modal';
+        modal.style.display = 'block';
+
+        const minDate = new Date().toISOString().split('T')[0];
+        
+        modal.innerHTML = `
+          <div class="modal-content">
+            <div class="modal-header">
+              <h3>Agendar Coleta - ${point.name}</h3>
+              <button class="modal-close" onclick="pointsManager.closeScheduleModal()">&times;</button>
+            </div>
+            <div class="modal-body">
+              <form id="schedule-form">
+                <div class="form-group">
+                  <label for="schedule-date">Data da Coleta</label>
+                  <input type="date" id="schedule-date" name="date" required>
+                </div>
+                <div class="form-group">
+                  <label for="schedule-time">Horário</label>
+                  <input type="time" id="schedule-time" name="time" required>
+                </div>
+                <div class="form-group">
+                  <label for="schedule-collector">Coletor</label>
+                  <select id="schedule-collector" name="collector" required>
+                    <option value="">Selecione um coletor</option>
+                  </select>
+                </div>
+                <div class="form-group">
+                  <label for="schedule-notes">Observações</label>
+                  <textarea id="schedule-notes" name="notes" rows="3" placeholder="Observações sobre a coleta..."></textarea>
+                </div>
+              </form>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn-secondary" onclick="pointsManager.closeScheduleModal()">Cancelar</button>
+              <button type="button" class="btn-primary" onclick="pointsManager.confirmSchedule(${id})">Agendar</button>
             </div>
           </div>
         `;
 
-        document.body.insertAdjacentHTML('beforeend', scheduleHtml);
+        document.body.appendChild(modal);
+
+        // Configurar data mínima
+        document.getElementById('schedule-date').setAttribute('min', minDate);
+
+        // Preencher lista de coletores
+        const collectorSelect = document.getElementById('schedule-collector');
+        this.collectors.forEach(collector => {
+          const option = document.createElement('option');
+          option.value = collector.id;
+          option.textContent = collector.nome;
+          if (collector.id === point.coletorId) {
+            option.selected = true;
+          }
+          collectorSelect.appendChild(option);
+        });
       }
 
       closeScheduleModal() {
@@ -1172,10 +1547,13 @@
         const form = document.getElementById('schedule-form');
         const formData = new FormData(form);
         
+        const dateValue = formData.get('date');
+        const timeValue = formData.get('time');
+        
         const scheduleData = {
           id: Date.now(),
           pontoId: pointId,
-          dataHoraInicio: `${formData.get('date')}T${formData.get('time')}:00`,
+          dataHoraInicio: dateValue + 'T' + timeValue + ':00',
           coletorId: formData.get('collector'),
           status: 'agendado',
           observacoes: formData.get('notes'),
@@ -1289,7 +1667,8 @@
       formatDate(dateString) {
         const date = new Date(dateString);
         return date.toLocaleDateString('pt-BR');
-      }    }
+      }
+    }
 
     // Initialize collection points manager
     const pointsManager = new CollectionPointsManager();

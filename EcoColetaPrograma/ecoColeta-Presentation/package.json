@@ -4,10 +4,12 @@
   "description": "Frontend da aplicação EcoColeta",  "scripts": {
     "start": "node server.js",
     "dev": "node server.js",
+    "dashboard": "node server.js",
     "json-server": "json-server --watch db.json --port 3000",
     "json-server-cors": "json-server --watch db.json --port 3000 --middlewares cors-middleware.js",
     "server": "node server.js",
-    "debug": "node --inspect server.js"
+    "debug": "node --inspect server.js",
+    "test-api": "node server.js"
   },
   "dependencies": {
     "body-parser": "^1.20.2",

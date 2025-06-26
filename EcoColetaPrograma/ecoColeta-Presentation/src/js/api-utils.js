@@ -5,7 +5,7 @@
 
 // Configuração da API
 const API_CONFIG = {
-    BASE_URL: 'https://two025-1-p1-tiaw-ecocoleta.onrender.com/api',
+    BASE_URL: 'http://localhost:3000/api',
     TIMEOUT: 10000, // 10 segundos
     RETRY_ATTEMPTS: 3
 };
@@ -169,6 +169,58 @@ const EcoColetaService = {
     doacoes: {
         listar: () => ecoColetaAPI.get('/donations'),
         criar: (doacao) => ecoColetaAPI.post('/donations', doacao)
+    },
+
+    // Agendamentos
+    agendamentos: {
+        /**
+         * Criar um novo agendamento
+         */
+        async criar(agendamento) {
+            return ecoColetaAPI.post('/agendamentos', agendamento);
+        },
+
+        /**
+         * Listar agendamentos com filtros opcionais
+         */
+        async listar(filtros = {}) {
+            const params = new URLSearchParams();
+            if (filtros.doadorEmail) params.append('doadorEmail', filtros.doadorEmail);
+            if (filtros.pontoColetaId) params.append('pontoColetaId', filtros.pontoColetaId);
+            if (filtros.status) params.append('status', filtros.status);
+            
+            const endpoint = params.toString() ? `/agendamentos?${params.toString()}` : '/agendamentos';
+            return ecoColetaAPI.get(endpoint);
+        },
+
+        /**
+         * Buscar agendamento por ID
+         */
+        async buscarPorId(id) {
+            return ecoColetaAPI.get(`/agendamentos/${id}`);
+        },
+
+        /**
+         * Atualizar status de um agendamento
+         */
+        async atualizarStatus(pontoId, agendaId, dadosAtualizacao) {
+            return ecoColetaAPI.patch(`/pontosDeColeta/${pontoId}/agendamentos/${agendaId}`, dadosAtualizacao);
+        },
+
+        /**
+         * Listar agendamentos de um ponto específico
+         */
+        async listarPorPonto(pontoId, filtros = {}) {
+            const params = new URLSearchParams();
+            if (filtros.status) params.append('status', filtros.status);
+            if (filtros.dataInicio) params.append('dataInicio', filtros.dataInicio);
+            if (filtros.dataFim) params.append('dataFim', filtros.dataFim);
+            
+            const endpoint = params.toString() 
+                ? `/pontosDeColeta/${pontoId}/agendamentos?${params.toString()}` 
+                : `/pontosDeColeta/${pontoId}/agendamentos`;
+            return ecoColetaAPI.get(endpoint);
+        }
     },
 
     // Teste de conectividade
