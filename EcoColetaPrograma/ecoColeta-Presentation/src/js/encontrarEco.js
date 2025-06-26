@@ -546,7 +546,7 @@ function abrirFormularioAgendamento(idPonto) {
         status: "pendente"
       };
       console.log("Enviando agendamento:", agendamento); // DEBUG
-      fetch(`${API_BASE_URL}/api/pontosDeColeta/${idPonto}/agendar`, {
+      fetch(`${API_BASE_URL}/pontosDeColeta/${idPonto}/agendar`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(agendamento)

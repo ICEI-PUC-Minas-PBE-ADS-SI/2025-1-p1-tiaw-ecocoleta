@@ -1867,6 +1867,15 @@
       "tipoMaterial": "baterias",
       "observacoes": "Agendamento para o ponto do coletor Samuel",
       "id": 6
+    },
+    {
+      "pontoColetaId": "31",
+      "doadorEmail": "pedrinhoMatador@gmail.com",
+      "dataAgendamento": "2025-10-8",
+      "horarioAgendamento": "15:00",
+      "tipoMaterial": "baterias",
+      "observacoes": "Teste",
+      "id": 7
     }
   ]
 }
