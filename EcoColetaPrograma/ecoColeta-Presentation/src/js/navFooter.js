@@ -73,10 +73,18 @@ navMenu.className = "menu";
 
 // Itens do menu
 const menuItems = [
+  {
+    text: "Tema Escuro",
+    icon: '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3a7 7 0 0 0 9.79 9.79z"></path></svg>',
+    onClick: function () {
+      toggleDarkMode();
+    }
+  },
   { text: "Mapa", href: "encontraEco.html" },
   { text: "Guia", href: "guiaEdu.html" },
   { text: "Recompensas", href: "recompensas.html" },
   { text: "Comunidade", href: "comunidade.html" },
+
 ];
 
 // Criando itens do menu principal
@@ -122,11 +130,6 @@ const dropdownItems = [
     text: "Meu Perfil",
     icon: '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>',
     href: "perfil.html",
-  },
-  {
-    text: "Configurações",
-    icon: '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg>',
-    href: "#",
   },
   {
     text: "Tema Escuro",
@@ -253,9 +256,19 @@ const mobileIcons = [
 
 // Adicionando itens ao menu mobile
 menuItems.forEach((item, index) => {
-  let mobileNavItem = document.createElement("a");
+  let mobileNavItem;
+
+  if (item.href) {
+    // Cria <a> se for link
+    mobileNavItem = document.createElement("a");
+    mobileNavItem.href = item.href;
+  } else {
+    // Cria <div> se for clique
+    mobileNavItem = document.createElement("div");
+    mobileNavItem.addEventListener("click", item.onClick);
+  }
+
   mobileNavItem.className = "mobile-nav-item";
-  mobileNavItem.href = item.href;
 
   let mobileNavItemIcon = document.createElement("div");
   mobileNavItemIcon.className = "mobile-nav-item-icon";
@@ -270,6 +283,7 @@ menuItems.forEach((item, index) => {
 
   mobileNavItems.appendChild(mobileNavItem);
 });
+
 let mobileLoginButton = document.createElement("div");
 mobileLoginButton.className = "mobile-login-button";
 mobileLoginButton.textContent = "Entrar";
