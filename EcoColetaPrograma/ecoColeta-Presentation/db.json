@@ -1885,6 +1885,15 @@
       "tipoMaterial": "Baterias",
       "observacoes": "Nome: Matheus Augusto, Telefone: (31) 99226-8649",
       "id": 8
+    },
+    {
+      "pontoColetaId": 31,
+      "doadorEmail": "matheusaagd2@gmail.com",
+      "dataAgendamento": "2025-06-30",
+      "horarioAgendamento": "12:00",
+      "tipoMaterial": "Baterias",
+      "observacoes": "Nome: Matheus Augusto, Telefone: (31) 99999-9999",
+      "id": 9
     }
   ]
 }
