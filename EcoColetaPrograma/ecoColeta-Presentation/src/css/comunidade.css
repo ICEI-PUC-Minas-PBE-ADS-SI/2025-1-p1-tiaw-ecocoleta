@@ -182,7 +182,7 @@ h2 {
   border-radius: 16px;
   box-shadow: 0 2px 8px rgba(4, 170, 109, 0.10), 0 1.5px 6px rgba(0,0,0,0.07);
   width: 320px;
-  min-height: 340px;
+  height: 400px;
   position: relative;
   overflow: visible;
   display: flex;
@@ -302,41 +302,15 @@ h2 {
   transform: scale(1.12) rotate(-3deg);
 }
 
-.historia-card:hover {
+.historia-card:hover,
+.evento-card:hover {
   box-shadow: 0 8px 24px rgba(4, 170, 109, 0.18), 0 4px 16px rgba(0,0,0,0.13);
-  transform: translateY(-6px) scale(1.025) ;
   background: linear-gradient(135deg, #e0f7fa 0%, #f8fafc 100%);
-  min-height: 380px;
+  transform: translateY(-10px) scale(1.05) ;
   z-index: 10;
   animation: none;
 }
 
-.historia-card:hover .historia-card-content p {
-  max-height: 1000px;
-  color: #222;
-  overflow: visible;
-  background: none;
-}
-
-.historia-card:hover {
-  overflow: visible;
-   /* transition: filter 2.9s, box-shadow 2.9s, transform 2.9s, opacity 2.9s; */
-}
-
-@keyframes cardPop {
-  0% {
-    transform: scale(0.97);
-    opacity: 0.7;
-  }
-  80% {
-    transform: scale(1.03);
-    opacity: 1;
-  }
-  100% {
-    transform: scale(1);
-    opacity: 1;
-  }
-}
 
 /* EVENTOS - Cards na comunidade */
 .eventos-container {
@@ -723,14 +697,6 @@ body.dark-mode .nao-usado {
   background: #059669;
 }
 
-.evento-card:hover {
-  box-shadow: 0 8px 24px rgba(4, 170, 109, 0.18), 0 4px 16px rgba(0,0,0,0.13);
-  transform: translateY(-6px) scale(1.025);
-  background: linear-gradient(135deg, #e0f7fa 0%, #f8fafc 100%);
-  min-height: 380px;
-  z-index: 10;
-  animation: none;
-}
 .evento-card:hover .evento-descricao {
   max-height: 1000px;
   color: #222;

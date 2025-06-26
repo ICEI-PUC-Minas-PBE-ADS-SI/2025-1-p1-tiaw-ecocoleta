@@ -270,6 +270,14 @@ menuItems.forEach((item, index) => {
 
   mobileNavItems.appendChild(mobileNavItem);
 });
+let mobileLoginButton = document.createElement("div");
+mobileLoginButton.className = "mobile-login-button";
+mobileLoginButton.textContent = "Entrar";
+mobileLoginButton.addEventListener("click", function () {
+  window.location.href = "autent.html";
+});
+mobileLoginButton.style.display = "none";
+mobileMenu.appendChild(mobileLoginButton);
 
 mobileMenu.appendChild(mobileUserProfile);
 mobileMenu.appendChild(mobileNavItems);
@@ -371,6 +379,7 @@ function updateUserInterface() {
     loginContainer.style.display = "block";
     userProfileDesktop.style.display = "none";
     mobileUserProfile.style.display = "none";
+    mobileLoginButton.style.display = "flex";
   }
 }
 
@@ -515,9 +524,9 @@ document.addEventListener("DOMContentLoaded", function () {
 
   let group1 = createLinkGroup("Links Rápidos", [
     { text: "Sobre Nós", href: "#" },
-    { text: "Como Funciona", href: "#" },
-    { text: "Pontos de Coleta", href: "#" },
-    { text: "Recompensas", href: "#l" },
+    { text: "Como Funciona", href: "GuiaEdu.html" },
+    { text: "Pontos de Coleta", href: "encontraEco.html" },
+    { text: "Recompensas", href: "recompensas.html" },
   ]);
 
   let group2 = createLinkGroup("Suporte", [
@@ -572,7 +581,7 @@ document.addEventListener("DOMContentLoaded", function () {
   copyright.className = "copyright";
 
   let pCopyright = document.createElement("p");
-  pCopyright.innerHTML = "&copy; 2023 EcoColeta. Todos os direitos reservados.";
+  pCopyright.innerHTML = "&copy; 2025 EcoColeta. Todos os direitos reservados.";
 
   copyright.appendChild(pCopyright);
   divfooter.appendChild(footerContent);
