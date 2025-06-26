@@ -295,7 +295,7 @@ document.addEventListener("DOMContentLoaded", () => {
         return dados;
     }    // Criar comunidade na API
     async function criarComunidadeAPI(dados) {
-        const API_BASE_URL = "https://two025-1-p1-tiaw-ecocoleta.onrender.com/api";
+        const API_BASE_URL = "http://localhost:3000/api";
         
         try {
             console.log('Enviando dados para API:', dados);

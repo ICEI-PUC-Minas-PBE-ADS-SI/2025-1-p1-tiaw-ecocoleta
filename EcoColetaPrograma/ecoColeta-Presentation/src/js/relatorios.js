@@ -123,11 +123,10 @@ class RelatoriosManager {
           summary: this.getRealCollectionsSummary(dateRange, region),
           trends: this.getCollectionTrends(dateRange)
         };
-      
-      case 'coletores':
+        case 'doadores':
         return {
           ...baseData,
-          title: 'Relatório de Coletores',
+          title: 'Relatório de Doadores',
           collectors: this.getRealCollectorsData(region),
           performance: this.getRealCollectorsPerformance(dateRange),
           rankings: this.getCollectorRankings()
@@ -233,8 +232,7 @@ class RelatoriosManager {
         break;
       case 'coletas':
         currentY = this.addCollectionsReportContent(doc, reportData, margin, currentY, pageWidth, checkNewPage);
-        break;
-      case 'coletores':
+        break;      case 'doadores':
         currentY = this.addCollectorsReportContent(doc, reportData, margin, currentY, pageWidth, checkNewPage);
         break;
       case 'pontos':
@@ -394,11 +392,10 @@ class RelatoriosManager {
     return currentY + 10;
   }
 
-  addCollectorsReportContent(doc, reportData, margin, currentY, pageWidth, checkNewPage) {
-    // Collectors performance
+  addCollectorsReportContent(doc, reportData, margin, currentY, pageWidth, checkNewPage) {    // Donors performance
     doc.setFontSize(14);
     doc.setFont(undefined, 'bold');
-    doc.text('Desempenho dos Coletores', margin, currentY);
+    doc.text('Desempenho dos Doadores', margin, currentY);
     currentY += 15;
 
     const collectors = reportData.collectors.slice(0, 15);
@@ -511,8 +508,7 @@ class RelatoriosManager {
           csvContent += `${collection.data},${collection.ponto},${collection.status},${collection.coletor},${collection.materiais.join(';')}\n`;
         });
         break;
-      
-      case 'coletores':
+        case 'doadores':
         csvContent += `Nome,Email,Telefone,Coletas,Status\n`;
         reportData.collectors.forEach(collector => {
           csvContent += `${collector.nome},${collector.email},${collector.telefone},${collector.coletas},${collector.status}\n`;
@@ -566,9 +562,8 @@ class RelatoriosManager {
     
     const successRate = totalCollections > 0 ? Math.round((completedCollections / totalCollections) * 100) : 0;
     
-    return {
-      'Total de Pontos de Coleta': totalPoints.toString(),
-      'Coletores Ativos': totalCollectors.toString(),
+    return {      'Total de Pontos de Coleta': totalPoints.toString(),
+      'Doadores Ativos': totalCollectors.toString(),
       'Total de Usuários': totalUsers.toString(),
       'Coletas Realizadas': completedCollections.toString(),
       'Volume Total Coletado': `${(totalVolume / 1000).toFixed(1)} toneladas`,
@@ -937,10 +932,9 @@ class RelatoriosManager {
   }
 
   // Keep original data generation methods as fallback
-  getGeneralStats() {
-    return {
+  getGeneralStats() {    return {
       'Total de Pontos de Coleta': '147',
-      'Coletores Ativos': '23',
+      'Doadores Ativos': '23',
       'Coletas Este Mês': '892',
       'Volume Total Coletado': '15.7 toneladas',
       'Taxa de Sucesso': '94%'
@@ -970,26 +964,24 @@ class RelatoriosManager {
       'Material Mais Coletado': 'Papel (35%)'
     };
   }
-
-  getCollectorsData() {
-    const collectors = [];
+  getDonorsData() {
+    const donors = [];
     for (let i = 0; i < 15; i++) {
-      collectors.push({
-        nome: `Coletor ${i + 1}`,
-        email: `coletor${i + 1}@ecocoleta.com`,
+      donors.push({
+        nome: `Doador ${i + 1}`,
+        email: `doador${i + 1}@ecocoleta.com`,
         telefone: `(11) 9${String(Math.random()).slice(2, 10)}`,
-        coletas: Math.floor(Math.random() * 50) + 10,
+        doacoes: Math.floor(Math.random() * 50) + 10,
         status: Math.random() > 0.2 ? 'Ativo' : 'Inativo'
       });
     }
-    return collectors;
+    return donors;
   }
-
-  getCollectorsPerformance() {
+  getDonorsPerformance() {
     return {
-      'Coletor Mais Ativo': 'João Silva (67 coletas)',
+      'Doador Mais Ativo': 'João Silva (67 doações)',
       'Taxa Média de Sucesso': '91%',
-      'Tempo Médio por Coleta': '2.3 horas',
+      'Tempo Médio por Doação': '2.3 horas',
       'Avaliação Média': '4.6/5'
     };
   }

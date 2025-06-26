@@ -3,11 +3,13 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">  <title>EcoColeta Dashboard</title>
-  <link rel="stylesheet" href="../src/css/dashboardAdmin.css">
+  <link rel="stylesheet" href="styles.css">
   <!-- Chart.js for vanilla JS charts -->
-   <link rel="stylesheet" href="../src/css/navFooter.css">
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <link rel="stylesheet" href="../src/css/dashboardAdmin.css" />
+  
+  <link rel="stylesheet" href="../src/css/dashboardAdmin.css" />
+  <!-- API Configuration -->
+  <script src="../src/js/api-config.js"></script>
   <!-- Sidebar functionality -->
   <script src="../src/js/sidebar.js"></script>
 </head>
@@ -52,9 +54,9 @@
           </li>
           </li>
           <li>
-            <a href="coletores.html">
+            <a href="doadores.html">
               <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
-              Coletores
+              Doadores
             </a>
           </li>
           <li>
@@ -209,10 +211,10 @@
 
           <div class="card chart-card">
             <div class="card-header">
-              <h2 class="card-title">Coletores Associados</h2>
-              <span class="card-subtitle">Performance dos coletores em seus pontos</span>
+              <h2 class="card-title">Agendamentos de Doadores</h2>
+              <span class="card-subtitle">Agendamentos feitos pelos doadores em seus pontos</span>
             </div>
-            <div class="card-content">              <div id="coletores-performance-list" class="coletores-performance">
+            <div class="card-content">              <div id="doadores-agendamentos-list" class="doadores-agendamentos">
                 <div class="performance-item">
                   <div class="performance-header">
                     <div class="collector-name">
@@ -819,7 +821,138 @@
     <div id="sidebar-overlay" class="sidebar-overlay"></div>
   </div>
 
-  <script src="../src/js/navFooter.js"></script>
+  <!-- Modal para Cadastro de Ponto de Coleta -->
+  <!--<div id="modal-novo-ponto" class="modal-overlay">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2>Adicionar Novo Ponto de Coleta</h2>
+        <button class="modal-close" id="close-modal">&times;</button>
+      </div>
+      <div class="modal-body">
+        <form id="form-novo-ponto">
+          <div class="form-row">
+            <div class="form-group">
+              <label for="nome-ponto">Nome do Ponto de Coleta *</label>
+              <input type="text" id="nome-ponto" name="nome" required>
+            </div>
+          </div>
+          
+          <div class="form-row">
+            <div class="form-group">
+              <label for="cep-ponto">CEP *</label>
+              <input type="text" id="cep-ponto" name="cep" placeholder="00000-000" maxlength="9" required>
+            </div>
+            <div class="form-group">
+              <label for="endereco-ponto">Endereço *</label>
+              <input type="text" id="endereco-ponto" name="endereco" required>
+            </div>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label for="cidade-ponto">Cidade *</label>
+              <input type="text" id="cidade-ponto" name="cidade" required>
+            </div>
+            <div class="form-group">
+              <label for="estado-ponto">Estado *</label>
+              <select id="estado-ponto" name="estado" required>
+                <option value="">Selecione</option>
+                <option value="AC">AC</option>
+                <option value="AL">AL</option>
+                <option value="AP">AP</option>
+                <option value="AM">AM</option>
+                <option value="BA">BA</option>
+                <option value="CE">CE</option>
+                <option value="DF">DF</option>
+                <option value="ES">ES</option>
+                <option value="GO">GO</option>
+                <option value="MA">MA</option>
+                <option value="MT">MT</option>
+                <option value="MS">MS</option>
+                <option value="MG">MG</option>
+                <option value="PA">PA</option>
+                <option value="PB">PB</option>
+                <option value="PR">PR</option>
+                <option value="PE">PE</option>
+                <option value="PI">PI</option>
+                <option value="RJ">RJ</option>
+                <option value="RN">RN</option>
+                <option value="RS">RS</option>
+                <option value="RO">RO</option>
+                <option value="RR">RR</option>
+                <option value="SC">SC</option>
+                <option value="SP">SP</option>
+                <option value="SE">SE</option>
+                <option value="TO">TO</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label for="telefone-ponto">Telefone de Contato *</label>
+              <input type="tel" id="telefone-ponto" name="contato" placeholder="(00) 00000-0000" required>
+            </div>
+            <div class="form-group">
+              <label for="horario-ponto">Horário de Funcionamento *</label>
+              <input type="text" id="horario-ponto" name="horario" placeholder="Ex: Segunda a Sexta: 08:00 - 18:00" required>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label>Materiais Aceitos *</label>
+            <div class="checkbox-grid">
+              <label class="checkbox-item">
+                <input type="checkbox" name="materiaisAceitos" value="plastico">
+                <span>Plástico</span>
+              </label>
+              <label class="checkbox-item">
+                <input type="checkbox" name="materiaisAceitos" value="papel">
+                <span>Papel</span>
+              </label>
+              <label class="checkbox-item">
+                <input type="checkbox" name="materiaisAceitos" value="vidro">
+                <span>Vidro</span>
+              </label>
+              <label class="checkbox-item">
+                <input type="checkbox" name="materiaisAceitos" value="metal">
+                <span>Metal</span>
+              </label>
+              <label class="checkbox-item">
+                <input type="checkbox" name="materiaisAceitos" value="eletronicos">
+                <span>Eletrônicos</span>
+              </label>
+              <label class="checkbox-item">
+                <input type="checkbox" name="materiaisAceitos" value="pilhas">
+                <span>Pilhas</span>
+              </label>
+              <label class="checkbox-item">
+                <input type="checkbox" name="materiaisAceitos" value="baterias">
+                <span>Baterias</span>
+              </label>
+              <label class="checkbox-item">
+                <input type="checkbox" name="materiaisAceitos" value="oleo">
+                <span>Óleo</span>
+              </label>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label class="checkbox-item">
+              <input type="checkbox" id="coleta-domiciliar" name="coletaDomiciliar">
+              <span>Oferece coleta domiciliar</span>
+            </label>
+          </div>
+
+          <div class="form-actions">
+            <button type="button" class="btn-secondary" id="cancel-modal">Cancelar</button>
+            <button type="submit" class="btn-primary">Criar Ponto de Coleta</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div> -->
+
   <script src="../src/js/dashboardAdmin.js"></script>
 </body>
 </html>

@@ -25,7 +25,7 @@
       "tipoUsuario": "coletor",
       "ecopontos": 25637,
       "senha": "2603Betim#2",
-      "imagem": "assets/img/AvatarScrollMaster.jpg",
+      "imagem": "",
       "emailVerificado": false,
       "id": 2,
       "bio": "n sei oque não sei oque la\n"
@@ -39,8 +39,7 @@
       "endereco": "Rua Amapá, Novo Horizonte",
       "cidade": "Betim",
       "estado": "MG",
-      "tipoUsuario": "coletor",
-      "ecopontos": 100000,
+      "tipoUsuario": "doador",
       "senha": "2603Betim#2",
       "imagem": "",
       "emailVerificado": false,
@@ -87,7 +86,6 @@
       "cidade": "Betim",
       "estado": "MG",
       "tipoUsuario": "coletor",
-      "ecopontos": 0,
       "senha": "12345678910",
       "imagem": "assets/img/AvatarScrollMaster.jpg",
       "emailVerificado": false,
@@ -112,7 +110,6 @@
       "cidade": "Betim",
       "estado": "MG",
       "tipoUsuario": "coletor",
-      "ecopontos": 0,
       "razaoSocial": "Organização EcoColeta",
       "cnpj": "87.654.677/6565-55",
       "areaAtuacao": "comercial",
@@ -124,51 +121,34 @@
         "baterias"
       ],
       "senha": "Samuca02.",
-      "imagem": "assets/img/AvatarArthurzin.jpg",
+      "imagem": "assets/img/AvatarThiagão.jpg",
       "emailVerificado": false,
       "dataCadastro": "2025-05-27T18:20:40.084Z",
       "id": 7,
       "ecopontoId": 31
     },
     {
-      "nome": "Teste CORS 1748391441533",
-      "email": "teste.cors.1748391441533@ecocoleta.com",
-      "tipoUsuario": "doador",
-      "ecopontos": 0,
-      "telefone": "(31) 99999-9999",
-      "endereco": "Rua de Teste, 123 - CORS City",
-      "id": 8
-    },
-    {
-      "nome": "Usuário de Teste CORS",
-      "email": "usuario.teste.1748393484559@ecocoleta.com",
-      "tipoUsuario": "doador",
-      "telefone": "(31) 98765-4321",
-      "endereco": "Rua de Teste CORS, 123",
-      "cidade": "Betim",
-      "estado": "MG",
-      "id": 9
-    },
-    {
-      "nome": "matheus augusto",
-      "email": "matheusaagd3@gmail.com",
-      "telefone": "(31) 99065-1262",
-      "cep": "32606-044",
-      "endereco": "Rua Amapá",
+      "nome": "Jonas",
+      "email": "samuelfig@gmail.com",
+      "telefone": "(31) 99226-8649",
+      "cep": "32628-114",
+      "endereco": "Rua Cravo",
       "cidade": "Betim",
       "estado": "MG",
       "tipoUsuario": "coletor",
-      "ecopontos": 0,
-      "razaoSocial": "quero mudar o mundo",
-      "cnpj": "12345678999",
+      "razaoSocial": "Organização EcoColeta",
+      "cnpj": "87.654.677/6565-55",
       "areaAtuacao": "residencial",
       "coletaDomiciliar": "sim",
-      "horarioColeta": "9 as 45",
+      "horarioColeta": "13h as 17h",
       "materiaisColeta": [
-        "papel"
+        "papel",
+        "vidro",
+        "metal",
+        "eletronicos"
       ],
-      "senha": "2603Betim#2",
-      "imagem": "assets/img/avatarCaique.jpg",
+      "senha": "Samuca02.",
+      "imagem": "",
       "emailVerificado": false,
       "dataCadastro": "2025-05-31T03:12:10.381Z",
       "id": 10,
@@ -296,7 +276,7 @@
       "lat": -19.9677,
       "lng": -44.1986,
       "endereco": "Avenida Governador Valadares, 455 - Centro, Betim - MG",
-      "horario": "Segunda a Sábado: 08:00 - 17:00",
+      "horario": "Segunda a S�bado: 08:00 - 17:00",
       "materiaisAceitos": [
         "plastico",
         "papel",
@@ -315,10 +295,10 @@
           "dataHoraInicio": "2025-06-10T10:00:00Z",
           "dataHoraFim": "2025-06-10T11:00:00Z",
           "tipo": "coleta_agendada_empresa",
-          "descricao": "Coleta de papelão agendada pela Empresa Exemplo Ltda.",
+          "descricao": "Coleta de papel�o agendada pela Empresa Exemplo Ltda.",
           "status": "concluido",
           "materiais": [
-            "papelão"
+            "papel�o"
           ],
           "contatoResponsavel": "Sr. Carlos (Empresa Exemplo)",
           "observacoes": "Acesso pela doca dos fundos."
@@ -330,14 +310,14 @@
           "dataHoraInicio": "2025-06-12T14:00:00Z",
           "dataHoraFim": "2025-06-12T14:30:00Z",
           "tipo": "entrega_voluntaria_grande_volume",
-          "descricao": "Entrega de eletrônicos por Samuel.",
+          "descricao": "Entrega de eletr�nicos por Samuel.",
           "status": "concluido",
           "materiais": [
             "eletronicos",
             "baterias"
           ],
           "contatoResponsavel": "Samuel Maciel",
-          "observacoes": "Necessário auxílio para descarregar."
+          "observacoes": "Necess�rio aux�lio para descarregar."
         },
         {
           "idAgenda": "agenda-ecoponto1-003",
@@ -346,7 +326,7 @@
           "dataHoraInicio": "2025-05-28T09:00:00Z",
           "dataHoraFim": "2025-05-28T10:00:00Z",
           "tipo": "coleta_domiciliar",
-          "descricao": "Coleta domiciliar de plásticos e papel",
+          "descricao": "Coleta domiciliar de pl�sticos e papel",
           "status": "concluido",
           "materiais": [
             "plastico",
@@ -362,7 +342,7 @@
           "dataHoraInicio": "2025-05-25T15:00:00Z",
           "dataHoraFim": "2025-05-25T16:00:00Z",
           "tipo": "coleta_domiciliar",
-          "descricao": "Coleta de materiais recicláveis residenciais",
+          "descricao": "Coleta de materiais recicl�veis residenciais",
           "status": "concluido",
           "materiais": [
             "plastico",
@@ -370,7 +350,7 @@
             "papel"
           ],
           "contatoResponsavel": "Matheus Augusto",
-          "observacoes": "Coleta em área residencial."
+          "observacoes": "Coleta em �rea residencial."
         },
         {
           "idAgenda": "agenda-ecoponto1-005",
@@ -379,14 +359,29 @@
           "dataHoraInicio": "2025-05-20T13:00:00Z",
           "dataHoraFim": "2025-05-20T14:00:00Z",
           "tipo": "coleta_comercial",
-          "descricao": "Coleta de eletrônicos comerciais",
+          "descricao": "Coleta de eletr�nicos comerciais",
           "status": "concluido",
           "materiais": [
             "eletronicos",
             "baterias"
           ],
           "contatoResponsavel": "Samuel Maciel",
-          "observacoes": "Coleta de equipamentos de escritório."
+          "observacoes": "Coleta de equipamentos de escrit�rio."
+        },
+        {
+          "idAgenda": "agenda-teste-doador-samuel-20250611152854",
+          "dataHoraFim": "2025-06-12T16:28:54Z",
+          "idUsuarioAgendamento": 5,
+          "coletorId": 7,
+          "materiais": [
+            "papel",
+            "plastico"
+          ],
+          "contatoResponsavel": "Samuel Doador (Teste)",
+          "dataHoraInicio": "2025-06-12T15:28:54Z",
+          "tipo": "entrega_teste_doador",
+          "observacoes": "Agendamento de teste para validar filtro de doador",
+          "status": "agendado"
         }
       ],
       "historico": [
@@ -400,7 +395,7 @@
           ],
           "quantidadeKg": 45,
           "status": "concluido",
-          "observacoes": "Coleta de equipamentos eletrônicos antigos"
+          "observacoes": "Coleta de equipamentos eletr�nicos antigos"
         },
         {
           "id": "hist_002",
@@ -424,7 +419,7 @@
           ],
           "quantidadeKg": 30,
           "status": "concluido",
-          "observacoes": "Coleta de computadores e periféricos"
+          "observacoes": "Coleta de computadores e perif�ricos"
         }
       ]
     },
@@ -451,14 +446,14 @@
           "dataHoraInicio": "2025-05-22T08:00:00Z",
           "dataHoraFim": "2025-05-22T09:00:00Z",
           "tipo": "coleta_domiciliar",
-          "descricao": "Coleta de plásticos e papel residencial",
+          "descricao": "Coleta de pl�sticos e papel residencial",
           "status": "concluido",
           "materiais": [
             "plastico",
             "papel"
           ],
           "contatoResponsavel": "Matheus Augusto",
-          "observacoes": "Coleta de materiais domésticos."
+          "observacoes": "Coleta de materiais dom�sticos."
         },
         {
           "idAgenda": "agenda-ecoponto2-002",
@@ -473,7 +468,463 @@
             "metal"
           ],
           "contatoResponsavel": "Samuel Maciel",
-          "observacoes": "Coleta de materiais metálicos separados."
+          "observacoes": "Coleta de materiais met�licos separados."
+        },
+        {
+          "idAgenda": "agenda-ecoponto2-1749146806094",
+          "idUsuarioAgendamento": 5,
+          "coletorId": null,
+          "dataHoraInicio": "2025-06-10T14:00:00Z",
+          "dataHoraFim": "2025-06-10T15:00:00Z",
+          "tipo": "entrega_voluntaria",
+          "descricao": "Entrega de materiais recicl�veis por Samuel (TESTE)",
+          "status": "agendado",
+          "materiais": [
+            "plastico",
+            "papel"
+          ],
+          "contatoResponsavel": "Samuel Maciel",
+          "observacoes": "Contato: (31) 99999-9999 - Email: samuelfigsre@gmail.com - TESTE"
+        },
+        {
+          "idAgenda": "agenda-ecoponto2-1749146807617",
+          "idUsuarioAgendamento": 5,
+          "coletorId": null,
+          "dataHoraInicio": "2025-06-10T14:00:00Z",
+          "dataHoraFim": "2025-06-10T15:00:00Z",
+          "tipo": "entrega_voluntaria",
+          "descricao": "Entrega de materiais recicl�veis por Samuel (TESTE)",
+          "status": "agendado",
+          "materiais": [
+            "plastico",
+            "papel"
+          ],
+          "contatoResponsavel": "Samuel Maciel",
+          "observacoes": "Contato: (31) 99999-9999 - Email: samuelfigsre@gmail.com - TESTE"
+        },
+        {
+          "idAgenda": "agenda-ecoponto2-1749146808308",
+          "idUsuarioAgendamento": 5,
+          "coletorId": null,
+          "dataHoraInicio": "2025-06-10T14:00:00Z",
+          "dataHoraFim": "2025-06-10T15:00:00Z",
+          "tipo": "entrega_voluntaria",
+          "descricao": "Entrega de materiais recicl�veis por Samuel (TESTE)",
+          "status": "agendado",
+          "materiais": [
+            "plastico",
+            "papel"
+          ],
+          "contatoResponsavel": "Samuel Maciel",
+          "observacoes": "Contato: (31) 99999-9999 - Email: samuelfigsre@gmail.com - TESTE"
+        },
+        {
+          "idAgenda": "agenda-ecoponto2-1749146848764",
+          "idUsuarioAgendamento": 5,
+          "coletorId": null,
+          "dataHoraInicio": "2025-06-10T14:00:00Z",
+          "dataHoraFim": "2025-06-10T15:00:00Z",
+          "tipo": "entrega_voluntaria",
+          "descricao": "Entrega de materiais recicl�veis por Samuel (TESTE)",
+          "status": "agendado",
+          "materiais": [
+            "plastico",
+            "papel"
+          ],
+          "contatoResponsavel": "Samuel Maciel",
+          "observacoes": "Contato: (31) 99999-9999 - Email: samuelfigsre@gmail.com - TESTE"
+        },
+        {
+          "idAgenda": "agenda-ecoponto2-1749146850096",
+          "idUsuarioAgendamento": 5,
+          "coletorId": null,
+          "dataHoraInicio": "2025-06-10T14:00:00Z",
+          "dataHoraFim": "2025-06-10T15:00:00Z",
+          "tipo": "entrega_voluntaria",
+          "descricao": "Entrega de materiais recicl�veis por Samuel (TESTE)",
+          "status": "agendado",
+          "materiais": [
+            "plastico",
+            "papel"
+          ],
+          "contatoResponsavel": "Samuel Maciel",
+          "observacoes": "Contato: (31) 99999-9999 - Email: samuelfigsre@gmail.com - TESTE"
+        },
+        {
+          "idAgenda": "agenda-ecoponto2-1749146866739",
+          "idUsuarioAgendamento": 5,
+          "coletorId": null,
+          "dataHoraInicio": "2025-06-10T14:00:00Z",
+          "dataHoraFim": "2025-06-10T15:00:00Z",
+          "tipo": "entrega_voluntaria",
+          "descricao": "Entrega de materiais recicl�veis por Samuel (TESTE)",
+          "status": "agendado",
+          "materiais": [
+            "plastico",
+            "papel"
+          ],
+          "contatoResponsavel": "Samuel Maciel",
+          "observacoes": "Contato: (31) 99999-9999 - Email: samuelfigsre@gmail.com - TESTE"
+        },
+        {
+          "idAgenda": "agenda-ecoponto2-1749146970377",
+          "idUsuarioAgendamento": 5,
+          "coletorId": null,
+          "dataHoraInicio": "2025-06-10T14:00:00Z",
+          "dataHoraFim": "2025-06-10T15:00:00Z",
+          "tipo": "entrega_voluntaria",
+          "descricao": "Entrega de materiais recicl�veis por Samuel (TESTE)",
+          "status": "agendado",
+          "materiais": [
+            "plastico",
+            "papel"
+          ],
+          "contatoResponsavel": "Samuel Maciel",
+          "observacoes": "Contato: (31) 99999-9999 - Email: samuelfigsre@gmail.com - TESTE"
+        },
+        {
+          "idAgenda": "agenda-ecoponto2-1749146971534",
+          "idUsuarioAgendamento": 5,
+          "coletorId": null,
+          "dataHoraInicio": "2025-06-10T14:00:00Z",
+          "dataHoraFim": "2025-06-10T15:00:00Z",
+          "tipo": "entrega_voluntaria",
+          "descricao": "Entrega de materiais recicl�veis por Samuel (TESTE)",
+          "status": "agendado",
+          "materiais": [
+            "plastico",
+            "papel"
+          ],
+          "contatoResponsavel": "Samuel Maciel",
+          "observacoes": "Contato: (31) 99999-9999 - Email: samuelfigsre@gmail.com - TESTE"
+        },
+        {
+          "idAgenda": "agenda-ecoponto2-1749146972208",
+          "idUsuarioAgendamento": 5,
+          "coletorId": null,
+          "dataHoraInicio": "2025-06-10T14:00:00Z",
+          "dataHoraFim": "2025-06-10T15:00:00Z",
+          "tipo": "entrega_voluntaria",
+          "descricao": "Entrega de materiais recicl�veis por Samuel (TESTE)",
+          "status": "agendado",
+          "materiais": [
+            "plastico",
+            "papel"
+          ],
+          "contatoResponsavel": "Samuel Maciel",
+          "observacoes": "Contato: (31) 99999-9999 - Email: samuelfigsre@gmail.com - TESTE"
+        },
+        {
+          "idAgenda": "agenda-ecoponto2-1749146972983",
+          "idUsuarioAgendamento": 5,
+          "coletorId": null,
+          "dataHoraInicio": "2025-06-10T14:00:00Z",
+          "dataHoraFim": "2025-06-10T15:00:00Z",
+          "tipo": "entrega_voluntaria",
+          "descricao": "Entrega de materiais recicl�veis por Samuel (TESTE)",
+          "status": "agendado",
+          "materiais": [
+            "plastico",
+            "papel"
+          ],
+          "contatoResponsavel": "Samuel Maciel",
+          "observacoes": "Contato: (31) 99999-9999 - Email: samuelfigsre@gmail.com - TESTE"
+        },
+        {
+          "idAgenda": "agenda-ecoponto2-1749146973783",
+          "idUsuarioAgendamento": 5,
+          "coletorId": null,
+          "dataHoraInicio": "2025-06-10T14:00:00Z",
+          "dataHoraFim": "2025-06-10T15:00:00Z",
+          "tipo": "entrega_voluntaria",
+          "descricao": "Entrega de materiais recicl�veis por Samuel (TESTE)",
+          "status": "agendado",
+          "materiais": [
+            "plastico",
+            "papel"
+          ],
+          "contatoResponsavel": "Samuel Maciel",
+          "observacoes": "Contato: (31) 99999-9999 - Email: samuelfigsre@gmail.com - TESTE"
+        },
+        {
+          "idAgenda": "agenda-ecoponto2-1749146974528",
+          "idUsuarioAgendamento": 5,
+          "coletorId": null,
+          "dataHoraInicio": "2025-06-10T14:00:00Z",
+          "dataHoraFim": "2025-06-10T15:00:00Z",
+          "tipo": "entrega_voluntaria",
+          "descricao": "Entrega de materiais recicl�veis por Samuel (TESTE)",
+          "status": "agendado",
+          "materiais": [
+            "plastico",
+            "papel"
+          ],
+          "contatoResponsavel": "Samuel Maciel",
+          "observacoes": "Contato: (31) 99999-9999 - Email: samuelfigsre@gmail.com - TESTE"
+        },
+        {
+          "idAgenda": "agenda-ecoponto2-1749146975225",
+          "idUsuarioAgendamento": 5,
+          "coletorId": null,
+          "dataHoraInicio": "2025-06-10T14:00:00Z",
+          "dataHoraFim": "2025-06-10T15:00:00Z",
+          "tipo": "entrega_voluntaria",
+          "descricao": "Entrega de materiais recicl�veis por Samuel (TESTE)",
+          "status": "agendado",
+          "materiais": [
+            "plastico",
+            "papel"
+          ],
+          "contatoResponsavel": "Samuel Maciel",
+          "observacoes": "Contato: (31) 99999-9999 - Email: samuelfigsre@gmail.com - TESTE"
+        },
+        {
+          "idAgenda": "agenda-ecoponto2-1749146976574",
+          "idUsuarioAgendamento": 5,
+          "coletorId": null,
+          "dataHoraInicio": "2025-06-10T14:00:00Z",
+          "dataHoraFim": "2025-06-10T15:00:00Z",
+          "tipo": "entrega_voluntaria",
+          "descricao": "Entrega de materiais recicl�veis por Samuel (TESTE)",
+          "status": "agendado",
+          "materiais": [
+            "plastico",
+            "papel"
+          ],
+          "contatoResponsavel": "Samuel Maciel",
+          "observacoes": "Contato: (31) 99999-9999 - Email: samuelfigsre@gmail.com - TESTE"
+        },
+        {
+          "idAgenda": "agenda-ecoponto2-1749146977364",
+          "idUsuarioAgendamento": 5,
+          "coletorId": null,
+          "dataHoraInicio": "2025-06-10T14:00:00Z",
+          "dataHoraFim": "2025-06-10T15:00:00Z",
+          "tipo": "entrega_voluntaria",
+          "descricao": "Entrega de materiais recicl�veis por Samuel (TESTE)",
+          "status": "agendado",
+          "materiais": [
+            "plastico",
+            "papel"
+          ],
+          "contatoResponsavel": "Samuel Maciel",
+          "observacoes": "Contato: (31) 99999-9999 - Email: samuelfigsre@gmail.com - TESTE"
+        },
+        {
+          "idAgenda": "agenda-ecoponto2-1749146978786",
+          "idUsuarioAgendamento": 5,
+          "coletorId": null,
+          "dataHoraInicio": "2025-06-10T14:00:00Z",
+          "dataHoraFim": "2025-06-10T15:00:00Z",
+          "tipo": "entrega_voluntaria",
+          "descricao": "Entrega de materiais recicl�veis por Samuel (TESTE)",
+          "status": "agendado",
+          "materiais": [
+            "plastico",
+            "papel"
+          ],
+          "contatoResponsavel": "Samuel Maciel",
+          "observacoes": "Contato: (31) 99999-9999 - Email: samuelfigsre@gmail.com - TESTE"
+        },
+        {
+          "idAgenda": "agenda-ecoponto2-1749146979399",
+          "idUsuarioAgendamento": 5,
+          "coletorId": null,
+          "dataHoraInicio": "2025-06-10T14:00:00Z",
+          "dataHoraFim": "2025-06-10T15:00:00Z",
+          "tipo": "entrega_voluntaria",
+          "descricao": "Entrega de materiais recicl�veis por Samuel (TESTE)",
+          "status": "agendado",
+          "materiais": [
+            "plastico",
+            "papel"
+          ],
+          "contatoResponsavel": "Samuel Maciel",
+          "observacoes": "Contato: (31) 99999-9999 - Email: samuelfigsre@gmail.com - TESTE"
+        },
+        {
+          "idAgenda": "agenda-ecoponto2-1749146979906",
+          "idUsuarioAgendamento": 5,
+          "coletorId": null,
+          "dataHoraInicio": "2025-06-10T14:00:00Z",
+          "dataHoraFim": "2025-06-10T15:00:00Z",
+          "tipo": "entrega_voluntaria",
+          "descricao": "Entrega de materiais recicl�veis por Samuel (TESTE)",
+          "status": "agendado",
+          "materiais": [
+            "plastico",
+            "papel"
+          ],
+          "contatoResponsavel": "Samuel Maciel",
+          "observacoes": "Contato: (31) 99999-9999 - Email: samuelfigsre@gmail.com - TESTE"
+        },
+        {
+          "idAgenda": "agenda-ecoponto2-1749146980052",
+          "idUsuarioAgendamento": 5,
+          "coletorId": null,
+          "dataHoraInicio": "2025-06-10T14:00:00Z",
+          "dataHoraFim": "2025-06-10T15:00:00Z",
+          "tipo": "entrega_voluntaria",
+          "descricao": "Entrega de materiais recicl�veis por Samuel (TESTE)",
+          "status": "agendado",
+          "materiais": [
+            "plastico",
+            "papel"
+          ],
+          "contatoResponsavel": "Samuel Maciel",
+          "observacoes": "Contato: (31) 99999-9999 - Email: samuelfigsre@gmail.com - TESTE"
+        },
+        {
+          "idAgenda": "agenda-ecoponto2-1749146980604",
+          "idUsuarioAgendamento": 5,
+          "coletorId": null,
+          "dataHoraInicio": "2025-06-10T14:00:00Z",
+          "dataHoraFim": "2025-06-10T15:00:00Z",
+          "tipo": "entrega_voluntaria",
+          "descricao": "Entrega de materiais recicl�veis por Samuel (TESTE)",
+          "status": "agendado",
+          "materiais": [
+            "plastico",
+            "papel"
+          ],
+          "contatoResponsavel": "Samuel Maciel",
+          "observacoes": "Contato: (31) 99999-9999 - Email: samuelfigsre@gmail.com - TESTE"
+        },
+        {
+          "idAgenda": "agenda-ecoponto2-1749147112639",
+          "idUsuarioAgendamento": 5,
+          "coletorId": null,
+          "dataHoraInicio": "2025-06-10T15:00:00Z",
+          "dataHoraFim": "2025-06-10T16:00:00Z",
+          "tipo": "entrega_voluntaria",
+          "descricao": "Entrega de materiais recicl�veis por Samuel Maciel da Silva Figueiredo (TESTE INTEGRADO)",
+          "status": "agendado",
+          "materiais": [
+            "plastico",
+            "papel",
+            "metal"
+          ],
+          "contatoResponsavel": "Samuel Maciel da Silva Figueiredo",
+          "observacoes": "Contato: (31) 99226-8649 - Email: samuelfigsre@gmail.com - TESTE INTEGRADO 05/06/2025, 15:11:52"
+        },
+        {
+          "idAgenda": "agenda-ecoponto2-1749147120015",
+          "idUsuarioAgendamento": 5,
+          "coletorId": null,
+          "dataHoraInicio": "2025-06-10T15:00:00Z",
+          "dataHoraFim": "2025-06-10T16:00:00Z",
+          "tipo": "entrega_voluntaria",
+          "descricao": "Entrega de materiais recicl�veis por Samuel Maciel da Silva Figueiredo (TESTE INTEGRADO)",
+          "status": "agendado",
+          "materiais": [
+            "plastico",
+            "papel",
+            "metal"
+          ],
+          "contatoResponsavel": "Samuel Maciel da Silva Figueiredo",
+          "observacoes": "Contato: (31) 99226-8649 - Email: samuelfigsre@gmail.com - TESTE INTEGRADO 05/06/2025, 15:12:00"
+        },
+        {
+          "idAgenda": "agenda-ecoponto2-1749147128765",
+          "idUsuarioAgendamento": 5,
+          "coletorId": null,
+          "dataHoraInicio": "2025-06-10T15:00:00Z",
+          "dataHoraFim": "2025-06-10T16:00:00Z",
+          "tipo": "entrega_voluntaria",
+          "descricao": "Entrega de materiais recicl�veis por Samuel Maciel da Silva Figueiredo (TESTE INTEGRADO)",
+          "status": "agendado",
+          "materiais": [
+            "plastico",
+            "papel",
+            "metal"
+          ],
+          "contatoResponsavel": "Samuel Maciel da Silva Figueiredo",
+          "observacoes": "Contato: (31) 99226-8649 - Email: samuelfigsre@gmail.com - TESTE INTEGRADO 05/06/2025, 15:12:08"
+        },
+        {
+          "idAgenda": "agenda-ecoponto2-1749147143761",
+          "idUsuarioAgendamento": 5,
+          "coletorId": null,
+          "dataHoraInicio": "2025-06-10T15:00:00Z",
+          "dataHoraFim": "2025-06-10T16:00:00Z",
+          "tipo": "entrega_voluntaria",
+          "descricao": "Entrega de materiais recicl�veis por Samuel Maciel da Silva Figueiredo (TESTE INTEGRADO)",
+          "status": "agendado",
+          "materiais": [
+            "plastico",
+            "papel",
+            "metal"
+          ],
+          "contatoResponsavel": "Samuel Maciel da Silva Figueiredo",
+          "observacoes": "Contato: (31) 99226-8649 - Email: samuelfigsre@gmail.com - TESTE INTEGRADO 05/06/2025, 15:12:23"
+        },
+        {
+          "idAgenda": "agenda-ecoponto2-1749147150423",
+          "idUsuarioAgendamento": 5,
+          "coletorId": null,
+          "dataHoraInicio": "2025-06-10T15:00:00Z",
+          "dataHoraFim": "2025-06-10T16:00:00Z",
+          "tipo": "entrega_voluntaria",
+          "descricao": "Entrega de materiais recicl�veis por Samuel Maciel da Silva Figueiredo (TESTE INTEGRADO)",
+          "status": "agendado",
+          "materiais": [
+            "plastico",
+            "papel",
+            "metal"
+          ],
+          "contatoResponsavel": "Samuel Maciel da Silva Figueiredo",
+          "observacoes": "Contato: (31) 99226-8649 - Email: samuelfigsre@gmail.com - TESTE INTEGRADO 05/06/2025, 15:12:30"
+        },
+        {
+          "idAgenda": "agenda-ecoponto2-1749147207642",
+          "idUsuarioAgendamento": 5,
+          "coletorId": null,
+          "dataHoraInicio": "2025-06-10T15:00:00Z",
+          "dataHoraFim": "2025-06-10T16:00:00Z",
+          "tipo": "entrega_voluntaria",
+          "descricao": "Entrega de materiais recicl�veis por Samuel Maciel da Silva Figueiredo (TESTE INTEGRADO)",
+          "status": "agendado",
+          "materiais": [
+            "plastico",
+            "papel",
+            "metal"
+          ],
+          "contatoResponsavel": "Samuel Maciel da Silva Figueiredo",
+          "observacoes": "Contato: (31) 99226-8649 - Email: samuelfigsre@gmail.com - TESTE INTEGRADO 05/06/2025, 15:13:27"
+        },
+        {
+          "idAgenda": "agenda-ecoponto2-1749147788960",
+          "idUsuarioAgendamento": 5,
+          "coletorId": null,
+          "dataHoraInicio": "2025-06-10T15:00:00Z",
+          "dataHoraFim": "2025-06-10T16:00:00Z",
+          "tipo": "entrega_voluntaria",
+          "descricao": "Entrega de materiais recicl�veis por Samuel Maciel da Silva Figueiredo (TESTE INTEGRADO)",
+          "status": "agendado",
+          "materiais": [
+            "plastico",
+            "papel",
+            "metal"
+          ],
+          "contatoResponsavel": "Samuel Maciel da Silva Figueiredo",
+          "observacoes": "Contato: (31) 99226-8649 - Email: samuelfigsre@gmail.com - TESTE INTEGRADO 05/06/2025, 15:23:08"
+        },
+        {
+          "idAgenda": "agenda-ecoponto2-teste-20250609235905",
+          "descricao": "TESTE FINAL - Agendamento criado em 09/06/2025 23:59",
+          "idUsuarioAgendamento": 5,
+          "coletorId": null,
+          "materiais": [
+            "plastico",
+            "papel",
+            "vidro"
+          ],
+          "contatoResponsavel": "Samuel Maciel da Silva Figueiredo",
+          "observacoes": "TESTE FINAL DE INTEGRA��O - Criado automaticamente para validar funcionalidade",
+          "dataHoraInicio": "2025-06-10T23:59:05Z",
+          "tipo": "entrega_voluntaria",
+          "dataHoraFim": "2025-06-11T00:59:05Z",
+          "status": "agendado"
         }
       ],
       "historico": [
@@ -487,7 +938,7 @@
           ],
           "quantidadeKg": 20,
           "status": "concluido",
-          "observacoes": "Coleta regular de materiais recicláveis"
+          "observacoes": "Coleta regular de materiais recicl�veis"
         }
       ]
     },
@@ -982,10 +1433,10 @@
       "agenda": []
     },
     {
-      "nome": "Ecoponto Organização EcoColeta",
+      "nome": "Ecoponto Organiza��o EcoColeta",
       "lat": -19.962058,
       "lng": -44.2210885,
-      "endereco": "Rua São Salvador, Betim - MG",
+      "endereco": "Rua S�o Salvador, Betim - MG",
       "horario": "13h as 17h",
       "materiaisAceitos": [
         "eletronicos",
@@ -994,7 +1445,24 @@
       ],
       "contato": "(31) 99226-8649",
       "coletaDomiciliar": false,
-      "agenda": [],
+      "agenda": [
+        {
+          "idAgenda": "agenda-teste-samuel-20250611151647",
+          "descricao": "TESTE FILTRO - Agendamento criado para validar filtro do coletor Samuel",
+          "idUsuarioAgendamento": 5,
+          "coletorId": 7,
+          "materiais": [
+            "eletronicos",
+            "pilhas"
+          ],
+          "contatoResponsavel": "Samuel Maciel (Teste)",
+          "observacoes": "Agendamento de teste criado em 11/06/2025 15:16 para verificar filtro",
+          "dataHoraInicio": "2025-06-11T17:16:47Z",
+          "tipo": "coleta_agendada_teste",
+          "dataHoraFim": "2025-06-11T18:16:47Z",
+          "status": "agendado"
+        }
+      ],
       "coletorId": 7,
       "status": "ativo",
       "id": 31
@@ -1432,5 +1900,88 @@
         "acaoRecomendada": "Avaliar viabilidade de inclusão."
       }
     ]
-  }
+  },
+  "agendamentos": [
+    {
+      "pontoColetaId": "1",
+      "doadorEmail": "samuelsilvamaciel02@gmail.com",
+      "dataAgendamento": "2024-12-30",
+      "horarioAgendamento": "14:00",
+      "tipoMaterial": "plastico",
+      "observacoes": "Teste de agendamento via Postman",
+      "id": 1
+    },
+    {
+      "pontoColetaId": "1",
+      "doadorEmail": "jonas@gmail.com",
+      "dataAgendamento": "2025-12-29",
+      "horarioAgendamento": "14:00",
+      "tipoMaterial": "plastico",
+      "observacoes": "Teste de agendamento via Postman",
+      "id": 2
+    },
+    {
+      "pontoColetaId": "31",
+      "doadorEmail": "samuelsilvamaciel02@gmail.com",
+      "dataAgendamento": "2025-06-25",
+      "horarioAgendamento": "15:00",
+      "tipoMaterial": "baterias",
+      "observacoes": "Agendamento para o ponto do coletor Samuel",
+      "id": 3
+    },
+    {
+      "pontoColetaId": "31",
+      "doadorEmail": "percy@gmail.com",
+      "dataAgendamento": "2025-06-25",
+      "horarioAgendamento": "15:00",
+      "tipoMaterial": "baterias",
+      "observacoes": "Agendamento para o ponto do coletor Samuel",
+      "id": 4
+    },
+    {
+      "pontoColetaId": "1",
+      "doadorEmail": "percy@gmail.com",
+      "dataAgendamento": "2025-06-25",
+      "horarioAgendamento": "15:00",
+      "tipoMaterial": "baterias",
+      "observacoes": "Agendamento para o ponto do coletor Samuel",
+      "id": 5
+    },
+    {
+      "pontoColetaId": "31",
+      "doadorEmail": "jana@gmail.com",
+      "dataAgendamento": "2025-06-25",
+      "horarioAgendamento": "15:00",
+      "tipoMaterial": "baterias",
+      "observacoes": "Agendamento para o ponto do coletor Samuel",
+      "id": 6
+    },
+    {
+      "pontoColetaId": "31",
+      "doadorEmail": "pedrinhoMatador@gmail.com",
+      "dataAgendamento": "2025-10-8",
+      "horarioAgendamento": "15:00",
+      "tipoMaterial": "baterias",
+      "observacoes": "Teste",
+      "id": 7
+    },
+    {
+      "pontoColetaId": 31,
+      "doadorEmail": "matheusaagd2@gmail.com",
+      "dataAgendamento": "2025-07-03",
+      "horarioAgendamento": "17:00",
+      "tipoMaterial": "Baterias",
+      "observacoes": "Nome: Matheus Augusto, Telefone: (31) 99226-8649",
+      "id": 8
+    },
+    {
+      "pontoColetaId": 31,
+      "doadorEmail": "matheusaagd2@gmail.com",
+      "dataAgendamento": "2025-06-30",
+      "horarioAgendamento": "12:00",
+      "tipoMaterial": "Baterias",
+      "observacoes": "Nome: Matheus Augusto, Telefone: (31) 99999-9999",
+      "id": 9
+    }
+  ]
 }

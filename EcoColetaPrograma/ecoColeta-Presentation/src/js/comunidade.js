@@ -3,7 +3,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const containerHistorias = document.querySelector(".historias-container");
 
   // Configuração da API
-  const API_BASE_URL = "https://two025-1-p1-tiaw-ecocoleta.onrender.com/api";
+  const API_BASE_URL = "http://localhost:3000/api";
 
   // Função para carregar comunidades da API
   async function carregarComunidades() {
@@ -159,7 +159,7 @@ async function carregarEventos() {
   const containerEventos = document.querySelector('.eventos-container');
   if (!containerEventos) return;
   // Corrige escopo da variável de API
-  const API_BASE_URL = "https://two025-1-p1-tiaw-ecocoleta.onrender.com/api";
+  const API_BASE_URL = "http://localhost:3000/api";
   try {
     const response = await fetch(`${API_BASE_URL}/eventos`);
     if (!response.ok) {
