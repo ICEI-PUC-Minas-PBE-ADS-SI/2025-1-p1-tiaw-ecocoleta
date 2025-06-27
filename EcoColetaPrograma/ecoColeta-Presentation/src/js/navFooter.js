@@ -91,6 +91,9 @@ const menuItems = [
 menuItems.forEach((item) => {
   let link = document.createElement("a");
   link.href = item.href;
+  if (item.text == `Tema Escuro`) {
+    return
+  }
 
   let menuItem = document.createElement("div");
   menuItem.className = "menu-item";
