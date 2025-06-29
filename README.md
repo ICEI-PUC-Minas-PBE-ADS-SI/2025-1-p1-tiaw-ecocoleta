@@ -36,22 +36,22 @@ O link e o usuário/senha descritos acima são apenas exemplos de como tais info
 # Documentação
 
 <ol>
-<li><a href="docs/01-Contexto.md"> Documentação de contexto</a></li>
-<li><a href="docs/02-Product-discovery.md"> Product discovery</a></li>
-<li><a href="docs/03-Product-design.md"> Product design</a></li>
-<li><a href="docs/04-Metodologia.md"> Metodologia</a></li>
-<li><a href="docs/05-Projeto-interface.md"> Projeto de interface</a></li>
-<li><a href="docs/06-Template-padrao.md"> Template padrão da aplicação</a></li>
-<li><a href="docs/07-Arquitetura-solucao.md"> Arquitetura da solução</a></li>
-<li><a href="docs/08-Plano-testes-software.md"> Plano de testes de software</a></li>
-<li><a href="docs/09-Registro-testes-software.md"> Registro de testes de software</a></li>
-<li><a href="docs/10-Referencias.md"> Referências</a></li>
+<li><a href="EcoColetaPrograma/ecoColeta-Presentation/docs/01-Contexto.md"> Documentação de contexto</a></li>
+<li><a href="EcoColetaPrograma/ecoColeta-Presentation/docs/02-Product-discovery.md"> Product discovery</a></li>
+<li><a href="EcoColetaPrograma/ecoColeta-Presentation/docs/03-Product-design.md"> Product design</a></li>
+<li><a href="EcoColetaPrograma/ecoColeta-Presentation/docs/04-Metodologia.md"> Metodologia</a></li>
+<li><a href="EcoColetaPrograma/ecoColeta-Presentation/docs/05-Projeto-interface.md"> Projeto de interface</a></li>
+<li><a href="EcoColetaPrograma/ecoColeta-Presentation/docs/06-Template-padrao.md"> Template padrão da aplicação</a></li>
+<li><a href="EcoColetaPrograma/ecoColeta-Presentation/docs/07-Arquitetura-solucao.md"> Arquitetura da solução</a></li>
+<li><a href="EcoColetaPrograma/ecoColeta-Presentation/docs/08-Plano-testes-software.md"> Plano de testes de software</a></li>
+<li><a href="EcoColetaPrograma/ecoColeta-Presentation/docs/09-Registro-testes-software.md"> Registro de testes de software</a></li>
+<li><a href="EcoColetaPrograma/ecoColeta-Presentation/docs/10-Referencias.md"> Referências</a></li>
 </ol>
 
 # Código
 
-* <a href="src/README.md">Código</a>
+* <a href="[src/README.md](EcoColetaPrograma/ecoColeta-Presentation/README.md)">Código</a>
 
 # Apresentação
 
-* <a href="presentation/README.md">Apresentação do projeto</a>
+* <a href="[text](README.md)">Apresentação do projeto</a>
