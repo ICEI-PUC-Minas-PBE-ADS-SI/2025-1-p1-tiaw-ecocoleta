@@ -748,21 +748,482 @@ EcoColeta - Juntos por um planeta mais limpo!`;
     downloadButtons.forEach(button => {
         button.addEventListener('click', function(e) {
             e.preventDefault();
-            const fileKey = this.getAttribute('data-file');
+            
+            const card = this.closest('.download-card');
+            const title = card.querySelector('h3').textContent;
+            const description = card.querySelector('p').textContent;
             
             // Adicionar efeito visual de loading
             const originalText = this.innerHTML;
-            this.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Baixando...';
+            this.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Gerando PDF...';
             this.disabled = true;
             
             // Simular delay de processamento
             setTimeout(() => {
-                downloadFile(fileKey);
+                generatePDF(title, description);
                 
                 // Restaurar botão
                 this.innerHTML = originalText;
                 this.disabled = false;
-            }, 1000);
+            }, 2000);
         });
     });
 });
+
+function generatePDF(title, description) {
+    // Aguarda um pouco para garantir que a biblioteca foi carregada
+    setTimeout(() => {
+        try {
+            // Verifica se jsPDF está disponível - versão UMD
+            if (typeof window.jspdf === 'undefined' && typeof jsPDF === 'undefined') {
+                alert('Erro: Biblioteca PDF não carregada. Verifique sua conexão com a internet.');
+                console.error('jsPDF não está disponível');
+                return;
+            }
+            
+            // Acessa jsPDF da forma correta para versão UMD
+            const { jsPDF } = window.jspdf || window;
+            
+            if (!jsPDF) {
+                throw new Error('Não foi possível acessar jsPDF');
+            }
+            
+            const doc = new jsPDF();
+            
+            // Configurações do PDF
+            const pageWidth = doc.internal.pageSize.getWidth();
+            const pageHeight = doc.internal.pageSize.getHeight();
+            const margin = 20;
+            let yPosition = 30;
+            
+            // Adiciona cabeçalho
+            doc.setFontSize(20);
+            doc.setTextColor(13, 159, 111); // Cor verde do EcoColeta
+            doc.text('EcoColeta - Guia Educativo', margin, yPosition);
+            
+            yPosition += 20;
+            
+            // Adiciona título do documento
+            doc.setFontSize(16);
+            doc.setTextColor(0, 0, 0);
+            doc.text(title, margin, yPosition);
+            
+            yPosition += 15;
+            
+            // Adiciona descrição
+            doc.setFontSize(12);
+            doc.setTextColor(100, 100, 100);
+            
+            // Quebra o texto da descrição em múltiplas linhas se necessário
+            const splitDescription = doc.splitTextToSize(description, pageWidth - 2 * margin);
+            doc.text(splitDescription, margin, yPosition);
+            
+            yPosition += splitDescription.length * 7 + 15;
+            
+            // Adiciona conteúdo específico baseado no tipo
+            if (title.includes('Guia de Bolso')) {
+                addGuiaBolsoContent(doc, margin, yPosition, pageWidth);
+            } else if (title.includes('Infográfico')) {
+                addInfograficoContent(doc, margin, yPosition, pageWidth);
+            } else if (title.includes('Cartilha')) {
+                addBookletContent(doc, margin, yPosition);
+            }
+            
+            // Adiciona rodapé
+            doc.setFontSize(10);
+            doc.setTextColor(100, 100, 100);
+            doc.text('EcoColeta © 2025 - Preservando o meio ambiente através da educação', 
+                     margin, pageHeight - 10);
+        
+        yPosition += splitDescription.length * 7 + 20;
+        
+        // Adiciona conteúdo específico baseado no tipo de documento
+        if (title.includes('Guia de Bolso')) {
+            addPocketGuideContent(doc, margin, yPosition);
+        } else if (title.includes('Infográfico')) {
+            addInfographicContent(doc, margin, yPosition);
+        } else if (title.includes('Cartilha')) {
+            addBookletContent(doc, margin, yPosition);
+        }
+        
+        // Adiciona rodapé
+        doc.setFontSize(8);
+        doc.setTextColor(150, 150, 150);
+        doc.text('Gerado em: ' + new Date().toLocaleDateString('pt-BR'), margin, pageHeight - 10);
+        doc.text('EcoColeta - Transformando o futuro através da reciclagem', pageWidth - margin - 80, pageHeight - 10);
+        
+        // Salva o PDF
+        const fileName = title.toLowerCase().replace(/\s+/g, '-') + '.pdf';
+        doc.save(fileName);
+        
+        // PDF gerado com sucesso - download iniciado
+        console.log('PDF gerado com sucesso:', fileName);
+        alert('Download concluído');
+        
+    } catch (error) {
+        console.error('Erro ao gerar PDF:', error);
+        alert('Erro ao gerar PDF: ' + error.message + '. Tente recarregar a página.');
+    }
+    }, 100); // Pequeno delay para garantir que a biblioteca carregou
+}
+    if (title.includes('Guia de Bolso')) {
+        addGuiaBolsoContent(doc, margin, yPosition, pageWidth);
+    } else if (title.includes('Infográfico')) {
+        addInfograficoContent(doc, margin, yPosition, pageWidth);
+    } else if (title.includes('Cartilha')) {
+        addBookletContent(doc, margin, yPosition);
+    }
+    
+    // Adiciona rodapé
+    doc.setFontSize(10);
+    doc.setTextColor(100, 100, 100);
+    doc.text('EcoColeta © 2025 - Preservando o meio ambiente através da educação', 
+             margin, pageHeight - 10);
+
+
+function addGuiaBolsoContent(doc, margin, yPosition, pageWidth) {
+    const materials = [
+        {
+            name: 'PAPEL',
+            recyclable: ['Jornais e revistas', 'Papelão limpo', 'Papel de escritório', 'Cadernos e livros'],
+            nonRecyclable: ['Papel higiênico usado', 'Papel carbono', 'Papel plastificado', 'Guardanapos usados']
+        },
+        {
+            name: 'PLÁSTICO',
+            recyclable: ['Garrafas PET', 'Embalagens de produtos de limpeza', 'Potes de iogurte', 'Sacolas plásticas'],
+            nonRecyclable: ['Isopor', 'Adesivos', 'Fraldas descartáveis', 'Embalagens metalizadas']
+        },
+        {
+            name: 'VIDRO',
+            recyclable: ['Garrafas de bebidas', 'Potes de conserva', 'Frascos de perfume', 'Vidros de remédio'],
+            nonRecyclable: ['Espelhos', 'Vidros de janela', 'Lâmpadas', 'Cristais']
+        },
+        {
+            name: 'METAL',
+            recyclable: ['Latas de alumínio', 'Latas de aço', 'Tampas metálicas', 'Fios de cobre'],
+            nonRecyclable: ['Pilhas e baterias', 'Objetos com tinta', 'Aerossóis', 'Materiais eletrônicos']
+        }
+    ];
+    
+    materials.forEach(material => {
+        if (yPosition > 250) {
+            doc.addPage();
+            yPosition = 30;
+        }
+        
+        doc.setFontSize(14);
+        doc.setTextColor(13, 159, 111);
+        doc.text(material.name, margin, yPosition);
+        yPosition += 10;
+        
+        doc.setFontSize(10);
+        doc.setTextColor(0, 128, 0);
+        doc.text('✓ PODE SER RECICLADO:', margin, yPosition);
+        yPosition += 7;
+        
+        doc.setTextColor(0, 0, 0);
+        material.recyclable.forEach(item => {
+            doc.text(`• ${item}`, margin + 5, yPosition);
+            yPosition += 5;
+        });
+        
+        yPosition += 3;
+        doc.setTextColor(255, 0, 0);
+        doc.text('✗ NÃO PODE SER RECICLADO:', margin, yPosition);
+        yPosition += 7;
+        
+        doc.setTextColor(0, 0, 0);
+        material.nonRecyclable.forEach(item => {
+            doc.text(`• ${item}`, margin + 5, yPosition);
+            yPosition += 5;
+        });
+        
+        yPosition += 15;
+    });
+}
+
+function addInfograficoContent(doc, margin, yPosition, pageWidth) {
+    doc.setFontSize(14);
+    doc.setTextColor(13, 159, 111);
+    doc.text('SÍMBOLOS DE RECICLAGEM', margin, yPosition);
+    yPosition += 15;
+    
+    const symbols = [
+        { code: '1 - PET', description: 'Garrafas de refrigerante, água, óleo' },
+        { code: '2 - PEAD', description: 'Embalagens de detergente, xampu' },
+        { code: '3 - PVC', description: 'Tubos, mangueiras, embalagens' },
+        { code: '4 - PEBD', description: 'Sacolas plásticas, filmes' },
+        { code: '5 - PP', description: 'Potes de margarina, tampas' },
+        { code: '6 - PS', description: 'Copos descartáveis, isopor' },
+        { code: '7 - OUTROS', description: 'Outros tipos de plástico' }
+    ];
+    
+    doc.setFontSize(12);
+    symbols.forEach(symbol => {
+        doc.setTextColor(13, 159, 111);
+        doc.text(symbol.code, margin, yPosition);
+        doc.setTextColor(0, 0, 0);
+        doc.text(symbol.description, margin + 30, yPosition);
+        yPosition += 8;
+    });
+    
+    yPosition += 15;
+    doc.setFontSize(14);
+    doc.setTextColor(13, 159, 111);
+    doc.text('CORES DA COLETA SELETIVA', margin, yPosition);
+    yPosition += 15;
+    
+    const colors = [
+        { color: 'AZUL', material: 'Papel' },
+        { color: 'VERMELHO', material: 'Plástico' },
+        { color: 'VERDE', material: 'Vidro' },
+        { color: 'AMARELO', material: 'Metal' },
+        { color: 'MARROM', material: 'Orgânico' }
+    ];
+    
+    doc.setFontSize(12);
+    colors.forEach(item => {
+        doc.setTextColor(13, 159, 111);
+        doc.text(item.color, margin, yPosition);
+        doc.setTextColor(0, 0, 0);
+        doc.text(item.material, margin + 30, yPosition);
+        yPosition += 8;
+    });
+}
+
+function addBookletContent(doc, margin, yPosition) {
+    doc.setFontSize(14);
+    doc.setTextColor(13, 159, 111);
+    doc.text('MANUAL COMPLETO DE RECICLAGEM', margin, yPosition);
+    yPosition += 20;
+    
+    const sections = [
+        {
+            title: '1. IMPORTÂNCIA DA RECICLAGEM',
+            content: [
+                'A reciclagem é fundamental para:',
+                '• Preservar recursos naturais',
+                '• Reduzir a poluição',
+                '• Economizar energia',
+                '• Criar empregos',
+                '• Diminuir resíduos nos aterros'
+            ]
+        },
+        {
+            title: '2. PREPARAÇÃO DOS MATERIAIS',
+            content: [
+                'Antes de descartar:',
+                '• Lave embalagens',
+                '• Retire etiquetas quando possível',
+                '• Separe por tipo de material',
+                '• Armazene em local seco',
+                '• Não misture materiais diferentes'
+            ]
+        },
+        {
+            title: '3. IMPACTO AMBIENTAL',
+            content: [
+                'Benefícios da reciclagem:',
+                '• 1 tonelada de papel reciclado = 20 árvores preservadas',
+                '• 1 tonelada de plástico reciclado = 1 tonelada de petróleo economizada',
+                '• Alumínio pode ser reciclado infinitas vezes',
+                '• Vidro é 100% reciclável'
+            ]
+        }
+    ];
+    
+    sections.forEach(section => {
+        if (yPosition > 220) {
+            doc.addPage();
+            yPosition = 30;
+        }
+        
+        doc.setFontSize(12);
+        doc.setTextColor(13, 159, 111);
+        doc.text(section.title, margin, yPosition);
+        yPosition += 10;
+        
+        doc.setFontSize(10);
+        doc.setTextColor(0, 0, 0);
+        section.content.forEach(line => {
+            doc.text(line, margin, yPosition);
+            yPosition += 6;
+        });
+        
+        yPosition += 10;
+    });
+}
+
+// Funções auxiliares para conteúdo específico dos PDFs
+function addPocketGuideContent(doc, margin, yPosition) {
+    const materials = [
+        {
+            name: 'PAPEL (Azul)',
+            recyclable: ['Jornais e revistas', 'Papelão limpo', 'Papel de escritório', 'Cadernos e livros'],
+            nonRecyclable: ['Papel higiênico usado', 'Papel carbono', 'Papel plastificado', 'Guardanapos usados']
+        },
+        {
+            name: 'PLÁSTICO (Amarelo)',
+            recyclable: ['Garrafas PET', 'Embalagens de produtos de limpeza', 'Potes de iogurte', 'Sacolas plásticas'],
+            nonRecyclable: ['Isopor', 'Adesivos', 'Fraldas descartáveis', 'Embalagens metalizadas']
+        },
+        {
+            name: 'VIDRO (Verde)',
+            recyclable: ['Garrafas de bebidas', 'Potes de conserva', 'Frascos de perfume', 'Vidros de remédio'],
+            nonRecyclable: ['Espelhos', 'Vidros de janela', 'Lâmpadas', 'Cristais']
+        },
+        {
+            name: 'METAL (Vermelho)',
+            recyclable: ['Latas de alumínio', 'Latas de aço', 'Tampas metálicas', 'Fios de cobre'],
+            nonRecyclable: ['Pilhas e baterias', 'Objetos com tinta', 'Aerossóis', 'Materiais eletrônicos']
+        }
+    ];
+    
+    materials.forEach(material => {
+        if (yPosition > 250) {
+            doc.addPage();
+            yPosition = 30;
+        }
+        
+        doc.setFontSize(14);
+        doc.setTextColor(13, 159, 111);
+        doc.text(material.name, margin, yPosition);
+        yPosition += 10;
+        
+        doc.setFontSize(10);
+        doc.setTextColor(0, 128, 0);
+        doc.text('✓ PODE SER RECICLADO:', margin, yPosition);
+        yPosition += 7;
+        
+        doc.setTextColor(0, 0, 0);
+        material.recyclable.forEach(item => {
+            doc.text(`• ${item}`, margin + 5, yPosition);
+            yPosition += 5;
+        });
+        
+        yPosition += 3;
+        doc.setTextColor(255, 0, 0);
+        doc.text('✗ NÃO PODE SER RECICLADO:', margin, yPosition);
+        yPosition += 7;
+        
+        doc.setTextColor(0, 0, 0);
+        material.nonRecyclable.forEach(item => {
+            doc.text(`• ${item}`, margin + 5, yPosition);
+            yPosition += 5;
+        });
+        
+        yPosition += 15;
+    });
+}
+
+function addInfographicContent(doc, margin, yPosition) {
+    doc.setFontSize(14);
+    doc.setTextColor(13, 159, 111);
+    doc.text('SÍMBOLOS DE RECICLAGEM', margin, yPosition);
+    yPosition += 15;
+    
+    const symbols = [
+        { code: '1 - PET', description: 'Garrafas de refrigerante, água, óleo' },
+        { code: '2 - PEAD', description: 'Embalagens de detergente, xampu' },
+        { code: '3 - PVC', description: 'Tubos, mangueiras, embalagens' },
+        { code: '4 - PEBD', description: 'Sacolas plásticas, filmes' },
+        { code: '5 - PP', description: 'Potes de margarina, tampas' },
+        { code: '6 - PS', description: 'Copos descartáveis, isopor' },
+        { code: '7 - OUTROS', description: 'Outros tipos de plástico' }
+    ];
+    
+    doc.setFontSize(12);
+    symbols.forEach(symbol => {
+        doc.setTextColor(13, 159, 111);
+        doc.text(symbol.code, margin, yPosition);
+        doc.setTextColor(0, 0, 0);
+        doc.text(symbol.description, margin + 30, yPosition);
+        yPosition += 8;
+    });
+    
+    yPosition += 15;
+    doc.setFontSize(14);
+    doc.setTextColor(13, 159, 111);
+    doc.text('CORES DA COLETA SELETIVA', margin, yPosition);
+    yPosition += 15;
+    
+    const colors = [
+        { color: 'AZUL', material: 'Papel' },
+        { color: 'VERMELHO', material: 'Plástico' },
+        { color: 'VERDE', material: 'Vidro' },
+        { color: 'AMARELO', material: 'Metal' },
+        { color: 'MARROM', material: 'Orgânico' }
+    ];
+    
+    doc.setFontSize(12);
+    colors.forEach(item => {
+        doc.setTextColor(13, 159, 111);
+        doc.text(item.color, margin, yPosition);
+        doc.setTextColor(0, 0, 0);
+        doc.text(item.material, margin + 30, yPosition);
+        yPosition += 8;
+    });
+}
+
+function addBookletContent(doc, margin, yPosition) {
+    doc.setFontSize(14);
+    doc.setTextColor(13, 159, 111);
+    doc.text('MANUAL COMPLETO DE RECICLAGEM', margin, yPosition);
+    yPosition += 20;
+    
+    const sections = [
+        {
+            title: '1. IMPORTÂNCIA DA RECICLAGEM',
+            content: [
+                'A reciclagem é fundamental para:',
+                '• Preservar recursos naturais',
+                '• Reduzir a poluição',
+                '• Economizar energia',
+                '• Criar empregos',
+                '• Diminuir resíduos nos aterros'
+            ]
+        },
+        {
+            title: '2. PREPARAÇÃO DOS MATERIAIS',
+            content: [
+                'Antes de descartar:',
+                '• Lave embalagens',
+                '• Retire etiquetas quando possível',
+                '• Separe por tipo de material',
+                '• Armazene em local seco',
+                '• Não misture materiais diferentes'
+            ]
+        },
+        {
+            title: '3. IMPACTO AMBIENTAL',
+            content: [
+                'Benefícios da reciclagem:',
+                '• 1 tonelada de papel reciclado = 20 árvores preservadas',
+                '• 1 tonelada de plástico reciclado = 1 tonelada de petróleo economizada',
+                '• Alumínio pode ser reciclado infinitas vezes',
+                '• Vidro é 100% reciclável'
+            ]
+        }
+    ];
+    
+    sections.forEach(section => {
+        if (yPosition > 220) {
+            doc.addPage();
+            yPosition = 30;
+        }
+        
+        doc.setFontSize(12);
+        doc.setTextColor(13, 159, 111);
+        doc.text(section.title, margin, yPosition);
+        yPosition += 10;
+        
+        doc.setFontSize(10);
+        doc.setTextColor(0, 0, 0);
+        section.content.forEach(line => {
+            doc.text(line, margin, yPosition);
+            yPosition += 6;
+        });
+        
+        yPosition += 10;
+    });
+}
