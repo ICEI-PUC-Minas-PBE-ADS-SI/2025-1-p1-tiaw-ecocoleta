@@ -14,12 +14,10 @@ O software deverá facilitar o usuário na busca de pontos de coletas e incentiv
 ## Integrantes
 
 * Artur Ferreira Silva
-* Caique Heleno de Souza Melo
 * Kauan Gomes Marques
 * Matheus Augusto Alves Goveia Damião
 * Ronaldo Augusto Oliveira Lacerda
 * Samuel Maciel da Silva Figueiredo 
-* Tiago Souza da Silva
 
 ## Professor
 
