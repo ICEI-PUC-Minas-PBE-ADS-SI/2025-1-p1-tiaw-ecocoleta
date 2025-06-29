@@ -776,7 +776,7 @@ function generatePDF(title, description) {
         try {
             // Verifica se jsPDF está disponível - versão UMD
             if (typeof window.jspdf === 'undefined' && typeof jsPDF === 'undefined') {
-                alert('Erro: Biblioteca PDF não carregada. Verifique sua conexão com a internet.');
+                showErrorModal('Erro: Biblioteca PDF não carregada. Verifique sua conexão com a internet.');
                 console.error('jsPDF não está disponível');
                 return;
             }
@@ -858,11 +858,11 @@ function generatePDF(title, description) {
         
         // PDF gerado com sucesso - download iniciado
         console.log('PDF gerado com sucesso:', fileName);
-        alert('Download concluído');
+        showDownloadModal();
         
     } catch (error) {
         console.error('Erro ao gerar PDF:', error);
-        alert('Erro ao gerar PDF: ' + error.message + '. Tente recarregar a página.');
+        showErrorModal('Erro ao gerar PDF: ' + error.message + '. Tente recarregar a página.');
     }
     }, 100); // Pequeno delay para garantir que a biblioteca carregou
 }
@@ -1226,4 +1226,76 @@ function addBookletContent(doc, margin, yPosition) {
         
         yPosition += 10;
     });
+}
+
+// Funções do Modal de Download
+function showDownloadModal() {
+    const modal = document.getElementById('downloadModal');
+    if (modal) {
+        modal.classList.add('show');
+        // Adicionar evento para fechar com ESC
+        document.addEventListener('keydown', handleEscapeKey);
+        // Adicionar evento para fechar clicando fora do modal
+        modal.addEventListener('click', handleClickOutside);
+    }
+}
+
+function closeDownloadModal() {
+    const modal = document.getElementById('downloadModal');
+    if (modal) {
+        modal.classList.remove('show');
+        // Remover event listeners
+        document.removeEventListener('keydown', handleEscapeKey);
+        modal.removeEventListener('click', handleClickOutside);
+    }
+}
+
+function handleEscapeKey(event) {
+    if (event.key === 'Escape') {
+        closeDownloadModal();
+    }
+}
+
+function handleClickOutside(event) {
+    const modalContent = document.querySelector('.download-modal-content');
+    if (event.target === document.getElementById('downloadModal') && !modalContent.contains(event.target)) {
+        closeDownloadModal();
+    }
+}
+
+// Funções do Modal de Erro
+function showErrorModal(message) {
+    const modal = document.getElementById('errorModal');
+    const errorMessage = document.getElementById('errorMessage');
+    if (modal && errorMessage) {
+        errorMessage.textContent = message;
+        modal.classList.add('show');
+        // Adicionar evento para fechar com ESC
+        document.addEventListener('keydown', handleErrorEscapeKey);
+        // Adicionar evento para fechar clicando fora do modal
+        modal.addEventListener('click', handleErrorClickOutside);
+    }
+}
+
+function closeErrorModal() {
+    const modal = document.getElementById('errorModal');
+    if (modal) {
+        modal.classList.remove('show');
+        // Remover event listeners
+        document.removeEventListener('keydown', handleErrorEscapeKey);
+        modal.removeEventListener('click', handleErrorClickOutside);
+    }
+}
+
+function handleErrorEscapeKey(event) {
+    if (event.key === 'Escape') {
+        closeErrorModal();
+    }
+}
+
+function handleErrorClickOutside(event) {
+    const modalContent = document.querySelector('.error-modal-content');
+    if (event.target === document.getElementById('errorModal') && !modalContent.contains(event.target)) {
+        closeErrorModal();
+    }
 }

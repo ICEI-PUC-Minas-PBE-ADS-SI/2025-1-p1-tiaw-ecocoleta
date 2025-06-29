@@ -290,6 +290,34 @@
       </div>
     </section>
 
+    <!-- Modal de Download -->
+    <div id="downloadModal" class="download-modal">
+      <div class="download-modal-content">
+        <div class="download-modal-icon">
+          <i class="fas fa-check-circle"></i>
+        </div>
+        <h3>Download Concluído!</h3>
+        <p>Seu arquivo foi baixado com sucesso. Aproveite o conteúdo educativo!</p>
+        <button class="download-modal-close" onclick="closeDownloadModal()">
+          Entendi
+        </button>
+      </div>
+    </div>
+
+    <!-- Modal de Erro -->
+    <div id="errorModal" class="error-modal">
+      <div class="error-modal-content">
+        <div class="error-modal-icon">
+          <i class="fas fa-exclamation-triangle"></i>
+        </div>
+        <h3>Ops! Algo deu errado</h3>
+        <p id="errorMessage">Ocorreu um erro inesperado. Tente novamente.</p>
+        <button class="error-modal-close" onclick="closeErrorModal()">
+          Tentar Novamente
+        </button>
+      </div>
+    </div>
+
     <!-- Biblioteca jsPDF para geração de PDFs -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
     
