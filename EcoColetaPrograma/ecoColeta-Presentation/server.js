@@ -488,8 +488,7 @@ app.post('/api/comunidades/:id/curtir', (req, res) => {
   }
 });
 
-<<<<<<<<< Temporary merge branch 1
-=========
+
 // ROTA PARA AGENDAR COLETA E SALVAR NO db.json
 app.post('/api/pontosDeColeta/:id/agendar', (req, res) => {
   try {
@@ -815,7 +814,7 @@ app.patch('/api/agendamentos/:id', (req, res) => {
   }
 });
 
->>>>>>>>> Temporary merge branch 2
+
 // Função auxiliar para gerar tags
 function gerarTags(nome, descricao, tipo) {
   const texto = `${nome} ${descricao} ${tipo}`.toLowerCase();
