@@ -73,7 +73,7 @@
     </section>
 
     <!-- Materials Library Section -->
-    <section class="materials-library">
+    <section class="materials-library" id="materialsSection">
       <div class="container">
         <h2>Biblioteca de Materiais</h2>
         <div class="search-container">
@@ -87,9 +87,9 @@
             </div>
             <h3>Vidro</h3>
             <p>Garrafas, potes e outros recipientes de vidro</p>
-            <a href="#" class="learn-more"
-              >Saiba mais <i class="fas fa-arrow-right"></i
-            ></a>
+            <button class="learn-more" data-material="vidro">
+              Saiba mais <i class="fas fa-arrow-right"></i>
+            </button>
           </div>
           <div class="material-card">
             <div class="material-icon">
@@ -97,9 +97,9 @@
             </div>
             <h3>Plástico</h3>
             <p>Embalagens, garrafas e produtos plásticos</p>
-            <a href="#" class="learn-more"
-              >Saiba mais <i class="fas fa-arrow-right"></i
-            ></a>
+            <button class="learn-more" data-material="plastico">
+              Saiba mais <i class="fas fa-arrow-right"></i>
+            </button>
           </div>
           <div class="material-card">
             <div class="material-icon">
@@ -107,9 +107,101 @@
             </div>
             <h3>Papel</h3>
             <p>Jornais, revistas e papelão</p>
-            <a href="#" class="learn-more"
-              >Saiba mais <i class="fas fa-arrow-right"></i
-            ></a>
+            <button class="learn-more" data-material="papel">
+              Saiba mais <i class="fas fa-arrow-right"></i>
+            </button>
+          </div>
+          <div class="material-card">
+            <div class="material-icon">
+              <i class="fas fa-leaf"></i>
+            </div>
+            <h3>Orgânico</h3>
+            <p>Restos de comida, cascas e materiais biodegradáveis</p>
+            <button class="learn-more" data-material="organico">
+              Saiba mais <i class="fas fa-arrow-right"></i>
+            </button>
+          </div>
+          <div class="material-card">
+            <div class="material-icon">
+              <i class="fas fa-mobile-alt"></i>
+            </div>
+            <h3>Eletrônicos</h3>
+            <p>Celulares, computadores e equipamentos eletrônicos</p>
+            <button class="learn-more" data-material="eletronicos">
+              Saiba mais <i class="fas fa-arrow-right"></i>
+            </button>
+          </div>
+          <div class="material-card">
+            <div class="material-icon">
+              <i class="fas fa-battery-half"></i>
+            </div>
+            <h3>Baterias</h3>
+            <p>Pilhas, baterias e acumuladores</p>
+            <button class="learn-more" data-material="baterias">
+              Saiba mais <i class="fas fa-arrow-right"></i>
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Container da página de detalhes -->
+      <div class="details-page" id="detailsPage" style="display: none;">
+        <div class="container">
+          <div class="details-header">
+            <button class="back-button" id="backButton">
+              <i class="fas fa-arrow-left"></i> Voltar
+            </button>
+            <h1 id="detailsTitle">Título do Material</h1>
+          </div>
+          
+          <div class="details-content">
+            <div class="details-hero">
+              <div class="material-icon-large" id="detailsIcon">
+                <i class="fas fa-wine-bottle"></i>
+              </div>
+              <div class="material-description">
+                <p id="detailsDescription">Descrição do material</p>
+              </div>
+            </div>
+
+            <div class="details-grid">
+              <div class="detail-card recyclable-card">
+                <div class="card-header">
+                  <i class="fas fa-check-circle"></i>
+                  <h3>O que pode ser reciclado</h3>
+                </div>
+                <ul id="recyclableItems"></ul>
+              </div>
+
+              <div class="detail-card non-recyclable-card">
+                <div class="card-header">
+                  <i class="fas fa-times-circle"></i>
+                  <h3>O que NÃO pode ser reciclado</h3>
+                </div>
+                <ul id="nonRecyclableItems"></ul>
+              </div>
+
+              <div class="detail-card preparation-card">
+                <div class="card-header">
+                  <i class="fas fa-tasks"></i>
+                  <h3>Como preparar para reciclagem</h3>
+                </div>
+                <ol id="preparationSteps"></ol>
+              </div>
+
+              <div class="detail-card impact-card">
+                <div class="card-header">
+                  <i class="fas fa-leaf"></i>
+                  <h3>Impacto ambiental</h3>
+                </div>
+                <p id="environmentalImpact"></p>
+              </div>
+            </div>
+
+            <div class="tips-section">
+              <h3><i class="fas fa-lightbulb"></i> Dicas importantes</h3>
+              <div class="tips-grid" id="importantTips"></div>
+            </div>
           </div>
         </div>
       </div>
@@ -198,6 +290,7 @@
       </div>
     </section>
 
+    <script src ="../src/js/guiaEdu-new.js"></script>
     <script src="../src/js/navFooter.js"></script>
     <script src="../src/js/guiaEdu.js"></script>
     <script src="../src/js/quiz.js"></script>

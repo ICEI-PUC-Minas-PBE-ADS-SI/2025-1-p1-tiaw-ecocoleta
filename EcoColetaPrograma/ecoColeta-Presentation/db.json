@@ -215,58 +215,6 @@
       "imagem": "assets/img/AvatarArthurzin.jpg",
       "emailVerificado": false,
       "id": 13
-    },
-    {
-      "nome": "MATHEUS AUGUSTO ALVES GOUVEIA DAMIAO",
-      "email": "matheusaagd23@gmail.com",
-      "telefone": "(31) 99944-4064",
-      "cep": "32606-044",
-      "endereco": "Rua Amapá",
-      "cidade": "Betim",
-      "estado": "MG",
-      "tipoUsuario": "coletor",
-      "razaoSocial": "eee",
-      "cnpj": "8767898568768",
-      "areaAtuacao": "residencial",
-      "coletaDomiciliar": "sim",
-      "horarioColeta": "matheusaagd23@gmail.com",
-      "materiaisColeta": [
-        "metal",
-        "pilhas"
-      ],
-      "senha": "2603Betim#2",
-      "imagem": "",
-      "emailVerificado": false,
-      "dataCadastro": "2025-06-26T13:21:09.904Z",
-      "id": 14,
-      "ecopontoId": 34
-    },
-    {
-      "nome": "EDINA ALVES GOVEIA",
-      "email": "matheusaagd200@gmail.com",
-      "telefone": "(31) 99944-4064",
-      "cep": "32606-044",
-      "endereco": "Rua Amapá",
-      "cidade": "Betim",
-      "estado": "MG",
-      "tipoUsuario": "coletor",
-      "razaoSocial": "32432313",
-      "cnpj": "13.243.123/1221",
-      "areaAtuacao": "industrial",
-      "coletaDomiciliar": "sim",
-      "horarioColeta": "9 811",
-      "materiaisColeta": [
-        "eletronicos",
-        "pilhas",
-        "baterias",
-        "oleo"
-      ],
-      "senha": "2603Betim#2",
-      "imagem": "",
-      "emailVerificado": false,
-      "dataCadastro": "2025-06-26T14:05:36.133Z",
-      "id": 15,
-      "ecopontoId": 35
     }
   ],
   "pontosDeColeta": [
@@ -1498,42 +1446,6 @@
       "coletorId": 12,
       "status": "ativo",
       "id": 33
-    },
-    {
-      "nome": "Ecoponto eee",
-      "lat": -19.9474769,
-      "lng": -44.2048675,
-      "endereco": "Rua Amapá, Betim - MG",
-      "horario": "matheusaagd23@gmail.com",
-      "materiaisAceitos": [
-        "metal",
-        "pilhas"
-      ],
-      "contato": "(31) 99944-4064",
-      "coletaDomiciliar": true,
-      "agenda": [],
-      "coletorId": 14,
-      "status": "ativo",
-      "id": 34
-    },
-    {
-      "nome": "Ecoponto 32432313",
-      "lat": -19.9474769,
-      "lng": -44.2048675,
-      "endereco": "Rua Amapá, Betim - MG",
-      "horario": "9 811",
-      "materiaisAceitos": [
-        "eletronicos",
-        "pilhas",
-        "baterias",
-        "oleo"
-      ],
-      "contato": "(31) 99944-4064",
-      "coletaDomiciliar": true,
-      "agenda": [],
-      "coletorId": 15,
-      "status": "ativo",
-      "id": 35
     }
   ],
   "donations": [
@@ -1703,7 +1615,8 @@
       "status": "ativa",
       "membros": [
         4,
-        13
+        13,
+        5
       ],
       "curtidas": 0,
       "comentarios": [],
@@ -1982,6 +1895,15 @@
       "tipoMaterial": "Baterias",
       "observacoes": "Nome: Matheus Augusto, Telefone: (31) 99999-9999",
       "id": 9
+    },
+    {
+      "pontoColetaId": "31",
+      "doadorEmail": "JefMatador@gmail.com",
+      "dataAgendamento": "2025-10-8",
+      "horarioAgendamento": "15:00",
+      "tipoMaterial": "baterias",
+      "observacoes": "Teste",
+      "id": 10
     }
   ]
 }
