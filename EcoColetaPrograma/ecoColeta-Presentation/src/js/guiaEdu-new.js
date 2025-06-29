@@ -1,19 +1,19 @@
 // Mobile Menu Toggle
-const menuToggle = document.querySelector('.menu-toggle');
-const nav = document.querySelector('nav');
+const guiaMenuToggle = document.querySelector('.menu-toggle');
+const guiaNavElement = document.querySelector('nav');
 
-if (menuToggle) {
-    menuToggle.addEventListener('click', () => {
-        nav.style.display = nav.style.display === 'block' ? 'none' : 'block';
+if (guiaMenuToggle) {
+    guiaMenuToggle.addEventListener('click', () => {
+        guiaNavElement.style.display = guiaNavElement.style.display === 'block' ? 'none' : 'block';
     });
 }
 
 // Window resize handler to reset nav display
 window.addEventListener('resize', () => {
     if (window.innerWidth > 768) {
-        if (nav) nav.style.display = 'block';
+        if (guiaNavElement) guiaNavElement.style.display = 'block';
     } else {
-        if (nav) nav.style.display = 'none';
+        if (guiaNavElement) guiaNavElement.style.display = 'none';
     }
 });
 
