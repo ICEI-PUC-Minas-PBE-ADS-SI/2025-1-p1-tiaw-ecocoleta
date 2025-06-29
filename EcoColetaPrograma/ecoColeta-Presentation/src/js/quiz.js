@@ -203,7 +203,7 @@ function checkAnswer() {
     const selectedOption = document.querySelector('input[name="answer"]:checked');
     
     if (!selectedOption) {
-        alert('Por favor, selecione uma resposta!');
+        showWarningModal();
         return;
     }
     
@@ -327,6 +327,43 @@ function updateProgressDisplay() {
     const progressPercent = ((currentQuestionIndex + 1) / quizQuestions.length) * 100;
     progressBar.style.width = `${progressPercent}%`;
 }
+
+// Funções para modal de aviso
+function showWarningModal() {
+    const modal = document.getElementById('warningModal');
+    if (modal) {
+        modal.style.display = 'block';
+        // Adicionar classe para animação
+        setTimeout(() => {
+            modal.classList.add('show');
+        }, 10);
+    }
+}
+
+function closeWarningModal() {
+    const modal = document.getElementById('warningModal');
+    if (modal) {
+        modal.classList.remove('show');
+        setTimeout(() => {
+            modal.style.display = 'none';
+        }, 300);
+    }
+}
+
+// Fechar modal clicando fora dele
+document.addEventListener('click', function(event) {
+    const modal = document.getElementById('warningModal');
+    if (event.target === modal) {
+        closeWarningModal();
+    }
+});
+
+// Fechar modal com ESC
+document.addEventListener('keydown', function(event) {
+    if (event.key === 'Escape') {
+        closeWarningModal();
+    }
+});
 
 // Inicializar o quiz quando o DOM estiver carregado
 document.addEventListener('DOMContentLoaded', function() {

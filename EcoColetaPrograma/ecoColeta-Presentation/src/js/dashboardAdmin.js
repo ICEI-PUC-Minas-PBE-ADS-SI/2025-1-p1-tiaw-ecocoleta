@@ -2,6 +2,29 @@
 // Configuração da API
 const API_BASE_URL = 'http://localhost:3000/api';
 
+// ========== PAYWALL: Verificação de assinatura ativa ==========
+(async function verificarAssinaturaColetor() {
+  const usuarioLogado = JSON.parse(localStorage.getItem('usuarioLogado') || '{}');
+  if (!usuarioLogado.id) {
+    window.location.href = 'autent.html';
+    return;
+  }
+  try {
+    // Busca o usuário atualizado no backend
+    const response = await fetch(`/api/usuarios/${usuarioLogado.id}`);
+    if (!response.ok) throw new Error('Erro ao buscar usuário');
+    const usuario = await response.json();
+    // Só bloqueia coletores sem assinatura ativa
+    if (usuario.tipoUsuario === 'coletor' && usuario.statusAssinatura !== 'ativo') {
+      window.location.href = 'assinatura.html';
+      return;
+    }
+  } catch (e) {
+    // Em caso de erro, redireciona para login
+    window.location.href = 'autent.html';
+  }
+})();
+
 // Classe principal para gerenciar o dashboard
 class DashboardAdmin {
   constructor() {

@@ -1,11 +1,11 @@
 // Criando o link para o CSS
-let linkElement = document.createElement("link");
-linkElement.rel = "stylesheet";
-linkElement.href = "../css/navFooter.css";
-document.head.appendChild(linkElement);
+let navLinkElement = document.createElement("link");
+navLinkElement.rel = "stylesheet";
+navLinkElement.href = "../css/navFooter.css";
+document.head.appendChild(navLinkElement);
 
-const body = document.querySelector("body");
-const tagScript = document.querySelector('script[src*="navFooter.js"]');
+const navBody = document.querySelector("body");
+const navTagScript = document.querySelector('script[src*="navFooter.js"]');
 
 // Função para verificar se o usuário está logado
 function isUserLoggedIn() {
@@ -33,9 +33,9 @@ function logout() {
 }
 
 // Criando o Nav
-let nav = document.createElement("nav");
-nav.className = "nav";
-nav.id = "nav";
+let navElement = document.createElement("nav");
+navElement.className = "nav";
+navElement.id = "nav";
 
 let navContainer = document.createElement("div");
 navContainer.className = "nav-container";
@@ -50,9 +50,9 @@ logoContainer.className = "logo-container";
 let logoWrapper = document.createElement("div");
 logoWrapper.className = "logo-wrapper";
 
-let linksitem = document.createElement("a");
-linksitem.className = "logo-item";
-linksitem.href = "index.html";
+let navLogoLink = document.createElement("a");
+navLogoLink.className = "logo-item";
+navLogoLink.href = "index.html";
 
 let logoImage = document.createElement("div");
 logoImage.className = "logo-image";
@@ -91,16 +91,13 @@ const menuItems = [
 menuItems.forEach((item) => {
   let link = document.createElement("a");
   link.href = item.href;
-  if (item.text == `Tema Escuro`) {
-    return
-  }
 
   let menuItem = document.createElement("div");
   menuItem.className = "menu-item";
   menuItem.textContent = item.text;
 
-  link.appendChild(menuItem);
-  navMenu.appendChild(link);
+  navMenuLink.appendChild(menuItem);
+  navMenu.appendChild(navMenuLink);
 });
 
 // Criando botão de login para desktop
@@ -301,9 +298,9 @@ mobileMenu.appendChild(mobileNavItems);
 
 // Montagem do NavBar
 logoImage.appendChild(navimg);
-logoWrapper.appendChild(linksitem);
-linksitem.appendChild(logoImage);
-linksitem.appendChild(logoText);
+logoWrapper.appendChild(navLogoLink);
+navLogoLink.appendChild(logoImage);
+navLogoLink.appendChild(logoText);
 
 logoContainer.appendChild(logoWrapper);
 
@@ -321,8 +318,8 @@ navContent.appendChild(navMenu);
 navContent.appendChild(rightContainer);
 
 navContainer.appendChild(navContent);
-nav.appendChild(navContainer);
-body.insertBefore(nav, body.firstChild);
+navElement.appendChild(navContainer);
+navBody.insertBefore(navElement, navBody.firstChild);
 
 // Atualiza o estado do menu baseado no status de login do usuário
 function updateUserInterface() {
@@ -412,13 +409,13 @@ window.addEventListener("storage", function (e) {
 
 // Adicionando evento de scroll para efeitos no header
 window.addEventListener("scroll", function () {
-  const nav = document.querySelector(".nav");
+  const navScrollElement = document.querySelector(".nav");
   if (window.scrollY > 20) {
-    nav.style.boxShadow = "0 4px 20px rgba(0, 0, 0, 0.1)";
-    nav.style.backgroundColor = "rgba(255, 255, 255, 0.98)";
+    navScrollElement.style.boxShadow = "0 4px 20px rgba(0, 0, 0, 0.1)";
+    navScrollElement.style.backgroundColor = "rgba(255, 255, 255, 0.98)";
   } else {
-    nav.style.boxShadow = "0 2px 8px rgba(0, 0, 0, 0.1)";
-    nav.style.backgroundColor = "white";
+    navScrollElement.style.boxShadow = "0 2px 8px rgba(0, 0, 0, 0.1)";
+    navScrollElement.style.backgroundColor = "white";
   }
 });
 
