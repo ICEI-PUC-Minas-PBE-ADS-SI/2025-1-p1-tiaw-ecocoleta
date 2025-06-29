@@ -456,3 +456,313 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
 });
+
+// Funcionalidade de Download dos Materiais
+document.addEventListener('DOMContentLoaded', function() {
+    // Mapeamento dos arquivos disponíveis para download
+    const downloadFiles = {
+        'guia-bolso': {
+            url: 'assets/downloads/guia-de-bolso-reciclagem.pdf',
+            filename: 'Guia_de_Bolso_Reciclagem.pdf',
+            type: 'application/pdf'
+        },
+        'infografico': {
+            url: 'assets/downloads/infografico-reciclagem.png',
+            filename: 'Infografico_Simbolos_Reciclagem.png',
+            type: 'image/png'
+        },
+        'cartilha': {
+            url: 'assets/downloads/cartilha-reciclagem-completa.pdf',
+            filename: 'Cartilha_Reciclagem_Completa.pdf',
+            type: 'application/pdf'
+        }
+    };
+
+    // Função para criar conteúdo dinâmico dos PDFs
+    function generatePDFContent(type) {
+        const canvas = document.createElement('canvas');
+        canvas.width = 600;
+        canvas.height = 800;
+        const ctx = canvas.getContext('2d');
+        
+        // Fundo branco
+        ctx.fillStyle = '#ffffff';
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+        
+        // Título
+        ctx.fontName = 'Arial';
+        ctx.fillStyle = '#2d5a27';
+        ctx.font = 'bold 28px Arial';
+        ctx.textAlign = 'center';
+        
+        if (type === 'guia-bolso') {
+            ctx.fillText('GUIA DE BOLSO', canvas.width/2, 60);
+            ctx.fillText('RECICLAGEM', canvas.width/2, 100);
+            
+            ctx.font = '16px Arial';
+            ctx.fillStyle = '#333';
+            ctx.textAlign = 'left';
+            
+            const tips = [
+                '🗑️ PAPEL: Jornais, revistas, cadernos',
+                '♻️ PLÁSTICO: Garrafas PET, embalagens',
+                '🍾 VIDRO: Garrafas, potes, frascos',
+                '🔩 METAL: Latas de alumínio, ferro',
+                '🍂 ORGÂNICO: Restos de comida, folhas',
+                '',
+                '❌ NÃO RECICLE:',
+                '• Papel higiênico usado',
+                '• Vidros quebrados',
+                '• Pilhas e baterias',
+                '• Remédios vencidos'
+            ];
+            
+            let y = 150;
+            tips.forEach(tip => {
+                ctx.fillText(tip, 50, y);
+                y += 30;
+            });
+        }
+        
+        return canvas.toDataURL('image/png');
+    }
+
+    // Função para gerar imagem do infográfico
+    function generateInfographic() {
+        const canvas = document.createElement('canvas');
+        canvas.width = 800;
+        canvas.height = 600;
+        const ctx = canvas.getContext('2d');
+        
+        // Fundo
+        ctx.fillStyle = '#f0f8f0';
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+        
+        // Título
+        ctx.fillStyle = '#2d5a27';
+        ctx.font = 'bold 32px Arial';
+        ctx.textAlign = 'center';
+        ctx.fillText('SÍMBOLOS DA RECICLAGEM', canvas.width/2, 50);
+        
+        // Símbolos e descrições
+        const symbols = [
+            { symbol: '♻️', color: '#4CAF50', text: 'Reciclável', desc: 'Material pode ser reciclado' },
+            { symbol: '🗑️', color: '#FF5722', text: 'Lixo Comum', desc: 'Descarte no lixo comum' },
+            { symbol: '⚠️', color: '#FF9800', text: 'Cuidado', desc: 'Material perigoso' },
+            { symbol: '🔋', color: '#9C27B0', text: 'Eletrônico', desc: 'Descarte especial' }
+        ];
+        
+        let x = 100;
+        let y = 150;
+        
+        symbols.forEach((item, index) => {
+            if (index % 2 === 0 && index > 0) {
+                y += 200;
+                x = 100;
+            }
+            
+            // Símbolo
+            ctx.font = '60px Arial';
+            ctx.fillText(item.symbol, x, y);
+            
+            // Texto
+            ctx.font = 'bold 20px Arial';
+            ctx.fillStyle = item.color;
+            ctx.fillText(item.text, x, y + 40);
+            
+            ctx.font = '14px Arial';
+            ctx.fillStyle = '#666';
+            ctx.fillText(item.desc, x, y + 60);
+            
+            x += 300;
+        });
+        
+        return canvas.toDataURL('image/png');
+    }
+
+    // Função para download usando blob
+    function downloadFile(fileKey) {
+        const file = downloadFiles[fileKey];
+        if (!file) return;
+
+        let content;
+        let mimeType = file.type;
+        
+        if (fileKey === 'infografico') {
+            // Gerar infográfico
+            content = generateInfographic();
+            // Converter dataURL para blob
+            const byteString = atob(content.split(',')[1]);
+            const mimeString = content.split(',')[0].split(':')[1].split(';')[0];
+            const ab = new ArrayBuffer(byteString.length);
+            const ia = new Uint8Array(ab);
+            for (let i = 0; i < byteString.length; i++) {
+                ia[i] = byteString.charCodeAt(i);
+            }
+            const blob = new Blob([ab], { type: 'image/png' });
+            triggerDownload(blob, file.filename);
+        } else {
+            // Para PDFs, criar um conteúdo simples
+            const pdfContent = createPDFContent(fileKey);
+            const blob = new Blob([pdfContent], { type: 'text/plain' });
+            triggerDownload(blob, file.filename.replace('.pdf', '.txt'));
+        }
+    }
+
+    // Função para criar conteúdo de PDF como texto
+    function createPDFContent(type) {
+        if (type === 'guia-bolso') {
+            return `GUIA DE BOLSO - RECICLAGEM
+=============================
+
+MATERIAIS RECICLÁVEIS:
+• Papel: jornais, revistas, cadernos, papel de escritório
+• Plástico: garrafas PET, embalagens, potes
+• Vidro: garrafas, potes, frascos (sem tampa)
+• Metal: latas de alumínio, latas de conserva
+
+MATERIAIS NÃO RECICLÁVEIS:
+• Papel higiênico usado
+• Papel carbono
+• Vidros quebrados ou temperados
+• Pilhas e baterias
+• Remédios vencidos
+
+DICAS IMPORTANTES:
+✓ Lave os recipientes antes de descartar
+✓ Remova tampas e rótulos quando possível
+✓ Separe por tipo de material
+✓ Procure pontos de coleta seletiva
+
+EcoColeta - Cuidando do Meio Ambiente`;
+        } else if (type === 'cartilha') {
+            return `CARTILHA COMPLETA DE RECICLAGEM
+===================================
+
+CAPÍTULO 1: INTRODUÇÃO À RECICLAGEM
+A reciclagem é fundamental para a preservação do meio ambiente...
+
+CAPÍTULO 2: TIPOS DE MATERIAIS
+- Papel e Papelão
+- Plásticos
+- Vidros
+- Metais
+- Orgânicos
+
+CAPÍTULO 3: PROCESSO DE SEPARAÇÃO
+1. Identifique o material
+2. Limpe adequadamente
+3. Separe por categoria
+4. Armazene corretamente
+
+CAPÍTULO 4: IMPACTO AMBIENTAL
+A reciclagem reduz:
+- Consumo de recursos naturais
+- Poluição do ar e água
+- Ocupação de aterros
+- Emissão de gases do efeito estufa
+
+CAPÍTULO 5: COMO PARTICIPAR
+- Encontre pontos de coleta
+- Participe de campanhas
+- Eduque familiares e amigos
+- Use o aplicativo EcoColeta
+
+Para mais informações, visite: www.ecocoleta.com.br
+EcoColeta - Juntos por um planeta mais limpo!`;
+        }
+        return '';
+    }
+
+    // Função para acionar o download
+    function triggerDownload(blob, filename) {
+        const url = window.URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.style.display = 'none';
+        a.href = url;
+        a.download = filename;
+        document.body.appendChild(a);
+        a.click();
+        window.URL.revokeObjectURL(url);
+        document.body.removeChild(a);
+        
+        // Mostrar mensagem de sucesso
+        showDownloadSuccess(filename);
+    }
+
+    // Função para mostrar mensagem de sucesso
+    function showDownloadSuccess(filename) {
+        // Criar elemento de notificação
+        const notification = document.createElement('div');
+        notification.style.cssText = `
+            position: fixed;
+            top: 100px;
+            right: 20px;
+            background: #4CAF50;
+            color: white;
+            padding: 15px 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+            z-index: 10000;
+            font-family: Arial, sans-serif;
+            font-size: 14px;
+            max-width: 300px;
+            animation: slideIn 0.3s ease-out;
+        `;
+        
+        notification.innerHTML = `
+            <div style="display: flex; align-items: center; gap: 10px;">
+                <i class="fas fa-check-circle" style="font-size: 18px;"></i>
+                <div>
+                    <strong>Download Concluído!</strong><br>
+                    <small>${filename}</small>
+                </div>
+            </div>
+        `;
+        
+        // Adicionar animação CSS
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes slideIn {
+                from { transform: translateX(100%); opacity: 0; }
+                to { transform: translateX(0); opacity: 1; }
+            }
+        `;
+        document.head.appendChild(style);
+        
+        document.body.appendChild(notification);
+        
+        // Remover após 3 segundos
+        setTimeout(() => {
+            notification.style.animation = 'slideIn 0.3s ease-out reverse';
+            setTimeout(() => {
+                if (notification.parentNode) {
+                    notification.parentNode.removeChild(notification);
+                }
+            }, 300);
+        }, 3000);
+    }
+
+    // Adicionar event listeners aos botões de download
+    const downloadButtons = document.querySelectorAll('.download-btn');
+    downloadButtons.forEach(button => {
+        button.addEventListener('click', function(e) {
+            e.preventDefault();
+            const fileKey = this.getAttribute('data-file');
+            
+            // Adicionar efeito visual de loading
+            const originalText = this.innerHTML;
+            this.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Baixando...';
+            this.disabled = true;
+            
+            // Simular delay de processamento
+            setTimeout(() => {
+                downloadFile(fileKey);
+                
+                // Restaurar botão
+                this.innerHTML = originalText;
+                this.disabled = false;
+            }, 1000);
+        });
+    });
+});
