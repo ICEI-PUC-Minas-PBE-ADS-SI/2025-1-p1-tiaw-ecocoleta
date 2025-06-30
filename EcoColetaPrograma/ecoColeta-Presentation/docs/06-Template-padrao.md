@@ -5,18 +5,12 @@
 Layout padrão da aplicação que será utilizado em todas as páginas com a definição de identidade visual, aspectos de responsividade e iconografia.
 
 
-[text](06-Template-padrao.md) !
-[text](<../aba da comunidade.png>) !
-[text](<../aba de dicas e tecnicas.png>) !
-[text](../comunidade.png) !
-[text](<../dicas e tecnicas.png>) !
-[text](<../sobre a ansiedade.png>) !
-[text](<../tela de cadastro.png>) !
-[text](<../tela de login.png>) !
-[text](<../tela de perfil.png>) !
-[text](<../tela incial.png>)
-
-
+![alt text](image-37.png)
+![alt text](image-38.png)
+![alt text](image-39.png)
+![alt text](image-40.png)
+![alt text](image-41.png)
+![alt text](image-42.png)
 
 > **Links úteis**:
 >

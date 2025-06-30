@@ -2,21 +2,20 @@
 
 <span style="color:red">Pré-requisitos: <a href="01-Contexto.md"> Documentação de contexto</a></span>
 
-✅ [Documentação de Design Thinking (MIRO)](files/processo-dt.pdf)
+✅ [Documentação de Design Thinking (MIRO)](https://miro.com/app/board/uXjVINql3iI=/)
 
 ## Etapa de entendimento
 
 **✳️✳️✳️ APRESENTE OS ARTEFATOS DA ETAPA  ✳️✳️✳️**
 
-[text](02-Product-discovery.md)
- ![text](../Stakeholder_page-0001.jpg)
-![text](<../Matriz de alinhamento_page-0001.jpg>)
-![text](../Highlights_page-0001.jpg) 
-![text](<../Entendimento 02 - Mapa de Stakeholders pronto_page-0001.jpg>)
-![text](<../Entendimento 01 - Matriz de Alinhamento pronta_page-0001.jpg>) 
-![text](<../Empatia 2_page-0001.jpg>)
-![text](<../Empatia 02 - Coleta - Highlights de Pesquisa-1 pronta_page-0001.jpg>) 
-![text](<../Empatia 01 - Coleta - Entrevista QualitativaPRONTA_page-0001.jpg>)
+![alt text](image-19.png)
+![alt text](image-20.png)
+![alt text](image-21.png)
+![alt text](image-22.png)
+![alt text](image-27.png)
+![alt text](image-28.png)
+![alt text](image-29.png)
+![alt text](image-30.png)
 
 
 ## Etapa de definição
@@ -25,9 +24,9 @@
 
 **✳️✳️✳️ APRESENTE OS DIAGRAMAS DE PERSONAS ✳️✳️✳️**
 
-![alt text](../Persona_page-0001.jpg)
-
-![Exemplo de persona](images/exemplo-persona.png)
+![alt text](image-23.png)
+![alt text](image-24.png)
+![alt text](image-25.png)
 
 
 > **Links úteis**:
