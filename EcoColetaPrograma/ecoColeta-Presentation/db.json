@@ -28,7 +28,7 @@
       "imagem": "",
       "emailVerificado": false,
       "id": 2,
-      "bio": "n sei oque não sei oque la\n"
+      "bio": "Não sei o que não sei o que lá\n"
     },
     {
       "nome": "Matheus Augusto",
@@ -125,7 +125,11 @@
       "emailVerificado": false,
       "dataCadastro": "2025-05-27T18:20:40.084Z",
       "id": 7,
-      "ecopontoId": 31
+      "ecopontoId": 31,
+      "planoAtivo": "premium",
+      "assinaturaStripeId": "sub_premium_samuel_2025",
+      "statusAssinatura": "ativa",
+      "dataAssinatura": "2025-06-29T12:00:00.000Z"
     },
     {
       "nome": "Jonas",
