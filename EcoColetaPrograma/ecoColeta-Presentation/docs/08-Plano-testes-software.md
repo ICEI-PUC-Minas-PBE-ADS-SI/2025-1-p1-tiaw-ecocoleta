@@ -11,23 +11,19 @@ Não deixe de enumerar os casos de teste de forma sequencial e garantir que o(s)
 Por exemplo:
 
 | **Caso de teste**  | **CT-001 – Cadastrar perfil**  |
-|:---: |:---: |
-| Requisito associado | RF-00X - A aplicação deve apresentar, na página principal, a funcionalidade de cadastro de usuários para que estes consigam criar e gerenciar seu perfil. |
-| Objetivo do teste | Verificar se o usuário consegue se cadastrar na aplicação. |
-| Passos | - Acessar o navegador <br> - Informar o endereço do site https://adota-pet.herokuapp.com/src/index.html <br> - Clicar em "Criar conta" <br> - Preencher os campos obrigatórios (e-mail, nome, sobrenome, celular, CPF, senha, confirmação de senha) <br> - Aceitar os termos de uso <br> - Clicar em "Registrar" |
-| Critério de êxito | - O cadastro foi realizado com sucesso. |
-| Responsável pela elaboração do caso de teste | Nome do integrante da equipe. |
-
-<br>
+<video controls src="Fazendo Cadastro no Site.mp4" title="Title"></video>
 
 | **Caso de teste**  | **CT-002 – Efetuar login**  |
-|:---: |:---: |
-| Requisito associado | RF-00Y - A aplicação deve possuir opção de fazer login, sendo o login o endereço de e-mail. |
-| Objetivo do teste | Verificar se o usuário consegue realizar login. |
-| Passos | - Acessar o navegador <br> - Informar o endereço do site https://adota-pet.herokuapp.com/src/index.html <br> - Clicar no botão "Entrar" <br> - Preencher o campo de e-mail <br> - Preencher o campo de senha <br> - Clicar em "Login" |
-| Critério de êxito | - O login foi realizado com sucesso. |
-| Responsável pela elaboração do caso de teste | Nome do integrante da equipe. |
+<video controls src="Login no Site.mp4" title="Title"></video>
 
+| **Caso de teste**  | **CT-003 – Agendamento de Coleta**  |
+<video controls src="Agendamento de Coleta.mp4" title="Title"></video>
+
+| **Caso de teste**  | **CT-004 – Realizando Quiz Educacional**  |
+<video controls src="Quiz.mp4" title="Title"></video>
+
+| **Caso de teste**  | **CT-005 – Calculando Impacto Ambiental**  |
+<video controls src="Calcule seu Impacto.mp4" title="Title"></video>
 
 ## Ferramentas de testes (opcional)
 

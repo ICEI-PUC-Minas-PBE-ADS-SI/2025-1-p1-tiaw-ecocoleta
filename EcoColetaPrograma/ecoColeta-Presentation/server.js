@@ -182,10 +182,129 @@ app.post('/api/pontosDeColeta/:id/agendar', (req, res) => {
   res.status(201).json(agendamento);
 });
 
-// JSON Server routes (deixe sempre por último)
-app.use('/api', jsonServerMiddlewares, jsonServerRouter);
+// Stripe checkout session endpoint (ANTES do JSON Server)
+app.post('/api/stripe/create-checkout-session', async (req, res) => {
+  try {
+    const { plano, userId, email } = req.body;
+    
+    // Verificar se o usuário existe
+    const usuario = jsonServerRouter.db.get('usuarios').find({ id: parseInt(userId) }).value();
+    if (!usuario) {
+      return res.status(404).json({ error: 'Usuário não encontrado' });
+    }
+    
+    // Definir preços dos planos (em centavos)
+    const precos = {
+      basic: 1299,     // R$ 12,99
+      pro: 2599,       // R$ 25,99
+      premium: 3999    // R$ 39,99
+    };
+    
+    const nomes = {
+      basic: 'Plano Básico',
+      pro: 'Plano Profissional', 
+      premium: 'Plano Premium'
+    };
+    
+    if (!precos[plano]) {
+      return res.status(400).json({ error: 'Plano inválido' });
+    }
+    
+    // Criar sessão de checkout
+    const session = await stripe.checkout.sessions.create({
+      payment_method_types: ['card'],
+      line_items: [
+        {
+          price_data: {
+            currency: 'brl',
+            product_data: {
+              name: nomes[plano],
+              description: `Assinatura mensal - EcoColeta ${nomes[plano]}`,
+            },
+            unit_amount: precos[plano],
+            recurring: {
+              interval: 'month',
+            },
+          },
+          quantity: 1,
+        },
+      ],
+      mode: 'subscription',
+      customer_email: email,
+      success_url: `${req.headers.origin || 'http://localhost:5500'}/public/perfil.html?session_id={CHECKOUT_SESSION_ID}`,
+      cancel_url: `${req.headers.origin || 'http://localhost:5500'}/public/assinatura.html`,
+      metadata: {
+        userId: userId.toString(),
+        plano: plano
+      }
+    });
+    
+    res.json({ sessionId: session.id });
+  } catch (error) {
+    console.error('Erro ao criar sessão de checkout:', error);
+    res.status(500).json({ error: 'Erro ao criar sessão de checkout', details: error.message });
+  }
+});
 
-// Stripe payment intent endpoint
+// Stripe webhook endpoint (ANTES do JSON Server)
+app.post('/api/stripe/webhook', express.raw({type: 'application/json'}), (req, res) => {
+  const sig = req.headers['stripe-signature'];
+  const endpointSecret = process.env.STRIPE_WEBHOOK_SECRET;
+  
+  let event;
+  
+  try {
+    if (endpointSecret) {
+      event = stripe.webhooks.constructEvent(req.body, sig, endpointSecret);
+    } else {
+      // Para desenvolvimento, aceitar sem verificação de assinatura
+      event = JSON.parse(req.body);
+    }
+  } catch (err) {
+    console.error('Webhook signature verification failed.', err.message);
+    return res.status(400).send(`Webhook Error: ${err.message}`);
+  }
+  
+  // Processar eventos do Stripe
+  switch (event.type) {
+    case 'checkout.session.completed':
+      const session = event.data.object;
+      const userId = parseInt(session.metadata.userId);
+      const plano = session.metadata.plano;
+      
+      // Atualizar usuário com plano ativo
+      const usuario = jsonServerRouter.db.get('usuarios').find({ id: userId }).value();
+      if (usuario) {
+        jsonServerRouter.db.get('usuarios')
+          .find({ id: userId })
+          .assign({
+            planoAtivo: plano,
+            assinaturaStripeId: session.subscription,
+            statusAssinatura: 'ativa',
+            dataAssinatura: new Date().toISOString()
+          })
+          .write();
+        
+        console.log(`Assinatura ativada para usuário ${userId}: ${plano}`);
+      }
+      break;
+      
+    case 'invoice.payment_succeeded':
+      console.log('Pagamento de fatura bem-sucedido');
+      break;
+      
+    case 'invoice.payment_failed':
+      console.log('Falha no pagamento da fatura');
+      break;
+      
+    default:
+      console.log(`Evento não tratado: ${event.type}`);
+  }
+  
+  res.json({ received: true });
+});
+
+// Stripe payment intent endpoint (ANTES do JSON Server)
 app.post('/create-payment-intent', async (req, res) => {
   try {
     const { amount } = req.body;
@@ -204,7 +323,7 @@ app.post('/create-payment-intent', async (req, res) => {
   }
 });
 
-// Save donation endpoint
+// Save donation endpoint (ANTES do JSON Server)
 app.post('/api/donations', async (req, res) => {
   try {
     const donation = {
@@ -220,6 +339,9 @@ app.post('/api/donations', async (req, res) => {
     res.status(500).json({ error: error.message });
   }
 });
+
+// JSON Server routes (deixe sempre por último)
+app.use('/api', jsonServerMiddlewares, jsonServerRouter);
 
 // Comunidades endpoints
 // GET todas as comunidades com paginação e filtros
@@ -830,7 +952,6 @@ app.patch('/api/agendamentos/:id', (req, res) => {
     res.status(500).json({ error: 'Erro ao atualizar agendamento', details: error.message });
   }
 });
-
 
 // Função auxiliar para gerar tags
 function gerarTags(nome, descricao, tipo) {
