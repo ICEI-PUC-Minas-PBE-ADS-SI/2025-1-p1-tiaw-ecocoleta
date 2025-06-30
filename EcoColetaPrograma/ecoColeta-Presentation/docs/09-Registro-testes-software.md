@@ -33,14 +33,23 @@ Para cada caso de teste definido no <a href="08-Plano-testes-software.md"> Plano
 | **Calcule impacto Metal:** |
  ![alt text](image-11.png)
 
+ | **Recompensas - Versão Coletor** |
+ ![alt text](image-17.png)
+
+ | **Recompensas - Versão Coletor - Nova Recompensa** |
+ ![alt text](image-18.png)
+
 | **Agendamento indisponível:** |
  ![alt text](image-12.png)
 
 | **Agendamento disponível:** |
  ![alt text](image-13.png)
 
+| **Agentamento sem material** |
+![alt text](image-35.png)
+
 | **Agendamento concluído:** |
- ![alt text](image-14.png)
+ ![alt text](image-34.png)
 
 | **Quiz resposta correta:** |
  ![alt text](image-15.png)
@@ -48,6 +57,8 @@ Para cada caso de teste definido no <a href="08-Plano-testes-software.md"> Plano
 | **Quiz resposta errada:** |
  ![alt text](image-16.png)
 
+| **Doações - Usuário comum**
+![alt text](image-43.png)
 
 > **Links úteis**:
 > - [Screencast: entenda o que é e como gravar vídeos com ele](https://rockcontent.com/br/blog/screencast/) 
