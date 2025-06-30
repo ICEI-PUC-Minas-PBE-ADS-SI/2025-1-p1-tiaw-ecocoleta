@@ -96,6 +96,9 @@ const menuItems = [
 
 // Criando itens do menu principal
 menuItems.forEach((item) => {
+  if (item.text == `Tema Escuro`) {
+  return
+  }
   let navMenuLink = document.createElement("a");
   navMenuLink.href = item.href || "#";
   navMenuLink.className = "menu-link";

@@ -1,4 +1,4 @@
-﻿{
+{
   "usuarios": [
     {
       "id": 1,
@@ -1474,24 +1474,7 @@
       "status": "completed"
     }
   ],
-  "recompensas": [
-    {
-      "nome": "agua",
-      "descricao": "é agua pô",
-      "imagem": "assets/img/gift.svg",
-      "pontosNecessarios": 5,
-      "quantidade": 0,
-      "id": 1
-    },
-    {
-      "nome": "Matheus Augusto Alves Goveia Damião ",
-      "descricao": "jbkn",
-      "imagem": "data:image/webp;base64,UklGRoY1AABXRUJQVlA4IHo1AAAwugCdASpDAcAAPpU8mEglo6KhMraNsLASiWgAxnpQ2B9eu9D532h+69yj3B/MPu3rd/2ew347yJvfu+P/zvWH5h/mi9QP+C9IHnC+pD/C79P6LvTSf221e+SP8jwd8vn0Xaa/bMddpP3WTm/2vf/81tQ72n6A0OJxT8Cfh/QQm+/VOoJwmdAX9SesT/v+Vr9o/5PsHdLr94/Z7/btXkl1FvP4ZHxV1nwdnUOeV4XWEulUHn7pi245wp+IHsCE61RHLMjrRh+mgkbZNmXplGRA+3rx5dVR5JqKj1rtK++fI7YjPtED757YjPuSHwStz+7A548TcXj0Z2M16e7GOoKqit9OmRholRLJwppvwkiONM8yc/2Hr6eEqVKjoqCezjz72Z7OG/5kRbd2U9/BmDAHhkDQ/nkMoYGysPjLVBj/o+8e+8aN3AHcHWQhhbJmEFNKUWdW75FpXQiMkkpa7wA2Kh5lrwpZHyZaUZN5ShJ7sgIy4FiJbgkc+zRO1ILfyxp5klSk5vbt//J0K8BD2pNkPmqc5ltkaobv/+ab3d8KFdDqb9JqZPx2Jjy8p59eWTwX6ew0rIEj3za2XyDocoG1NlzSIarTj6R1W2gH/5r1QWQ8+3jH8YmPv3ji/r0TmPhjNWDPNtWpiZFonZNFsgFOvZEg6ptJ2/HbLQwdesbGYkNmhOVny4YbcxH4cJmeeS7oV/nxKE7gJhUUGhuo1TdyJ01JjtoEU3T0foAVIFvFu7v3kTqCvhBPfBWT8otrIbWqQzzpw8cHNIyHo9meXOk/IYY5LgycRIrtrhO/VW0uYBrG8oIs0aZaxZtoPZV6auSg8odhfiSZNszP2YrINi/uOeAHr81LqlBfM7Ij5YNNmM4z1flEKd0Xrzc3IEQ5gI6V9f6q2Lddg0Zi8BDeH+SKcb47bGATK6hlmT6KhYpaviyQmLhURphvvGl+NElrk0Lg49GXnYjuk0089",
-      "pontosNecessarios": 15775433453545355000,
-      "quantidade": 1,
-      "id": 2
-    }
-  ],
+  "recompensas": [],
   "comunidades": [
     {
       "nome": "Desmatamento na Amazônia",
