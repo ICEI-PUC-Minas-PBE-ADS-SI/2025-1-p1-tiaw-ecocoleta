@@ -11,25 +11,30 @@ Não deixe de enumerar os casos de teste de forma sequencial e garantir que o(s)
 Por exemplo:
 
 | **Caso de teste**  | **CT-001 – Cadastrar perfil**  |
-<video controls src="Fazendo Cadastro no Site.mp4" title="Title"></video>
+https://github.com/user-attachments/assets/f68a2f7b-cc5f-4a89-95c1-9c4b99eee20e
 
 | **Caso de teste**  | **CT-002 – Efetuar login**  |
-<video controls src="Login no Site.mp4" title="Title"></video>
+https://github.com/user-attachments/assets/90607014-767f-4bf0-acd3-a59fba60ce6f
 
 | **Caso de teste**  | **CT-003 – Agendamento de Coleta**  |
 <video controls src="Agendamento de Coleta.mp4" title="Title"></video>
 
 | **Caso de teste**  | **CT-004 – Realizando Quiz Educacional**  |
-<video controls src="Quiz.mp4" title="Title"></video>
+
+https://github.com/user-attachments/assets/89de8eb6-b999-491e-be0a-e5dcecba1ff0
 
 | **Caso de teste**  | **CT-005 – Calculando Impacto Ambiental**  |
-<video controls src="Calcule seu Impacto.mp4" title="Title"></video>
+
+https://github.com/user-attachments/assets/c2dda01a-3958-40c2-9e52-6ef7ab1a934e
 
 | **Caso de teste**  | **CT-006 – Interagindo com a Comunidade**  |
-<video controls src="Comunidade.mp4" title="Title"></video>
+
+https://github.com/user-attachments/assets/9721f712-477e-49ca-8910-3eba7ee6445b
 
 | **Caso de teste**  | **CT-007 – Adquirindo Recompensas Através de EcoPontos**  |
-<video controls src="Recompensas.mp4" title="Title"></video>
+
+https://github.com/user-attachments/assets/58ceef75-56c8-4117-a271-ac6f66d0218a
+
 
 ## Ferramentas de testes (opcional)
 
