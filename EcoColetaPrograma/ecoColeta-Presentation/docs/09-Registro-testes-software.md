@@ -6,15 +6,47 @@ Relatório com as evidências dos testes de software realizados no sistema pela 
 
 Para cada caso de teste definido no <a href="08-Plano-testes-software.md"> Plano de testes de software</a>, realize o registro das evidências dos testes feitos na aplicação pela equipe, que comprovem que o critério de êxito foi alcançado (ou não!). Para isso, utilize uma ferramenta de captura de tela que mostre cada um dos casos de teste definidos. Observação: cada caso de teste deverá possuir um vídeo do tipo _screencast_ para caracterizar uma evidência do referido caso.
 
-| **Caso de teste** 	| **CT-001 – Cadastrar perfil** 	|
-|:---:	|:---:	|
-| Requisito associado | RF-00X - A aplicação deve apresentar, na página principal, a funcionalidade de cadastro de usuários para que esses consigam criar e gerenciar seu perfil. |
-| Registro de evidência | [www.teste.com.br/drive/ct-01](http://www.teste.com.br/drive/ct-01) |
+|  **Cadastro malsucedido:** |
+ ![alt text](image-3.png)
 
-| **Caso de teste** 	| **CT-002 – Realizar login** 	|
-|:---:	|:---:	|
-| Requisito associado | RF-00Y - A aplicação deve permitir que um usuário previamente cadastrado faça login. |
-| Registro de evidência | [www.teste.com.br/drive/ct-02](http://www.teste.com.br/drive/ct-02) |
+| **Cadastro malsucedido senha fraca:** |
+ ![alt text](image-4.png)
+
+| **Cadastro bem-sucedido:** |
+ ![alt text](image-5.png)
+
+| **Teste login malsucedido:** |
+ ![alt text](image-6.png)
+
+| **Teste login bem-sucedido:** |
+ ![alt text](image-7.png)
+
+| **Calcule impacto Plástico:** |
+ ![alt text](image-8.png)
+
+| **Calcule impacto Vidro:** |
+ ![alt text](image-9.png)
+
+| **Calcule impacto Papel:** |
+ ![alt text](image-10.png)
+ 
+| **Calcule impacto Metal:** |
+ ![alt text](image-11.png)
+
+| **Agendamento indisponível:** |
+ ![alt text](image-12.png)
+
+| **Agendamento disponível:** |
+ ![alt text](image-13.png)
+
+| **Agendamento concluído:** |
+ ![alt text](image-14.png)
+
+| **Quiz resposta correta:** |
+ ![alt text](image-15.png)
+
+| **Quiz resposta errada:** |
+ ![alt text](image-16.png)
 
 
 > **Links úteis**:
