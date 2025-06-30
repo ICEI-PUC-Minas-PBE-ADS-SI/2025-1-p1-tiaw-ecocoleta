@@ -71,6 +71,23 @@ app.use((req, res, next) => {
 });
 
 app.use(bodyParser.json());
+
+// Middleware para definir MIME types corretos e desabilitar cache
+app.use((req, res, next) => {
+  if (req.url.endsWith('.css')) {
+    res.setHeader('Content-Type', 'text/css');
+    res.setHeader('Cache-Control', 'no-cache, no-store, must-revalidate');
+    res.setHeader('Pragma', 'no-cache');
+    res.setHeader('Expires', '0');
+  } else if (req.url.endsWith('.js')) {
+    res.setHeader('Content-Type', 'application/javascript');
+    res.setHeader('Cache-Control', 'no-cache, no-store, must-revalidate');
+    res.setHeader('Pragma', 'no-cache');
+    res.setHeader('Expires', '0');
+  }
+  next();
+});
+
 app.use(express.static('public')); // Servir arquivos estáticos da pasta public
 app.use('/src', express.static('src')); // Servir arquivos CSS e JS
 app.use('/uploads', express.static(path.join(__dirname, 'public', 'uploads')));

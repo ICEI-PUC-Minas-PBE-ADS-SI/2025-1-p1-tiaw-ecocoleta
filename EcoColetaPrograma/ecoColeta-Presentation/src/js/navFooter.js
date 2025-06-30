@@ -1,11 +1,16 @@
 // Criando o link para o CSS
 let navLinkElement = document.createElement("link");
 navLinkElement.rel = "stylesheet";
-navLinkElement.href = "../css/navFooter.css";
+navLinkElement.href = "/src/css/navFooter.css";
 document.head.appendChild(navLinkElement);
+
+console.log("NavFooter.js carregado - CSS adicionado");
 
 const navBody = document.querySelector("body");
 const navTagScript = document.querySelector('script[src*="navFooter.js"]');
+
+console.log("Body encontrado:", navBody);
+console.log("Script encontrado:", navTagScript);
 
 // Função para verificar se o usuário está logado
 function isUserLoggedIn() {
@@ -63,6 +68,8 @@ navimg.src =
 navimg.alt = "EcoColeta Logo";
 navimg.className = "logo";
 
+logoImage.appendChild(navimg);
+
 let logoText = document.createElement("div");
 logoText.className = "logo-text";
 logoText.textContent = "EcoColeta";
@@ -89,12 +96,21 @@ const menuItems = [
 
 // Criando itens do menu principal
 menuItems.forEach((item) => {
-  let link = document.createElement("a");
-  link.href = item.href;
+  let navMenuLink = document.createElement("a");
+  navMenuLink.href = item.href || "#";
+  navMenuLink.className = "menu-link";
 
   let menuItem = document.createElement("div");
   menuItem.className = "menu-item";
   menuItem.textContent = item.text;
+
+  // Se o item tem um onClick, adiciona o event listener
+  if (item.onClick) {
+    navMenuLink.addEventListener("click", (e) => {
+      e.preventDefault();
+      item.onClick();
+    });
+  }
 
   navMenuLink.appendChild(menuItem);
   navMenu.appendChild(navMenuLink);
@@ -319,7 +335,9 @@ navContent.appendChild(rightContainer);
 
 navContainer.appendChild(navContent);
 navElement.appendChild(navContainer);
+// Inserindo o Nav no DOM
 navBody.insertBefore(navElement, navBody.firstChild);
+console.log("Nav inserido no DOM");
 
 // Atualiza o estado do menu baseado no status de login do usuário
 function updateUserInterface() {
@@ -602,7 +620,8 @@ document.addEventListener("DOMContentLoaded", function () {
   divfooter.appendChild(copyright);
   footer.appendChild(divfooter);
 
-  tagScript.parentNode.insertBefore(footer, tagScript);
+  navTagScript.parentNode.insertBefore(footer, navTagScript);
+  console.log("Footer inserido no DOM");
 });
 
 // Inicializar interface
