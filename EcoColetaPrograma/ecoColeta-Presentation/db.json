@@ -10,7 +10,7 @@
       "endereco": "Rua das Flores, 123 - Centro, Betim - MG",
       "dataNascimento": "1990-01-01",
       "tipoUsuario": "doador",
-      "ecopontos": 100000000000,
+      "ecopontos": 99999979000,
       "imagem": "https://cdn.builder.io/api/v1/image/assets/4c6f6ec200514327a30a7409483092ac/0f6c0c0c0c0c0c0c0c0c0c0c0c0c0c0c0c0c0c0c"
     },
     {
@@ -1480,7 +1480,7 @@
       "descricao": "Belíssimo Jogo de Toalhas para você e sua família.",
       "imagem": "https://pwa.media.cdn.signacommerce.com.br/conamore/media/catalog/product/t/o/toalha-select-para-hotelaria-equipotel-conamore_1.jpg",
       "pontosNecessarios": 6000,
-      "quantidade": 2,
+      "quantidade": 0,
       "id": 1
     },
     {
@@ -1488,7 +1488,7 @@
       "descricao": "Kit de beleza com produtos biodegradáveis e sustentáveis.",
       "imagem": "https://papelsemente.com.br/wp-content/uploads/2020/08/WhatsApp-Image-2020-08-17-at-12.13.49.jpeg",
       "pontosNecessarios": 3000,
-      "quantidade": 3,
+      "quantidade": 0,
       "id": 2
     }
   ],
@@ -1593,10 +1593,21 @@
       "status": "ativa",
       "membros": [
         4,
-        11
+        11,
+        1
       ],
       "curtidas": 0,
-      "comentarios": [],
+      "comentarios": [
+        {
+          "id": 1751248522953,
+          "texto": "Muito top o movimento! Parabéns!",
+          "autorId": 1,
+          "autorNome": "João Silva",
+          "autorFoto": "https://cdn.builder.io/api/v1/image/assets/4c6f6ec200514327a30a7409483092ac/0f6c0c0c0c0c0c0c0c0c0c0c0c0c0c0c0c0c0c0c",
+          "data": "2025-06-30T01:55:22.953Z",
+          "parentId": null
+        }
+      ],
       "visualizacoes": 0,
       "tags": [
         "saude",
@@ -1621,10 +1632,22 @@
       "membros": [
         4,
         13,
-        5
+        5,
+        7,
+        1
       ],
       "curtidas": 0,
-      "comentarios": [],
+      "comentarios": [
+        {
+          "id": 1751248494837,
+          "texto": "Achei a proposta da comunidade muito interessante! Quero interagir ainda mais!",
+          "autorId": 1,
+          "autorNome": "João Silva",
+          "autorFoto": "https://cdn.builder.io/api/v1/image/assets/4c6f6ec200514327a30a7409483092ac/0f6c0c0c0c0c0c0c0c0c0c0c0c0c0c0c0c0c0c0c",
+          "data": "2025-06-30T01:54:54.837Z",
+          "parentId": null
+        }
+      ],
       "visualizacoes": 0,
       "tags": [
         "tecnologia",

@@ -25,6 +25,12 @@ Por exemplo:
 | **Caso de teste**  | **CT-005 – Calculando Impacto Ambiental**  |
 <video controls src="Calcule seu Impacto.mp4" title="Title"></video>
 
+| **Caso de teste**  | **CT-006 – Interagindo com a Comunidade**  |
+<video controls src="Comunidade.mp4" title="Title"></video>
+
+| **Caso de teste**  | **CT-007 – Adquirindo Recompensas Através de EcoPontos**  |
+<video controls src="Recompensas.mp4" title="Title"></video>
+
 ## Ferramentas de testes (opcional)
 
 Comente sobre as ferramentas de testes utilizadas.
