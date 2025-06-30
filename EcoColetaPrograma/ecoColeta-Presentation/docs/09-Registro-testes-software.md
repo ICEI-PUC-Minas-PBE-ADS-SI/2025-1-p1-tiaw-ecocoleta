@@ -39,6 +39,15 @@ Para cada caso de teste definido no <a href="08-Plano-testes-software.md"> Plano
  | **Recompensas - Versão Coletor - Nova Recompensa** |
  ![alt text](image-18.png)
 
+**Recompensas - Usuário comum - Ponto insuficiente**
+![alt text](image-46.png)
+
+**Recompensas - Usuário comum - Ponto suficiente**
+![alt text](image-47.png)
+
+**Recompensa indisponível - usuário comum**
+![alt text](image-48.png)
+
 | **Agendamento indisponível:** |
  ![alt text](image-12.png)
 
@@ -60,6 +69,26 @@ Para cada caso de teste definido no <a href="08-Plano-testes-software.md"> Plano
 | **Doações - Usuário comum**
 ![alt text](image-43.png)
 
+**Dashboard para coletores**
+![alt text](image-44.png)
+
+**Exportando Arquivos**
+![alt text](image-45.png)
+
+**Comunidades**
+![alt text](image-49.png)
+
+**Comentários em públicações da comunidade**
+![alt text](image-50.png)
+
+**Saindo da comunidade**
+![alt text](image-51.png)
+
+**Downloads de materiais de apoio**
+![alt text](image-53.png)
+
+**Downloads realizado - materiais de apoio**
+![alt text](image-52.png)
 > **Links úteis**:
 > - [Screencast: entenda o que é e como gravar vídeos com ele](https://rockcontent.com/br/blog/screencast/) 
 

@@ -216,6 +216,7 @@
       "estado": "MG",
       "tipoUsuario": null,
       "senha": "kauan147",
+      "ecopontos": 2000,
       "imagem": "assets/img/AvatarArthurzin.jpg",
       "emailVerificado": false,
       "id": 13
@@ -1480,6 +1481,7 @@
       "descricao": "Belíssimo Jogo de Toalhas para você e sua família.",
       "imagem": "https://pwa.media.cdn.signacommerce.com.br/conamore/media/catalog/product/t/o/toalha-select-para-hotelaria-equipotel-conamore_1.jpg",
       "pontosNecessarios": 6000,
+      "quantidade": 0,
       "quantidade": 0,
       "id": 1
     },
