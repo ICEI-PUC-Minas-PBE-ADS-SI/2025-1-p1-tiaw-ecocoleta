@@ -216,6 +216,7 @@
       "estado": "MG",
       "tipoUsuario": null,
       "senha": "kauan147",
+      "ecopontos": 2000,
       "imagem": "assets/img/AvatarArthurzin.jpg",
       "emailVerificado": false,
       "id": 13
@@ -1480,7 +1481,7 @@
       "descricao": "Belíssimo Jogo de Toalhas para você e sua família.",
       "imagem": "https://pwa.media.cdn.signacommerce.com.br/conamore/media/catalog/product/t/o/toalha-select-para-hotelaria-equipotel-conamore_1.jpg",
       "pontosNecessarios": 6000,
-      "quantidade": 2,
+      "quantidade": 0,
       "id": 1
     },
     {
@@ -1620,11 +1621,20 @@
       "status": "ativa",
       "membros": [
         4,
-        13,
         5
       ],
       "curtidas": 0,
-      "comentarios": [],
+      "comentarios": [
+        {
+          "id": 1751248491005,
+          "texto": "Gostei bastante da sua comunidade",
+          "autorId": 13,
+          "autorNome": "Ronaldo Augusto Oliveira Lacerda",
+          "autorFoto": "assets/img/AvatarArthurzin.jpg",
+          "data": "2025-06-30T01:54:51.005Z",
+          "parentId": null
+        }
+      ],
       "visualizacoes": 0,
       "tags": [
         "tecnologia",
