@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Teste de Assinatura - EcoColeta</title>
+    <style>
+        body { font-family: Arial, sans-serif; padding: 20px; background: #f5f5f5; }
+        .container { max-width: 800px; margin: 0 auto; background: white; padding: 20px; border-radius: 8px; }
+        .status { padding: 15px; border-radius: 5px; margin: 10px 0; }
+        .success { background: #d4edda; color: #155724; border: 1px solid #c3e6cb; }
+        .error { background: #f8d7da; color: #721c24; border: 1px solid #f5c6cb; }
+        .info { background: #d1ecf1; color: #0c5460; border: 1px solid #bee5eb; }
+        pre { background: #f8f9fa; padding: 15px; border-radius: 5px; overflow-x: auto; }
+        button { background: #28a745; color: white; border: none; padding: 10px 20px; border-radius: 5px; cursor: pointer; margin: 5px; }
+        button:hover { background: #218838; }
+        .red { background: #dc3545; }
+        .red:hover { background: #c82333; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🔍 Teste de Verificação de Assinatura</h1>
+        
+        <div id="results"></div>
+        
+        <div style="margin-top: 20px;">
+            <button onclick="verificarDados()">🔄 Verificar Dados</button>
+            <button onclick="testarAPI()">🌐 Testar API</button>
+            <button onclick="limparDados()" class="red">🗑️ Limpar Dados</button>
+            <button onclick="irParaDashboard()">📊 Ir para Dashboard</button>
+        </div>
+    </div>
+
+    <script>
+        function mostrarResultado(tipo, titulo, conteudo) {
+            const results = document.getElementById('results');
+            const div = document.createElement('div');
+            div.className = `status ${tipo}`;
+            div.innerHTML = `<h3>${titulo}</h3><pre>${conteudo}</pre>`;
+            results.appendChild(div);
+        }
+
+        function verificarDados() {
+            document.getElementById('results').innerHTML = '';
+            
+            const usuarioLogado = localStorage.getItem('usuarioLogado');
+            
+            if (!usuarioLogado) {
+                mostrarResultado('error', '❌ Usuário não encontrado', 'Nenhum usuário logado no localStorage');
+                return;
+            }
+            
+            try {
+                const dados = JSON.parse(usuarioLogado);
+                mostrarResultado('info', '📋 Dados do Usuario no localStorage', JSON.stringify(dados, null, 2));
+                
+                // Verificar assinatura
+                const hasSubscription = dados.statusAssinatura === 'ativa' || dados.planoAtivo;
+                
+                if (dados.tipoUsuario === 'coletor') {
+                    if (hasSubscription) {
+                        mostrarResultado('success', '✅ Assinatura Válida', 
+                            `Tipo: ${dados.tipoUsuario}\nPlano: ${dados.planoAtivo || 'N/A'}\nStatus: ${dados.statusAssinatura || 'N/A'}`);
+                    } else {
+                        mostrarResultado('error', '❌ Assinatura Inválida', 
+                            `Tipo: ${dados.tipoUsuario}\nPlano: ${dados.planoAtivo || 'N/A'}\nStatus: ${dados.statusAssinatura || 'N/A'}`);
+                    }
+                } else {
+                    mostrarResultado('info', 'ℹ️ Não é Coletor', `Tipo de usuário: ${dados.tipoUsuario}\nAcesso ao dashboard: Liberado`);
+                }
+                
+            } catch (error) {
+                mostrarResultado('error', '❌ Erro ao analisar dados', error.message);
+            }
+        }
+
+        async function testarAPI() {
+            const usuarioLogado = localStorage.getItem('usuarioLogado');
+            
+            if (!usuarioLogado) {
+                mostrarResultado('error', '❌ Usuário não encontrado', 'Faça login primeiro');
+                return;
+            }
+            
+            try {
+                const datos = JSON.parse(usuarioLogado);
+                const response = await fetch(`http://localhost:3000/api/usuarios/${datos.id}`);
+                
+                mostrarResultado('info', '🌐 Status da API', `Status: ${response.status}\nURL: http://localhost:3000/api/usuarios/${datos.id}`);
+                
+                if (response.ok) {
+                    const usuario = await response.json();
+                    mostrarResultado('success', '✅ Dados da API', JSON.stringify(usuario, null, 2));
+                } else {
+                    mostrarResultado('error', '❌ Erro na API', `Status: ${response.status}\nErro: ${response.statusText}`);
+                }
+                
+            } catch (error) {
+                mostrarResultado('error', '❌ Erro de conexão', error.message);
+            }
+        }
+
+        function limparDados() {
+            localStorage.removeItem('usuarioLogado');
+            mostrarResultado('info', '🗑️ Dados limpos', 'LocalStorage limpo. Faça login novamente.');
+        }
+
+        function irParaDashboard() {
+            window.location.href = 'dashboardAdmin.html';
+        }
+
+        // Verificar automaticamente ao carregar
+        document.addEventListener('DOMContentLoaded', verificarDados);
+    </script>
+</body>
+</html>

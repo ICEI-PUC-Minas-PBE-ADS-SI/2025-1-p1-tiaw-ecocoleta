@@ -28,7 +28,7 @@
       "imagem": "",
       "emailVerificado": false,
       "id": 2,
-      "bio": "n sei oque não sei oque la\n"
+      "bio": "Não sei o que não sei o que lá\n"
     },
     {
       "nome": "Matheus Augusto",
@@ -116,16 +116,20 @@
       "coletaDomiciliar": "nao",
       "horarioColeta": "13h as 17h",
       "materiaisColeta": [
-        "eletronicos",
+        "eletrônicos",
         "pilhas",
         "baterias"
       ],
       "senha": "Samuca02.",
-      "imagem": "assets/img/AvatarThiagão.jpg",
+      "imagem": "assets/img/AvatarThiago.jpg",
       "emailVerificado": false,
       "dataCadastro": "2025-05-27T18:20:40.084Z",
       "id": 7,
-      "ecopontoId": 31
+      "ecopontoId": 31,
+      "planoAtivo": "premium",
+      "assinaturaStripeId": "sub_premium_samuel_2025",
+      "statusAssinatura": "ativa",
+      "dataAssinatura": "2025-06-29T12:00:00.000Z"
     },
     {
       "nome": "Jonas",
@@ -145,7 +149,7 @@
         "papel",
         "vidro",
         "metal",
-        "eletronicos"
+        "eletrônicos"
       ],
       "senha": "Samuca02.",
       "imagem": "",
@@ -169,7 +173,7 @@
       "coletaDomiciliar": "nao",
       "horarioColeta": "09 as 10",
       "materiaisColeta": [
-        "eletronicos"
+        "eletrônicos"
       ],
       "senha": "123Artur",
       "imagem": "",
@@ -224,13 +228,13 @@
       "lat": -19.9677,
       "lng": -44.1986,
       "endereco": "Avenida Governador Valadares, 455 - Centro, Betim - MG",
-      "horario": "Segunda a S�bado: 08:00 - 17:00",
+      "horario": "Segunda a Sábado: 08:00 - 17:00",
       "materiaisAceitos": [
-        "plastico",
+        "plástico",
         "papel",
         "vidro",
         "metal",
-        "eletronicos"
+        "eletrônicos"
       ],
       "contato": "(31) 3512-3000",
       "coletaDomiciliar": true,
@@ -243,7 +247,7 @@
           "dataHoraInicio": "2025-06-10T10:00:00Z",
           "dataHoraFim": "2025-06-10T11:00:00Z",
           "tipo": "coleta_agendada_empresa",
-          "descricao": "Coleta de papel�o agendada pela Empresa Exemplo Ltda.",
+          "descricao": "Coleta de papelão agendada pela Empresa Exemplo Ltda.",
           "status": "concluido",
           "materiais": [
             "papel�o"
@@ -258,14 +262,14 @@
           "dataHoraInicio": "2025-06-12T14:00:00Z",
           "dataHoraFim": "2025-06-12T14:30:00Z",
           "tipo": "entrega_voluntaria_grande_volume",
-          "descricao": "Entrega de eletr�nicos por Samuel.",
+          "descricao": "Entrega de eletrônicos por Samuel.",
           "status": "concluido",
           "materiais": [
-            "eletronicos",
+            "eletrônicos",
             "baterias"
           ],
           "contatoResponsavel": "Samuel Maciel",
-          "observacoes": "Necess�rio aux�lio para descarregar."
+          "observacoes": "Necessário auxílio para descarregar."
         },
         {
           "idAgenda": "agenda-ecoponto1-003",
@@ -274,10 +278,10 @@
           "dataHoraInicio": "2025-05-28T09:00:00Z",
           "dataHoraFim": "2025-05-28T10:00:00Z",
           "tipo": "coleta_domiciliar",
-          "descricao": "Coleta domiciliar de pl�sticos e papel",
+          "descricao": "Coleta domiciliar de plásticos e papel",
           "status": "concluido",
           "materiais": [
-            "plastico",
+            "plástico",
             "papel"
           ],
           "contatoResponsavel": "Samuel Maciel",
@@ -290,15 +294,15 @@
           "dataHoraInicio": "2025-05-25T15:00:00Z",
           "dataHoraFim": "2025-05-25T16:00:00Z",
           "tipo": "coleta_domiciliar",
-          "descricao": "Coleta de materiais recicl�veis residenciais",
+          "descricao": "Coleta de materiais recicláveis residenciais",
           "status": "concluido",
           "materiais": [
-            "plastico",
+            "plástico",
             "metal",
             "papel"
           ],
           "contatoResponsavel": "Matheus Augusto",
-          "observacoes": "Coleta em �rea residencial."
+          "observacoes": "Coleta em área residencial."
         },
         {
           "idAgenda": "agenda-ecoponto1-005",
@@ -307,14 +311,14 @@
           "dataHoraInicio": "2025-05-20T13:00:00Z",
           "dataHoraFim": "2025-05-20T14:00:00Z",
           "tipo": "coleta_comercial",
-          "descricao": "Coleta de eletr�nicos comerciais",
+          "descricao": "Coleta de eletrônicos comerciais",
           "status": "concluido",
           "materiais": [
-            "eletronicos",
+            "eletrônicos",
             "baterias"
           ],
           "contatoResponsavel": "Samuel Maciel",
-          "observacoes": "Coleta de equipamentos de escrit�rio."
+          "observacoes": "Coleta de equipamentos de escritório."
         },
         {
           "idAgenda": "agenda-teste-doador-samuel-20250611152854",
@@ -323,7 +327,7 @@
           "coletorId": 7,
           "materiais": [
             "papel",
-            "plastico"
+            "plástico"
           ],
           "contatoResponsavel": "Samuel Doador (Teste)",
           "dataHoraInicio": "2025-06-12T15:28:54Z",
@@ -338,19 +342,19 @@
           "coletorId": 7,
           "dataColeta": "2025-05-15T10:00:00Z",
           "materiaisColetados": [
-            "eletronicos",
+            "eletrônicos",
             "baterias"
           ],
           "quantidadeKg": 45,
           "status": "concluido",
-          "observacoes": "Coleta de equipamentos eletr�nicos antigos"
+          "observacoes": "Coleta de equipamentos eletrônicos antigos"
         },
         {
           "id": "hist_002",
           "coletorId": 6,
           "dataColeta": "2025-05-10T14:00:00Z",
           "materiaisColetados": [
-            "plastico",
+            "plástico",
             "papel",
             "metal"
           ],
@@ -363,7 +367,7 @@
           "coletorId": 7,
           "dataColeta": "2025-05-05T16:00:00Z",
           "materiaisColetados": [
-            "eletronicos"
+            "eletrônicos"
           ],
           "quantidadeKg": 30,
           "status": "concluido",
@@ -379,7 +383,7 @@
       "endereco": "Rua das Alterosas, 789 - Alterosas, Betim - MG",
       "horario": "Segunda a Sexta: 08:00 - 18:00",
       "materiaisAceitos": [
-        "plastico",
+        "plástico",
         "papel",
         "metal"
       ],
@@ -394,14 +398,14 @@
           "dataHoraInicio": "2025-05-22T08:00:00Z",
           "dataHoraFim": "2025-05-22T09:00:00Z",
           "tipo": "coleta_domiciliar",
-          "descricao": "Coleta de pl�sticos e papel residencial",
+          "descricao": "Coleta de plásticos e papel residencial",
           "status": "concluido",
           "materiais": [
-            "plastico",
+            "plástico",
             "papel"
           ],
           "contatoResponsavel": "Matheus Augusto",
-          "observacoes": "Coleta de materiais dom�sticos."
+          "observacoes": "Coleta de materiais domésticos."
         },
         {
           "idAgenda": "agenda-ecoponto2-002",
@@ -416,7 +420,7 @@
             "metal"
           ],
           "contatoResponsavel": "Samuel Maciel",
-          "observacoes": "Coleta de materiais met�licos separados."
+          "observacoes": "Coleta de materiais metálicos separados."
         },
         {
           "idAgenda": "agenda-ecoponto2-1749146806094",
@@ -425,10 +429,10 @@
           "dataHoraInicio": "2025-06-10T14:00:00Z",
           "dataHoraFim": "2025-06-10T15:00:00Z",
           "tipo": "entrega_voluntaria",
-          "descricao": "Entrega de materiais recicl�veis por Samuel (TESTE)",
+          "descricao": "Entrega de materiais recicláveis por Samuel (TESTE)",
           "status": "agendado",
           "materiais": [
-            "plastico",
+            "plástico",
             "papel"
           ],
           "contatoResponsavel": "Samuel Maciel",
@@ -441,10 +445,10 @@
           "dataHoraInicio": "2025-06-10T14:00:00Z",
           "dataHoraFim": "2025-06-10T15:00:00Z",
           "tipo": "entrega_voluntaria",
-          "descricao": "Entrega de materiais recicl�veis por Samuel (TESTE)",
+          "descricao": "Entrega de materiais recicláveis por Samuel (TESTE)",
           "status": "agendado",
           "materiais": [
-            "plastico",
+            "plástico",
             "papel"
           ],
           "contatoResponsavel": "Samuel Maciel",
@@ -457,10 +461,10 @@
           "dataHoraInicio": "2025-06-10T14:00:00Z",
           "dataHoraFim": "2025-06-10T15:00:00Z",
           "tipo": "entrega_voluntaria",
-          "descricao": "Entrega de materiais recicl�veis por Samuel (TESTE)",
+          "descricao": "Entrega de materiais recicláveis por Samuel (TESTE)",
           "status": "agendado",
           "materiais": [
-            "plastico",
+            "plástico",
             "papel"
           ],
           "contatoResponsavel": "Samuel Maciel",
@@ -473,10 +477,10 @@
           "dataHoraInicio": "2025-06-10T14:00:00Z",
           "dataHoraFim": "2025-06-10T15:00:00Z",
           "tipo": "entrega_voluntaria",
-          "descricao": "Entrega de materiais recicl�veis por Samuel (TESTE)",
+          "descricao": "Entrega de materiais recicláveis por Samuel (TESTE)",
           "status": "agendado",
           "materiais": [
-            "plastico",
+            "plástico",
             "papel"
           ],
           "contatoResponsavel": "Samuel Maciel",
@@ -489,10 +493,10 @@
           "dataHoraInicio": "2025-06-10T14:00:00Z",
           "dataHoraFim": "2025-06-10T15:00:00Z",
           "tipo": "entrega_voluntaria",
-          "descricao": "Entrega de materiais recicl�veis por Samuel (TESTE)",
+          "descricao": "Entrega de materiais recicláveis por Samuel (TESTE)",
           "status": "agendado",
           "materiais": [
-            "plastico",
+            "plástico",
             "papel"
           ],
           "contatoResponsavel": "Samuel Maciel",
@@ -505,10 +509,10 @@
           "dataHoraInicio": "2025-06-10T14:00:00Z",
           "dataHoraFim": "2025-06-10T15:00:00Z",
           "tipo": "entrega_voluntaria",
-          "descricao": "Entrega de materiais recicl�veis por Samuel (TESTE)",
+          "descricao": "Entrega de materiais recicláveis por Samuel (TESTE)",
           "status": "agendado",
           "materiais": [
-            "plastico",
+            "plástico",
             "papel"
           ],
           "contatoResponsavel": "Samuel Maciel",
@@ -521,10 +525,10 @@
           "dataHoraInicio": "2025-06-10T14:00:00Z",
           "dataHoraFim": "2025-06-10T15:00:00Z",
           "tipo": "entrega_voluntaria",
-          "descricao": "Entrega de materiais recicl�veis por Samuel (TESTE)",
+          "descricao": "Entrega de materiais recicláveis por Samuel (TESTE)",
           "status": "agendado",
           "materiais": [
-            "plastico",
+            "plástico",
             "papel"
           ],
           "contatoResponsavel": "Samuel Maciel",
@@ -537,10 +541,10 @@
           "dataHoraInicio": "2025-06-10T14:00:00Z",
           "dataHoraFim": "2025-06-10T15:00:00Z",
           "tipo": "entrega_voluntaria",
-          "descricao": "Entrega de materiais recicl�veis por Samuel (TESTE)",
+          "descricao": "Entrega de materiais recicláveis por Samuel (TESTE)",
           "status": "agendado",
           "materiais": [
-            "plastico",
+            "plástico",
             "papel"
           ],
           "contatoResponsavel": "Samuel Maciel",
@@ -556,7 +560,7 @@
           "descricao": "Entrega de materiais recicl�veis por Samuel (TESTE)",
           "status": "agendado",
           "materiais": [
-            "plastico",
+            "plástico",
             "papel"
           ],
           "contatoResponsavel": "Samuel Maciel",
@@ -569,10 +573,10 @@
           "dataHoraInicio": "2025-06-10T14:00:00Z",
           "dataHoraFim": "2025-06-10T15:00:00Z",
           "tipo": "entrega_voluntaria",
-          "descricao": "Entrega de materiais recicl�veis por Samuel (TESTE)",
+          "descricao": "Entrega de materiais recicláveis por Samuel (TESTE)",
           "status": "agendado",
           "materiais": [
-            "plastico",
+            "plástico",
             "papel"
           ],
           "contatoResponsavel": "Samuel Maciel",
@@ -585,10 +589,10 @@
           "dataHoraInicio": "2025-06-10T14:00:00Z",
           "dataHoraFim": "2025-06-10T15:00:00Z",
           "tipo": "entrega_voluntaria",
-          "descricao": "Entrega de materiais recicl�veis por Samuel (TESTE)",
+          "descricao": "Entrega de materiais recicláveis por Samuel (TESTE)",
           "status": "agendado",
           "materiais": [
-            "plastico",
+            "plástico",
             "papel"
           ],
           "contatoResponsavel": "Samuel Maciel",
@@ -601,10 +605,10 @@
           "dataHoraInicio": "2025-06-10T14:00:00Z",
           "dataHoraFim": "2025-06-10T15:00:00Z",
           "tipo": "entrega_voluntaria",
-          "descricao": "Entrega de materiais recicl�veis por Samuel (TESTE)",
+          "descricao": "Entrega de materiais recicláveis por Samuel (TESTE)",
           "status": "agendado",
           "materiais": [
-            "plastico",
+            "plástico",
             "papel"
           ],
           "contatoResponsavel": "Samuel Maciel",
@@ -617,10 +621,10 @@
           "dataHoraInicio": "2025-06-10T14:00:00Z",
           "dataHoraFim": "2025-06-10T15:00:00Z",
           "tipo": "entrega_voluntaria",
-          "descricao": "Entrega de materiais recicl�veis por Samuel (TESTE)",
+          "descricao": "Entrega de materiais recicláveis por Samuel (TESTE)",
           "status": "agendado",
           "materiais": [
-            "plastico",
+            "plástico",
             "papel"
           ],
           "contatoResponsavel": "Samuel Maciel",
@@ -633,10 +637,10 @@
           "dataHoraInicio": "2025-06-10T14:00:00Z",
           "dataHoraFim": "2025-06-10T15:00:00Z",
           "tipo": "entrega_voluntaria",
-          "descricao": "Entrega de materiais recicl�veis por Samuel (TESTE)",
+          "descricao": "Entrega de materiais recicláveis por Samuel (TESTE)",
           "status": "agendado",
           "materiais": [
-            "plastico",
+            "plástico",
             "papel"
           ],
           "contatoResponsavel": "Samuel Maciel",
@@ -649,10 +653,10 @@
           "dataHoraInicio": "2025-06-10T14:00:00Z",
           "dataHoraFim": "2025-06-10T15:00:00Z",
           "tipo": "entrega_voluntaria",
-          "descricao": "Entrega de materiais recicl�veis por Samuel (TESTE)",
+          "descricao": "Entrega de materiais recicláveis por Samuel (TESTE)",
           "status": "agendado",
           "materiais": [
-            "plastico",
+            "plástico",
             "papel"
           ],
           "contatoResponsavel": "Samuel Maciel",
@@ -665,10 +669,10 @@
           "dataHoraInicio": "2025-06-10T14:00:00Z",
           "dataHoraFim": "2025-06-10T15:00:00Z",
           "tipo": "entrega_voluntaria",
-          "descricao": "Entrega de materiais recicl�veis por Samuel (TESTE)",
+          "descricao": "Entrega de materiais recicláveis por Samuel (TESTE)",
           "status": "agendado",
           "materiais": [
-            "plastico",
+            "plástico",
             "papel"
           ],
           "contatoResponsavel": "Samuel Maciel",
@@ -681,10 +685,10 @@
           "dataHoraInicio": "2025-06-10T14:00:00Z",
           "dataHoraFim": "2025-06-10T15:00:00Z",
           "tipo": "entrega_voluntaria",
-          "descricao": "Entrega de materiais recicl�veis por Samuel (TESTE)",
+          "descricao": "Entrega de materiais recicláveis por Samuel (TESTE)",
           "status": "agendado",
           "materiais": [
-            "plastico",
+            "plástico",
             "papel"
           ],
           "contatoResponsavel": "Samuel Maciel",
@@ -697,10 +701,10 @@
           "dataHoraInicio": "2025-06-10T14:00:00Z",
           "dataHoraFim": "2025-06-10T15:00:00Z",
           "tipo": "entrega_voluntaria",
-          "descricao": "Entrega de materiais recicl�veis por Samuel (TESTE)",
+          "descricao": "Entrega de materiais recicláveis por Samuel (TESTE)",
           "status": "agendado",
           "materiais": [
-            "plastico",
+            "plástico",
             "papel"
           ],
           "contatoResponsavel": "Samuel Maciel",
@@ -713,10 +717,10 @@
           "dataHoraInicio": "2025-06-10T14:00:00Z",
           "dataHoraFim": "2025-06-10T15:00:00Z",
           "tipo": "entrega_voluntaria",
-          "descricao": "Entrega de materiais recicl�veis por Samuel (TESTE)",
+          "descricao": "Entrega de materiais recicláveis por Samuel (TESTE)",
           "status": "agendado",
           "materiais": [
-            "plastico",
+            "plástico",
             "papel"
           ],
           "contatoResponsavel": "Samuel Maciel",
@@ -729,10 +733,10 @@
           "dataHoraInicio": "2025-06-10T14:00:00Z",
           "dataHoraFim": "2025-06-10T15:00:00Z",
           "tipo": "entrega_voluntaria",
-          "descricao": "Entrega de materiais recicl�veis por Samuel (TESTE)",
+          "descricao": "Entrega de materiais recicláveis por Samuel (TESTE)",
           "status": "agendado",
           "materiais": [
-            "plastico",
+            "plástico",
             "papel"
           ],
           "contatoResponsavel": "Samuel Maciel",
@@ -745,10 +749,10 @@
           "dataHoraInicio": "2025-06-10T15:00:00Z",
           "dataHoraFim": "2025-06-10T16:00:00Z",
           "tipo": "entrega_voluntaria",
-          "descricao": "Entrega de materiais recicl�veis por Samuel Maciel da Silva Figueiredo (TESTE INTEGRADO)",
+          "descricao": "Entrega de materiais recicláveis por Samuel Maciel da Silva Figueiredo (TESTE INTEGRADO)",
           "status": "agendado",
           "materiais": [
-            "plastico",
+            "plástico",
             "papel",
             "metal"
           ],
@@ -762,10 +766,10 @@
           "dataHoraInicio": "2025-06-10T15:00:00Z",
           "dataHoraFim": "2025-06-10T16:00:00Z",
           "tipo": "entrega_voluntaria",
-          "descricao": "Entrega de materiais recicl�veis por Samuel Maciel da Silva Figueiredo (TESTE INTEGRADO)",
+          "descricao": "Entrega de materiais recicláveis por Samuel Maciel da Silva Figueiredo (TESTE INTEGRADO)",
           "status": "agendado",
           "materiais": [
-            "plastico",
+            "plástico",
             "papel",
             "metal"
           ],
@@ -779,10 +783,10 @@
           "dataHoraInicio": "2025-06-10T15:00:00Z",
           "dataHoraFim": "2025-06-10T16:00:00Z",
           "tipo": "entrega_voluntaria",
-          "descricao": "Entrega de materiais recicl�veis por Samuel Maciel da Silva Figueiredo (TESTE INTEGRADO)",
+          "descricao": "Entrega de materiais recicláveis por Samuel Maciel da Silva Figueiredo (TESTE INTEGRADO)",
           "status": "agendado",
           "materiais": [
-            "plastico",
+            "plástico",
             "papel",
             "metal"
           ],
@@ -796,10 +800,10 @@
           "dataHoraInicio": "2025-06-10T15:00:00Z",
           "dataHoraFim": "2025-06-10T16:00:00Z",
           "tipo": "entrega_voluntaria",
-          "descricao": "Entrega de materiais recicl�veis por Samuel Maciel da Silva Figueiredo (TESTE INTEGRADO)",
+          "descricao": "Entrega de materiais recicláveis por Samuel Maciel da Silva Figueiredo (TESTE INTEGRADO)",
           "status": "agendado",
           "materiais": [
-            "plastico",
+            "plástico",
             "papel",
             "metal"
           ],
@@ -813,10 +817,10 @@
           "dataHoraInicio": "2025-06-10T15:00:00Z",
           "dataHoraFim": "2025-06-10T16:00:00Z",
           "tipo": "entrega_voluntaria",
-          "descricao": "Entrega de materiais recicl�veis por Samuel Maciel da Silva Figueiredo (TESTE INTEGRADO)",
+          "descricao": "Entrega de materiais recicláveis por Samuel Maciel da Silva Figueiredo (TESTE INTEGRADO)",
           "status": "agendado",
           "materiais": [
-            "plastico",
+            "plástico",
             "papel",
             "metal"
           ],
@@ -830,10 +834,10 @@
           "dataHoraInicio": "2025-06-10T15:00:00Z",
           "dataHoraFim": "2025-06-10T16:00:00Z",
           "tipo": "entrega_voluntaria",
-          "descricao": "Entrega de materiais recicl�veis por Samuel Maciel da Silva Figueiredo (TESTE INTEGRADO)",
+          "descricao": "Entrega de materiais recicláveis por Samuel Maciel da Silva Figueiredo (TESTE INTEGRADO)",
           "status": "agendado",
           "materiais": [
-            "plastico",
+            "plástico",
             "papel",
             "metal"
           ],
@@ -847,10 +851,10 @@
           "dataHoraInicio": "2025-06-10T15:00:00Z",
           "dataHoraFim": "2025-06-10T16:00:00Z",
           "tipo": "entrega_voluntaria",
-          "descricao": "Entrega de materiais recicl�veis por Samuel Maciel da Silva Figueiredo (TESTE INTEGRADO)",
+          "descricao": "Entrega de materiais recicláveis por Samuel Maciel da Silva Figueiredo (TESTE INTEGRADO)",
           "status": "agendado",
           "materiais": [
-            "plastico",
+            "plástico",
             "papel",
             "metal"
           ],
@@ -863,12 +867,12 @@
           "idUsuarioAgendamento": 5,
           "coletorId": null,
           "materiais": [
-            "plastico",
+            "plástico",
             "papel",
             "vidro"
           ],
           "contatoResponsavel": "Samuel Maciel da Silva Figueiredo",
-          "observacoes": "TESTE FINAL DE INTEGRA��O - Criado automaticamente para validar funcionalidade",
+          "observacoes": "TESTE FINAL DE INTEGRAÇÃO - Criado automaticamente para validar funcionalidade",
           "dataHoraInicio": "2025-06-10T23:59:05Z",
           "tipo": "entrega_voluntaria",
           "dataHoraFim": "2025-06-11T00:59:05Z",
@@ -881,12 +885,12 @@
           "coletorId": 6,
           "dataColeta": "2025-05-12T09:00:00Z",
           "materiaisColetados": [
-            "plastico",
+            "plástico",
             "papel"
           ],
           "quantidadeKg": 20,
           "status": "concluido",
-          "observacoes": "Coleta regular de materiais recicl�veis"
+          "observacoes": "Coleta regular de materiais recicláveis"
         }
       ]
     },
@@ -898,9 +902,9 @@
       "endereco": "Av. Industrial, 1200 - Distrito Industrial, Betim - MG",
       "horario": "24 horas",
       "materiaisAceitos": [
-        "plastico",
+        "plástico",
         "metal",
-        "eletronicos",
+        "eletrônicos",
         "baterias"
       ],
       "contato": "(31) 3512-3002",
@@ -916,7 +920,7 @@
           "descricao": "Coleta de equipamentos eletrônicos da empresa Tech Solutions",
           "status": "agendado",
           "materiais": [
-            "eletronicos",
+            "eletrônicos",
             "baterias"
           ],
           "contatoResponsavel": "João Tech Solutions",
@@ -946,7 +950,7 @@
       "endereco": "Rua Belmiro Delgado, 100 - Imbiruçu, Betim - MG",
       "horario": "Segunda a Sábado: 07:00 - 16:00",
       "materiaisAceitos": [
-        "plastico",
+        "plástico",
         "papel",
         "vidro"
       ],
@@ -963,7 +967,7 @@
       "horario": "Segunda a Sexta: 09:00 - 18:00",
       "materiaisAceitos": [
         "papel",
-        "plastico",
+        "plástico",
         "metal",
         "oleo"
       ],
@@ -981,7 +985,7 @@
       "materiaisAceitos": [
         "vidro",
         "metal",
-        "eletronicos"
+        "eletrônicos"
       ],
       "contato": "(31) 3512-3005",
       "coletaDomiciliar": false,
@@ -995,7 +999,7 @@
       "endereco": "Rua do Riacho, 890 - Riacho, Betim - MG",
       "horario": "Segunda a Domingo: 08:00 - 20:00",
       "materiaisAceitos": [
-        "plastico",
+        "plástico",
         "papel",
         "vidro",
         "metal",
@@ -1014,7 +1018,7 @@
       "horario": "Segunda a Sexta: 07:00 - 16:00",
       "materiaisAceitos": [
         "papel",
-        "plastico"
+        "plástico"
       ],
       "contato": "(31) 3512-3007",
       "coletaDomiciliar": false,
@@ -1029,7 +1033,7 @@
       "horario": "24 horas",
       "materiaisAceitos": [
         "metal",
-        "eletronicos",
+        "eletrônicos",
         "baterias"
       ],
       "contato": "(31) 3512-3008",
@@ -1044,7 +1048,7 @@
       "endereco": "Av. das Laranjeiras, 789 - Laranjeiras, Betim - MG",
       "horario": "Segunda a Sábado: 08:00 - 17:00",
       "materiaisAceitos": [
-        "plastico",
+        "plástico",
         "papel",
         "vidro",
         "oleo"
@@ -1061,7 +1065,7 @@
       "endereco": "Rua do Brasileiro, 123 - Brasileiro, Betim - MG",
       "horario": "Segunda a Sexta: 08:00 - 18:00",
       "materiaisAceitos": [
-        "plastico",
+        "plástico",
         "papel",
         "metal"
       ],
@@ -1079,7 +1083,7 @@
       "materiaisAceitos": [
         "vidro",
         "metal",
-        "eletronicos",
+        "eletrônicos",
         "baterias"
       ],
       "contato": "(31) 3512-3011",
@@ -1094,9 +1098,9 @@
       "endereco": "Rua Petrovale, 789 - Petrovale, Betim - MG",
       "horario": "24 horas",
       "materiaisAceitos": [
-        "plastico",
+        "plástico",
         "metal",
-        "eletronicos"
+        "eletrônicos"
       ],
       "contato": "(31) 3512-3012",
       "coletaDomiciliar": true,
@@ -1111,7 +1115,7 @@
       "horario": "Segunda a Sábado: 08:00 - 17:00",
       "materiaisAceitos": [
         "papel",
-        "plastico",
+        "plástico",
         "vidro"
       ],
       "contato": "(31) 3512-3013",
@@ -1142,7 +1146,7 @@
       "endereco": "Av. Teresópolis, 890 - Jardim Teresópolis, Betim - MG",
       "horario": "Segunda a Sábado: 07:00 - 16:00",
       "materiaisAceitos": [
-        "plastico",
+        "plástico",
         "papel",
         "vidro",
         "metal"
@@ -1159,7 +1163,7 @@
       "endereco": "Rua Santo Afonso, 123 - Santo Afonso, Betim - MG",
       "horario": "24 horas",
       "materiaisAceitos": [
-        "eletronicos",
+        "eletrônicos",
         "baterias"
       ],
       "contato": "(31) 3512-3016",
@@ -1174,7 +1178,7 @@
       "endereco": "Av. Paulo Camilo, 456 - Paulo Camilo, Betim - MG",
       "horario": "Segunda a Domingo: 08:00 - 20:00",
       "materiaisAceitos": [
-        "plastico",
+        "plástico",
         "papel",
         "metal",
         "oleo"
@@ -1193,7 +1197,7 @@
       "materiaisAceitos": [
         "vidro",
         "metal",
-        "eletronicos"
+        "eletrônicos"
       ],
       "contato": "(31) 3512-3018",
       "coletaDomiciliar": true,
@@ -1207,7 +1211,7 @@
       "endereco": "Av. do Cruzeiro, 234 - Cruzeiro, Betim - MG",
       "horario": "Segunda a Sábado: 08:00 - 18:00",
       "materiaisAceitos": [
-        "plastico",
+        "plástico",
         "papel",
         "vidro"
       ],
@@ -1224,7 +1228,7 @@
       "horario": "24 horas",
       "materiaisAceitos": [
         "metal",
-        "eletronicos",
+        "eletrônicos",
         "baterias",
         "oleo"
       ],
@@ -1240,7 +1244,7 @@
       "endereco": "Av. Casa Branca, 890 - Jardim Casa Branca, Betim - MG",
       "horario": "Segunda a Sexta: 07:00 - 16:00",
       "materiaisAceitos": [
-        "plastico",
+        "plástico",
         "papel"
       ],
       "contato": "(31) 3512-3021",
@@ -1257,7 +1261,7 @@
       "materiaisAceitos": [
         "vidro",
         "metal",
-        "eletronicos"
+        "eletrônicos"
       ],
       "contato": "(31) 3512-3022",
       "coletaDomiciliar": true,
@@ -1271,7 +1275,7 @@
       "endereco": "Av. das Bandeirinhas, 456 - Bandeirinhas, Betim - MG",
       "horario": "Segunda a Sábado: 08:00 - 17:00",
       "materiaisAceitos": [
-        "plastico",
+        "plástico",
         "papel",
         "vidro",
         "metal"
@@ -1288,7 +1292,7 @@
       "endereco": "Rua da Capelinha, 789 - Capelinha, Betim - MG",
       "horario": "24 horas",
       "materiaisAceitos": [
-        "eletronicos",
+        "eletrônicos",
         "baterias",
         "oleo"
       ],
@@ -1304,7 +1308,7 @@
       "endereco": "Av. Duque de Caxias, 234 - Centro, Betim - MG",
       "horario": "Segunda a Sexta: 09:00 - 18:00",
       "materiaisAceitos": [
-        "plastico",
+        "plástico",
         "papel",
         "metal"
       ],
@@ -1322,7 +1326,7 @@
       "materiaisAceitos": [
         "vidro",
         "metal",
-        "eletronicos",
+        "eletrônicos",
         "baterias"
       ],
       "contato": "(31) 3512-3026",
@@ -1337,7 +1341,7 @@
       "endereco": "Av. Nova Baden, 890 - Nova Baden, Betim - MG",
       "horario": "Segunda a Sábado: 08:00 - 17:00",
       "materiaisAceitos": [
-        "plastico",
+        "plástico",
         "papel",
         "vidro",
         "oleo"
@@ -1355,7 +1359,7 @@
       "horario": "24 horas",
       "materiaisAceitos": [
         "metal",
-        "eletronicos",
+        "eletrônicos",
         "baterias"
       ],
       "contato": "(31) 3512-3028",
@@ -1370,7 +1374,7 @@
       "endereco": "Av. Brasília, 456 - Jardim Brasília, Betim - MG",
       "horario": "Segunda a Sábado: 08:00 - 18:00",
       "materiaisAceitos": [
-        "plastico",
+        "plástico",
         "papel",
         "vidro",
         "metal",
@@ -1381,13 +1385,13 @@
       "agenda": []
     },
     {
-      "nome": "Ecoponto Organiza��o EcoColeta",
+      "nome": "Ecoponto Organização EcoColeta",
       "lat": -19.962058,
       "lng": -44.2210885,
-      "endereco": "Rua S�o Salvador, Betim - MG",
+      "endereco": "Rua São Salvador, Betim - MG",
       "horario": "13h as 17h",
       "materiaisAceitos": [
-        "eletronicos",
+        "eletrônicos",
         "pilhas",
         "baterias"
       ],
@@ -1400,7 +1404,7 @@
           "idUsuarioAgendamento": 5,
           "coletorId": 7,
           "materiais": [
-            "eletronicos",
+            "eletrônicos",
             "pilhas"
           ],
           "contatoResponsavel": "Samuel Maciel (Teste)",
@@ -1422,7 +1426,7 @@
       "endereco": "Avenida Duque de Caxias, Igarapé - MG",
       "horario": "09 as 10",
       "materiaisAceitos": [
-        "eletronicos"
+        "eletrônicos"
       ],
       "contato": "(31) 99835-9590",
       "coletaDomiciliar": false,
@@ -1821,7 +1825,7 @@
       "doadorEmail": "samuelsilvamaciel02@gmail.com",
       "dataAgendamento": "2024-12-30",
       "horarioAgendamento": "14:00",
-      "tipoMaterial": "plastico",
+      "tipoMaterial": "plástico",
       "observacoes": "Teste de agendamento via Postman",
       "id": 1
     },
@@ -1830,7 +1834,7 @@
       "doadorEmail": "jonas@gmail.com",
       "dataAgendamento": "2025-12-29",
       "horarioAgendamento": "14:00",
-      "tipoMaterial": "plastico",
+      "tipoMaterial": "plástico",
       "observacoes": "Teste de agendamento via Postman",
       "id": 2
     },
