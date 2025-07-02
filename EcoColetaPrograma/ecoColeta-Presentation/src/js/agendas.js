@@ -1,6 +1,9 @@
 // Agendas - EcoColeta
 // Configuração da API
-const API_BASE_URL = 'http://localhost:3000/api';
+const API_BASE_URL = window.location.hostname.includes('localhost')
+  ? 'http://localhost:3000'
+  : 'https://two025-1-p1-tiaw-ecocoleta.onrender.com';
+
 
 // Classe principal para gerenciar as agendas
 class AgendasManager {
