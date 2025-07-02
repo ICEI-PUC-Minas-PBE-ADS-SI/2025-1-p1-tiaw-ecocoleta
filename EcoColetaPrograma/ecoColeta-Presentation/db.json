@@ -23,7 +23,7 @@
       "cidade": "Betim",
       "estado": "MG",
       "tipoUsuario": "coletor",
-      "ecopontos": 25637,
+      "ecopontos": 19637,
       "senha": "2603Betim#2",
       "imagem": "",
       "emailVerificado": false,
@@ -1481,7 +1481,6 @@
       "descricao": "Belíssimo Jogo de Toalhas para você e sua família.",
       "imagem": "https://pwa.media.cdn.signacommerce.com.br/conamore/media/catalog/product/t/o/toalha-select-para-hotelaria-equipotel-conamore_1.jpg",
       "pontosNecessarios": 6000,
-      "quantidade": 0,
       "quantidade": 0,
       "id": 1
     },
