@@ -73,13 +73,7 @@ navMenu.className = "menu";
 
 // Itens do menu
 const menuItems = [
-  {
-    text: "Tema Escuro",
-    icon: '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3a7 7 0 0 0 9.79 9.79z"></path></svg>',
-    onClick: function () {
-      toggleDarkMode();
-    }
-  },
+  
   { text: "Mapa", href: "encontraEco.html" },
   { text: "Guia", href: "guiaEdu.html" },
   { text: "Recompensas", href: "recompensas.html" },
