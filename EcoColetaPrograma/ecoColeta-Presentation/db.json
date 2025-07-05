@@ -1942,6 +1942,15 @@
       "tipoMaterial": "Vidro",
       "observacoes": "Nome: Matheus Augusto, Telefone: (31) 99065-1262",
       "id": 11
+    },
+    {
+      "pontoColetaId": 31,
+      "doadorEmail": "samuelsilvamaciel02@gmail.com",
+      "dataAgendamento": "2025-07-03",
+      "horarioAgendamento": "10:00",
+      "tipoMaterial": "Pilhas, Baterias",
+      "observacoes": "Nome: Samuel Maciel da Silva Figueiredo, Telefone: (31) 99226-8649",
+      "id": 12
     }
   ]
 }
