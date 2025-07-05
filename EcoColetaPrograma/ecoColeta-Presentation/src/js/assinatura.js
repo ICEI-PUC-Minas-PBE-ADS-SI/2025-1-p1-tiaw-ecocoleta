@@ -50,12 +50,15 @@ function assinarPlano(plano) {
   })
     .then(async res => {
       let data;
+      let rawText = await res.text();
       try {
-        data = await res.json();
+        data = JSON.parse(rawText);
       } catch (e) {
+        console.error('Resposta bruta do servidor:', rawText);
         throw new Error('Resposta inesperada do servidor.');
       }
       if (!res.ok) {
+        console.error('Erro detalhado do backend:', data);
         throw new Error(data && data.error ? data.error : `HTTP error! status: ${res.status}`);
       }
       return data;
@@ -73,6 +76,7 @@ function assinarPlano(plano) {
             }
           });
       } else {
+        console.error('Resposta inesperada do backend (sem sessionId):', data);
         throw new Error((data && data.error) || 'Erro ao iniciar checkout. Tente novamente.');
       }
     })
