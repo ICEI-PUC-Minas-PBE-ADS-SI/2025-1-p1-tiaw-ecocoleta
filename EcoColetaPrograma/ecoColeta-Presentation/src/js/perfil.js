@@ -329,14 +329,18 @@ tabButtons.forEach((button) => {
   });
 });
 
+
 // Event Listeners melhorados
-document.addEventListener("DOMContentLoaded", () => {
-  // Inicializa as informações de perfil
-  preencherPerfil();
-  
+document.addEventListener("DOMContentLoaded", async () => {
+  // Inicializa as informações de perfil e só depois inicializa o modal de avatar
+  await preencherPerfil();
+
+  // Inicializa modal de avatar com dados atualizados
+  initAvatarModal();
+
   // Carrega a primeira tab por padrão
   switchTab("Configurações da Conta");
-  
+
   // Adiciona tooltips
   document.querySelectorAll("[data-tooltip]").forEach((element) => {
     element.addEventListener("mouseenter", () => {
@@ -344,21 +348,18 @@ document.addEventListener("DOMContentLoaded", () => {
       element.setAttribute("title", tooltip);
     });
   });
-  
-  // Inicializa modal de avatar
-  initAvatarModal();
-  
+
   // Troca nome da aba de Atividade para Doações recentes
   tabButtons.forEach((btn) => {
     if (btn.textContent.toLowerCase().includes("atividade")) {
       btn.textContent = "Doações recentes";
     }
   });
-  
+
   // Troca título da seção
   const activityTitle = document.querySelector(".activity-title");
   if (activityTitle) activityTitle.textContent = "Doações recentes";
-  
+
   // Exibe doações recentes ao carregar
   exibirDoacoesRecentes();
 });
@@ -892,8 +893,13 @@ function createAvatarModal() {
   return modal;
 }
 
+
 // Gerenciar modal de avatar
 function initAvatarModal() {
+  // Remove modal antigo se existir (evita duplicidade)
+  const oldModal = document.querySelector('.avatar-modal');
+  if (oldModal) oldModal.remove();
+
   const modal = createAvatarModal();
   const preview = modal.querySelector(".avatar-preview img");
   const options = modal.querySelectorAll(".avatar-option");
@@ -901,8 +907,27 @@ function initAvatarModal() {
   const fileInput = upload.querySelector('input[type="file"]');
   let selectedAvatar = usuarioLogado.imagem || defaultAvatars[0];
 
+  // Sempre sincroniza preview e seleção com o usuário logado
+  preview.src = selectedAvatar;
+  options.forEach((opt) => {
+    if (opt.dataset.avatar === selectedAvatar) {
+      opt.classList.add("selected");
+    } else {
+      opt.classList.remove("selected");
+    }
+  });
+
   // Abrir modal
   document.querySelector(".profile-avatar").addEventListener("click", () => {
+    // Atualiza preview e seleção ao abrir
+    preview.src = usuarioLogado.imagem || defaultAvatars[0];
+    options.forEach((opt) => {
+      if (opt.dataset.avatar === (usuarioLogado.imagem || defaultAvatars[0])) {
+        opt.classList.add("selected");
+      } else {
+        opt.classList.remove("selected");
+      }
+    });
     modal.classList.add("active");
   });
 
@@ -981,22 +1006,28 @@ function initAvatarModal() {
       if (preview) { // preview dentro do modal
         preview.src = usuarioLogado.imagem;
       }
-      
+
       // Atualiza a imagem no header, se existir (exemplo)
       const headerUserImage = document.querySelector('.header-user-image'); // Supondo que exista tal classe
       if (headerUserImage) {
         headerUserImage.src = usuarioLogado.imagem;
       }
 
+      // Atualiza o modal para refletir seleção
+      options.forEach((opt) => {
+        if (opt.dataset.avatar === usuarioLogado.imagem) {
+          opt.classList.add("selected");
+        } else {
+          opt.classList.remove("selected");
+        }
+      });
+
       modal.classList.remove("active");
-      // O showFeedback original estava atrelado ao profileAvatar, o que pode não ser ideal se ele não for um form-group
-      // Poderia ser melhor atrelar ao saveButton ou ao modal content
       showFeedback(saveButton.closest('.avatar-modal-content') || saveButton, "Avatar atualizado com sucesso!", "success");
 
     } catch (error) {
       console.error("Erro ao salvar avatar:", error);
-      // Feedback de erro
-       showFeedback(saveButton.closest('.avatar-modal-content') || saveButton, "Erro ao salvar avatar.", "error");
+      showFeedback(saveButton.closest('.avatar-modal-content') || saveButton, "Erro ao salvar avatar.", "error");
     } finally {
       hideLoading(saveButton);
     }
