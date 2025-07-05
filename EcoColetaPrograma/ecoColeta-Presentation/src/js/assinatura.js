@@ -90,7 +90,10 @@ function assinarPlano(plano) {
 // Função para verificar status da assinatura
 function verificarStatusAssinatura() {
   const usuario = getUsuarioLogado();
-  if (!usuario || !usuario.id) return;
+  if (!usuario || !usuario.id) {
+    // Se não estiver logado, não faz requisição nem altera interface
+    return;
+  }
 
   fetch(`${API_BASE_URL}/api/usuarios/${usuario.id}`)
     .then(res => res.json())
@@ -103,10 +106,10 @@ function verificarStatusAssinatura() {
           <strong>✅ Assinatura Ativa:</strong> ${data.planoAtivo.charAt(0).toUpperCase() + data.planoAtivo.slice(1)}<br>
           <small>Desde: ${new Date(data.dataAssinatura).toLocaleDateString('pt-BR')}</small>
         `;
-        
         const container = document.querySelector('.container');
-        container.insertBefore(statusDiv, container.firstChild);
-        
+        if (container) {
+          container.insertBefore(statusDiv, container.firstChild);
+        }
         // Alterar botões para "Gerenciar Assinatura"
         const btns = document.querySelectorAll('.btn-stripe');
         btns.forEach(btn => {
