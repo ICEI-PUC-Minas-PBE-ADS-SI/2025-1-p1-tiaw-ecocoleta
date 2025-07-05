@@ -859,7 +859,6 @@ function createAvatarModal() {
       </div>
       <div class="avatar-preview">
         <img src="${usuarioLogado.imagem || defaultAvatars[0]}" alt="Preview">
-        <div class="avatar-modal-nome" style="margin-top:10px;font-weight:bold;text-align:center;">${usuarioLogado.nome || ''}</div>
       </div>
       <div class="avatar-options">
         ${defaultAvatars
@@ -920,10 +919,8 @@ function initAvatarModal() {
 
   // Abrir modal
   document.querySelector(".profile-avatar").addEventListener("click", () => {
-    // Atualiza preview, seleção e nome ao abrir
+    // Atualiza preview e seleção ao abrir
     preview.src = usuarioLogado.imagem || defaultAvatars[0];
-    const nomeDiv = modal.querySelector('.avatar-modal-nome');
-    if (nomeDiv) nomeDiv.textContent = usuarioLogado.nome || '';
     options.forEach((opt) => {
       if (opt.dataset.avatar === (usuarioLogado.imagem || defaultAvatars[0])) {
         opt.classList.add("selected");
@@ -1026,9 +1023,7 @@ function initAvatarModal() {
         }
       });
 
-      // Atualiza nome no modal
-      const nomeDiv = modal.querySelector('.avatar-modal-nome');
-      if (nomeDiv) nomeDiv.textContent = usuarioLogado.nome || '';
+
 
       modal.classList.remove("active");
       showFeedback(saveButton.closest('.avatar-modal-content') || saveButton, "Avatar atualizado com sucesso!", "success");
