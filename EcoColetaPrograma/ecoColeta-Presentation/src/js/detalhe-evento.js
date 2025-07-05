@@ -8,7 +8,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     document.body.innerHTML = '<p style="color:#c00;text-align:center;margin-top:40px">Evento não encontrado.</p>';
     return;
   }
-  const API_BASE_URL = 'http://localhost:3000/api';
+  const API_BASE_URL = 'https://two025-1-p1-tiaw-ecocoleta.onrender.com/api';
   let isAutor = false; // Corrige escopo para evitar ReferenceError
   let autor = {};
   try {

@@ -1,7 +1,7 @@
 // detalhe-comunidade.js
 // Página de detalhe de comunidade: busca dados, renderiza, controla participação e comentários
 
-const API_BASE_URL = "http://localhost:3000/api";
+const API_BASE_URL = "https://two025-1-p1-tiaw-ecocoleta.onrender.com/api";
 
 // Utilitário para pegar query string
 function getQueryParam(param) {

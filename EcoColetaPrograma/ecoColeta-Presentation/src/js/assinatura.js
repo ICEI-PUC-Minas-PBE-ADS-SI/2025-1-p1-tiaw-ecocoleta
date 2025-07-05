@@ -1,9 +1,7 @@
 // assinatura.js - Lógica de assinatura Stripe para EcoColeta
 
-// Detecta ambiente (local ou produção)
-const API_BASE_URL = window.location.hostname.includes('localhost')
-  ? 'http://localhost:3000'
-  : 'https://two025-1-p1-tiaw-ecocoleta.onrender.com';
+// Sempre usa a URL do servidor de produção
+const API_BASE_URL = 'https://two025-1-p1-tiaw-ecocoleta.onrender.com';
 
 // Função para buscar usuário logado do localStorage
 function getUsuarioLogado() {
@@ -50,29 +48,43 @@ function assinarPlano(plano) {
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({ plano, userId: usuario.id, email: usuario.email })
   })
-  .then(res => {
-    if (!res.ok) {
-      throw new Error(`HTTP error! status: ${res.status}`);
-    }
-    return res.json();
-  })
-  .then(data => {
-    if (data.sessionId) {
-      const stripe = Stripe('pk_test_51ReFqqRpNL9isTvJf9wmRFTjTlSixZY97X4WakMy3opn4a3Muma7BlZs5o79S6I5XloSNvYKthaLQ5XSwpfBfbaq00WYuDMdA7'); // Troque pela sua chave pública Stripe
-      stripe.redirectToCheckout({ sessionId: data.sessionId });
-    } else {
-      throw new Error(data.error || 'Erro ao iniciar checkout');
-    }
-  })
-  .catch(error => {
-    console.error('Erro no checkout:', error);
-    alert(`Erro ao iniciar checkout: ${error.message}`);
-    btns.forEach((btn, index) => {
-      btn.disabled = false;
-      const textos = ['Assinar Básico', 'Assinar Profissional', 'Assinar Premium'];
-      btn.textContent = textos[index] || 'Assinar';
+    .then(async res => {
+      let data;
+      try {
+        data = await res.json();
+      } catch (e) {
+        throw new Error('Resposta inesperada do servidor.');
+      }
+      if (!res.ok) {
+        throw new Error(data && data.error ? data.error : `HTTP error! status: ${res.status}`);
+      }
+      return data;
+    })
+    .then(data => {
+      if (data && data.sessionId) {
+        if (typeof Stripe !== 'function') {
+          throw new Error('Stripe.js não foi carregado corretamente. Tente recarregar a página.');
+        }
+        const stripe = Stripe('pk_test_51ReFqqRpNL9isTvJf9wmRFTjTlSixZY97X4WakMy3opn4a3Muma7BlZs5o79S6I5XloSNvYKthaLQ5XSwpfBfbaq00WYuDMdA7'); // Troque pela sua chave pública Stripe
+        stripe.redirectToCheckout({ sessionId: data.sessionId })
+          .then(function(result) {
+            if (result.error) {
+              alert('Erro ao redirecionar para o checkout: ' + result.error.message);
+            }
+          });
+      } else {
+        throw new Error((data && data.error) || 'Erro ao iniciar checkout. Tente novamente.');
+      }
+    })
+    .catch(error => {
+      console.error('Erro no checkout:', error);
+      alert(`Erro ao iniciar checkout: ${error.message}`);
+      btns.forEach((btn, index) => {
+        btn.disabled = false;
+        const textos = ['Assinar Básico', 'Assinar Profissional', 'Assinar Premium'];
+        btn.textContent = textos[index] || 'Assinar';
+      });
     });
-  });
 }
 
 // Função para verificar status da assinatura

@@ -3,8 +3,8 @@
 
 // URL base da API
 const API_CONFIG = {
-  BASE_URL: 'http://localhost:3000',
-  API_ENDPOINT: 'http://localhost:3000/api',
+  BASE_URL: 'https://two025-1-p1-tiaw-ecocoleta.onrender.com',
+  API_ENDPOINT: 'https://two025-1-p1-tiaw-ecocoleta.onrender.com/api',
   
   // Endpoints específicos
   ENDPOINTS: {

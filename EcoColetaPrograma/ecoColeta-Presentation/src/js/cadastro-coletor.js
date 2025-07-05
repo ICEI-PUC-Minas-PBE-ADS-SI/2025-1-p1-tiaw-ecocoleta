@@ -2,7 +2,7 @@
 document.addEventListener("DOMContentLoaded", function () {
   const form = document.getElementById("cadastroColetorForm");
   const cepInput = document.getElementById("cep");
-  const API_BASE_URL = "http://localhost:3000/api";
+  const API_BASE_URL = "https://two025-1-p1-tiaw-ecocoleta.onrender.com/api";
 
   // Função para buscar coordenadas baseadas no CEP
   async function buscarCoordenadas(cep, endereco, cidade, estado) {
@@ -172,7 +172,7 @@ document.addEventListener("DOMContentLoaded", function () {
     try {
       // Primeiro, verifica se o email já está em uso
       const emailCheckResponse = await fetch(
-        `http://localhost:3000/api/usuarios?email=${encodeURIComponent(email)}`
+        `https://two025-1-p1-tiaw-ecocoleta.onrender.com/api/usuarios?email=${encodeURIComponent(email)}`
       );
       const usuariosExistentes = await emailCheckResponse.json();
 
@@ -215,7 +215,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
       // Cadastra o usuário coletor
       const usuarioResponse = await fetch(
-        "http://localhost:3000/api/usuarios",
+        "https://two025-1-p1-tiaw-ecocoleta.onrender.com/api/usuarios",
         {
           method: "POST",
           headers: {
@@ -248,7 +248,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
       // Cadastra o ecoponto
       const ecopontoResponse = await fetch(
-        "http://localhost:3000/api/pontosDeColeta",
+        "https://two025-1-p1-tiaw-ecocoleta.onrender.com/api/pontosDeColeta",
         {
           method: "POST",
           headers: {
@@ -265,7 +265,7 @@ document.addEventListener("DOMContentLoaded", function () {
       const novoEcoponto = await ecopontoResponse.json();
 
       // Atualiza o usuário com o ID do ecoponto
-      await fetch(`http://localhost:3000/api/usuarios/${novoUsuario.id}`, {
+      await fetch(`https://two025-1-p1-tiaw-ecocoleta.onrender.com/api/usuarios/${novoUsuario.id}`, {
         method: "PATCH",
         headers: {
           "Content-Type": "application/json",

@@ -3,7 +3,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const containerHistorias = document.querySelector(".historias-container");
 
   // Configuração da API
-  const API_BASE_URL = "http://localhost:3000/api";
+  const API_BASE_URL = "https://two025-1-p1-tiaw-ecocoleta.onrender.com/api";
 
   // Função para carregar comunidades da API
   async function carregarComunidades() {
@@ -159,7 +159,7 @@ async function carregarEventos() {
   const containerEventos = document.querySelector('.eventos-container');
   if (!containerEventos) return;
   // Corrige escopo da variável de API
-  const API_BASE_URL = "http://localhost:3000/api";
+  const API_BASE_URL = "https://two025-1-p1-tiaw-ecocoleta.onrender.com/api";
   try {
     const response = await fetch(`${API_BASE_URL}/eventos`);
     if (!response.ok) {
@@ -280,17 +280,17 @@ window.addEventListener('DOMContentLoaded', () => {
   // Carrega todos os dados necessários para busca
   async function carregarDadosBusca() {
     try {
-      const resC = await fetch('http://localhost:3000/api/usuarios?_sort=ecopontos&_order=desc');
+      const resC = await fetch('https://two025-1-p1-tiaw-ecocoleta.onrender.com/api/usuarios?_sort=ecopontos&_order=desc');
       dados.contribuintes = await resC.json();
       carregou.contribuintes = true;
     } catch {}
     try {
-      const resCom = await fetch('http://localhost:3000/api/comunidades');
+      const resCom = await fetch('https://two025-1-p1-tiaw-ecocoleta.onrender.com/api/comunidades');
       dados.comunidades = await resCom.json();
       carregou.comunidades = true;
     } catch {}
     try {
-      const resE = await fetch('http://localhost:3000/api/eventos');
+      const resE = await fetch('https://two025-1-p1-tiaw-ecocoleta.onrender.com/api/eventos');
       dados.eventos = await resE.json();
       carregou.eventos = true;
     } catch {}

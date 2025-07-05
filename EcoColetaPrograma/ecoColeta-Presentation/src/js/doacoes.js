@@ -2072,21 +2072,7 @@ function throttle(func, limit) {
 // LOGS E DEBUG (apenas em desenvolvimento)
 // ============================================================================
 
-if (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1') {
-  console.log('🐛 Modo de desenvolvimento ativo');
-  
-  // Expor estado global para debug
-  window.DoarComAmor = {
-    AppState,
-    CONFIG,
-    Elements,
-    // Funções úteis para debug
-    triggerConfetti,
-    showNotification,
-    updateUserLevel,
-    processDonationSuccess
-  };
-}
+
 
 // ============================================================================
 // FIM DO SCRIPT
