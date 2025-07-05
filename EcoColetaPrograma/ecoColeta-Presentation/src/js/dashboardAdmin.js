@@ -2,15 +2,31 @@
 // Configuração da API
 const API_BASE_URL = 'https://two025-1-p1-tiaw-ecocoleta.onrender.com/api';
 
-// ========== PAYWALL: Verificação de assinatura ativa ==========
-// TEMPORARIAMENTE DESATIVADO PARA DEBUG
-/*
+// ========== PAYWALL: Verificação de assinatura ativa ========== 
 (async function verificarAssinaturaColetor() {
-  // Verificação desativada temporariamente
-  console.log('⚠️ VERIFICAÇÃO DE ASSINATURA DESATIVADA PARA DEBUG');
-  return;
+  const usuario = JSON.parse(localStorage.getItem('usuarioLogado'));
+  if (!usuario || !usuario.id) {
+    // Não logado, não faz nada aqui (será tratado pela autenticação)
+    return;
+  }
+  try {
+    const res = await fetch(`https://two025-1-p1-tiaw-ecocoleta.onrender.com/api/usuarios/${usuario.id}`);
+    const data = await res.json();
+    if (!data.planoAtivo || data.statusAssinatura !== 'ativa') {
+      alert('Acesso restrito: é necessário ter uma assinatura ativa para acessar o dashboard.');
+      setTimeout(() => {
+        window.location.href = 'assinatura.html';
+      }, 2000);
+      throw new Error('Usuário sem assinatura ativa.');
+    }
+  } catch (e) {
+    console.error('Erro ao verificar assinatura ativa:', e);
+    alert('Erro ao verificar assinatura. Tente novamente.');
+    setTimeout(() => {
+      window.location.href = 'assinatura.html';
+    }, 2000);
+  }
 })();
-*/
 
 console.log('🚀 DASHBOARD LIBERADO - Verificação de assinatura bypassed para debug');
 
