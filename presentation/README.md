@@ -21,5 +21,9 @@
 
 ## Vídeo
 
-<video src="../docs/EcoColeta.mp4"></video>
+<a href="https://youtu.be/cra6x3IxhD8" target="_blank">
+  <img src="../docs/image-13.png" alt="Clique para assistir ao vídeo" width="300" />
+</a>
+
+Ou assista diretamente no YouTube: [https://youtu.be/cra6x3IxhD8](https://youtu.be/cra6x3IxhD8)
 
