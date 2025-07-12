@@ -182,68 +182,55 @@ app.post('/api/pontosDeColeta/:id/agendar', (req, res) => {
   res.status(201).json(agendamento);
 });
 
-// Stripe checkout session endpoint (ANTES do JSON Server)
-app.post('/api/stripe/create-checkout-session', async (req, res) => {
-  try {
-    const { plano, userId, email } = req.body;
-    
-    // Verificar se o usuário existe
-    const usuario = jsonServerRouter.db.get('usuarios').find({ id: parseInt(userId) }).value();
-    if (!usuario) {
-      return res.status(404).json({ error: 'Usuário não encontrado' });
-    }
-    
-    // Definir preços dos planos (em centavos)
-    const precos = {
-      basic: 1299,     // R$ 12,99
-      pro: 2599,       // R$ 25,99
-      premium: 3999    // R$ 39,99
-    };
-    
-    const nomes = {
-      basic: 'Plano Básico',
-      pro: 'Plano Profissional', 
-      premium: 'Plano Premium'
-    };
-    
-    if (!precos[plano]) {
-      return res.status(400).json({ error: 'Plano inválido' });
-    }
-    
-    // Criar sessão de checkout
-    const session = await stripe.checkout.sessions.create({
-      payment_method_types: ['card'],
-      line_items: [
-        {
-          price_data: {
-            currency: 'brl',
-            product_data: {
-              name: nomes[plano],
-              description: `Assinatura mensal - EcoColeta ${nomes[plano]}`,
-            },
-            unit_amount: precos[plano],
-            recurring: {
-              interval: 'month',
-            },
-          },
-          quantity: 1,
-        },
-      ],
-      mode: 'subscription',
-      customer_email: email,
-      success_url: `${req.headers.origin || 'http://localhost:5500'}/public/perfil.html?session_id={CHECKOUT_SESSION_ID}`,
-      cancel_url: `${req.headers.origin || 'http://localhost:5500'}/public/assinatura.html`,
-      metadata: {
-        userId: userId.toString(),
-        plano: plano
-      }
-    });
-    
-    res.json({ sessionId: session.id });
-  } catch (error) {
-    console.error('Erro ao criar sessão de checkout:', error);
-    res.status(500).json({ error: 'Erro ao criar sessão de checkout', details: error.message });
+// Endpoint simulado de checkout Stripe
+app.post('/api/stripe/create-checkout-session', (req, res) => {
+  const { plano, userId, email } = req.body;
+  const sessionId = 'sessao_fake_' + Math.floor(Math.random() * 100000);
+
+  // Atualiza o usuário no db.json com o novo plano simulado
+  const usuario = jsonServerRouter.db.get('usuarios').find({ id: parseInt(userId) }).value();
+  if (usuario) {
+    // Define período gratuito de 7 dias a partir de agora
+    const dataAssinatura = new Date();
+    const dataFimGratuito = new Date(dataAssinatura);
+    dataFimGratuito.setDate(dataAssinatura.getDate() + 7);
+
+    // Define valor de planoAtivo para liberar dashboard
+    let planoAtivoDashboard = '';
+    if (plano === 'basic') planoAtivoDashboard = 'dashboard_basico';
+    else if (plano === 'pro') planoAtivoDashboard = 'dashboard_profissional';
+    else if (plano === 'premium') planoAtivoDashboard = 'dashboard_premium';
+
+    jsonServerRouter.db.get('usuarios')
+      .find({ id: parseInt(userId) })
+      .assign({
+        planoAtivo: planoAtivoDashboard,
+        assinaturaStripeId: sessionId,
+        statusAssinatura: 'ativa',
+        dataAssinatura: dataAssinatura.toISOString(),
+        periodoGratuitoFim: dataFimGratuito.toISOString()
+      })
+      .write();
   }
+
+  // Opcional: salvar um registro de assinatura em uma coleção separada
+  if (jsonServerRouter.db.get('assinaturas').value() === undefined) {
+    jsonServerRouter.db.set('assinaturas', []).write();
+  }
+  jsonServerRouter.db.get('assinaturas').push({
+    id: Date.now(),
+    userId: parseInt(userId),
+    email,
+    plano,
+    sessionId,
+    data: new Date().toISOString(),
+    periodoGratuitoFim: usuario ? new Date(new Date().setDate(new Date().getDate() + 7)).toISOString() : null
+  }).write();
+
+  // Retorna o sessionId fake para o frontend
+  res.json({
+    sessionId
+  });
 });
 
 // Stripe webhook endpoint (ANTES do JSON Server)
