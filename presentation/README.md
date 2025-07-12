@@ -21,5 +21,5 @@
 
 ## Vídeo
 
-<video controls src="EcoColeta.mp4" title="Title"></video>
+<video src="EcoColeta.mp4"></video>
 
