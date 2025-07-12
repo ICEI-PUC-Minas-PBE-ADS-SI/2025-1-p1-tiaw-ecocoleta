@@ -1,0 +1,357 @@
+/* recompensas.css */
+body {
+  background: #f6f8f6;
+  font-family: 'Segoe UI', Arial, sans-serif;
+}
+.recompensas-container {
+  max-width: 900px;
+  margin: 40px auto;
+  background: #fff;
+  border-radius: 18px;
+  box-shadow: 0 4px 24px rgba(0,0,0,0.08);
+  padding: 32px 24px 40px 24px;
+  text-align: center;
+}
+.recompensas-titulo {
+  font-size: 2.5rem;
+  color: #2e7d32;
+  margin-bottom: 32px;
+  font-weight: 700;
+}
+.recompensas-ecopontos {
+  font-size: 1.2rem;
+  color: #388e3c;
+  margin-bottom: 24px;
+  font-weight: 500;
+}
+.recompensas-cards {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 32px;
+  justify-content: center;
+}
+.recompensas-card {
+  background: #f1f8e9;
+  border-radius: 14px;
+  box-shadow: 0 2px 8px rgba(46,125,50,0.08);
+  width: 260px;
+  padding: 24px 16px 20px 16px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+.recompensas-card:hover {
+  transform: translateY(-6px) scale(1.03);
+  box-shadow: 0 8px 24px rgba(46,125,50,0.15);
+}
+.recompensas-card-img {
+  width: 90px;
+  height: 90px;
+  object-fit: contain;
+  margin-bottom: 18px;
+}
+.recompensas-card-title {
+  font-size: 1.3rem;
+  color: #2e7d32;
+  margin-bottom: 8px;
+  font-weight: 600;
+}
+.recompensas-card-desc {
+  font-size: 1rem;
+  color: #555;
+  margin-bottom: 12px;
+}
+.recompensas-card-points {
+  font-size: 1.1rem;
+  color: #388e3c;
+  font-weight: 600;
+  margin-bottom: 16px;
+}
+.recompensas-verde {
+  color: #43a047;
+}
+.recompensas-card-btn {
+  background: linear-gradient(90deg, #43a047 60%, #66bb6a 100%);
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  padding: 10px 28px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s, box-shadow 0.2s;
+  box-shadow: 0 2px 8px rgba(67,160,71,0.08);
+}
+.recompensas-card-btn:hover {
+  background: linear-gradient(90deg, #388e3c 60%, #81c784 100%);
+  box-shadow: 0 4px 16px rgba(67,160,71,0.18);
+}
+/* Adiciona estilo para o botão de exclusão de recompensa (admin) */
+.recompensas-excluir-btn {
+  background: #d32f2f !important;
+  color: #fff !important;
+  margin-top: 8px;
+  padding: 8px 18px;
+  font-size: 0.98rem;
+  border-radius: 8px;
+  border: none;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+.recompensas-excluir-btn:hover {
+  background: #b71c1c !important;
+}
+.historico-container {
+  margin-top: 48px;
+  margin-bottom: 20px;
+  background: #f9fbe7;
+  border-radius: 12px;
+  padding: 32px 18px 24px 18px;
+  box-shadow: 0 2px 8px rgba(67,160,71,0.07);
+  max-width: 600px;
+  margin-left: auto;
+  margin-right: auto;
+}
+#historico {
+  margin: 0;
+}
+#historico h2 {
+  font-size: 1.3rem;
+  color: #2e7d32;
+  font-weight: 600;
+  margin-bottom: 18px;
+  border-left: 4px solid #66bb6a;
+  padding-left: 10px;
+}
+#historico-resgates {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+.recompensas-historico-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: #fff;
+  border-radius: 8px;
+  padding: 10px 16px;
+  margin-bottom: 10px;
+  box-shadow: 0 1px 4px rgba(67,160,71,0.05);
+  font-size: 1rem;
+}
+.recompensas-historico-recompensa {
+  color: #388e3c;
+  font-weight: 500;
+}
+.recompensas-historico-pontos {
+  color: #d32f2f;
+  font-weight: 600;
+}
+.recompensas-historico-data {
+  color: #888;
+  font-size: 0.95em;
+}
+.recompensas-historico-vazio {
+  color: #888;
+  text-align: center;
+  margin-top: 10px;
+}
+/* Melhorias visuais para o formulário de adicionar recompensa */
+.recompensas-form {
+  max-width: 420px;
+  margin: 0 auto;
+  background: #f9fbe7;
+  border-radius: 14px;
+  box-shadow: 0 2px 12px rgba(67,160,71,0.10);
+  padding: 32px 28px 24px 28px;
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  align-items: center;
+}
+.recompensas-form .form-group {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  margin-bottom: 8px;
+  width: 100%;
+}
+.recompensas-form label {
+  font-weight: 600;
+  color: #2e7d32;
+  margin-bottom: 6px;
+  font-size: 1.05rem;
+}
+.recompensas-form input,
+.recompensas-form textarea {
+  width: 100%;
+  padding: 10px 12px;
+  border: 1.5px solid #c8e6c9;
+  border-radius: 7px;
+  font-size: 1rem;
+  background: #fff;
+  margin-bottom: 2px;
+  transition: border 0.2s;
+}
+.recompensas-form input:focus,
+.recompensas-form textarea:focus {
+  border: 1.5px solid #43a047;
+  outline: none;
+}
+.recompensas-form textarea {
+  min-height: 60px;
+  resize: vertical;
+}
+.recompensas-form button[type="submit"],
+.recompensas-form button[type="button"] {
+  display: inline-block;
+  min-width: 120px;
+}
+.recompensas-form button[type="submit"] {
+  margin-top: 18px;
+  margin-bottom: 0;
+  margin-right: 10px;
+}
+.recompensas-form button[type="button"] {
+  background: #e0e0e0 !important;
+  color: #333 !important;
+  margin-left: 0;
+  margin-top: 18px;
+}
+/* Estilo para card e botão de recompensa indisponível */
+.recompensa-indisponivel {
+  opacity: 0.55;
+  filter: grayscale(0.15);
+  pointer-events: none;
+}
+.btn-indisponivel {
+  background: #bdbdbd !important;
+  color: #fff !important;
+  cursor: not-allowed !important;
+  opacity: 0.85;
+  border: none;
+  box-shadow: none;
+  pointer-events: none;
+  transition: none;
+}
+.recompensas-card-quantidade {
+  font-size: 0.98rem;
+  color: #666;
+  margin-bottom: 10px;
+}
+.recompensas-card-btn[disabled]:hover::after {
+  content: 'Indisponível';
+  position: absolute;
+  left: 50%;
+  top: 100%;
+  transform: translateX(-50%);
+  background: #bdbdbd;
+  color: #fff;
+  padding: 4px 10px;
+  border-radius: 6px;
+  font-size: 0.95em;
+  margin-top: 4px;
+  white-space: nowrap;
+}
+body.dark-mode {
+  background: #23272E !important;
+  color: #f3f3f3;
+}
+body.dark-mode .recompensas-container,
+body.dark-mode .historico-container,
+body.dark-mode .recompensas-form {
+  background: #23272E !important;
+  color: #f3f3f3 !important;
+  box-shadow: 0 4px 24px rgba(0,0,0,0.18);
+}
+body.dark-mode .recompensas-titulo,
+body.dark-mode .recompensas-ecopontos,
+body.dark-mode .recompensas-card-title,
+body.dark-mode .recompensas-card-points,
+body.dark-mode #historico h2,
+body.dark-mode .recompensas-form label {
+  color: #7fffaf !important;
+}
+body.dark-mode .recompensas-cards {
+  background: transparent !important;
+}
+body.dark-mode .recompensas-card {
+  background: #23272E !important;
+  color: #f3f3f3 !important;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.28);
+}
+body.dark-mode .recompensas-card-desc,
+body.dark-mode .recompensas-card-quantidade,
+body.dark-mode .recompensas-historico-data,
+body.dark-mode .recompensas-historico-vazio {
+  color: #bdbdbd !important;
+}
+body.dark-mode .recompensas-card-btn,
+body.dark-mode .recompensas-card-btn:active,
+body.dark-mode .recompensas-card-btn:focus {
+  background: linear-gradient(90deg, #10b981 60%, #059669 100%) !important;
+  color: #fff !important;
+  box-shadow: 0 2px 8px rgba(16,185,129,0.18);
+}
+body.dark-mode .recompensas-card-btn:hover {
+  background: linear-gradient(90deg, #059669 60%, #10b981 100%) !important;
+}
+body.dark-mode .recompensas-excluir-btn {
+  background: #d32f2f !important;
+  color: #fff !important;
+}
+body.dark-mode .recompensas-excluir-btn:hover {
+  background: #b71c1c !important;
+}
+body.dark-mode .historico-container {
+  background: #23272E !important;
+  color: #f3f3f3 !important;
+}
+body.dark-mode .recompensas-historico-item {
+  background: #181a1b !important;
+  color: #f3f3f3 !important;
+  box-shadow: 0 1px 4px rgba(16,185,129,0.10);
+}
+body.dark-mode .recompensas-form input,
+body.dark-mode .recompensas-form textarea {
+  background: #181a1b !important;
+  color: #f3f3f3 !important;
+  border: 1.5px solid #10b981 !important;
+}
+body.dark-mode .recompensas-form input:focus,
+body.dark-mode .recompensas-form textarea:focus {
+  border: 1.5px solid #059669 !important;
+}
+body.dark-mode .btn-indisponivel {
+  background: #444 !important;
+  color: #bbb !important;
+}
+body.dark-mode .recompensas-card-btn[disabled]:hover::after {
+  background: #444 !important;
+  color: #bbb !important;
+}
+@media (max-width: 900px) {
+  .recompensas-cards {
+    flex-direction: column;
+    align-items: center;
+  }
+  .recompensas-card {
+    width: 90%;
+    margin-bottom: 24px;
+  }
+}
+@media (max-width: 600px) {
+  .historico-container {
+    padding: 14px 4px 10px 4px;
+    max-width: 98vw;
+  }
+  #historico h2 {
+    font-size: 1.1rem;
+    padding-left: 6px;
+  }
+  .recompensas-form {
+    padding: 18px 6px 14px 6px;
+    max-width: 98vw;
+  }
+}

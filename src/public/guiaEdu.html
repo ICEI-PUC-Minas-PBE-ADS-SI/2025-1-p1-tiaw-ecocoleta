@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>EcoColeta - Aprenda a Reciclar de Forma Correta</title>
+    <link rel="icon" type="image/png" href="assets/img/logo.svg">
+    <link rel="stylesheet" href="assets/css/cssGuiaEdu.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+    <link rel="stylesheet" href="assets/css/navFooter.css" />
+  </head>
+  <body>
+    <!-- Hero Section -->
+    <section class="hero">
+      <div class="container">
+        <div class="hero-content">
+          <h1>Aprenda a Reciclar de Forma Correta</h1>
+          <p>
+            Descubra como fazer a diferença no meio ambiente através da
+            separação correta de resíduos.
+          </p>
+          <button class="btn-primary">Começar Jornada</button>
+        </div>
+        <div class="hero-image">
+          <img src="assets/img/imagenGuia.png" alt="Ilustração de reciclagem" />
+        </div>
+      </div>
+    </section>
+
+    <!-- Recycling Cycle Section -->
+    <section class="recycling-cycle">
+      <div class="container">
+        <h2>Ciclo da Reciclagem</h2>
+        <div class="cycle-steps">
+          <div class="cycle-step">
+            <div class="icon-container green">
+              <i class="fas fa-trash"></i>
+            </div>
+            <h3>Separação</h3>
+            <p>
+              Separe corretamente os resíduos em suas respectivas categorias
+            </p>
+          </div>
+          <div class="cycle-step">
+            <div class="icon-container blue">
+              <i class="fas fa-truck"></i>
+            </div>
+            <h3>Coleta</h3>
+            <p>
+              Os materiais são coletados e transportados para centros de
+              reciclagem
+            </p>
+          </div>
+          <div class="cycle-step">
+            <div class="icon-container orange">
+              <i class="fas fa-industry"></i>
+            </div>
+            <h3>Processamento</h3>
+            <p>Transformação dos materiais em novos produtos</p>
+          </div>
+          <div class="cycle-step">
+            <div class="icon-container purple">
+              <i class="fas fa-sync-alt"></i>
+            </div>
+            <h3>Reutilização</h3>
+            <p>Novos produtos retornam ao ciclo de consumo</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Materials Library Section -->
+    <section class="materials-library" id="materialsSection">
+      <div class="container">
+        <h2>Biblioteca de Materiais</h2>
+        <div class="search-container">
+          <input type="text" placeholder="Buscar material..." />
+          <button class="search-btn"><i class="fas fa-search"></i></button>
+        </div>
+        <div class="materials-grid">
+          <div class="material-card">
+            <div class="material-icon">
+              <i class="fas fa-wine-bottle"></i>
+            </div>
+            <h3>Vidro</h3>
+            <p>Garrafas, potes e outros recipientes de vidro</p>
+            <button class="learn-more" data-material="vidro">
+              Saiba mais <i class="fas fa-arrow-right"></i>
+            </button>
+          </div>
+          <div class="material-card">
+            <div class="material-icon">
+              <i class="fas fa-shopping-bag"></i>
+            </div>
+            <h3>Plástico</h3>
+            <p>Embalagens, garrafas e produtos plásticos</p>
+            <button class="learn-more" data-material="plastico">
+              Saiba mais <i class="fas fa-arrow-right"></i>
+            </button>
+          </div>
+          <div class="material-card">
+            <div class="material-icon">
+              <i class="fas fa-newspaper"></i>
+            </div>
+            <h3>Papel</h3>
+            <p>Jornais, revistas e papelão</p>
+            <button class="learn-more" data-material="papel">
+              Saiba mais <i class="fas fa-arrow-right"></i>
+            </button>
+          </div>
+          <div class="material-card">
+            <div class="material-icon">
+              <i class="fas fa-leaf"></i>
+            </div>
+            <h3>Orgânico</h3>
+            <p>Restos de comida, cascas e materiais biodegradáveis</p>
+            <button class="learn-more" data-material="organico">
+              Saiba mais <i class="fas fa-arrow-right"></i>
+            </button>
+          </div>
+          <div class="material-card">
+            <div class="material-icon">
+              <i class="fas fa-mobile-alt"></i>
+            </div>
+            <h3>Eletrônicos</h3>
+            <p>Celulares, computadores e equipamentos eletrônicos</p>
+            <button class="learn-more" data-material="eletronicos">
+              Saiba mais <i class="fas fa-arrow-right"></i>
+            </button>
+          </div>
+          <div class="material-card">
+            <div class="material-icon">
+              <i class="fas fa-battery-half"></i>
+            </div>
+            <h3>Baterias</h3>
+            <p>Pilhas, baterias e acumuladores</p>
+            <button class="learn-more" data-material="baterias">
+              Saiba mais <i class="fas fa-arrow-right"></i>
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Container da página de detalhes -->
+      <div class="details-page" id="detailsPage" style="display: none;">
+        <div class="container">
+          <div class="details-header">
+            <button class="back-button" id="backButton">
+              <i class="fas fa-arrow-left"></i> Voltar
+            </button>
+            <h1 id="detailsTitle">Título do Material</h1>
+          </div>
+          
+          <div class="details-content">
+            <div class="details-hero">
+              <div class="material-icon-large" id="detailsIcon">
+                <i class="fas fa-wine-bottle"></i>
+              </div>
+              <div class="material-description">
+                <p id="detailsDescription">Descrição do material</p>
+              </div>
+            </div>
+
+            <div class="details-grid">
+              <div class="detail-card recyclable-card">
+                <div class="card-header">
+                  <i class="fas fa-check-circle"></i>
+                  <h3>O que pode ser reciclado</h3>
+                </div>
+                <ul id="recyclableItems"></ul>
+              </div>
+
+              <div class="detail-card non-recyclable-card">
+                <div class="card-header">
+                  <i class="fas fa-times-circle"></i>
+                  <h3>O que NÃO pode ser reciclado</h3>
+                </div>
+                <ul id="nonRecyclableItems"></ul>
+              </div>
+
+              <div class="detail-card preparation-card">
+                <div class="card-header">
+                  <i class="fas fa-tasks"></i>
+                  <h3>Como preparar para reciclagem</h3>
+                </div>
+                <ol id="preparationSteps"></ol>
+              </div>
+
+              <div class="detail-card impact-card">
+                <div class="card-header">
+                  <i class="fas fa-leaf"></i>
+                  <h3>Impacto ambiental</h3>
+                </div>
+                <p id="environmentalImpact"></p>
+              </div>
+            </div>
+
+            <div class="tips-section">
+              <h3><i class="fas fa-lightbulb"></i> Dicas importantes</h3>
+              <div class="tips-grid" id="importantTips"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Knowledge Test Section -->
+    <section class="knowledge-test">
+      <div class="container">
+        <h2>Teste seus Conhecimentos</h2>
+        <div class="quiz-container">
+          <div class="progress-container">
+            <div class="progress-text">
+              <span>Progresso</span>
+              <span>3/10</span>
+            </div>
+            <div class="progress-bar">
+              <div class="progress" style="width: 30%"></div>
+            </div>
+          </div>
+          <div class="question">
+            <p>Onde deve ser descartado um copo de vidro quebrado?</p>
+          </div>
+          <div class="options">
+            <div class="option">
+              <input type="radio" id="option1" name="answer" />
+              <label for="option1">A) Contêiner de vidros</label>
+            </div>
+            <div class="option">
+              <input type="radio" id="option2" name="answer" />
+              <label for="option2">B) Lixo comum</label>
+            </div>
+            <div class="option">
+              <input type="radio" id="option3" name="answer" />
+              <label for="option3">C) Lixo orgânico</label>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Download Materials Section -->
+    <section class="download-materials">
+      <div class="container">
+        <h2>Materiais para Download</h2>
+        <div class="downloads-grid">
+          <div class="download-card">
+            <div class="download-icon">
+              <i class="fas fa-file-pdf"></i>
+            </div>
+            <div class="download-info">
+              <h3>Guia de Bolso</h3>
+              <p>Guia completo para separação de resíduos</p>
+              <span class="file-size">2.3 MB</span>
+            </div>
+            <button class="download-btn" data-file="guia-bolso">
+              <i class="fas fa-download"></i> Download
+            </button>
+          </div>
+          <div class="download-card">
+            <div class="download-icon">
+              <i class="fas fa-file-image"></i>
+            </div>
+            <div class="download-info">
+              <h3>Infográfico</h3>
+              <p>Símbolos e significados da reciclagem</p>
+              <span class="file-size">1.5 MB</span>
+            </div>
+            <button class="download-btn" data-file="infografico">
+              <i class="fas fa-download"></i> Download
+            </button>
+          </div>
+          <div class="download-card">
+            <div class="download-icon">
+              <i class="fas fa-file-alt"></i>
+            </div>
+            <div class="download-info">
+              <h3>Cartilha</h3>
+              <p>Manual completo de reciclagem</p>
+              <span class="file-size">3.1 MB</span>
+            </div>
+            <button class="download-btn" data-file="cartilha">
+              <i class="fas fa-download"></i> Download
+            </button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Modal de Download -->
+    <div id="downloadModal" class="download-modal">
+      <div class="download-modal-content">
+        <div class="download-modal-icon">
+          <i class="fas fa-check-circle"></i>
+        </div>
+        <h3>Download Concluído!</h3>
+        <p>Seu arquivo foi baixado com sucesso. Aproveite o conteúdo educativo!</p>
+        <button class="download-modal-close" onclick="closeDownloadModal()">
+          Entendi
+        </button>
+      </div>
+    </div>
+
+    <!-- Modal de Erro -->
+    <div id="errorModal" class="error-modal">
+      <div class="error-modal-content">
+        <div class="error-modal-icon">
+          <i class="fas fa-exclamation-triangle"></i>
+        </div>
+        <h3>Ops! Algo deu errado</h3>
+        <p id="errorMessage">Ocorreu um erro inesperado. Tente novamente.</p>
+        <button class="error-modal-close" onclick="closeErrorModal()">
+          Tentar Novamente
+        </button>
+      </div>
+    </div>
+
+    <!-- Modal de Aviso para Quiz -->
+    <div id="warningModal" class="warning-modal">
+        <div class="warning-modal-content">
+            <div class="warning-modal-header">
+                <div class="warning-modal-icon">⚠️</div>
+                <h3 class="warning-modal-title">Atenção!</h3>
+            </div>
+            <div class="warning-modal-body">
+                <p class="warning-modal-message">Por favor, selecione uma resposta antes de continuar!</p>
+                <div class="warning-modal-buttons">
+                    <button class="warning-modal-btn warning-modal-btn-primary" onclick="closeWarningModal()">
+                        Entendi
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Biblioteca jsPDF para geração de PDFs -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    
+    <script src="assets/js/navFooter.js"></script>
+    <script src ="assets/js/guiaEdu-new.js"></script>
+    <script src="assets/js/quiz.js"></script>
+    <script src="assets/js/theme.js"></script>
+  </body>
+</html>

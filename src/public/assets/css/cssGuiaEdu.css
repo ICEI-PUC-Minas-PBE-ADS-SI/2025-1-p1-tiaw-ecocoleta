@@ -1,0 +1,1388 @@
+/* Base Styles */
+:root {
+    --primary-color: #0D9F6F;
+    --primary-dark: #0A7F59;
+    --secondary-color: #F5F9F8;
+    --text-color: #333;
+    --light-gray: #F8F9FA;
+    --gray: #6C757D;
+    --blue: #3B82F6;
+    --orange: #F59E0B;
+    --purple: #8B5CF6;
+    --white: #FFFFFF;
+    --shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    --border-radius: 8px;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    color: var(--text-color);
+    line-height: 1.6;
+    background-color: var(--secondary-color);
+}
+
+.container {
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+h1, h2, h3, h4 {
+    margin-bottom: 15px;
+    font-weight: 600;
+}
+
+h1 {
+    font-size: 2.5rem;
+    line-height: 1.2;
+}
+
+h2 {
+    font-size: 2rem;
+    text-align: center;
+    margin-bottom: 40px;
+}
+
+p {
+    margin-bottom: 15px;
+}
+
+a {
+    text-decoration: none;
+    color: var(--primary-color);
+}
+
+ul {
+    list-style: none;
+}
+
+img {
+    max-width: 100%;
+    height: auto;
+}
+
+section {
+    padding: 80px 0;
+}
+
+/* Buttons */
+.btn-primary {
+    background-color: var(--primary-color);
+    color: var(--white);
+    border: none;
+    padding: 10px 20px;
+    border-radius: var(--border-radius);
+    cursor: pointer;
+    font-weight: 600;
+    transition: background-color 0.3s;
+}
+
+.btn-primary:hover {
+    background-color: var(--primary-dark);
+}
+
+/* Hero Section */
+.hero {
+    background-color: var(--secondary-color);
+    padding: 80px 0;
+}
+
+.hero .container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.hero-content {
+    flex: 1;
+    padding-right: 40px;
+}
+
+.hero-image {
+    flex: 1;
+    text-align: center;
+}
+
+.hero-image img {
+    max-width: 100%;
+    height: auto;
+}
+
+/* Recycling Cycle Section */
+.recycling-cycle {
+    background-color: var(--white);
+}
+
+.cycle-steps {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 30px;
+}
+
+.cycle-step {
+    text-align: center;
+    padding: 20px;
+    border-radius: var(--border-radius);
+    background-color: var(--light-gray);
+    transition: transform 0.3s;
+}
+
+.cycle-step:hover {
+    transform: translateY(-5px);
+}
+
+.icon-container {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 20px;
+    color: var(--white);
+    font-size: 1.8rem;
+}
+
+.green {
+    background-color: var(--primary-color);
+}
+
+.blue {
+    background-color: var(--blue);
+}
+
+.orange {
+    background-color: var(--orange);
+}
+
+.purple {
+    background-color: var(--purple);
+}
+
+/* Materials Library Section */
+.materials-library {
+    background-color: var(--secondary-color);
+}
+
+.search-container {
+    display: flex;
+    max-width: 600px;
+    margin: 0 auto 40px;
+}
+
+.search-container input {
+    flex: 1;
+    padding: 12px 15px;
+    border: 1px solid #ddd;
+    border-radius: var(--border-radius) 0 0 var(--border-radius);
+    font-size: 1rem;
+}
+
+.search-btn {
+    background-color: var(--primary-color);
+    color: var(--white);
+    border: none;
+    padding: 0 20px;
+    border-radius: 0 var(--border-radius) var(--border-radius) 0;
+    cursor: pointer;
+}
+
+.materials-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 30px;
+}
+
+.material-card {
+    background-color: var(--white);
+    padding: 30px;
+    border-radius: var(--border-radius);
+    box-shadow: var(--shadow);
+    transition: transform 0.3s;
+}
+
+.material-card:hover {
+    transform: translateY(-5px);
+}
+
+.material-icon {
+    font-size: 2rem;
+    color: var(--primary-color);
+    margin-bottom: 15px;
+}
+
+.learn-more {
+    display: inline-block;
+    margin-top: 10px;
+    font-weight: 500;
+    background: none;
+    border: none;
+    color: var(--primary-color);
+    font-size: 1rem;
+    cursor: pointer;
+    transition: color 0.3s;
+}
+
+.learn-more:hover {
+    color: var(--primary-dark);
+}
+
+.learn-more i {
+    margin-left: 5px;
+    transition: transform 0.3s;
+}
+
+.learn-more:hover i {
+    transform: translateX(5px);
+}
+
+/* Details Page Styles */
+.details-page {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh;
+    background-color: var(--secondary-color);
+    z-index: 9998; /* Um pouco menor que a navbar para que ela fique visível */
+    overflow-y: auto;
+    padding: 100px 0 20px 0; /* Adicionado padding-top de 100px para não sobrepor a navbar */
+    opacity: 0;
+    transform: translateX(100%);
+    transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+.details-page.active {
+    opacity: 1;
+    transform: translateX(0);
+}
+
+.details-header {
+    display: flex;
+    align-items: center;
+    margin-bottom: 30px;
+    padding: 0 0 20px 0; /* Removido padding-top para evitar espaço duplo */
+    border-bottom: 2px solid var(--primary-color);
+}
+
+.back-button {
+    background-color: var(--primary-color);
+    color: var(--white);
+    border: none;
+    padding: 12px 20px;
+    border-radius: var(--border-radius);
+    cursor: pointer;
+    font-size: 1rem;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-right: 20px;
+    transition: background-color 0.3s;
+}
+
+.back-button:hover {
+    background-color: var(--primary-dark);
+}
+
+.details-header h1 {
+    color: var(--primary-color);
+    margin: 0;
+    font-size: 2.5rem;
+}
+
+.details-content {
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.details-hero {
+    display: flex;
+    align-items: center;
+    background-color: var(--white);
+    padding: 40px;
+    border-radius: var(--border-radius);
+    box-shadow: var(--shadow);
+    margin-bottom: 40px;
+}
+
+.material-icon-large {
+    font-size: 4rem;
+    color: var(--primary-color);
+    margin-right: 40px;
+    background-color: var(--light-gray);
+    padding: 30px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 120px;
+    height: 120px;
+}
+
+.material-description {
+    flex: 1;
+}
+
+.material-description p {
+    font-size: 1.2rem;
+    line-height: 1.6;
+    color: var(--text-color);
+    margin: 0;
+}
+
+.details-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 30px;
+    margin-bottom: 40px;
+}
+
+.detail-card {
+    background-color: var(--white);
+    padding: 30px;
+    border-radius: var(--border-radius);
+    box-shadow: var(--shadow);
+    transition: transform 0.3s;
+}
+
+.detail-card:hover {
+    transform: translateY(-5px);
+}
+
+.card-header {
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+    color: var(--primary-color);
+}
+
+.card-header i {
+    font-size: 1.5rem;
+    margin-right: 10px;
+}
+
+.card-header h3 {
+    margin: 0;
+    font-size: 1.3rem;
+}
+
+.recyclable-card .card-header {
+    color: #10b981;
+}
+
+.non-recyclable-card .card-header {
+    color: #ef4444;
+}
+
+.preparation-card .card-header {
+    color: var(--blue);
+}
+
+.impact-card .card-header {
+    color: var(--primary-color);
+}
+
+.detail-card ul,
+.detail-card ol {
+    list-style-position: inside;
+    padding-left: 0;
+}
+
+.detail-card li {
+    margin-bottom: 10px;
+    padding: 8px 0;
+    border-bottom: 1px solid #f0f0f0;
+    font-size: 1rem;
+    line-height: 1.5;
+}
+
+.detail-card li:last-child {
+    border-bottom: none;
+}
+
+.detail-card p {
+    font-size: 1.1rem;
+    line-height: 1.6;
+    color: var(--text-color);
+}
+
+.tips-section {
+    background-color: var(--white);
+    padding: 40px;
+    border-radius: var(--border-radius);
+    box-shadow: var(--shadow);
+}
+
+.tips-section h3 {
+    color: var(--primary-color);
+    font-size: 1.5rem;
+    margin-bottom: 30px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.tips-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 20px;
+}
+
+.tip-card {
+    background-color: var(--light-gray);
+    padding: 20px;
+    border-radius: var(--border-radius);
+    border-left: 4px solid var(--primary-color);
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    transition: background-color 0.3s;
+}
+
+.tip-card:hover {
+    background-color: #e2f8ef;
+}
+
+.tip-card .tip-icon {
+    font-size: 1.5rem;
+    color: var(--primary-color);
+    min-width: 30px;
+}
+
+.tip-card .tip-text {
+    font-size: 1rem;
+    line-height: 1.5;
+    color: var(--text-color);
+}
+
+/* Responsive Styles for Details Page */
+@media (max-width: 992px) {
+    .details-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .details-hero {
+        flex-direction: column;
+        text-align: center;
+    }
+    
+    .material-icon-large {
+        margin-right: 0;
+        margin-bottom: 20px;
+    }
+}
+
+@media (max-width: 768px) {
+    .details-page {
+        padding: 90px 0 10px 0; /* Ajustado para mobile também */
+    }
+    
+    .details-header {
+        flex-direction: column;
+        text-align: center;
+        gap: 15px;
+    }
+    
+    .details-header h1 {
+        font-size: 2rem;
+    }
+    
+    .details-hero {
+        padding: 20px;
+    }
+    
+    .material-icon-large {
+        font-size: 3rem;
+        min-width: 80px;
+        height: 80px;
+        padding: 20px;
+    }
+    
+    .detail-card {
+        padding: 20px;
+    }
+    
+    .tips-section {
+        padding: 20px;
+    }
+}
+
+/* Knowledge Test Section */
+.knowledge-test {
+    background-color: var(--white);
+}
+
+.quiz-container {
+    max-width: 800px;
+    margin: 0 auto;
+    background-color: var(--light-gray);
+    padding: 40px;
+    border-radius: var(--border-radius);
+}
+
+.progress-container {
+    margin-bottom: 30px;
+}
+
+.progress-text {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 10px;
+}
+
+.progress-bar {
+    height: 10px;
+    background-color: #e9ecef;
+    border-radius: 5px;
+    overflow: hidden;
+}
+
+.progress {
+    height: 100%;
+    background-color: var(--primary-color);
+    border-radius: 5px;
+}
+
+.question {
+    font-size: 1.2rem;
+    font-weight: 500;
+    margin-bottom: 20px;
+}
+
+.options {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.option {
+    display: flex;
+    align-items: center;
+    padding: 15px;
+    background-color: var(--white);
+    border-radius: var(--border-radius);
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.option:hover {
+    background-color: #e9ecef;
+}
+
+.option input {
+    margin-right: 15px;
+}
+
+/* Quiz buttons */
+.btn-confirm, .btn-next, .btn-restart {
+    background-color: var(--primary-color);
+    color: var(--white);
+    border: none;
+    padding: 12px 24px;
+    border-radius: var(--border-radius);
+    cursor: pointer;
+    font-weight: 600;
+    transition: background-color 0.3s;
+    margin-top: 20px;
+    align-self: center;
+    display: block;
+    width: fit-content;
+}
+
+.btn-confirm:hover, .btn-next:hover, .btn-restart:hover {
+    background-color: var(--primary-dark);
+}
+
+.explanation {
+    background-color: var(--white);
+    padding: 20px;
+    border-radius: var(--border-radius);
+    margin-top: 20px;
+}
+
+.explanation h3 {
+    margin-bottom: 15px;
+}
+
+.explanation p {
+    margin-bottom: 20px;
+}
+
+/* Download Materials Section */
+.download-materials {
+    background-color: var(--secondary-color);
+}
+
+.downloads-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 30px;
+}
+
+.download-card {
+    background-color: var(--white);
+    padding: 20px;
+    border-radius: var(--border-radius);
+    box-shadow: var(--shadow);
+    display: flex;
+    align-items: center;
+}
+
+.download-icon {
+    font-size: 2rem;
+    color: var(--primary-color);
+    margin-right: 15px;
+}
+
+.download-info {
+    flex: 1;
+}
+
+.download-info h3 {
+    margin-bottom: 5px;
+}
+
+.file-size {
+    font-size: 0.9rem;
+    color: var(--gray);
+}
+
+.download-btn {
+    background-color: var(--primary-color);
+    color: var(--white);
+    border: none;
+    padding: 8px 15px;
+    border-radius: var(--border-radius);
+    cursor: pointer;
+    font-size: 0.9rem;
+    white-space: nowrap;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    min-width: 100px;
+    justify-content: center;
+}
+
+.download-btn:hover {
+    background-color: var(--primary-dark);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(13, 159, 111, 0.3);
+}
+
+.download-btn:disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
+    transform: none;
+    box-shadow: none;
+}
+
+.download-btn:disabled:hover {
+    background-color: #ccc;
+    transform: none;
+}
+
+.download-btn .fa-spinner {
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+/* Modal de Download PDF */
+.download-modal {
+    display: none;
+    position: fixed;
+    z-index: 10000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.6);
+    backdrop-filter: blur(5px);
+    animation: fadeInBackground 0.3s ease-out;
+}
+
+.download-modal.show {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.download-modal-content {
+    background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%);
+    padding: 40px 30px;
+    border-radius: 20px;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.2);
+    text-align: center;
+    max-width: 400px;
+    width: 90%;
+    position: relative;
+    transform: scale(0.7) translateY(-50px);
+    opacity: 0;
+    animation: modalAppear 0.4s ease-out forwards;
+}
+
+.download-modal-icon {
+    font-size: 4rem;
+    color: var(--primary-color);
+    margin-bottom: 20px;
+    animation: checkmarkAnimation 0.6s ease-out 0.2s both;
+}
+
+.download-modal h3 {
+    color: var(--text-color);
+    font-size: 1.5rem;
+    margin-bottom: 15px;
+    font-weight: 600;
+}
+
+.download-modal p {
+    color: var(--gray);
+    font-size: 1rem;
+    margin-bottom: 25px;
+    line-height: 1.5;
+}
+
+.download-modal-close {
+    background: var(--primary-color);
+    color: white;
+    border: none;
+    padding: 12px 30px;
+    border-radius: 25px;
+    font-size: 1rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(13, 159, 111, 0.3);
+}
+
+.download-modal-close:hover {
+    background: var(--primary-dark);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(13, 159, 111, 0.4);
+}
+
+.download-modal-close:active {
+    transform: translateY(0);
+}
+
+/* Animações */
+@keyframes fadeInBackground {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes modalAppear {
+    to {
+        transform: scale(1) translateY(0);
+        opacity: 1;
+    }
+}
+
+@keyframes checkmarkAnimation {
+    0% {
+        transform: scale(0) rotate(-45deg);
+        opacity: 0;
+    }
+    50% {
+        transform: scale(1.2) rotate(-45deg);
+        opacity: 1;
+    }
+    100% {
+        transform: scale(1) rotate(0deg);
+        opacity: 1;
+    }
+}
+
+/* Modal de Erro */
+.error-modal {
+    display: none;
+    position: fixed;
+    z-index: 10000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.6);
+    backdrop-filter: blur(5px);
+    animation: fadeInBackground 0.3s ease-out;
+}
+
+.error-modal.show {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.error-modal-content {
+    background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%);
+    padding: 40px 30px;
+    border-radius: 20px;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.2);
+    text-align: center;
+    max-width: 450px;
+    width: 90%;
+    position: relative;
+    transform: scale(0.7) translateY(-50px);
+    opacity: 0;
+    animation: modalAppear 0.4s ease-out forwards;
+}
+
+.error-modal-icon {
+    font-size: 4rem;
+    color: #ef4444;
+    margin-bottom: 20px;
+    animation: shakeAnimation 0.6s ease-out 0.2s both;
+}
+
+.error-modal h3 {
+    color: var(--text-color);
+    font-size: 1.5rem;
+    margin-bottom: 15px;
+    font-weight: 600;
+}
+
+.error-modal p {
+    color: var(--gray);
+    font-size: 1rem;
+    margin-bottom: 25px;
+    line-height: 1.5;
+}
+
+.error-modal-close {
+    background: #ef4444;
+    color: white;
+    border: none;
+    padding: 12px 30px;
+    border-radius: 25px;
+    font-size: 1rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(239, 68, 68, 0.3);
+}
+
+.error-modal-close:hover {
+    background: #dc2626;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(239, 68, 68, 0.4);
+}
+
+.error-modal-close:active {
+    transform: translateY(0);
+}
+
+@keyframes shakeAnimation {
+    0%, 100% {
+        transform: translateX(0);
+    }
+    10%, 30%, 50%, 70%, 90% {
+        transform: translateX(-5px);
+    }
+    20%, 40%, 60%, 80% {
+        transform: translateX(5px);
+    }
+}
+
+/* Modo escuro para o modal de erro */
+body.dark-mode .error-modal-content {
+    background: linear-gradient(135deg, #2d3748 0%, #1a202c 100%);
+    color: #f7fafc;
+}
+
+body.dark-mode .error-modal h3 {
+    color: #f7fafc;
+}
+
+body.dark-mode .error-modal p {
+    color: #cbd5e0;
+}
+
+body.dark-mode {
+  background-color: #23272E !important;
+  color: #f3f3f3;
+}
+body.dark-mode .container,
+body.dark-mode section,
+body.dark-mode .hero,
+body.dark-mode .materials-library,
+body.dark-mode .download-materials {
+  background-color: #23272E !important;
+}
+body.dark-mode h1,
+body.dark-mode h2,
+body.dark-mode h3,
+body.dark-mode h4,
+body.dark-mode p,
+body.dark-mode label,
+body.dark-mode .file-size {
+  color: #f3f3f3 !important;
+}
+body.dark-mode a,
+body.dark-mode .learn-more {
+  color: #10b981 !important;
+}
+body.dark-mode .btn-primary,
+body.dark-mode .btn-confirm,
+body.dark-mode .btn-next,
+body.dark-mode .btn-restart,
+body.dark-mode .download-btn {
+  background-color: #10b981 !important;
+  color: #fff !important;
+}
+body.dark-mode .btn-primary:hover,
+body.dark-mode .btn-confirm:hover,
+body.dark-mode .btn-next:hover,
+body.dark-mode .btn-restart:hover,
+body.dark-mode .download-btn:hover {
+  background-color: #059669 !important;
+}
+body.dark-mode .cycle-step,
+body.dark-mode .material-card,
+body.dark-mode .quiz-container,
+body.dark-mode .option,
+body.dark-mode .explanation,
+body.dark-mode .download-card {
+  background-color: #26292F !important;
+  color: #f3f3f3 !important;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.4);
+}
+body.dark-mode .option:hover {
+  background-color: #222d2f !important;
+}
+body.dark-mode .progress-bar {
+  background-color: #222d2f !important;
+}
+body.dark-mode .progress {
+  background-color: #10b981 !important;
+}
+body.dark-mode .search-container input {
+  background-color: #232526 !important;
+  color: #f3f3f3 !important;
+  border: 1px solid #333 !important;
+}
+body.dark-mode .search-btn {
+  background-color: #10b981 !important;
+  color: #fff !important;
+}
+body.dark-mode .icon-container.green {
+  background-color: #10b981 !important;
+}
+body.dark-mode .icon-container.blue {
+  background-color: #2563eb !important;
+}
+body.dark-mode .icon-container.orange {
+  background-color: #f59e0b !important;
+}
+body.dark-mode .icon-container.purple {
+  background-color: #8b5cf6 !important;
+}
+body.dark-mode .material-icon,
+body.dark-mode .download-icon {
+  color: #10b981 !important;
+  background: none !important;
+}
+body.dark-mode .material-icon,
+body.dark-mode .icon-container img,
+body.dark-mode .download-icon img {
+  background: none !important;
+  filter: brightness(0.85) invert(0.85);
+}
+body.dark-mode ::-webkit-scrollbar-track {
+  background: #232526;
+}
+body.dark-mode ::-webkit-scrollbar-thumb {
+  background: #10b981;
+}
+body.dark-mode ::-webkit-scrollbar-thumb:hover {
+  background: #059669;
+}
+
+/* Modal dark mode styles */
+body.dark-mode .modal-overlay {
+    background-color: rgba(0, 0, 0, 0.7);
+}
+
+body.dark-mode .modal-content {
+    background-color: #26292F !important;
+    color: #f3f3f3 !important;
+}
+
+body.dark-mode .modal-header {
+    background-color: #10b981 !important;
+    color: #fff !important;
+    border-bottom: 1px solid #333 !important;
+}
+
+body.dark-mode .modal-close {
+    color: #fff !important;
+}
+
+body.dark-mode .modal-close:hover {
+    background-color: rgba(255, 255, 255, 0.2) !important;
+}
+
+body.dark-mode .info-section {
+    background-color: #232526 !important;
+    color: #f3f3f3 !important;
+}
+
+body.dark-mode .info-section h3 {
+    color: #10b981 !important;
+}
+
+body.dark-mode .tip-card {
+    background-color: #26292F !important;
+    color: #f3f3f3 !important;
+    border-left: 4px solid #10b981 !important;
+}
+
+body.dark-mode .tip-card .tip-icon {
+    color: #10b981 !important;
+}
+
+/* Details Page Dark Mode */
+body.dark-mode .details-page {
+    background-color: #23272E !important;
+}
+
+body.dark-mode .details-header {
+    border-bottom: 2px solid #10b981 !important;
+}
+
+body.dark-mode .details-header h1 {
+    color: #10b981 !important;
+}
+
+body.dark-mode .back-button {
+    background-color: #10b981 !important;
+    color: #fff !important;
+}
+
+body.dark-mode .back-button:hover {
+    background-color: #059669 !important;
+}
+
+body.dark-mode .details-hero,
+body.dark-mode .detail-card,
+body.dark-mode .tips-section {
+    background-color: #26292F !important;
+    color: #f3f3f3 !important;
+}
+
+body.dark-mode .material-icon-large {
+    background-color: #232526 !important;
+    color: #10b981 !important;
+}
+
+body.dark-mode .material-description p {
+    color: #f3f3f3 !important;
+}
+
+body.dark-mode .card-header {
+    color: #10b981 !important;
+}
+
+body.dark-mode .recyclable-card .card-header {
+    color: #10b981 !important;
+}
+
+body.dark-mode .non-recyclable-card .card-header {
+    color: #ef4444 !important;
+}
+
+body.dark-mode .preparation-card .card-header {
+    color: #2563eb !important;
+}
+
+body.dark-mode .impact-card .card-header {
+    color: #10b981 !important;
+}
+
+body.dark-mode .detail-card li {
+    border-bottom: 1px solid #333 !important;
+    color: #f3f3f3 !important;
+}
+
+body.dark-mode .detail-card p {
+    color: #f3f3f3 !important;
+}
+
+body.dark-mode .tips-section h3 {
+    color: #10b981 !important;
+}
+
+body.dark-mode .tip-card {
+    background-color: #232526 !important;
+    border-left: 4px solid #10b981 !important;
+}
+
+body.dark-mode .tip-card:hover {
+    background-color: #222d2f !important;
+}
+
+body.dark-mode .tip-card .tip-icon {
+    color: #10b981 !important;
+}
+
+body.dark-mode .tip-card .tip-text {
+    color: #f3f3f3 !important;
+}
+
+/* Modal de Aviso para Quiz */
+.warning-modal {
+    display: none;
+    position: fixed;
+    z-index: 10000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.6);
+    backdrop-filter: blur(2px);
+    animation: fadeIn 0.3s ease-out;
+}
+
+.warning-modal-content {
+    background-color: #fff;
+    margin: 15% auto;
+    padding: 0;
+    border-radius: 16px;
+    width: 90%;
+    max-width: 450px;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+    transform: scale(0.9);
+    animation: modalSlideIn 0.3s ease-out forwards;
+    overflow: hidden;
+}
+
+.warning-modal-header {
+    background: linear-gradient(135deg, #ff9800, #f57c00);
+    color: white;
+    padding: 20px 24px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.warning-modal-icon {
+    font-size: 28px;
+    filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.2));
+}
+
+.warning-modal-title {
+    font-size: 20px;
+    font-weight: 600;
+    margin: 0;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+}
+
+.warning-modal-body {
+    padding: 24px;
+    text-align: center;
+}
+
+.warning-modal-message {
+    font-size: 16px;
+    color: #333;
+    margin-bottom: 24px;
+    line-height: 1.5;
+}
+
+.warning-modal-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 12px;
+}
+
+.warning-modal-btn {
+    padding: 12px 24px;
+    border: none;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    min-width: 100px;
+}
+
+.warning-modal-btn-primary {
+    background: linear-gradient(135deg, #4CAF50, #45a049);
+    color: white;
+    box-shadow: 0 4px 12px rgba(76, 175, 80, 0.3);
+}
+
+.warning-modal-btn-primary:hover {
+    background: linear-gradient(135deg, #45a049, #3d8b40);
+    transform: translateY(-1px);
+    box-shadow: 0 6px 16px rgba(76, 175, 80, 0.4);
+}
+
+.warning-modal-btn-primary:active {
+    transform: translateY(0);
+    box-shadow: 0 2px 8px rgba(76, 175, 80, 0.3);
+}
+
+/* Animação de entrada mais suave para o modal de aviso */
+.warning-modal.show .warning-modal-content {
+    animation: warningPulse 0.4s ease-out;
+}
+
+@keyframes warningPulse {
+    0% {
+        transform: scale(0.8) translateY(-30px);
+        opacity: 0;
+    }
+    50% {
+        transform: scale(1.05) translateY(-5px);
+        opacity: 0.8;
+    }
+    100% {
+        transform: scale(1) translateY(0);
+        opacity: 1;
+    }
+}
+
+/* Efeito hover no ícone de aviso */
+.warning-modal-icon {
+    transition: transform 0.3s ease;
+}
+
+.warning-modal:hover .warning-modal-icon {
+    transform: scale(1.1) rotate(5deg);
+}
+
+/* Melhorar a animação do botão */
+.warning-modal-btn-primary {
+    position: relative;
+    overflow: hidden;
+}
+
+.warning-modal-btn-primary::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+    transition: left 0.5s;
+}
+
+.warning-modal-btn-primary:hover::before {
+    left: 100%;
+}
+
+@keyframes modalSlideIn {
+    from {
+        transform: scale(0.9) translateY(-20px);
+        opacity: 0;
+    }
+    to {
+        transform: scale(1) translateY(0);
+        opacity: 1;
+    }
+}
+
+/* Responsividade para mobile */
+@media (max-width: 480px) {
+    .warning-modal-content {
+        width: 95%;
+        margin: 20% auto;
+    }
+    
+    .warning-modal-header {
+        padding: 16px 20px;
+    }
+    
+    .warning-modal-title {
+        font-size: 18px;
+    }
+    
+    .warning-modal-body {
+        padding: 20px;
+    }
+    
+    .warning-modal-message {
+        font-size: 15px;
+    }
+}
+
+/* Suporte ao modo escuro para todos os modais */
+
+/* Modal de Download - Modo Escuro */
+body.dark-mode .download-modal-content {
+    background: linear-gradient(135deg, #2d3748 0%, #1a202c 100%);
+    color: #f7fafc;
+    border: 1px solid #4a5568;
+}
+
+body.dark-mode .download-modal h3 {
+    color: #f7fafc;
+}
+
+body.dark-mode .download-modal p {
+    color: #cbd5e0;
+}
+
+body.dark-mode .download-modal-close {
+    background: #10b981;
+    color: white;
+}
+
+body.dark-mode .download-modal-close:hover {
+    background: #059669;
+    box-shadow: 0 6px 20px rgba(16, 185, 129, 0.4);
+}
+
+/* Modal de Aviso - Modo Escuro */
+body.dark-mode .warning-modal-content {
+    background: linear-gradient(135deg, #2d3748 0%, #1a202c 100%);
+    color: #f7fafc;
+    border: 1px solid #4a5568;
+}
+
+body.dark-mode .warning-modal-title {
+    color: #f7fafc;
+}
+
+body.dark-mode .warning-modal-message {
+    color: #cbd5e0;
+}
+
+body.dark-mode .warning-modal-btn {
+    background: #4a5568;
+    color: #f7fafc;
+    border: 1px solid #718096;
+}
+
+body.dark-mode .warning-modal-btn:hover {
+    background: #2d3748;
+    border-color: #4a5568;
+}
+
+body.dark-mode .warning-modal-btn-primary {
+    background: #f59e0b !important;
+    color: white !important;
+    border: none !important;
+}
+
+body.dark-mode .warning-modal-btn-primary:hover {
+    background: #d97706 !important;
+    box-shadow: 0 6px 20px rgba(245, 158, 11, 0.4);
+}

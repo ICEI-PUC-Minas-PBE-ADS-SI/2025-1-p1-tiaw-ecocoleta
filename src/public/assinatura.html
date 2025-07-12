@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Assinatura Coletor - EcoColeta</title>
+  <link rel="icon" type="image/png" href="assets/img/logo.svg">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" />
+  <link rel="stylesheet" href="assets/css/assinatura.css" />
+</head>
+<body>
+  <div class="container py-5">
+    <div class="row justify-content-center g-4">
+      <!-- Plano Básico -->
+      <div class="col-md-4">
+        <div class="paywall-container h-100 d-flex flex-column">
+          <div class="eco-logo mb-2">
+            <img src="./assets/img/logo.svg" alt="EcoColeta Logo">
+            <span class="eco-logo-text">EcoColeta</span>
+          </div>
+          <div class="plan-title">Plano Básico</div>
+          <div class="plan-price">R$ 12,99 <span style="font-size:1rem;font-weight:400;">/mês</span></div>
+          <div class="plan-desc">Ideal para quem está começando. Não inclui acesso ao dashboard.</div>
+          <ul class="benefits-list">
+            <li><span class="benefit-icon">✔️</span> Receba solicitações de clientes</li>
+            <li><span class="benefit-icon">✔️</span> Perfil público na plataforma</li>
+            <li><span class="benefit-icon">✔️</span> Suporte padrão</li>
+            <li><span class="benefit-icon">❌</span> Sem acesso ao dashboard</li>
+          </ul>
+          <button class="btn-stripe w-100 mb-2" onclick="assinarPlano('basic')">Assinar Básico</button>
+        </div>
+      </div>
+      <!-- Plano Profissional -->
+      <div class="col-md-4">
+        <div class="paywall-container h-100 d-flex flex-column border border-success border-2">
+          <div class="eco-logo mb-2">
+            <img src="./assets/img/logo.svg" alt="EcoColeta Logo">
+            <span class="eco-logo-text">EcoColeta</span>
+          </div>
+          <div class="plan-title">Plano Profissional</div>
+          <div class="plan-price">R$ 25,99 <span style="font-size:1rem;font-weight:400;">/mês</span></div>
+          <div class="plan-desc">Acesse todas as ferramentas essenciais para expandir seu negócio de coleta.</div>
+          <ul class="benefits-list">
+            <li><span class="benefit-icon">✔️</span> Acesso ao painel completo de coleta</li>
+            <li><span class="benefit-icon">✔️</span> Receba solicitações de clientes</li>
+            <li><span class="benefit-icon">✔️</span> Relatórios e métricas exclusivas</li>
+            <li><span class="benefit-icon">✔️</span> Suporte prioritário</li>
+            <li><span class="benefit-icon">✔️</span> Cancelamento fácil a qualquer momento</li>
+          </ul>
+          <button class="btn-stripe w-100 mb-2" onclick="assinarPlano('pro')">Assinar Profissional</button>
+        </div>
+      </div>
+      <!-- Plano Premium -->
+      <div class="col-md-4">
+        <div class="paywall-container h-100 d-flex flex-column">
+          <div class="eco-logo mb-2">
+            <img src="./assets/img/logo.svg" alt="EcoColeta Logo">
+            <span class="eco-logo-text">EcoColeta</span>
+          </div>
+          <div class="plan-title">Plano Premium</div>
+          <div class="plan-price">R$ 39,99 <span style="font-size:1rem;font-weight:400;">/mês</span></div>
+          <div class="plan-desc">Todas as funções desbloqueadas, integrações e vantagens exclusivas.</div>
+          <ul class="benefits-list">
+            <li><span class="benefit-icon">✔️</span> Tudo do Profissional +</li>
+            <li><span class="benefit-icon">✔️</span> Integração com sistemas externos</li>
+            <li><span class="benefit-icon">✔️</span> Relatórios avançados</li>
+            <li><span class="benefit-icon">✔️</span> Suporte premium</li>
+            <li><span class="benefit-icon">✔️</span> Novas funções em primeira mão</li>
+          </ul>
+          <button class="btn-stripe w-100 mb-2" onclick="assinarPlano('premium')">Assinar Premium</button>
+        </div>
+      </div>
+    </div>
+    <div class="small-link mt-4">Pagamento seguro via Stripe. <br> Dúvidas? <a href="#" style="color:#198754;">Fale conosco</a></div>
+  </div>
+  <script src="https://js.stripe.com/v3/"></script>
+  <script src="assets/js/assinatura.js"></script>
+</body>
+</html>

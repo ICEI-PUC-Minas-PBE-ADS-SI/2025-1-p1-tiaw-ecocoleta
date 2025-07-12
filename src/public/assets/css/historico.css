@@ -1,0 +1,116 @@
+/* Reset básico para garantir consistência entre navegadores */
+body, h1, h2, ul, li, p {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Fonte e cor de fundo geral */
+body {
+    font-family: 'Segoe UI', Arial, sans-serif;
+    background-color: #f4f8f4; /* tom claro, padrão EcoColeta */
+    color: #222;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+/* Cabeçalho estilizado */
+header {
+    background-color: #2e7d32; /* verde EcoColeta */
+    color: #fff;
+    padding: 24px 0 16px 0;
+    text-align: center;
+    box-shadow: 0 2px 8px rgba(46, 125, 50, 0.08);
+}
+
+header h1 {
+    font-size: 2.2rem;
+    letter-spacing: 1px;
+}
+
+/* Área principal centralizada */
+main {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    padding: 32px 8px 24px 8px;
+}
+
+/* Seção do histórico */
+#historico {
+    background: #fff;
+    border-radius: 12px;
+    box-shadow: 0 2px 16px rgba(46, 125, 50, 0.07);
+    padding: 32px 28px;
+    min-width: 340px;
+    max-width: 480px;
+    width: 100%;
+}
+
+#historico h2 {
+    color: #388e3c;
+    font-size: 1.3rem;
+    margin-bottom: 18px;
+    font-weight: 600;
+    border-left: 4px solid #66bb6a;
+    padding-left: 10px;
+}
+
+/* Lista de recompensas */
+#lista-recompensas {
+    list-style: none;
+}
+
+/* Cada item de recompensa */
+.recompensa-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: #e8f5e9; /* verde bem claro */
+    border-radius: 8px;
+    margin-bottom: 14px;
+    padding: 16px 18px;
+    box-shadow: 0 1px 4px rgba(46, 125, 50, 0.04);
+    transition: box-shadow 0.2s;
+}
+
+.recompensa-item:hover {
+    box-shadow: 0 4px 16px rgba(46, 125, 50, 0.10);
+}
+
+/* Nome da recompensa */
+.recompensa-nome {
+    font-weight: 500;
+    color: #2e7d32;
+    font-size: 1.05rem;
+}
+
+/* Data e pontos */
+.recompensa-info {
+    text-align: right;
+}
+
+.recompensa-pontos {
+    color: #388e3c;
+    font-weight: bold;
+    font-size: 1rem;
+}
+
+.recompensa-data {
+    color: #888;
+    font-size: 0.92rem;
+}
+
+/* Responsividade */
+@media (max-width: 600px) {
+    #historico {
+        padding: 18px 6px;
+        min-width: unset;
+        max-width: 98vw;
+    }
+    main {
+        padding: 12px 2px 12px 2px;
+    }
+}

@@ -1,0 +1,475 @@
+/* Criar Comunidade - Styles */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Arial', sans-serif;
+}
+
+body {
+  background-color: #f8f9fa;
+  color: #333;
+  line-height: 1.6;
+}
+
+main {
+  padding: 20px;
+  min-height: 100vh;
+}
+
+.container {
+  max-width: 800px;
+  margin: 0 auto;
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+}
+
+/* Header */
+.header {
+  background: linear-gradient(135deg, #04aa6d 0%, #047857 100%);
+  color: white;
+  padding: 30px;
+  text-align: center;
+  position: relative;
+}
+
+.btn-voltar {
+  position: absolute;
+  left: 20px;
+  top: 20px;
+  background: rgba(255, 255, 255, 0.2);
+  color: white;
+  border: none;
+  padding: 10px 15px;
+  border-radius: 8px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.9em;
+  transition: all 0.3s ease;
+}
+
+.btn-voltar:hover {
+  background: rgba(255, 255, 255, 0.3);
+  transform: translateX(-2px);
+}
+
+.header h1 {
+  font-size: 2.2em;
+  margin-bottom: 10px;
+  font-weight: 600;
+}
+
+.subtitle {
+  font-size: 1.1em;
+  opacity: 0.9;
+  margin-top: 10px;
+}
+
+/* Form */
+.form-criar-comunidade {
+  padding: 40px;
+}
+
+.form-section {
+  margin-bottom: 40px;
+}
+
+.form-section h2 {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-size: 1.4em;
+  color: #333;
+  margin-bottom: 25px;
+  padding-bottom: 10px;
+  border-bottom: 2px solid #e9ecef;
+}
+
+.form-section h2 i {
+  color: #04aa6d;
+  font-size: 1.2em;
+}
+
+.form-group {
+  margin-bottom: 25px;
+}
+
+.form-label {
+  display: block;
+  font-weight: 600;
+  color: #333;
+  margin-bottom: 8px;
+  font-size: 1.05em;
+}
+
+.form-input,
+.form-textarea,
+.form-select {
+  width: 100%;
+  padding: 12px 16px;
+  border: 2px solid #e9ecef;
+  border-radius: 8px;
+  font-size: 1em;
+  transition: all 0.3s ease;
+  background: white;
+}
+
+.form-input:focus,
+.form-textarea:focus,
+.form-select:focus {
+  outline: none;
+  border-color: #04aa6d;
+  box-shadow: 0 0 0 3px rgba(4, 170, 109, 0.1);
+}
+
+.form-textarea {
+  resize: vertical;
+  min-height: 100px;
+}
+
+.form-help {
+  display: block;
+  color: #6c757d;
+  font-size: 0.85em;
+  margin-top: 5px;
+}
+
+/* Upload Area */
+.upload-area {
+  border: 2px dashed #04aa6d;
+  border-radius: 8px;
+  padding: 30px;
+  text-align: center;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  background: #f8f9fb;
+  position: relative;
+}
+
+.upload-area:hover {
+  border-color: #047857;
+  background: #f0f8f5;
+}
+
+.upload-area.dragover {
+  border-color: #047857;
+  background: #e8f5e8;
+  transform: scale(1.02);
+}
+
+.upload-content {
+  pointer-events: none;
+}
+
+.upload-icon {
+  font-size: 3em;
+  color: #04aa6d;
+  margin-bottom: 15px;
+}
+
+.upload-area p {
+  font-size: 1.1em;
+  color: #333;
+  margin-bottom: 10px;
+  font-weight: 500;
+}
+
+.upload-area small {
+  display: block;
+  color: #6c757d;
+  margin-bottom: 5px;
+}
+
+.form-file {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  cursor: pointer;
+}
+
+/* Banner Preview */
+.banner-preview {
+  margin-top: 15px;
+  position: relative;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.banner-preview img {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+}
+
+.btn-remove-banner {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background: rgba(220, 53, 69, 0.9);
+  color: white;
+  border: none;
+  width: 35px;
+  height: 35px;
+  border-radius: 50%;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.9em;
+  transition: all 0.3s ease;
+}
+
+.btn-remove-banner:hover {
+  background: #dc3545;
+  transform: scale(1.1);
+}
+
+/* Autor Section */
+.autor-section {
+  background: #f8f9fa;
+  padding: 25px;
+  border-radius: 8px;
+  border: 2px solid #e9ecef;
+}
+
+.autor-info {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.autor-avatar img {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 3px solid #04aa6d;
+}
+
+.autor-dados h3 {
+  font-size: 1.3em;
+  color: #333;
+  margin-bottom: 5px;
+}
+
+.autor-dados p {
+  color: #6c757d;
+  margin-bottom: 5px;
+}
+
+.autor-dados small {
+  color: #04aa6d;
+  font-weight: 600;
+  text-transform: uppercase;
+  font-size: 0.8em;
+  letter-spacing: 0.5px;
+}
+
+/* Form Actions */
+.form-actions {
+  display: flex;
+  gap: 15px;
+  justify-content: center;
+  padding-top: 30px;
+  border-top: 2px solid #e9ecef;
+  margin-top: 40px;
+}
+
+.btn {
+  padding: 12px 25px;
+  border: none;
+  border-radius: 8px;
+  font-size: 1em;
+  font-weight: 600;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  transition: all 0.3s ease;
+  text-decoration: none;
+  min-width: 150px;
+  justify-content: center;
+}
+
+.btn-primary {
+  background: linear-gradient(135deg, #04aa6d 0%, #047857 100%);
+  color: white;
+  box-shadow: 0 2px 8px rgba(4, 170, 109, 0.3);
+}
+
+.btn-primary:hover {
+  background: linear-gradient(135deg, #059669 0%, #065f46 100%);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(4, 170, 109, 0.4);
+}
+
+.btn-secondary {
+  background: #6c757d;
+  color: white;
+  box-shadow: 0 2px 8px rgba(108, 117, 125, 0.3);
+}
+
+.btn-secondary:hover {
+  background: #5a6268;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(108, 117, 125, 0.4);
+}
+
+/* Loading state */
+.btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  transform: none !important;
+}
+
+/* Success message */
+.success-message {
+  background: #d4edda;
+  color: #155724;
+  padding: 15px;
+  border-radius: 8px;
+  border: 1px solid #c3e6cb;
+  margin-bottom: 20px;
+  display: none;
+}
+
+.error-message {
+  background: #f8d7da;
+  color: #721c24;
+  padding: 15px;
+  border-radius: 8px;
+  border: 1px solid #f5c6cb;
+  margin-bottom: 20px;
+  display: none;
+}
+
+/* Character counter */
+.char-counter {
+  font-size: 0.8em;
+  color: #6c757d;
+  text-align: right;
+  margin-top: 5px;
+}
+
+.char-counter.warning {
+  color: #fd7e14;
+}
+
+.char-counter.danger {
+  color: #dc3545;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .container {
+    margin: 10px;
+    border-radius: 8px;
+  }
+  
+  .header {
+    padding: 20px;
+  }
+  
+  .header h1 {
+    font-size: 1.8em;
+  }
+  
+  .subtitle {
+    font-size: 1em;
+  }
+  
+  .form-criar-comunidade {
+    padding: 20px;
+  }
+  
+  .form-actions {
+    flex-direction: column;
+    gap: 10px;
+  }
+  
+  .btn {
+    width: 100%;
+  }
+  
+  .autor-info {
+    flex-direction: column;
+    text-align: center;
+    gap: 15px;
+  }
+  
+  .btn-voltar {
+    position: static;
+    margin-bottom: 20px;
+    align-self: flex-start;
+  }
+}
+
+/* Dark Mode Support */
+body.dark-mode {
+  background: #23272e !important;
+  color: #e3e6eb !important;
+}
+
+body.dark-mode .container {
+  background: #26292f !important;
+  color: #e3e6eb !important;
+}
+
+body.dark-mode .form-section h2 {
+  color: #e3e6eb !important;
+  border-color: #35383d !important;
+}
+
+body.dark-mode .form-label {
+  color: #e3e6eb !important;
+}
+
+body.dark-mode .form-input,
+body.dark-mode .form-textarea,
+body.dark-mode .form-select {
+  background: #23272e !important;
+  color: #e3e6eb !important;
+  border-color: #35383d !important;
+}
+
+body.dark-mode .form-input:focus,
+body.dark-mode .form-textarea:focus,
+body.dark-mode .form-select:focus {
+  border-color: #04aa6d !important;
+  box-shadow: 0 0 0 3px rgba(4, 170, 109, 0.2) !important;
+}
+
+body.dark-mode .upload-area {
+  background: #23272e !important;
+  border-color: #04aa6d !important;
+}
+
+body.dark-mode .upload-area:hover {
+  background: #26292f !important;
+}
+
+body.dark-mode .autor-section {
+  background: #23272e !important;
+  border-color: #35383d !important;
+}
+
+body.dark-mode .form-actions {
+  border-color: #35383d !important;
+}
+
+body.dark-mode .form-help,
+body.dark-mode .char-counter {
+  color: #b5bac1 !important;
+}
+
+body.dark-mode .autor-dados p {
+  color: #b5bac1 !important;
+}

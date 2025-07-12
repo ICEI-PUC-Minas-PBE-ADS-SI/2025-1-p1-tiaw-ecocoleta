@@ -1,0 +1,38 @@
+<!-- detalhe-evento.html -->
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Detalhe do Evento</title>
+  <link rel="icon" type="image/png" href="assets/img/logo.svg">
+  <link rel="stylesheet" href="assets/css/comunidade.css"/>
+  <link rel="stylesheet" href="assets/css/eventos.css"/>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"/>
+  <link rel="stylesheet" href="assets/css/navFooter.css">
+</head>
+<body>
+  
+  <main>
+    <div class="container detalhe-evento-container">
+      <button class="btn-voltar" onclick="window.history.back()"><i class="fa fa-arrow-left"></i> Voltar</button>
+      <div id="eventoBanner" class="evento-banner"></div>
+      <div class="evento-detalhe-content">
+        <h1 id="eventoTitulo"></h1>
+        <div class="evento-status-data">
+          <span id="eventoStatus"></span>
+          <span id="eventoData"></span>
+          <span id="eventoHora"></span>
+        </div>
+        <p id="eventoDescricao" class="evento-detalhe-descricao"></p>
+      </div>
+      <div class="evento-acoes" id="eventoAcoes" style="display: flex; gap: 12px; margin: 18px 0 0 0;"></div>
+      <div class="evento-autor-detalhe" id="eventoAutor"></div>
+    </div>
+  </main>
+  <script src="assets/js/api-utils.js"></script>
+  <script src="assets/js/navFooter.js"></script>
+  <script src="assets/js/detalhe-evento.js"></script>
+  <script src="assets/js/theme.js"></script>
+</body>
+</html>

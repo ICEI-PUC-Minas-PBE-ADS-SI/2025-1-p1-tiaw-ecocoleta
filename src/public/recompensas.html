@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>EcoColeta - Recompensas (Teste)</title>
+    <link rel="icon" type="image/png" href="assets/img/logo.svg">
+    <link rel="stylesheet" href="assets/css/styles.css" />
+    <link rel="stylesheet" href="assets/css/navFooter.css" />
+    <link rel="stylesheet" href="assets/css/recompensas.css" />
+    <!-- Corrigido: Caminhos dos CSS agora apontam para src/css/ ao invés de css/ -->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
+  </head>
+  <body>
+    <div class="recompensas-container">
+      <h1 class="recompensas-titulo">Recompensas</h1>
+      <div class="recompensas-ecopontos">Seus EcoPontos: <span id="ecopontos-usuario">0</span></div>
+      <div class="recompensas-cards" id="recompensas-cards"></div>
+      <!-- Botão Adicionar Recompensa para admin -->
+      <div id="admin-add-reward-btn" style="display:none; margin: 32px 0 0 0; text-align:center;">
+        <button class="recompensas-card-btn" onclick="window.location.href='adicionar-recompensa.html'">Adicionar Recompensa</button>
+      </div>
+      <script>
+        // Exibe o botão apenas para admin
+        const usuarioLogado = JSON.parse(localStorage.getItem('usuarioLogado'));
+        if (usuarioLogado && usuarioLogado.admin) {
+          document.getElementById('admin-add-reward-btn').style.display = 'block';
+        }
+      </script>
+    </div>
+    <!-- Seção de Histórico de Resgates -->
+    <div class="historico-container">
+      <section id="historico">
+        <h2>Histórico de Resgates</h2>
+        <ul id="historico-resgates">
+          <!-- Os resgates serão inseridos aqui dinamicamente -->
+        </ul>
+      </section>
+    </div>
+    <script src="assets/js/navFooter.js"></script>
+    <script src="assets/js/recompensas.js"></script>
+    <script src="assets/js/theme.js"></script>
+  </body>
+</html>

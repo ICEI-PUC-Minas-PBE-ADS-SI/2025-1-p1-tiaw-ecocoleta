@@ -1,0 +1,126 @@
+/* Estilos exclusivos para a página de adicionar recompensa */
+body {
+  background: #f6f8f6;
+  font-family: 'Segoe UI', Arial, sans-serif;
+}
+.recompensas-container {
+  max-width: 900px;
+  margin: 40px auto;
+  background: #fff;
+  border-radius: 18px;
+  box-shadow: 0 4px 24px rgba(0,0,0,0.08);
+  padding: 32px 24px 40px 24px;
+  text-align: center;
+}
+.recompensas-titulo {
+  font-size: 2.5rem;
+  color: #2e7d32;
+  margin-bottom: 32px;
+  font-weight: 700;
+}
+.recompensas-form {
+  max-width: 420px;
+  margin: 0 auto;
+  background: #f9fbe7;
+  border-radius: 14px;
+  box-shadow: 0 2px 12px rgba(67,160,71,0.10);
+  padding: 32px 28px 24px 28px;
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  align-items: center;
+}
+.recompensas-form .form-group {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  margin-bottom: 8px;
+  width: 100%;
+}
+.recompensas-form label {
+  font-weight: 600;
+  color: #2e7d32;
+  margin-bottom: 6px;
+  font-size: 1.05rem;
+}
+.recompensas-form input,
+.recompensas-form textarea {
+  width: 100%;
+  padding: 10px 12px;
+  border: 1.5px solid #c8e6c9;
+  border-radius: 7px;
+  font-size: 1rem;
+  background: #fff;
+  margin-bottom: 2px;
+  transition: border 0.2s;
+}
+.recompensas-form input:focus,
+.recompensas-form textarea:focus {
+  border: 1.5px solid #43a047;
+  outline: none;
+}
+.recompensas-form textarea {
+  min-height: 60px;
+  resize: vertical;
+}
+.recompensas-card-btn {
+  background: linear-gradient(90deg, #43a047 60%, #66bb6a 100%);
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  padding: 10px 28px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s, box-shadow 0.2s;
+  box-shadow: 0 2px 8px rgba(67,160,71,0.08);
+  margin-top: 18px;
+}
+.recompensas-card-btn:hover {
+  background: linear-gradient(90deg, #388e3c 60%, #81c784 100%);
+  box-shadow: 0 4px 16px rgba(67,160,71,0.18);
+}
+@media (max-width: 900px) {
+  .recompensas-container {
+    width: 98vw;
+  }
+}
+@media (max-width: 600px) {
+  .recompensas-form {
+    padding: 18px 6px 14px 6px;
+    max-width: 98vw;
+  }
+}
+/* Dark mode exclusivo para adicionar recompensa */
+body.dark-mode {
+  background: #23272E !important;
+  color: #f3f3f3;
+}
+body.dark-mode .recompensas-container,
+body.dark-mode .recompensas-form {
+  background: #23272E !important;
+  color: #f3f3f3 !important;
+  box-shadow: 0 4px 24px rgba(0,0,0,0.18);
+}
+body.dark-mode .recompensas-titulo,
+body.dark-mode .recompensas-form label {
+  color: #7fffaf !important;
+}
+body.dark-mode .recompensas-form input,
+body.dark-mode .recompensas-form textarea {
+  background: #23272E !important;
+  color: #f3f3f3 !important;
+  border: 1.5px solid #10b981 !important;
+}
+body.dark-mode .recompensas-form input:focus,
+body.dark-mode .recompensas-form textarea:focus {
+  border: 1.5px solid #059669 !important;
+}
+body.dark-mode .recompensas-card-btn {
+  background: linear-gradient(90deg, #10b981 60%, #059669 100%) !important;
+  color: #fff !important;
+  box-shadow: 0 2px 8px rgba(16,185,129,0.18);
+}
+body.dark-mode .recompensas-card-btn:hover {
+  background: linear-gradient(90deg, #059669 60%, #10b981 100%) !important;
+}
