@@ -182,55 +182,46 @@ app.post('/api/pontosDeColeta/:id/agendar', (req, res) => {
   res.status(201).json(agendamento);
 });
 
-// Endpoint simulado de checkout Stripe
-app.post('/api/stripe/create-checkout-session', (req, res) => {
-  const { plano, userId, email } = req.body;
-  const sessionId = 'sessao_fake_' + Math.floor(Math.random() * 100000);
+// Endpoint real de checkout Stripe
+app.post('/api/stripe/create-checkout-session', async (req, res) => {
+  try {
+    const { plano, userId, email } = req.body;
 
-  // Atualiza o usuário no db.json com o novo plano simulado
-  const usuario = jsonServerRouter.db.get('usuarios').find({ id: parseInt(userId) }).value();
-  if (usuario) {
-    // Define período gratuito de 7 dias a partir de agora
-    const dataAssinatura = new Date();
-    const dataFimGratuito = new Date(dataAssinatura);
-    dataFimGratuito.setDate(dataAssinatura.getDate() + 7);
+    // Defina os preços dos planos conforme seus produtos no Stripe
+    const priceIds = {
+      basic: process.env.STRIPE_PRICE_BASIC,
+      pro: process.env.STRIPE_PRICE_PRO,
+      premium: process.env.STRIPE_PRICE_PREMIUM
+    };
+    const priceId = priceIds[plano];
+    if (!priceId) {
+      return res.status(400).json({ error: 'Plano inválido.' });
+    }
 
-    // Define valor de planoAtivo para liberar dashboard
-    let planoAtivoDashboard = '';
-    if (plano === 'basic') planoAtivoDashboard = 'dashboard_basico';
-    else if (plano === 'pro') planoAtivoDashboard = 'dashboard_profissional';
-    else if (plano === 'premium') planoAtivoDashboard = 'dashboard_premium';
+    // Cria uma sessão de checkout real
+    const session = await stripe.checkout.sessions.create({
+      payment_method_types: ['card'],
+      mode: 'subscription',
+      customer_email: email,
+      line_items: [
+        {
+          price: priceId,
+          quantity: 1
+        }
+      ],
+      metadata: {
+        userId: String(userId),
+        plano: plano
+      },
+      success_url: `${process.env.FRONTEND_URL}/assinatura-sucesso.html?session_id={CHECKOUT_SESSION_ID}`,
+      cancel_url: `${process.env.FRONTEND_URL}/assinatura-cancelada.html`
+    });
 
-    jsonServerRouter.db.get('usuarios')
-      .find({ id: parseInt(userId) })
-      .assign({
-        planoAtivo: planoAtivoDashboard,
-        assinaturaStripeId: sessionId,
-        statusAssinatura: 'ativa',
-        dataAssinatura: dataAssinatura.toISOString(),
-        periodoGratuitoFim: dataFimGratuito.toISOString()
-      })
-      .write();
+    res.json({ sessionId: session.id });
+  } catch (error) {
+    console.error('Erro ao criar sessão de checkout Stripe:', error);
+    res.status(500).json({ error: 'Erro ao criar sessão de checkout Stripe', details: error.message });
   }
-
-  // Opcional: salvar um registro de assinatura em uma coleção separada
-  if (jsonServerRouter.db.get('assinaturas').value() === undefined) {
-    jsonServerRouter.db.set('assinaturas', []).write();
-  }
-  jsonServerRouter.db.get('assinaturas').push({
-    id: Date.now(),
-    userId: parseInt(userId),
-    email,
-    plano,
-    sessionId,
-    data: new Date().toISOString(),
-    periodoGratuitoFim: usuario ? new Date(new Date().setDate(new Date().getDate() + 7)).toISOString() : null
-  }).write();
-
-  // Retorna o sessionId fake para o frontend
-  res.json({
-    sessionId
-  });
 });
 
 // Stripe webhook endpoint (ANTES do JSON Server)
