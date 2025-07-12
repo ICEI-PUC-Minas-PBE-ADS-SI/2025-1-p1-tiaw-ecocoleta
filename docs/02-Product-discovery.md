@@ -2,7 +2,7 @@
 
 <span style="color:red">Pré-requisitos: <a href="01-Contexto.md"> Documentação de contexto</a></span>
 
-✅ [Documentação de Design Thinking (MIRO)](https://miro.com/app/board/uXjVINql3iI=/)
+✅ [Documentação de Design Thinking (MIRO)](ColetaSeletiva.pdf)
 
 ## Etapa de entendimento
 

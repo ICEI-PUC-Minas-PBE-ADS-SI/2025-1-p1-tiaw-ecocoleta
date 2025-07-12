@@ -38,7 +38,3 @@ https://github.com/user-attachments/assets/58ceef75-56c8-4117-a271-ac6f66d0218a
 | **Vídeo de Amostra**  | **Um pouco mais sobre o site do EcoColeta**  |
 <video controls src="EcoColeta.mp4" title="Title"></video>
 
-
-## Ferramentas de testes (opcional)
-
-Comente sobre as ferramentas de testes utilizadas.
