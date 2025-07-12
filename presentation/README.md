@@ -17,7 +17,7 @@
 
 ## Slides
 
-
+[Clique aqui para acessar os slides do projeto (PDF)](../docs/Ecocoleta.pdf)
 
 ## Vídeo
 
