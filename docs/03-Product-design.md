@@ -45,9 +45,7 @@ As tabelas a seguir apresentam os requisitos funcionais e não funcionais que de
 | 002| - O tempo de resposta para carregamento de mapas deve ser inferior a 3 segundos. | MÉDIA     |
 | 003| - O sistema deve estar disponível 24/7.                                          | ALTA      |
 
-> **Links úteis**:
-> - [O que são requisitos funcionais e requisitos não funcionais?](https://codificar.com.br/requisitos-funcionais-nao-funcionais/)
-> - [Entenda o que são requisitos de software, a diferença entre requisito funcional e não funcional, e como identificar e documentar cada um deles](https://analisederequisitos.com.br/requisitos-funcionais-e-requisitos-nao-funcionais-o-que-sao/)
+
 
 
 ## Restrições
