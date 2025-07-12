@@ -80,13 +80,7 @@ Objetivo: Oferecer meios de apoiar financeiramente o projeto ou comprar produtos
 
 
  
-> **Links úteis**:
-> - [Protótipos: baixa, média ou alta fidelidade?](https://medium.com/ladies-that-ux-br/prot%C3%B3tipos-baixa-m%C3%A9dia-ou-alta-fidelidade-71d897559135)
-> - [Protótipos vs wireframes](https://www.nngroup.com/videos/prototypes-vs-wireframes-ux-projects/)
-> - [Ferramentas de wireframes](https://rockcontent.com/blog/wireframes/)
-> - [Figma](https://www.figma.com/)
-> - [MarvelApp](https://marvelapp.com/developers/documentation/tutorials/)
-> - [Adobe XD](https://www.adobe.com/br/products/xd.html#scroll)
+
 
 
 ### Protótipo Interativo

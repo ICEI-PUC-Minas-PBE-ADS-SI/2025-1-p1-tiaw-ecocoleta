@@ -176,8 +176,3 @@ ScrollReveal (revealjs.org)
 
 Utilizamos o render como hospedagem para o site.
 
-> **Links úteis**:
-> - [Website com GitHub Pages](https://pages.github.com/)
-> - [Programação colaborativa com Repl.it](https://repl.it/)
-> - [Getting started with Heroku](https://devcenter.heroku.com/start)
-> - [Publicando seu site no Heroku](http://pythonclub.com.br/publicando-seu-hello-world-no-heroku.html)
