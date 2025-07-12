@@ -113,4 +113,4 @@ Para abordar os pontos fracos identificados e otimizar a solução, nosso grupo 
 
     Padronização da Interface do Usuário (UI): Realizaremos uma revisão completa da interface, com foco na padronização de elementos visuais, como ícones, para garantir uma experiência de usuário mais coesa e profissional.
 
-Essas ações visam não apenas corrigir as falhas atuais, mas também aprimorar a qualidade geral da solução, solidificando seus pontos fortes e garantindo um produto final robusto e de alta qualidade.
+
