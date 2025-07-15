@@ -1,0 +1,26 @@
+cff-version: 1.2.0
+message: Please cite this software using these metadata.
+title: EcoColeta
+authors:
+  - family-names: Goveia
+    given-names: Matheus 
+  - family-names: Ferreira
+    given-names: Artur 
+  - family-names: Figueiredo
+    given-names: Samuel 
+  - family-names: Lacerda
+    given-names: Ronaldo
+  - family-names: Gomes
+    given-names: Kauan 
+    family-names: Vasconcelos
+    given-names: Amália
+  - name-suffix: Professora
+    affiliation: PUC Minas    
+keywords:
+    - coloque aqui a palavra-chave 1
+    - coloque aqui a palavra-chave 2
+    - coloque aqui a palavra-chave 3
+repository-code: https://github.com/MatheusAGoveia/2025-1-p1-tiaw-ecocoleta.git
+license: CC-BY-4.0
+version: 1.0.0
+date-released: 2025-06-27
