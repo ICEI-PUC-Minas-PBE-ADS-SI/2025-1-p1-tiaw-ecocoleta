@@ -42,13 +42,13 @@ npm start
 
 ## 🌐 URLs Disponíveis
 
-Após iniciar com `npm start`, acesse:
+ acesse:
 
-- **🏠 Página Principal**: http://localhost:3000/index.html
-- **📊 Dashboard Admin**: http://localhost:3000/dashboardAdmin.html
-- **👤 Autenticação**: http://localhost:3000/autent.html
-- **👥 Comunidades**: http://localhost:3000/comunidade.html
-- **⚙️ Teste da API**: http://localhost:3000/test-api.html
+🏠 Página Principal : https://two025-1-p1-tiaw-ecocoleta.onrender.com/index.html
+📊 Painel de administração : http://two025-1-p1-tiaw-ecocoleta.onrender.com/dashboardAdmin.html
+👤 Autenticação : http://two025-1-p1-tiaw-ecocoleta.onrender.com/autent.html
+👥 Comunidades : http://two025-1-p1-tiaw-ecocoleta.onrender.com/comunidade.html
+⚙️ Teste da API : http://two025-1-p1-tiaw-ecocoleta.onrender.com/test-api.html
 
 ## 📡 API Endpoints
 
