@@ -1,113 +1,59 @@
-# EcoColeta - Frontend & Dashboard
+# EcoColeta
 
-Este é o frontend completo da aplicação EcoColeta, um sistema de doações para projetos ambientais com dashboard administrativo integrado.
+`CURSO: Sistemas de Informação`
 
-## 🚀 Funcionalidades
+`DISCIPLINA: Trabalho Interdisciplinar Aplicações Web`
 
-- **Dashboard Administrativo**: Visualização completa de dados, estatísticas e gráficos
-- **Sistema de Usuários**: Cadastro e autenticação de doadores e coletores
-- **Pontos de Coleta**: Gestão e localização de pontos de coleta
-- **Comunidades**: Sistema de comunidades para engajamento
-- **API Integrada**: JSON Server integrado para desenvolvimento
-- **Interface Responsiva**: Funciona em desktop e mobile
+`1º semestre/2025`
 
-## 📋 Requisitos
+ A coleta seletiva é um processo essencial para a gestão sustentável dos resíduos sólidos, promovendo a separação e destinação adequada dos materiais recicláveis. Visando reduzir o impacto ambiental do descarte incorreto, diminuir a poluição e otimizar o reaproveitamento de recursos.
+ O objetivo do trabalho é desenvolver um software capaz de localizar os pontos de coleta mais próximos a localização do usuário e que demonstro o impacto ambiental gerado através do descarte no local apropriado. O software deverá facilitar o usuário na busca de pontos de coletas e incentivá-lo a continuar reciclando.
 
-- Node.js (versão 14 ou superior)
-- npm (gerenciador de pacotes do Node.js)
+## Integrantes
 
-## ⚡ Instalação e Execução Rápida
+* Artur Ferreira Silva
+* Kauan Gomes Marques
+* Matheus Augusto Alves Goveia Damião
+* Ronaldo Augusto Oliveira Lacerda
+* Samuel Maciel da Silva Figueiredo
 
-### Método 1: Script Automático (Recomendado)
-1. Execute o arquivo `start-dashboard.bat`
-2. Aguarde a instalação automática das dependências
-3. O dashboard será aberto automaticamente no navegador
+## Professor
 
-### Método 2: Comandos Manuais
-1. Clone o repositório:
-```bash
-git clone https://github.com/seu-usuario/ecocoleta.git
-cd ecocoleta/EcoColetaPrograma/ecoColeta-Presentation
-```
+* Amália Soares Vieira de Vasconcelos
 
-2. Instale as dependências:
-```bash
-npm install
-```
+## Instruções de utilização
 
-3. Inicie a aplicação:
-```bash
-npm start
-```
+Assim que a primeira versão do sistema estiver disponível, deverá complementar com as instruções de utilização. Descreva como instalar eventuais dependências e como executar a aplicação.
 
-## 🌐 URLs Disponíveis
+Não deixe de informar o link onde a aplicação estará disponível para acesso (por exemplo: https://adota-pet.herokuapp.com/src/index.html).
 
- acesse:
+Se houver usuário de teste, o login e a senha também deverão ser informados aqui (por exemplo: usuário - admin / senha - admin).
 
-🏠 Página Principal : https://two025-1-p1-tiaw-ecocoleta.onrender.com/index.html
-📊 Painel de administração : http://two025-1-p1-tiaw-ecocoleta.onrender.com/dashboardAdmin.html
-👤 Autenticação : http://two025-1-p1-tiaw-ecocoleta.onrender.com/autent.html
-👥 Comunidades : http://two025-1-p1-tiaw-ecocoleta.onrender.com/comunidade.html
-⚙️ Teste da API : http://two025-1-p1-tiaw-ecocoleta.onrender.com/test-api.html
+O link e o usuário/senha descritos acima são apenas exemplos de como tais informações deverão ser apresentadas.
 
-## 📡 API Endpoints
+# Documentação
 
-A aplicação roda com JSON Server integrado:
+<ol>
+<li><a href="docs/01-Contexto.md"> Documentação de contexto</a></li>
+<li><a href="docs/02-Product-discovery.md"> Product discovery</a></li>
+<li><a href="docs/03-Product-design.md"> Product design</a></li>
+<li><a href="docs/04-Metodologia.md"> Metodologia</a></li>
+<li><a href="docs/05-Projeto-interface.md"> Projeto de interface</a></li>
+<li><a href="docs/06-Template-padrao.md"> Template padrão da aplicação</a></li>
+<li><a href="docs/07-Arquitetura-solucao.md"> Arquitetura da solução</a></li>
+<li><a href="docs/08-Plano-testes-software.md"> Plano de testes de software</a></li>
+<li><a href="docs/09-Registro-testes-software.md"> Registro de testes de software</a></li>
+<li><a href="docs/10-Referencias.md"> Referências</a></li>
+</ol>
 
-- **Base URL**: http://localhost:3000/api
-- **Usuários**: `/api/usuarios`
-- **Pontos de Coleta**: `/api/pontosDeColeta`
-- **Comunidades**: `/api/comunidades`
-- **Doações**: `/api/donations`
-- **Agendamentos**: `/api/agendamentos`
+# Código
 
-## Estrutura do Projeto
+* <a href="src/README.md">Código</a>
 
-```
-ecoColeta-Presentation/
-├── src/
-│   ├── css/
-│   │   ├── doacoes.css
-│   │   └── navFooter.css
-│   ├── js/
-│   │   ├── doacoes.js
-│   │   ├── doacao-realizada.js
-│   │   └── navFooter.js
-│   └── pages/
-│       ├── doacoes.html
-│       ├── doacao-realizada.html
-│       └── home.html
-├── db.json
-├── package.json
-└── README.md
-```
+# Apresentação
 
-## Funcionalidades
+* <a href="presentation/README.md">Apresentação do projeto</a>
 
-- Sistema de doações com valores predefinidos
-- Formulário de doação com validação
-- Integração com API de pagamento (mock)
-- Armazenamento de doações no JSON Server
-- Página de confirmação de doação
-- Design responsivo
-- Animações e transições suaves
-
-## Tecnologias Utilizadas
-
-- HTML5
-- CSS3
-- JavaScript (ES6+)
-- JSON Server (mock backend)
-- Font Awesome (ícones)
-
-## Contribuição
-
-1. Faça um fork do projeto
-2. Crie uma branch para sua feature (`git checkout -b feature/nova-feature`)
-3. Commit suas mudanças (`git commit -m 'Adiciona nova feature'`)
-4. Push para a branch (`git push origin feature/nova-feature`)
-5. Abra um Pull Request
-
-## Licença
-
-Este projeto está sob a licença MIT. Veja o arquivo [LICENSE](LICENSE) para mais detalhes.
+> **Links úteis**:
+> - [Sintaxe básica de gravação e formatação no GitHub - GitHub Docs](https://docs.github.com/pt/get-started/writing-on-github/getting-started-with-writing-and-formatting-on-github/basic-writing-and-formatting-syntax)
+> - [Markdown® Básico: Sintaxe, Uso &amp; Exemplos [Passo a Passo]](https://markdown.net.br/sintaxe-basica/)
